@@ -306,8 +306,8 @@ points: 이미지·영상의 장점 3개. 각각 12자 이내 짧은 구절.
 threads: 220자 이내. 쓰레드는 글 중심이라 친구한테 말하듯 반말을 섞은 편한 말투로 써라
   (예: "이거 알아?", "~더라", "~하면 딱이야", "~거든요"처럼 반말 위주에 존댓말 살짝).
   첫 문장은 눈길을 끄는 한 줄. 이모지 0~2개, 해시태그 없음. 써본 척 금지 규칙은 그대로 지켜라.
-threads_reply: 쓰레드 글에 바로 달 첫 댓글. 80자 이내, threads와 같은 반말 섞인 말투.
-  본문에 없던 활용 팁 하나나, 댓글을 부르는 가벼운 질문 하나. 링크·광고 문구 넣지 마라.
+threads_reply: 쓰레드 첫 댓글 맨 위 [광고] 뒤에 붙을 짧은 한 줄. 25자 이내, 반말 섞인 감탄·공감형.
+  예: "나만 몰랐네..이 좋은 걸 ㅠㅠ", "이건 진짜 알려줘야 돼". 링크·광고 문구는 넣지 마라(프로그램이 붙인다).
 instagram: 350자 이내 본문. 줄바꿈으로 읽기 쉽게. 해시태그 없음.
 hashtags: 관련 해시태그 5~8개를 한 줄로 (#으로 시작, 띄어쓰기로 구분).
 
@@ -324,7 +324,7 @@ POST_TOOL = {
             "headline": {"type": "string", "description": "첫 화면 문구, 18자 이내, 고민·상황·질문형"},
             "points": {"type": "array", "items": {"type": "string"}, "description": "장점 3개, 각 12자 이내, 기술 용어 대신 사용자가 느끼는 변화"},
             "threads": {"type": "string", "description": "쓰레드 본문, 220자 이내, 반말 섞인 편한 말투"},
-            "threads_reply": {"type": "string", "description": "쓰레드 첫 댓글, 80자 이내, 같은 말투, 팁이나 가벼운 질문, 링크 없음"},
+            "threads_reply": {"type": "string", "description": "쓰레드 첫 댓글 한 줄, 25자 이내, 반말 섞인 감탄·공감형, 링크 없음"},
             "instagram": {"type": "string", "description": "인스타 본문, 350자 이내, 해시태그 없음"},
             "hashtags": {"type": "string", "description": "해시태그 5~8개, 띄어쓰기로 구분"},
         },
@@ -500,8 +500,13 @@ def generate(item):
 
 
 def link_in_reply():
-    """THREADS_LINK_IN_REPLY=1 이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다."""
-    return env("THREADS_LINK_IN_REPLY", "0") == "1"
+    """THREADS_LINK_IN_REPLY=1(기본)이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다."""
+    return env("THREADS_LINK_IN_REPLY", "1") == "1"
+
+
+def threads_media():
+    """THREADS_MEDIA=0(기본)이면 쓰레드는 글만 올린다(이미지·영상·자막 없이)."""
+    return env("THREADS_MEDIA", "0") == "1"
 
 
 def compose_threads(body, link, disclosure=DISCLOSURE):
@@ -513,14 +518,17 @@ def compose_threads(body, link, disclosure=DISCLOSURE):
     return head + body + tail
 
 
-def compose_threads_reply(text, link):
-    """쓰레드 첫 댓글. 쓸 내용이 없으면 ''(댓글을 달지 않음)."""
+def compose_threads_reply(text, link, disclosure=DISCLOSURE):
+    """쓰레드 첫 댓글: [광고] 한 줄 + 대가성 문구 + 링크 여러 번(한 개가 죽을 때 대비).
+    링크를 본문에 두는 설정이면 한 줄만. 쓸 내용이 없으면 ''(댓글을 달지 않음)."""
     if env("THREADS_REPLY", "1") != "1":
         return ""
-    body = text.get("threads_reply", "")
-    if link_in_reply():
-        body = (body + "\n\n" if body else "") + f"👉 {link}"
-    return body[:500]
+    line = text.get("threads_reply", "").strip()
+    if not link_in_reply():
+        return line[:500]
+    repeat = max(1, int(env("THREADS_LINK_REPEAT", "3") or 3))
+    lines = [f"[광고] {line}".strip(), disclosure] + [link] * repeat
+    return "\n".join(lines)[:500]
 
 
 def compose_instagram(text, name, disclosure=DISCLOSURE):
@@ -651,7 +659,7 @@ def threads_post(text, urls=None, kind="image", reply_to=None):
 
 def threads_reply(rec, text, item):
     """방금 올린 쓰레드 글에 첫 댓글을 단다. 실패해도 본글은 그대로 둔다."""
-    body = compose_threads_reply(text, item["link"])
+    body = compose_threads_reply(text, item["link"], item["aff"]["disclosure"])
     if not body:
         return
     time.sleep(int(env("THREADS_REPLY_DELAY", "20") or 20))  # 본글이 반영될 시간을 조금 준다
@@ -698,7 +706,7 @@ KIND_LABEL = {"video": "영상(릴스)", "carousel": "캐러셀(여러 장)", "i
 def preview(item, kind, text):
     print("\n========== 쓰레드 미리보기 ==========")
     print(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]))
-    reply = compose_threads_reply(text, item["link"])
+    reply = compose_threads_reply(text, item["link"], item["aff"]["disclosure"])
     if reply:
         print("\n---------- 쓰레드 첫 댓글 ----------")
         print(reply)
@@ -777,7 +785,7 @@ def main():
             continue
 
         urls = []
-        if media_possible(item, kind):
+        if media_possible(item, kind) and ("instagram" in channels or threads_media()):
             try:
                 urls = resolve_media(item, kind, text)
             except Exception as e:
@@ -788,13 +796,14 @@ def main():
         for ch in channels:
             try:
                 if ch == "threads":
-                    pid = threads_post(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]), urls, kind)
+                    pid = threads_post(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]),
+                                       urls if threads_media() else None, kind)
                 else:
                     if not urls:
                         raise RuntimeError(f"{label}이(가) 없어 인스타그램에 올릴 수 없습니다.")
                     pid = instagram_post(urls, compose_instagram(text, item["short"], item["aff"]["disclosure"]),
                                          kind, cover)
-                rec[ch] = {"id": pid, "kind": kind if urls else "text",
+                rec[ch] = {"id": pid, "kind": kind if urls and (ch != "threads" or threads_media()) else "text",
                            "at": datetime.datetime.now().isoformat(timespec="seconds")}
                 ok = True
                 log(f"  ✓ {ch} 게시 완료 (id {pid})")
