@@ -17,6 +17,8 @@ import affiliates
 BASE = pathlib.Path(__file__).resolve().parent
 POSTED = BASE / "posted.json"
 OUT = BASE / "docs" / "index.html"
+THUMBS = OUT.parent / "thumbs"
+THUMB_SIZE = 240
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -36,8 +38,30 @@ def items():
         if not times:
             continue  # 아직 어디에도 올라가지 않은 상품은 페이지에 넣지 않음
         name = str(rec.get("name", "")).split(",")[0].strip() or rec["link"]
-        out.append({"name": name, "link": rec["link"], "at": max(times)})
+        out.append({"name": name, "full": str(rec.get("name", "")), "link": rec["link"], "at": max(times),
+                    "key": rec["link"].rstrip("/").rsplit("/", 1)[-1]})
     return sorted(out, key=lambda i: i["at"], reverse=True)
+
+
+def thumb(item):
+    """상품 사진 폴더의 첫 장으로 작은 썸네일을 만든다(이미 있으면 그대로). 페이지에서 쓸 경로, 없으면 ''."""
+    dest = THUMBS / f"{item['key']}.jpg"
+    if not dest.exists():
+        try:
+            import image_tools
+            from PIL import Image, ImageOps
+            folder = image_tools.photo_root() / image_tools.folder_name(item["full"] or item["name"])
+            photos = image_tools.images_in(folder) if folder.is_dir() else []
+            if not photos:
+                return ""
+            with Image.open(photos[0]) as im:
+                im = ImageOps.fit(ImageOps.exif_transpose(im).convert("RGB"), (THUMB_SIZE, THUMB_SIZE))
+                THUMBS.mkdir(parents=True, exist_ok=True)
+                im.save(dest, "JPEG", quality=82, optimize=True)
+        except Exception as e:
+            print(f"  (썸네일을 만들지 못함: {item['name']} → {e})")
+            return ""
+    return f"thumbs/{dest.name}"
 
 
 def disclosure(rows):
@@ -74,7 +98,8 @@ PAGE = """<!doctype html>
            color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:14px;
            padding:16px; margin-bottom:10px; }}
   a.item:active {{ transform:scale(.99); }}
-  .item > div {{ min-width:0; }}
+  .item > div {{ min-width:0; flex:1; }}
+  .thumb {{ flex:none; width:64px; height:64px; border-radius:10px; object-fit:cover; background:var(--line); }}
   .name {{ font-weight:600; line-height:1.4; word-break:keep-all; overflow-wrap:anywhere; }}
   .date {{ font-size:12px; color:var(--muted); margin-top:4px; }}
   .go {{ flex:none; font-size:14px; font-weight:700; color:#fff; background:var(--accent);
@@ -107,15 +132,20 @@ PAGE = """<!doctype html>
 """
 
 ROW = """    <a class="item" href="{link}" target="_blank" rel="sponsored noopener" data-name="{name}">
-      <div><div class="name">{name}</div><div class="date">{date}</div></div>
+      {img}<div><div class="name">{name}</div><div class="date">{date}</div></div>
       <span class="go">구매하기</span>
     </a>"""
 
 
 def build():
     rows = items()
-    body = "\n".join(ROW.format(link=html.escape(r["link"], quote=True), name=html.escape(r["name"], quote=True),
-                                date=r["at"][:10].replace("-", ".")) for r in rows)
+    lines = []
+    for r in rows:
+        src = thumb(r)
+        img = f'<img class="thumb" src="{src}" alt="" loading="lazy">' if src else ""
+        lines.append(ROW.format(link=html.escape(r["link"], quote=True), name=html.escape(r["name"], quote=True),
+                                date=r["at"][:10].replace("-", "."), img=img))
+    body = "\n".join(lines)
     page = PAGE.format(title=html.escape(TITLE), rows=body,
                        notice="<br>".join(html.escape(t) for t in disclosure(rows)))
     OUT.parent.mkdir(exist_ok=True)

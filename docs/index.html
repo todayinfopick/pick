@@ -23,7 +23,8 @@
            color:var(--text); background:var(--card); border:1px solid var(--line); border-radius:14px;
            padding:16px; margin-bottom:10px; }
   a.item:active { transform:scale(.99); }
-  .item > div { min-width:0; }
+  .item > div { min-width:0; flex:1; }
+  .thumb { flex:none; width:64px; height:64px; border-radius:10px; object-fit:cover; background:var(--line); }
   .name { font-weight:600; line-height:1.4; word-break:keep-all; overflow-wrap:anywhere; }
   .date { font-size:12px; color:var(--muted); margin-top:4px; }
   .go { flex:none; font-size:14px; font-weight:700; color:#fff; background:var(--accent);
@@ -38,15 +39,15 @@
   <input id="q" type="search" placeholder="상품 이름으로 찾기" autocomplete="off">
   <div id="list">
     <a class="item" href="https://link.coupang.com/a/hQvBzTcGxo" target="_blank" rel="sponsored noopener" data-name="에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트">
-      <div><div class="name">에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트</div><div class="date">2026.10.16</div></div>
+      <img class="thumb" src="thumbs/hQvBzTcGxo.jpg" alt="" loading="lazy"><div><div class="name">에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트</div><div class="date">2026.10.16</div></div>
       <span class="go">구매하기</span>
     </a>
     <a class="item" href="https://link.coupang.com/a/hQvb5ZRTlQ" target="_blank" rel="sponsored noopener" data-name="에이지투웨니스 클라우드 컴포트 파우더 팩트">
-      <div><div class="name">에이지투웨니스 클라우드 컴포트 파우더 팩트</div><div class="date">2026.10.15</div></div>
+      <img class="thumb" src="thumbs/hQvb5ZRTlQ.jpg" alt="" loading="lazy"><div><div class="name">에이지투웨니스 클라우드 컴포트 파우더 팩트</div><div class="date">2026.10.15</div></div>
       <span class="go">구매하기</span>
     </a>
     <a class="item" href="https://link.coupang.com/a/hPVFYDCNZA" target="_blank" rel="sponsored noopener" data-name="맥 글로우 플레이 텐더토크 립 밤">
-      <div><div class="name">맥 글로우 플레이 텐더토크 립 밤</div><div class="date">2026.10.14</div></div>
+      <img class="thumb" src="thumbs/hPVFYDCNZA.jpg" alt="" loading="lazy"><div><div class="name">맥 글로우 플레이 텐더토크 립 밤</div><div class="date">2026.10.14</div></div>
       <span class="go">구매하기</span>
     </a>
   </div>
