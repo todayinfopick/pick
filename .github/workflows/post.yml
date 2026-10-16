@@ -1,0 +1,93 @@
+name: 자동 게시
+
+on:
+  schedule:
+    # 한국 시간 09:00, 13:00, 20:00 (GitHub는 UTC 기준이라 9시간 빼서 적음)
+    - cron: "0 0 * * *"
+    - cron: "0 4 * * *"
+    - cron: "0 11 * * *"
+    # 토큰 연장: 매주 일요일 한국 시간 08:00
+    - cron: "0 23 * * 6"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "할 일"
+        type: choice
+        default: 지금 게시
+        options: [지금 게시, 미리보기, 토큰 연장]
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    # 예약 실행은 저장소 변수 AUTO_POST=on 일 때만 (PC 자동 게시를 끄기 전까지 두 번 올라가지 않도록)
+    if: github.event_name != 'schedule' || vars.AUTO_POST == 'on'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Asia/Seoul
+      PYTHONUTF8: "1"
+      GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+      GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
+      GOOGLE_PHOTO_FOLDER_ID: ${{ secrets.GOOGLE_PHOTO_FOLDER_ID }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
+      IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
+      INIT_THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+      INIT_IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+      INIT_THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
+      INIT_IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      AUTO_RESEARCH: ${{ vars.AUTO_RESEARCH || '0' }}
+      POSTS_PER_RUN: ${{ vars.POSTS_PER_RUN || '1' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 준비
+        run: |
+          sudo apt-get install -y -qq fonts-nanum > /dev/null
+          pip install -q -r requirements.txt
+
+      - name: 시트·사진 받기
+        run: python cloud_sync.py pull
+
+      - name: 토큰 연장
+        if: github.event.schedule == '0 23 * * 6' || inputs.mode == '토큰 연장'
+        run: python refresh_tokens.py
+
+      - name: 미리보기
+        if: inputs.mode == '미리보기'
+        run: python main.py --dry-run
+
+      - name: 게시
+        if: github.event.schedule != '0 23 * * 6' && (inputs.mode == '' || inputs.mode == null || inputs.mode == '지금 게시')
+        run: python main.py
+
+      - name: 링크 페이지 만들기
+        if: always()
+        run: python build_page.py
+
+      - name: 결과 저장
+        if: always()
+        run: |
+          python cloud_sync.py push || true
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          for f in posted.json research.json docs; do [ -e "$f" ] && git add -f "$f"; done
+          git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase && git push -q)
+
+      - name: 미리보기 이미지
+        if: inputs.mode == '미리보기'
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: media/

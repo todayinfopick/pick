@@ -1,0 +1,649 @@
+# -*- coding: utf-8 -*-
+"""캡처 도우미: 쿠팡 페이지 위에 떠 있는 작은 창.
+- 파트너스 링크를 복사하면 링크 칸에, 상품명을 복사하면 상품명 칸에 자동 입력
+- 📷 캡처(또는 Win+Shift+S)로 잘라낸 사진은 자동으로 사진 목록에 추가
+- [저장 → 다음 상품]: products.csv에 한 줄 추가 + 사진\\상품명 폴더에 사진 저장
+"""
+import csv
+import hashlib
+import io
+import os
+import subprocess
+import tkinter as tk
+from tkinter import messagebox
+
+from PIL import Image, ImageGrab, ImageTk
+
+import affiliates
+import gcloud
+import image_tools
+from main import PRODUCTS, log, product_key
+
+COLUMNS = ["상품명", "파트너스링크", "형식", "미디어", "소재이미지", "게시시간", "특징메모"]
+POLL_MS = 500
+MAX_PHOTOS = image_tools.MAX_PHOTOS  # 한 줄 5장 × 2줄 (인스타 캐러셀 최대 장수와 같음)
+
+
+# ---------------------------------------------------------------- products.csv
+def read_rows():
+    if gcloud.enabled():  # 구글 시트를 쓰는 경우 (폰·서버와 같은 목록)
+        rows = gcloud.read_tab()
+        if not rows:
+            return COLUMNS[:], []
+        header = [h.strip() for h in rows[0]]
+        for col in COLUMNS:
+            if col not in header:
+                header.append(col)
+        return header, rows[1:]
+    if not PRODUCTS.exists():
+        return COLUMNS[:], []
+    for enc in ("utf-8-sig", "cp949"):
+        try:
+            with open(PRODUCTS, encoding=enc, newline="") as f:
+                rows = list(csv.reader(f))
+            break
+        except UnicodeDecodeError:
+            continue
+    else:
+        raise RuntimeError("products.csv를 읽을 수 없습니다. 엑셀에서 'CSV UTF-8'로 저장해 주세요.")
+    if not rows:
+        return COLUMNS[:], []
+    header = [h.strip() for h in rows[0]]
+    for col in COLUMNS:  # 예전 양식이면 빠진 칸을 뒤에 추가
+        if col not in header:
+            header.append(col)
+    return header, rows[1:]
+
+
+def write_rows(header, rows):
+    rows = [r + [""] * (len(header) - len(r)) for r in rows]
+    if gcloud.enabled():
+        gcloud.write_tab([header] + rows)
+        return
+    with open(PRODUCTS, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(header)
+        w.writerows(rows)
+
+
+def name_key(name):
+    return product_key(name)  # 같은 상품 판단 기준은 게시 프로그램과 동일 (.env SAME_PRODUCT)
+
+
+def find_product(link=None, name=None):
+    """등록된 상품 찾기: 링크가 같거나, 상품명이 같으면(쿠팡 링크는 만들 때마다 바뀜) 그 상품.
+    찾으면 {'name', 'memo', 'link'}, 없으면 None."""
+    header, rows = read_rows()
+    li, ni, mi = header.index("파트너스링크"), header.index("상품명"), header.index("특징메모")
+    nk = name_key(name) if name else None
+    for r in rows:
+        cell = lambda i: r[i].strip() if len(r) > i else ""
+        if (link and cell(li) == link.strip()) or (nk and name_key(cell(ni)) == nk):
+            return {"name": cell(ni), "memo": cell(mi), "link": cell(li)}
+    return None
+
+
+def find_by_link(link):
+    return find_product(link=link)
+
+
+def update_product(old_link, name, memo, new_link=None):
+    """등록된 상품(old_link로 찾음)의 상품명·특징메모·링크를 고친다. 바뀌기 전 상품명을 돌려준다."""
+    header, rows = read_rows()
+    li, ni, mi = header.index("파트너스링크"), header.index("상품명"), header.index("특징메모")
+    old = None
+    for r in rows:
+        if len(r) > li and r[li].strip() == old_link:
+            r.extend([""] * (len(header) - len(r)))
+            old = r[ni].strip()
+            r[ni] = name
+            r[mi] = memo
+            if new_link:
+                r[li] = new_link
+            break
+    write_rows(header, rows)
+    return old
+
+
+def merge_duplicates():
+    """같은 상품(상품명 기준)이 여러 줄이면 첫 줄 하나로 합친다.
+    링크는 가장 나중 줄의 것으로, 빈 칸은 다른 줄의 내용으로 채운다. 합친 줄 수를 돌려준다."""
+    header, rows = read_rows()
+    ni, li = header.index("상품명"), header.index("파트너스링크")
+    keep, first = [], {}
+    merged = 0
+    for r in rows:
+        r = r + [""] * (len(header) - len(r))
+        name = r[ni].strip()
+        if not name:
+            if any(c.strip() for c in r):
+                keep.append(r)
+            continue  # 완전히 빈 줄은 정리
+        k = product_key(name)
+        if k not in first:
+            first[k] = r
+            keep.append(r)
+            continue
+        base = first[k]
+        if r[li].strip():
+            base[li] = r[li].strip()  # 최신 링크
+        for i, v in enumerate(r):
+            if i not in (ni, li) and v.strip() and not base[i].strip():
+                base[i] = v
+        merged += 1
+    if merged or len(keep) != len(rows):
+        write_rows(header, keep)
+    return merged
+
+
+def move_photos(old_name, new_name):
+    """상품명이 바뀌면 사진 폴더도 새 이름으로 옮긴다."""
+    root = image_tools.photo_root()
+    src = root / image_tools.folder_name(old_name)
+    dst = root / image_tools.folder_name(new_name)
+    if src == dst or not src.is_dir():
+        return
+    dst.mkdir(parents=True, exist_ok=True)
+    start = len(image_tools.images_in(dst))
+    for n, f in enumerate(image_tools.images_in(src), start=start + 1):
+        f.rename(dst / f"{n:02d}{f.suffix.lower()}")
+    try:
+        src.rmdir()
+    except OSError:
+        pass
+
+
+def append_product(name, link, memo):
+    header, rows = read_rows()
+    li = header.index("파트너스링크")
+    if any(len(r) > li and r[li].strip() == link for r in rows):
+        raise ValueError("이미 등록된 링크입니다.")
+    row = [""] * len(header)
+    row[header.index("상품명")] = name
+    row[li] = link
+    row[header.index("특징메모")] = memo
+    rows.append(row)
+    write_rows(header, rows)
+
+
+def photo_folder(name):
+    return image_tools.photo_root() / image_tools.folder_name(name)
+
+
+def load_saved_photos(name):
+    """이미 저장된 상품 사진을 불러온다 (수정 모드에서 화면에 보여주기 위해)."""
+    folder = photo_folder(name)
+    if not folder.is_dir():
+        return []
+    out = []
+    for f in image_tools.images_in(folder):
+        try:
+            with Image.open(f) as im:
+                out.append(im.copy())
+        except Exception:
+            continue
+    return out
+
+
+def save_photos(name, images, replace=False):
+    """사진 저장.
+    replace=True: 폴더를 지금 화면의 사진들로 통째로 바꾼다 (수정 모드, 기존 사진을 불러와 보여준 경우).
+    replace=False: 폴더에 없는 사진만 뒤에 추가한다 (같은 사진은 건너뜀)."""
+    folder = photo_folder(name)
+    folder.mkdir(parents=True, exist_ok=True)
+    old = image_tools.images_in(folder)
+    if replace:
+        tmp = []
+        for i, im in enumerate(images, start=1):
+            t = folder / f"__new{i:03d}.jpg"
+            im.convert("RGB").save(t, quality=92)
+            tmp.append(t)
+        for f in old:
+            f.unlink()
+        for i, t in enumerate(tmp, start=1):
+            t.rename(folder / f"{i:02d}.jpg")
+        return folder
+    existing = []
+    for f in old:
+        try:
+            with Image.open(f) as im:
+                existing.append(im.copy())
+        except Exception:
+            continue
+    n = len(old)
+    for im in image_tools.unique_photos(images):
+        if image_tools.is_duplicate(im, existing):
+            continue
+        n += 1
+        im.convert("RGB").save(folder / f"{n:02d}.jpg", quality=92)
+        existing.append(im)
+    return folder
+
+
+def is_link(text):
+    """게시에 쓸 수 있는 제휴 링크인지 (제휴처.csv 기준, 목록에 없는 링크는 '기타'로 허용)."""
+    return affiliates.looks_like_link(text) and affiliates.detect(text)["ok"]
+
+
+def is_plain_store(text):
+    """제휴 링크가 아닌 일반 쇼핑몰 주소인지 (수익이 안 잡힘)."""
+    return affiliates.looks_like_link(text) and affiliates.detect(text)["plain"]
+
+
+# ---------------------------------------------------------------- 화면
+class Helper:
+    def __init__(self, root):
+        self.root = root
+        self.images = []
+        self.last_text = None
+        self.last_img_hash = None
+        self.watch = tk.BooleanVar(value=True)
+        self.target = tk.StringVar(value="auto")
+        self.name_replace_next = False
+        self.editing = None  # 수정 중인 등록 상품 {'name','memo','link'}
+        self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
+        self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
+
+        root.title("쿠팡 캡처 도우미 — 새 상품 등록")
+        root.attributes("-topmost", True)
+        root.resizable(False, False)
+        sw = root.winfo_screenwidth()
+        root.geometry(f"+{sw - 420}+40")  # 높이는 사진 수에 맞춰 자동
+        root.minsize(400, 0)
+
+        pad = {"padx": 10, "pady": 3}
+        pick = tk.Frame(root, bg="#EEF2FF")
+        pick.pack(fill="x", padx=10, pady=(8, 2))
+        tk.Label(pick, text="복사한 글 넣을 칸:", bg="#EEF2FF").pack(side="left", padx=4)
+        for val, txt in (("auto", "자동"), ("name", "상품명"), ("memo", "특징메모")):
+            tk.Radiobutton(pick, text=txt, value=val, variable=self.target, bg="#EEF2FF",
+                           command=self.on_target).pack(side="left")
+        tk.Label(root, text="① 제휴 링크 (복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        self.link = tk.Entry(root)
+        self.link.pack(fill="x", padx=10)
+
+        tk.Label(root, text="② 상품명 (드래그해서 복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        self.name = tk.Entry(root)
+        self.name.pack(fill="x", padx=10)
+
+        tk.Label(root, text="③ 특징메모 (선택 · 비우면 AI가 검색)", anchor="w").pack(fill="x", **pad)
+        self.memo = tk.Text(root, height=3, wrap="word")
+        self.memo.pack(fill="x", padx=10)
+
+        bar = tk.Frame(root)
+        bar.pack(fill="x", padx=10, pady=8)
+        tk.Button(bar, text="📷 사진 캡처", command=self.capture, width=12).pack(side="left")
+        tk.Button(bar, text="↩ 마지막 사진 취소", command=self.undo_image).pack(side="left", padx=6)
+        self.count = tk.Label(bar, text=f"사진 0/{MAX_PHOTOS}장")
+        self.count.pack(side="right")
+
+        # 캡처한 사진 미리보기 (클릭하면 삭제)
+        self.thumbs = tk.Frame(root, bg="#F1F5F9")
+        self.thumbs.pack(fill="x", padx=10)
+        self.thumb_refs = []
+        self.empty_thumb = tk.Label(self.thumbs, text="(캡처한 사진이 여기에 표시됩니다)", bg="#F1F5F9",
+                                    fg="#999", height=3)
+        self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
+        tk.Label(root, text="사진을 클릭하면 그 사진만 지워집니다", fg="#888",
+                 anchor="w").pack(fill="x", padx=10)
+
+        self.save_btn = tk.Button(root, text="저장 → 다음 상품", command=self.save, height=2,
+                                  bg="#2563EB", fg="white", activebackground="#1D4ED8")
+        self.save_btn.pack(fill="x", padx=10, pady=4)
+
+        bottom = tk.Frame(root)
+        bottom.pack(fill="x", padx=10)
+        tk.Checkbutton(bottom, text="복사 자동 감지", variable=self.watch).pack(side="left")
+        tk.Button(bottom, text="새 상품(초기화)", command=self.new_product).pack(side="left", padx=6)
+        tk.Button(bottom, text="사진 폴더 열기", command=self.open_folder).pack(side="right")
+
+        self.status = tk.Label(root, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.", fg="#555",
+                               anchor="w", justify="left", wraplength=380)
+        self.status.pack(fill="x", padx=10, pady=6)
+
+        self.prime_clipboard()
+        self.tidy_photos()
+        self.tidy_sheet()
+        root.after(POLL_MS, self.poll)
+
+    # 시작 시 이미 클립보드에 있던 내용은 무시
+    def prime_clipboard(self):
+        try:
+            self.last_text = self.root.clipboard_get()
+        except tk.TclError:
+            self.last_text = ""
+        img = self.grab_image()
+        self.last_img_hash = self.hash_image(img) if img is not None else None
+
+    @staticmethod
+    def grab_image():
+        try:
+            data = ImageGrab.grabclipboard()
+        except Exception:
+            return None
+        return data if hasattr(data, "size") else None
+
+    @staticmethod
+    def hash_image(img):
+        buf = io.BytesIO()
+        img.convert("RGB").resize((64, 64)).save(buf, "PNG")
+        return hashlib.md5(buf.getvalue()).hexdigest()
+
+    def say(self, msg):
+        self.status.config(text=msg)
+
+    # ------------------------------------------------ 클립보드 감지
+    def poll(self):
+        if self.watch.get():
+            img = self.grab_image()
+            if img is not None:
+                h = self.hash_image(img)
+                if h != self.last_img_hash:
+                    self.last_img_hash = h
+                    self.add_image(img)
+            else:
+                try:
+                    text = self.root.clipboard_get()
+                except tk.TclError:
+                    text = None
+                if text is not None and text != self.last_text:
+                    self.last_text = text
+                    self.take_text(text.strip())
+        self.root.after(POLL_MS, self.poll)
+
+    def take_text(self, text):
+        if not text:
+            return
+        if is_plain_store(text):
+            name = affiliates.detect(text)["name"]
+            self.say(f"⚠ {name} 제휴 링크가 아닌 일반 주소라 넣지 않았습니다. 수익이 잡히지 않아요!\n"
+                     "제휴 프로그램에서 만든 링크를 복사하세요.")
+            self.root.bell()
+            return
+        if is_link(text):
+            if text.strip() != self.link.get().strip():
+                # 다른 링크 = 새 상품: 이전 내용을 비운다 (저장 안 한 사진이 있으면 확인)
+                if self.photos_dirty and self.images and not messagebox.askyesno(
+                        "새 상품", f"저장하지 않은 사진 {len(self.images)}장이 있습니다.\n"
+                                 "버리고 새 상품을 시작할까요?\n\n(아니오: 지금 상품을 계속 편집)"):
+                    self.say("새 링크를 무시했습니다. 지금 상품을 저장한 뒤 다시 링크를 복사하세요.")
+                    return
+                self.reset_fields()
+            self.link.delete(0, "end")
+            self.link.insert(0, text)
+            try:
+                found = find_by_link(text)
+            except Exception:
+                found = None
+            aff = affiliates.detect(text)["name"]
+            if found is not None:
+                self.editing = found
+                self.name.delete(0, "end")
+                self.name.insert(0, found["name"])
+                self.memo.delete("1.0", "end")
+                self.memo.insert("1.0", found["memo"])
+                self.name_replace_next = True  # 다음에 복사한 글은 상품명을 바꿈
+                self.set_mode(edit_name=found["name"])
+                self.load_existing_photos(found["name"])
+                bad = (found["name"] and found["name"] == found["memo"]) or len(found["name"]) > 80
+                if bad:
+                    self.say("⚠ 이미 등록된 상품인데 상품명이 잘못 저장된 것 같습니다.\n"
+                             "쿠팡 상품명을 복사하면 상품명이 바뀝니다. 고친 뒤 저장하세요.")
+                else:
+                    self.say("✎ 이미 등록된 상품을 불러왔습니다.\n"
+                             "상품명을 복사하면 바뀌고, 그다음 복사한 글은 특징메모에 붙습니다.")
+            else:
+                self.name_replace_next = False
+                self.say(f"✓ 링크 입력됨 ({aff}). 이제 상품명을 드래그해서 복사하세요.")
+            return
+        if text.startswith("http"):
+            return
+        one_line = " ".join(text.split())
+        # 창 안에서 칸 내용을 복사한 경우(이미 들어 있는 글)는 무시
+        if one_line == self.name.get().strip() or one_line in " ".join(self.memo.get("1.0", "end").split()):
+            return
+        mode = self.target.get()
+        to_name = (mode == "name" or
+                   (mode == "auto" and (not self.name.get().strip() or self.name_replace_next)))
+        if to_name:
+            self.name.delete(0, "end")
+            self.name.insert(0, one_line[:200])
+            self.name_replace_next = False
+            if self.editing is None:
+                try:
+                    same = find_product(name=one_line)
+                except Exception:
+                    same = None
+                if same is not None:
+                    self.editing = same
+                    if not self.memo.get("1.0", "end").strip():
+                        self.memo.insert("1.0", same["memo"])
+                    self.set_mode(edit_name=same["name"])
+                    self.load_existing_photos(same["name"])
+                    self.say("✎ 이미 등록된 상품입니다(링크만 새로 만든 경우).\n"
+                             "수정 모드로 바꿨습니다. 저장하면 링크도 새 링크로 바뀝니다.")
+                    return
+            self.say("✓ 상품명 입력됨. 이제 복사하는 글은 특징메모에 붙습니다. 📷 사진도 캡처하세요.")
+            return
+        cur = self.memo.get("1.0", "end").strip()
+        self.memo.delete("1.0", "end")
+        self.memo.insert("1.0", f"{cur}, {one_line}" if cur else one_line)
+        self.say("✓ 특징메모에 추가됨. (상품명을 바꾸려면 위 '상품명'을 고르고 복사하세요)")
+
+    def on_target(self):
+        msg = {"auto": "자동: 상품명이 비어 있으면 상품명, 아니면 특징메모에 넣습니다.",
+               "name": "복사한 글이 상품명을 바꿉니다.",
+               "memo": "복사한 글이 특징메모에 이어 붙습니다."}
+        self.say(msg[self.target.get()])
+
+    def load_existing_photos(self, name):
+        """수정 모드: 저장돼 있던 사진을 목록에 불러온다. 이미 캡처한 사진은 뒤에 붙인다(같은 사진 제외)."""
+        try:
+            saved = load_saved_photos(name)
+        except Exception:
+            saved = []
+        captured = [im for im in self.images if not image_tools.is_duplicate(im, saved)]
+        merged = image_tools.unique_photos(saved + captured)
+        cut = max(len(merged) - MAX_PHOTOS, 0)
+        self.images = merged[:MAX_PHOTOS]
+        self.photos_loaded = True
+        self.photos_dirty = bool(captured) or len(merged) != len(saved)
+        self.refresh_thumbs()
+        if cut:
+            self.root.bell()
+            messagebox.showwarning("사진 개수", f"사진이 {len(merged)}장이라 앞의 {MAX_PHOTOS}장만 남겼습니다.")
+
+    def add_image(self, img):
+        if image_tools.is_duplicate(img, self.images):
+            self.root.bell()
+            self.say("⚠ 이미 목록에 있는 사진이라 추가하지 않았습니다.")
+            return
+        if len(self.images) >= MAX_PHOTOS:
+            self.root.bell()
+            self.say(f"⚠ 사진은 최대 {MAX_PHOTOS}장까지입니다. 필요 없는 사진을 클릭해 지운 뒤 캡처하세요.")
+            return
+        self.images.append(img.copy())
+        self.photos_dirty = True
+        self.refresh_thumbs()
+        self.say(f"✓ 사진 추가 ({img.size[0]}×{img.size[1]}). 잘못 찍었으면 사진을 클릭해 지우세요.")
+
+    def refresh_thumbs(self):
+        for w in self.thumbs.winfo_children():
+            if w is not self.empty_thumb:
+                w.destroy()
+        self.thumb_refs = []
+        if not self.images:
+            self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
+        else:
+            self.empty_thumb.grid_remove()
+        per_row = 5
+        for i, im in enumerate(self.images):
+            t = im.convert("RGB").copy()
+            t.thumbnail((64, 64))
+            ph = ImageTk.PhotoImage(t)
+            self.thumb_refs.append(ph)
+            cell = tk.Frame(self.thumbs, bg="#F1F5F9")
+            cell.grid(row=i // per_row, column=i % per_row, padx=2, pady=2)
+            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=66, height=66)
+            lb.pack()
+            num = tk.Label(cell, text=f"{i + 1}  ✕", bg="#F1F5F9", fg="#555", cursor="hand2")
+            num.pack()
+            for w in (lb, num):
+                w.bind("<Button-1>", lambda e, idx=i: self.remove_image(idx))
+        self.count.config(text=f"사진 {len(self.images)}/{MAX_PHOTOS}장")
+
+    def remove_image(self, idx):
+        if 0 <= idx < len(self.images):
+            del self.images[idx]
+            self.photos_dirty = True
+            self.refresh_thumbs()
+            self.say(f"사진 {idx + 1}번을 지웠습니다. (남은 사진 {len(self.images)}장)")
+
+    def undo_image(self):
+        if self.images:
+            self.remove_image(len(self.images) - 1)
+        else:
+            self.say("지울 사진이 없습니다.")
+
+    # ------------------------------------------------ 버튼
+    def capture(self):
+        try:
+            subprocess.Popen(["explorer", "ms-screenclip:"])  # 윈도우 캡처 도구 (Win+Shift+S와 같음)
+            self.say("상품 사진 부분을 드래그하세요. 잘라낸 사진은 자동으로 추가됩니다.")
+        except Exception:
+            self.say("Win + Shift + S 를 눌러 상품 사진 부분을 드래그하세요.")
+
+    def open_folder(self):
+        root = image_tools.photo_root()
+        root.mkdir(parents=True, exist_ok=True)
+        os.startfile(root)
+
+    def new_product(self):
+        if ((self.photos_dirty and self.images) or self.name.get().strip()) and not messagebox.askyesno(
+                "초기화", "입력 중인 내용을 모두 지우고 새 상품을 시작할까요?"):
+            return
+        self.reset_fields()
+        self.say("초기화했습니다. 다음 상품의 링크를 복사하세요.")
+
+    def set_mode(self, edit_name=None):
+        """새 등록(파란 버튼) / 수정 중(주황 버튼) 표시."""
+        if edit_name is None:
+            self.root.title("쿠팡 캡처 도우미 — 새 상품 등록")
+            self.save_btn.config(text="저장 → 다음 상품", bg="#2563EB", activebackground="#1D4ED8")
+        else:
+            short = edit_name if len(edit_name) <= 24 else edit_name[:24] + "…"
+            self.root.title(f"쿠팡 캡처 도우미 — 수정 중: {short}")
+            self.save_btn.config(text="✎ 수정 내용 저장 (이미 등록된 상품)", bg="#EA580C",
+                                 activebackground="#C2410C")
+
+    def tidy_sheet(self):
+        """엑셀의 중복 상품을 한 줄로 정리 (엑셀이 열려 있으면 다음 기회에)."""
+        try:
+            n = merge_duplicates()
+        except PermissionError:
+            return
+        except Exception:
+            return
+        if n:
+            log(f"캡처 도우미: 중복 상품 {n}줄을 합쳐 정리")
+            self.say(f"✓ 엑셀에서 같은 상품 {n}줄을 한 줄로 합쳤습니다 (최신 링크로).")
+
+    def tidy_photos(self):
+        """사진 폴더의 중복 사진 정리 (시작할 때 한 번)."""
+        try:
+            folders, moved = image_tools.dedupe_all_folders()
+        except Exception:
+            return
+        if moved:
+            log(f"캡처 도우미: 중복 사진 {moved}장을 _중복사진 폴더로 옮김")
+            self.say(f"✓ 중복 사진 {moved}장을 정리했습니다 (사진\\_중복사진 폴더로 옮김).")
+
+    def reset_fields(self):
+        self.editing = None
+        self.set_mode()
+        self.target.set("auto")
+        self.name_replace_next = False
+        self.link.delete(0, "end")
+        self.name.delete(0, "end")
+        self.memo.delete("1.0", "end")
+        self.images.clear()
+        self.photos_loaded = False
+        self.photos_dirty = False
+        self.refresh_thumbs()
+
+    def save(self):
+        link = self.link.get().strip()
+        name = self.name.get().strip()
+        memo = " ".join(self.memo.get("1.0", "end").split())
+        if not is_link(link):
+            extra = "\n\n일반 쇼핑몰 주소는 수익이 잡히지 않습니다." if is_plain_store(link) else ""
+            messagebox.showwarning("확인", "제휴 링크(예: https://link.coupang.com/a/...)를 넣어 주세요." + extra)
+            return
+        if not name:
+            messagebox.showwarning("확인", "상품명을 넣어 주세요.")
+            return
+        existing = self.editing
+        if existing is None:
+            try:
+                existing = find_product(link=link, name=name)
+            except Exception as e:
+                messagebox.showerror("읽기 실패", str(e))
+                return
+        if existing is not None:
+            changes = []
+            if name != existing["name"]:
+                changes.append(f"상품명: {existing['name']} → {name}")
+            if memo != existing["memo"]:
+                changes.append("특징메모 수정")
+            if link != existing["link"]:
+                changes.append("링크를 새 링크로 교체")
+            if self.photos_dirty:
+                changes.append(f"사진을 지금 목록({len(self.images)}장)으로 저장" if self.photos_loaded
+                               else f"사진 {len(self.images)}장 추가")
+            if not changes:
+                messagebox.showinfo("변경 없음", "이미 등록된 상품이고 바뀐 내용이 없습니다.")
+                return
+            if not messagebox.askyesno("업데이트", "이미 등록된 상품입니다. 아래 내용으로 업데이트할까요?\n\n"
+                                       + "\n".join("• " + c for c in changes)):
+                return
+            try:
+                old = update_product(existing["link"], name, memo, new_link=link)
+            except PermissionError:
+                messagebox.showerror("저장 실패", "products.csv가 엑셀에 열려 있습니다. 엑셀을 닫고 다시 눌러 주세요.")
+                return
+            if old and old != name:
+                move_photos(old, name)
+            if self.photos_dirty:
+                save_photos(name, self.images, replace=self.photos_loaded)
+            log(f"캡처 도우미: '{name}' 업데이트 ({', '.join(changes)})")
+            self.reset_fields()
+            self.say(f"✓ 업데이트 완료: {name}\n다음 상품의 링크를 복사하세요.")
+            return
+        try:
+            append_product(name, link, memo)
+        except PermissionError:
+            messagebox.showerror("저장 실패", "products.csv가 엑셀에 열려 있습니다. 엑셀을 닫고 다시 눌러 주세요.")
+            return
+        except Exception as e:
+            messagebox.showerror("저장 실패", str(e))
+            return
+        n = len(self.images)
+        folder = save_photos(name, self.images) if n else None
+        log(f"캡처 도우미: '{name}' 추가 (사진 {n}장)")
+        self.tidy_sheet()
+
+        self.reset_fields()
+        where = f" → {folder.name} 폴더" if folder else ""
+        self.say(f"✓ 저장 완료: {name} (사진 {n}장{where})\n다음 상품의 링크를 복사하세요.")
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    try:
+        Helper(root)
+    except Exception as e:  # 창 없이 실행되므로 오류는 알림 창으로 보여줌
+        root.withdraw()
+        messagebox.showerror("캡처 도우미 오류", f"{e}\n\n(setup.bat을 실행했는지 확인해 주세요)")
+        raise SystemExit(1)
+    root.report_callback_exception = lambda *a: messagebox.showerror("캡처 도우미 오류", str(a[1]))
+    root.mainloop()
