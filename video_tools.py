@@ -225,3 +225,17 @@ def prepare_own_video(src, key="video"):
            "-movflags", "+faststart", str(out)]
     subprocess.run(cmd, check=True, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     return out
+
+
+def grab_frame(src, key="video", sec=1.0):
+    """영상의 한 장면을 사진으로 꺼낸다 (커버용). 실패하면 None."""
+    out = it.OUT_DIR / f"{it.slug(key)}_frame.jpg"
+    it.OUT_DIR.mkdir(exist_ok=True)
+    try:
+        subprocess.run([_ffmpeg(), "-y", "-loglevel", "error", "-ss", str(sec), "-i", str(src),
+                        "-frames:v", "1", str(out)], check=True,
+                       creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        with Image.open(out) as im:
+            return im.convert("RGB").copy()
+    except Exception:
+        return None

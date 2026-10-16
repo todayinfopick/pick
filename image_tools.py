@@ -172,9 +172,24 @@ def folder_name(name):
     return "".join(c for c in short if c not in bad).strip().rstrip(".")[:80] or "상품"
 
 
+COVER_NAMES = {"커버", "cover", "표지"}  # 이 이름의 사진은 릴스 커버로만 씀
+
+
+def is_cover_file(f):
+    return f.suffix.lower() in PHOTO_EXT and f.stem.strip().lower() in COVER_NAMES
+
+
 def images_in(folder):
-    return sorted((f for f in folder.iterdir() if f.suffix.lower() in PHOTO_EXT),
+    return sorted((f for f in folder.iterdir() if f.suffix.lower() in PHOTO_EXT and not is_cover_file(f)),
                   key=lambda f: f.name.lower())
+
+
+def cover_file_in(folder):
+    """폴더에 직접 넣은 커버 사진(커버.jpg 등). 없으면 None."""
+    if not folder.is_dir():
+        return None
+    found = [f for f in folder.iterdir() if is_cover_file(f)]
+    return found[0] if found else None
 
 
 MAX_PHOTOS = 10  # 인스타 캐러셀 최대 장수
@@ -551,3 +566,25 @@ def upload(path):
     if key:
         return _imgbb_upload(path, key)
     raise RuntimeError(".env에 CLOUDINARY_URL(또는 IMGBB_API_KEY)이 없어 업로드할 수 없습니다.")
+
+
+def make_reel_cover(name, headline, photo=None, own=None, key="cover"):
+    """릴스 커버(1080×1920). own(직접 넣은 커버 사진)이 있으면 그대로 9:16으로 맞추고,
+    없으면 카드(4:5)를 가운데에 두고 위아래를 사진을 흐리게 깔아 채운다.
+    프로필 격자에서는 가운데 4:5만 보이므로 카드가 그대로 보인다."""
+    from PIL import ImageFilter
+    OUT_DIR.mkdir(exist_ok=True)
+    RW, RH = 1080, 1920
+    if own is not None:
+        img = cover(own.convert("RGB"), RW, RH)
+    else:
+        pal = random_palette()
+        card = add_ad_tag(render_cover(name, headline, photo, pick_layout(photo), pal))
+        if photo is not None:
+            img = cover(photo.convert("RGB"), RW, RH).filter(ImageFilter.GaussianBlur(40))
+        else:
+            img = Image.new("RGB", (RW, RH), pal[0])
+        img.paste(card, (0, (RH - CH) // 2))
+    path = OUT_DIR / f"{slug(key)}_cover.jpg"
+    img.save(path, "JPEG", quality=90)
+    return path

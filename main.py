@@ -549,6 +549,36 @@ def resolve_media(item, kind, text):
             for m in local_media(item, kind, text)]
 
 
+def local_cover(item, text):
+    """릴스 커버 이미지 파일. 폴더의 커버.jpg가 있으면 그것, 없으면 첫 사진(없으면 영상 1초 장면)으로 만든다."""
+    import image_tools
+    from PIL import Image
+    key = item["link"].rsplit("/", 1)[-1]
+    folder = image_tools.photo_root() / image_tools.folder_name(item["name"])
+    own = image_tools.cover_file_in(folder)
+    if own:
+        print(f"  (폴더에 넣은 커버 사용: {own.name})")
+        with Image.open(own) as im:
+            return image_tools.make_reel_cover(item["short"], text["headline"], own=im.copy(), key=key)
+    photos = [] if media_list(item) else image_tools.load_photos(item["source"], item["name"])
+    photo = photos[0] if photos else None
+    vid = folder_video(item)
+    if photo is None and vid:
+        import video_tools
+        photo = video_tools.grab_frame(vid, key)
+    return image_tools.make_reel_cover(item["short"], text["headline"], photo, key=key)
+
+
+def resolve_cover(item, text):
+    """릴스 커버 공개 주소. 만들거나 올리지 못하면 None(인스타가 첫 장면을 커버로 씀)."""
+    try:
+        import image_tools
+        return image_tools.upload(local_cover(item, text))
+    except Exception as e:
+        log(f"  (커버를 만들지 못해 첫 장면을 커버로 씁니다: {e})")
+        return None
+
+
 # ---------------------------------------------------------------- 게시
 def wait_container(url, params, field, ok, timeout):
     """게시물 준비(특히 영상 처리)가 끝날 때까지 기다린다."""
@@ -596,7 +626,7 @@ def threads_post(text, urls=None, kind="image"):
     return r.json()["id"]
 
 
-def instagram_post(urls, caption, kind="image"):
+def instagram_post(urls, caption, kind="image", cover=None):
     ver = env("IG_API_VERSION", "v23.0")
     uid, tok = env("IG_USER_ID"), env("IG_ACCESS_TOKEN")
     host = f"https://graph.instagram.com/{ver}"
@@ -613,8 +643,10 @@ def instagram_post(urls, caption, kind="image"):
         children = [create({"image_url": u, "is_carousel_item": "true"}) for u in urls[:10]]
         cid = create({"media_type": "CAROUSEL", "children": ",".join(children), "caption": caption})
     elif kind == "video":
-        cid = create({"media_type": "REELS", "video_url": urls[0], "share_to_feed": "true",
-                      "caption": caption}, 600)
+        data = {"media_type": "REELS", "video_url": urls[0], "share_to_feed": "true", "caption": caption}
+        if cover:
+            data["cover_url"] = cover
+        cid = create(data, 600)
     else:
         cid = create({"image_url": urls[0], "caption": caption})
     r = requests.post(f"{host}/{uid}/media_publish",
@@ -638,6 +670,8 @@ def preview(item, kind, text):
     paths = local_media(item, kind, text)
     for p in paths:
         print(f"  {p}")
+    if kind == "video":
+        print(f"  릴스 커버: {local_cover(item, text)}")
     local = [p for p in paths if not isinstance(p, str)]
     if os.name == "nt" and local:
         # 캐러셀은 폴더를, 그 외에는 파일을 바로 열어 보여줌
@@ -708,6 +742,7 @@ def main():
                 urls = resolve_media(item, kind, text)
             except Exception as e:
                 log(f"  ✗ {label} 준비 실패: {e}")
+        cover = resolve_cover(item, text) if urls and kind == "video" and "instagram" in channels else None
 
         ok = False
         for ch in channels:
@@ -717,7 +752,8 @@ def main():
                 else:
                     if not urls:
                         raise RuntimeError(f"{label}이(가) 없어 인스타그램에 올릴 수 없습니다.")
-                    pid = instagram_post(urls, compose_instagram(text, item["short"], item["aff"]["disclosure"]), kind)
+                    pid = instagram_post(urls, compose_instagram(text, item["short"], item["aff"]["disclosure"]),
+                                         kind, cover)
                 rec[ch] = {"id": pid, "kind": kind if urls else "text",
                            "at": datetime.datetime.now().isoformat(timespec="seconds")}
                 ok = True
