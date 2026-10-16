@@ -303,12 +303,16 @@ points: 이미지·영상의 장점 3개. 각각 12자 이내 짧은 구절.
   성분·공법·기술 용어를 그대로 쓰지 말고, 그 덕분에 사용자가 느끼는 변화로 바꿔 써라.
   좋은 예: "덧발라도 안 두꺼워요", "오후에도 촉촉하게", "거품 하나로 메이크업까지"
   나쁜 예: "극저온 동결·진공 건조", "저분자 히알루론산 함유"
-threads: 220자 이내. 첫 문장은 눈길을 끄는 한 줄. 이모지 0~2개, 해시태그 없음.
+threads: 220자 이내. 쓰레드는 글 중심이라 친구한테 말하듯 반말을 섞은 편한 말투로 써라
+  (예: "이거 알아?", "~더라", "~하면 딱이야", "~거든요"처럼 반말 위주에 존댓말 살짝).
+  첫 문장은 눈길을 끄는 한 줄. 이모지 0~2개, 해시태그 없음. 써본 척 금지 규칙은 그대로 지켜라.
+threads_reply: 쓰레드 글에 바로 달 첫 댓글. 80자 이내, threads와 같은 반말 섞인 말투.
+  본문에 없던 활용 팁 하나나, 댓글을 부르는 가벼운 질문 하나. 링크·광고 문구 넣지 마라.
 instagram: 350자 이내 본문. 줄바꿈으로 읽기 쉽게. 해시태그 없음.
 hashtags: 관련 해시태그 5~8개를 한 줄로 (#으로 시작, 띄어쓰기로 구분).
 
 다른 말 없이 아래 JSON만 출력:
-{{"headline": "...", "points": ["...", "...", "..."], "threads": "...", "instagram": "...", "hashtags": "..."}}"""
+{{"headline": "...", "points": ["...", "...", "..."], "threads": "...", "threads_reply": "...", "instagram": "...", "hashtags": "..."}}"""
 
 
 POST_TOOL = {
@@ -319,11 +323,12 @@ POST_TOOL = {
         "properties": {
             "headline": {"type": "string", "description": "첫 화면 문구, 18자 이내, 고민·상황·질문형"},
             "points": {"type": "array", "items": {"type": "string"}, "description": "장점 3개, 각 12자 이내, 기술 용어 대신 사용자가 느끼는 변화"},
-            "threads": {"type": "string", "description": "쓰레드 본문, 220자 이내"},
+            "threads": {"type": "string", "description": "쓰레드 본문, 220자 이내, 반말 섞인 편한 말투"},
+            "threads_reply": {"type": "string", "description": "쓰레드 첫 댓글, 80자 이내, 같은 말투, 팁이나 가벼운 질문, 링크 없음"},
             "instagram": {"type": "string", "description": "인스타 본문, 350자 이내, 해시태그 없음"},
             "hashtags": {"type": "string", "description": "해시태그 5~8개, 띄어쓰기로 구분"},
         },
-        "required": ["headline", "points", "threads", "instagram", "hashtags"],
+        "required": ["headline", "points", "threads", "threads_reply", "instagram", "hashtags"],
     },
 }
 
@@ -488,18 +493,34 @@ def generate(item):
         "headline": str(data.get("headline", "")).strip() or item["short"][:16],
         "points": points or [item["short"]],
         "threads": str(data["threads"]).strip(),
+        "threads_reply": str(data.get("threads_reply", "")).strip(),
         "instagram": str(data["instagram"]).strip(),
         "hashtags": str(data.get("hashtags", "")).strip(),
     }
 
 
+def link_in_reply():
+    """THREADS_LINK_IN_REPLY=1 이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다."""
+    return env("THREADS_LINK_IN_REPLY", "0") == "1"
+
+
 def compose_threads(body, link, disclosure=DISCLOSURE):
     head = f"{disclosure}\n\n"
-    tail = f"\n\n👉 {link}"
+    tail = "\n\n👇 구매 링크는 댓글에" if link_in_reply() else f"\n\n👉 {link}"
     room = 500 - len(head) - len(tail)  # 쓰레드 글자 수 제한 500자
     if len(body) > room:
         body = body[:room - 1].rstrip() + "…"
     return head + body + tail
+
+
+def compose_threads_reply(text, link):
+    """쓰레드 첫 댓글. 쓸 내용이 없으면 ''(댓글을 달지 않음)."""
+    if env("THREADS_REPLY", "1") != "1":
+        return ""
+    body = text.get("threads_reply", "")
+    if link_in_reply():
+        body = (body + "\n\n" if body else "") + f"👉 {link}"
+    return body[:500]
 
 
 def compose_instagram(text, name, disclosure=DISCLOSURE):
@@ -596,7 +617,7 @@ def wait_container(url, params, field, ok, timeout):
     raise RuntimeError("미디어 처리 시간이 너무 오래 걸립니다. 다음 실행 때 다시 시도합니다.")
 
 
-def threads_post(text, urls=None, kind="image"):
+def threads_post(text, urls=None, kind="image", reply_to=None):
     ver = env("THREADS_API_VERSION", "v1.0")
     uid, tok = env("THREADS_USER_ID"), env("THREADS_ACCESS_TOKEN")
     base = f"https://graph.threads.net/{ver}"
@@ -618,12 +639,27 @@ def threads_post(text, urls=None, kind="image"):
         cid = create({"media_type": "VIDEO", "video_url": urls[0], "text": text}, 600)
     elif urls:
         cid = create({"media_type": "IMAGE", "image_url": urls[0], "text": text})
+    elif reply_to:
+        cid = create({"media_type": "TEXT", "text": text, "reply_to_id": reply_to})
     else:
         cid = create({"media_type": "TEXT", "text": text})
     r = requests.post(f"{base}/{uid}/threads_publish",
                       data={"creation_id": cid, "access_token": tok}, timeout=60)
     check(r, "쓰레드 게시")
     return r.json()["id"]
+
+
+def threads_reply(rec, text, item):
+    """방금 올린 쓰레드 글에 첫 댓글을 단다. 실패해도 본글은 그대로 둔다."""
+    body = compose_threads_reply(text, item["link"])
+    if not body:
+        return
+    time.sleep(int(env("THREADS_REPLY_DELAY", "20") or 20))  # 본글이 반영될 시간을 조금 준다
+    try:
+        rec["reply"] = threads_post(body, reply_to=rec["id"])
+        log(f"  ✓ threads 댓글 완료 (id {rec['reply']})")
+    except Exception as e:
+        log(f"  ✗ threads 댓글: {e} (메타 앱 권한에 threads_manage_replies가 있는지 확인)")
 
 
 def instagram_post(urls, caption, kind="image", cover=None):
@@ -662,6 +698,10 @@ KIND_LABEL = {"video": "영상(릴스)", "carousel": "캐러셀(여러 장)", "i
 def preview(item, kind, text):
     print("\n========== 쓰레드 미리보기 ==========")
     print(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]))
+    reply = compose_threads_reply(text, item["link"])
+    if reply:
+        print("\n---------- 쓰레드 첫 댓글 ----------")
+        print(reply)
     print("\n========== 인스타그램 미리보기 ==========")
     print(compose_instagram(text, item["short"], item["aff"]["disclosure"]))
     print(f"\n========== {KIND_LABEL[kind]} ==========")
@@ -758,6 +798,8 @@ def main():
                            "at": datetime.datetime.now().isoformat(timespec="seconds")}
                 ok = True
                 log(f"  ✓ {ch} 게시 완료 (id {pid})")
+                if ch == "threads":
+                    threads_reply(rec[ch], text, item)
             except Exception as e:
                 fails = rec.setdefault("fails", {})
                 fails[ch] = fails.get(ch, 0) + 1
