@@ -32,16 +32,11 @@ jobs:
     env:
       TZ: Asia/Seoul
       PYTHONUTF8: "1"
+      # 비밀값은 두 개뿐: 구글 키 파일 내용(GOOGLE_SA_JSON), PC .env 내용 통째(ENV_FILE)
       GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
-      GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
-      GOOGLE_PHOTO_FOLDER_ID: ${{ secrets.GOOGLE_PHOTO_FOLDER_ID }}
-      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-      CLOUDINARY_URL: ${{ secrets.CLOUDINARY_URL }}
-      IMGBB_API_KEY: ${{ secrets.IMGBB_API_KEY }}
-      INIT_THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
-      INIT_IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
-      INIT_THREADS_USER_ID: ${{ secrets.THREADS_USER_ID }}
-      INIT_IG_USER_ID: ${{ secrets.IG_USER_ID }}
+      ENV_FILE: ${{ secrets.ENV_FILE }}
+      GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
+      GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
       AUTO_RESEARCH: ${{ vars.AUTO_RESEARCH || '0' }}
       POSTS_PER_RUN: ${{ vars.POSTS_PER_RUN || '1' }}
     steps:
