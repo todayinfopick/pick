@@ -505,8 +505,8 @@ def link_in_reply():
 
 
 def threads_media():
-    """THREADS_MEDIA=0(기본)이면 쓰레드는 글만 올린다(이미지·영상·자막 없이)."""
-    return env("THREADS_MEDIA", "0") == "1"
+    """THREADS_MEDIA=1(기본)이면 쓰레드에 원본 사진·영상을 붙인다(자막·나레이션·소리 없이). 0이면 글만."""
+    return env("THREADS_MEDIA", "1") == "1"
 
 
 def compose_threads(body, link, disclosure=DISCLOSURE):
@@ -569,6 +569,46 @@ def local_media(item, kind, text):
     if kind == "carousel":
         return image_tools.make_carousel(item["short"], text["headline"], text["points"], photos, key)
     return [image_tools.make_card(item["short"], text["headline"], photos, key)]
+
+
+def threads_raw_media(item):
+    """쓰레드용 원본 미디어 (파일 목록, 형식). 자동 카드·영상의 자막·[광고] 표시·소리는 넣지 않는다.
+    - 미디어 칸에 직접 만든 완성본이 있으면 그대로
+    - 사진 폴더에 영상이 있고 형식이 영상(또는 비움)이면 그 영상을 소리만 빼서
+    - 아니면 상품 사진 원본 (1장=이미지, 여러 장=캐러셀)"""
+    import image_tools
+    files = media_list(item)
+    if files:
+        kind = "video" if media_ext(files[0]) in VIDEO_EXT else ("carousel" if len(files) > 1 else "image")
+        return [m if m.startswith("http") else image_tools.resolve_path(m) for m in files], kind
+    key = item["link"].rsplit("/", 1)[-1]
+    own = folder_video(item)
+    if own and item["kind_pref"] in ("", "video") and can_host("video"):
+        import video_tools
+        return [video_tools.mute_video(own, f"{key}_threads")], "video"
+    photos = image_tools.load_photos(item["source"], item["name"])
+    image_tools.OUT_DIR.mkdir(exist_ok=True)
+    paths = []
+    for i, im in enumerate(photos[:10], start=1):
+        p = image_tools.OUT_DIR / f"{image_tools.slug(key)}_threads_{i:02d}.jpg"
+        im.convert("RGB").save(p, quality=92)
+        paths.append(p)
+    return paths, ("carousel" if len(paths) > 1 else "image")
+
+
+def resolve_threads_media(item):
+    """쓰레드 원본 미디어 공개 주소와 형식. 없거나 실패하면 ([], 'text')."""
+    if not threads_media():
+        return [], "text"
+    try:
+        import image_tools
+        files, kind = threads_raw_media(item)
+        if not files or not can_host(kind):
+            return [], "text"
+        return [f if isinstance(f, str) else image_tools.upload(f) for f in files], kind
+    except Exception as e:
+        log(f"  ✗ 쓰레드 사진·영상 준비 실패, 글만 올립니다: {e}")
+        return [], "text"
 
 
 def resolve_media(item, kind, text):
@@ -785,7 +825,7 @@ def main():
             continue
 
         urls = []
-        if media_possible(item, kind) and ("instagram" in channels or threads_media()):
+        if media_possible(item, kind) and "instagram" in channels:
             try:
                 urls = resolve_media(item, kind, text)
             except Exception as e:
@@ -796,14 +836,16 @@ def main():
         for ch in channels:
             try:
                 if ch == "threads":
+                    t_urls, t_kind = resolve_threads_media(item)
                     pid = threads_post(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]),
-                                       urls if threads_media() else None, kind)
+                                       t_urls, t_kind)
                 else:
                     if not urls:
                         raise RuntimeError(f"{label}이(가) 없어 인스타그램에 올릴 수 없습니다.")
                     pid = instagram_post(urls, compose_instagram(text, item["short"], item["aff"]["disclosure"]),
                                          kind, cover)
-                rec[ch] = {"id": pid, "kind": kind if urls and (ch != "threads" or threads_media()) else "text",
+                used = (t_kind if t_urls else "text") if ch == "threads" else (kind if urls else "text")
+                rec[ch] = {"id": pid, "kind": used,
                            "at": datetime.datetime.now().isoformat(timespec="seconds")}
                 ok = True
                 log(f"  ✓ {ch} 게시 완료 (id {pid})")

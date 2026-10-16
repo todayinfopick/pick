@@ -227,6 +227,17 @@ def prepare_own_video(src, key="video"):
     return out
 
 
+def mute_video(src, key="video"):
+    """직접 찍은 영상을 글자·[광고] 표시 없이, 소리만 빼서 그대로 쓴다 (쓰레드용 원본)."""
+    it.OUT_DIR.mkdir(exist_ok=True)
+    out = it.OUT_DIR / f"{it.slug(key)}_raw.mp4"
+    cmd = [_ffmpeg(), "-y", "-loglevel", "error", "-i", str(src), "-an", "-t", "300",
+           "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-pix_fmt", "yuv420p",
+           "-vf", "scale=trunc(iw/2)*2:trunc(ih/2)*2", "-movflags", "+faststart", str(out)]
+    subprocess.run(cmd, check=True, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    return out
+
+
 def grab_frame(src, key="video", sec=1.0):
     """영상의 한 장면을 사진으로 꺼낸다 (커버용). 실패하면 None."""
     out = it.OUT_DIR / f"{it.slug(key)}_frame.jpg"
