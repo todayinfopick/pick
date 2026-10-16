@@ -137,7 +137,7 @@ def download(file_id, dest):
 
 
 def download_photo_folders(folder_id, dest_root, wanted=None):
-    """드라이브 사진 폴더 안의 상품별 하위 폴더를 dest_root/폴더이름/ 으로 받는다.
+    """드라이브 사진 폴더 안의 상품별 하위 폴더(사진·영상)를 dest_root/폴더이름/ 으로 받는다.
     wanted가 있으면 그 폴더 이름들만. 받은 폴더 수를 돌려준다."""
     n = 0
     for f in list_children(folder_id):
@@ -146,7 +146,7 @@ def download_photo_folders(folder_id, dest_root, wanted=None):
         if wanted is not None and f["name"] not in wanted:
             continue
         for p in list_children(f["id"]):
-            if p["mimeType"].startswith("image/"):
+            if p["mimeType"].startswith(("image/", "video/")):
                 download(p["id"], dest_root / f["name"] / p["name"])
         n += 1
     return n

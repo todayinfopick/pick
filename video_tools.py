@@ -202,3 +202,26 @@ def make_video(name, headline, points, photos=None, key="video"):
     if proc.returncode != 0 or not out.exists():
         raise RuntimeError("영상 만들기에 실패했습니다 (ffmpeg 오류).")
     return out
+
+
+def prepare_own_video(src, key="video"):
+    """직접 찍은 영상을 릴스 규격(1080×1920)으로 맞추고 오른쪽 위에 [광고] 표시를 얹는다.
+    원래 소리는 그대로 둔다(소리가 없으면 무음 트랙을 넣음)."""
+    it.OUT_DIR.mkdir(exist_ok=True)
+    tag = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    _disclosure(ImageDraw.Draw(tag), "#FFFFFF")
+    tag_png = it.OUT_DIR / f"{it.slug(key)}_tag.png"
+    tag.save(tag_png)
+    out = it.OUT_DIR / f"{it.slug(key)}_own.mp4"
+    fit = (f"[0:v]scale={W}:{H}:force_original_aspect_ratio=decrease,"
+           f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:black,setsar=1,fps={FPS}[v];[v][1:v]overlay=0:0[out]")
+    probe = subprocess.run([_ffmpeg(), "-i", str(src)], capture_output=True, text=True, errors="ignore",
+                           creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0)).stderr
+    cmd = [_ffmpeg(), "-y", "-loglevel", "error", "-i", str(src), "-i", str(tag_png),
+           "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+           "-filter_complex", fit, "-map", "[out]", "-map", "0:a:0" if "Audio:" in probe else "2:a",
+           "-t", "90", "-shortest", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
+           "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k", "-ar", "44100",
+           "-movflags", "+faststart", str(out)]
+    subprocess.run(cmd, check=True, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    return out

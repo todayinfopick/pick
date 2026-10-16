@@ -216,9 +216,24 @@ def media_list(item):
     return [m.strip().strip('"') for m in item["media"].split("|") if m.strip()]
 
 
+def folder_video(item):
+    """상품 사진 폴더에 직접 넣어 둔 영상(있으면 첫 번째). 없으면 None."""
+    if media_list(item) or item["source"]:
+        return None
+    import image_tools
+    folder = image_tools.photo_root() / image_tools.folder_name(item["name"])
+    if not folder.is_dir():
+        return None
+    vids = sorted((f for f in folder.iterdir() if f.suffix.lower() in VIDEO_EXT), key=lambda f: f.name.lower())
+    return vids[0] if vids else None
+
+
 def decide_kind(item, posted):
     """이번 게시물 형식: image(1장) / carousel(여러 장) / video."""
     files = media_list(item)
+    # 폴더에 직접 찍은 영상이 있으면 그 영상을 릴스로 (형식 칸에 이미지/캐러셀을 적으면 사진 사용)
+    if not files and item["kind_pref"] in ("", "video") and folder_video(item) and can_host("video"):
+        return "video"
     if files:
         if len(files) > 1:
             return "carousel"
@@ -512,8 +527,13 @@ def local_media(item, kind, text):
                 raise RuntimeError(f"파일을 찾을 수 없습니다: {p}")
             out.append(p)
         return out
-    photos = image_tools.load_photos(item["source"], item["name"])
     key = item["link"].rsplit("/", 1)[-1]
+    own = folder_video(item) if kind == "video" else None
+    if own:
+        import video_tools
+        print(f"  (폴더에 넣은 영상 사용: {own.name})")
+        return [video_tools.prepare_own_video(own, key)]
+    photos = image_tools.load_photos(item["source"], item["name"])
     if kind == "video":
         import video_tools
         return [video_tools.make_video(item["short"], text["headline"], text["points"], photos, key)]
