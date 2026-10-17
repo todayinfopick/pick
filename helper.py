@@ -293,16 +293,16 @@ class Helper:
 
         cat = tk.Frame(box)
         cat.pack(fill="x", padx=10, pady=(4, 0))
-        tk.Label(cat, text="분류 (올릴 계정):").pack(side="left")
+        tk.Label(cat, text="분류:").pack(side="left")
         self.category = tk.StringVar(value="")
         for val, txt in [("", "AI가 정함")] + [(c, c) for c in category_choices()]:
             tk.Radiobutton(cat, text=txt, value=val, variable=self.category).pack(side="left")
 
         bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
-        tk.Button(bar, text="📷 사진 캡처", command=self.capture, width=12).pack(side="left")
-        tk.Button(bar, text="↩ 마지막 사진 취소", command=self.undo_image).pack(side="left", padx=6)
-        tk.Button(bar, text="✨ 메모 자동 작성", command=lambda: self.run_ai(None)).pack(side="left")
+        tk.Button(bar, text="📷 사진 캡처", command=self.capture, width=11).pack(side="left")
+        tk.Button(bar, text="↩ 사진 취소", command=self.undo_image).pack(side="left", padx=4)
+        tk.Button(bar, text="✨ 메모 작성", command=lambda: self.run_ai(None)).pack(side="left")
         self.count = tk.Label(bar, text=f"사진 0/{MAX_PHOTOS}장")
         self.count.pack(side="right")
 
@@ -324,7 +324,7 @@ class Helper:
         bottom.pack(fill="x", padx=10)
         tk.Checkbutton(bottom, text="복사 자동 감지", variable=self.watch).pack(side="left")
         tk.Button(bottom, text="새 상품(초기화)", command=self.new_product).pack(side="left", padx=6)
-        tk.Button(bottom, text="사진 폴더 열기", command=self.open_folder).pack(side="right")
+        tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
 
         self.status = tk.Label(box, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.\n"
                                          "상세 설명 부분도 캡처해 두면 AI가 읽고 메모를 씁니다(게시엔 안 씀).", fg="#555",
