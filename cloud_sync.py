@@ -21,6 +21,8 @@ import gcloud
 BASE = pathlib.Path(__file__).resolve().parent
 ENV_PATH = BASE / ".env"
 PRODUCTS = BASE / "products.csv"
+# 채팅으로 받은 상품: 시트에 없는 상품명만 시트 맨 아래에 한 번 붙인다 (그 뒤엔 시트에서 고치면 됨)
+ADD_PRODUCTS = BASE / "추가상품.csv"
 # PC 전용 경로라 서버에서는 쓰지 않는 설정
 PC_ONLY = {"PHOTO_DIR", "BGM_DIR", "FONT_PATH", "RESEARCH_FILE", "GOOGLE_SA_FILE"}
 TOKEN_KEYS = ["THREADS_ACCESS_TOKEN", "THREADS_USER_ID", "IG_ACCESS_TOKEN", "IG_USER_ID"]
@@ -43,9 +45,30 @@ def write_env():
     print("✓ 설정(.env)을 준비했습니다.")
 
 
+def add_products(rows):
+    """추가상품.csv 의 상품 중 시트에 없는 것을 시트에 붙인다. 붙였으면 새 rows."""
+    if not ADD_PRODUCTS.exists() or not rows:
+        return rows
+    with open(ADD_PRODUCTS, encoding="utf-8-sig", newline="") as f:
+        extra = list(csv.DictReader(f))
+    head = [h.strip() for h in rows[0]]
+    if "상품명" not in head:
+        return rows
+    ni = head.index("상품명")
+    have = {r[ni].strip() for r in rows[1:] if len(r) > ni}
+    new = [[e.get(h, "") or "" for h in head] for e in extra
+           if (e.get("상품명") or "").strip() and e["상품명"].strip() not in have]
+    if not new:
+        return rows
+    rows = rows + new
+    gcloud.write_tab(rows)
+    print(f"✓ 추가상품 {len(new)}개를 시트에 붙였습니다: " + ", ".join(r[ni] for r in new))
+    return rows
+
+
 def pull():
     write_env()
-    rows = gcloud.read_tab()
+    rows = add_products(gcloud.read_tab())
     if not rows:
         raise SystemExit("구글 시트 '상품' 탭이 비어 있습니다.")
     with open(PRODUCTS, "w", encoding="utf-8-sig", newline="") as f:
