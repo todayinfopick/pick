@@ -40,6 +40,8 @@ SPEC = [
      "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_TIMES", "label": "일반 글 시각 (한국 시간)", "kind": "times",
      "default": "09:30 21:30"},
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "일반 글 이미지", "kind": "choice",
+     "choices": ["카드", "없음"], "default": "카드", "help": "카드: 글 제목을 크게 넣은 이미지 한 장을 함께 올려요 (광고 표시 없음)"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_THEME", "label": "계정 주제", "kind": "text",
      "default": "뷰티·생활 꿀팁",
      "help": "AI가 이 주제 안에서 계절에 맞는 글감을 골라요. 시트 '일반글' 탭 '주제' 칸에 적어 두면 그 글감을 먼저 써요"},

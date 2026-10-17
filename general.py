@@ -29,7 +29,10 @@ PROMPT = """너는 쓰레드(Threads)에 글을 올리는 '{theme}' 계정 주�
 - 특정 상품명·브랜드·링크·가격·구매 권유 금지. 광고처럼 읽히면 안 된다.
 - 의학적 효과 단정, 과장 금지. 이모지 0~2개, 해시태그 없음.
 
-다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문"}}"""
+card: 함께 올릴 이미지에 크게 넣을 한 줄 (16자 이내, 고민·질문형, 이모지 없음). 예: "니트 정전기 그만!"
+card_sub: 이미지 아래쪽 작은 한 줄 (20자 이내). 예: "외출 전 1분이면 끝"
+
+다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문", "card": "...", "card_sub": "..."}}"""
 
 SEASONS = {12: "겨울", 1: "겨울", 2: "겨울", 3: "봄", 4: "봄", 5: "봄", 6: "여름", 7: "여름", 8: "여름",
            9: "가을", 10: "가을", 11: "늦가을·초겨울"}
@@ -95,7 +98,21 @@ def write(theme, topic, recent):
     body = str(data.get("text", "")).strip()
     if len(body) < 20:
         raise RuntimeError(f"AI가 쓴 글이 너무 짧습니다: {body!r}")
-    return str(data.get("topic", topic)).strip() or topic, body[:500]
+    return (str(data.get("topic", topic)).strip() or topic, body[:500],
+            str(data.get("card", "")).strip()[:24], str(data.get("card_sub", "")).strip()[:30])
+
+
+def card_image(card, sub, dry):
+    """일반 글에 붙일 글자 카드 → (파일 경로, 공개 주소). 끄거나 실패하면 (None, None)."""
+    if env("GENERAL_IMAGE", "카드") != "카드" or not card:
+        return None, None
+    try:
+        import image_tools
+        path = image_tools.make_tip_card(card, sub, env("GENERAL_THEME", ""), key="general")
+        return path, (None if dry else image_tools.upload(path))
+    except Exception as e:
+        log(f"  (일반 글 이미지를 만들지 못해 글만 올립니다: {e})")
+        return None, None
 
 
 def run(dry=False, slot=""):
@@ -110,16 +127,20 @@ def run(dry=False, slot=""):
     history = posted.setdefault("_general", [])
     row, topic = sheet_topic()
     try:
-        topic, body = write(env("GENERAL_THEME", "뷰티·생활 꿀팁"), topic, [h.get("topic", "") for h in history])
+        topic, body, card, sub = write(env("GENERAL_THEME", "뷰티·생활 꿀팁"), topic,
+                                       [h.get("topic", "") for h in history])
     except Exception as e:
         log(f"일반 글 ✗ {e}")
         return 1
     log(f"일반 글: {topic}")
+    path, url = card_image(card, sub, dry)
     if dry:
         print("\n========== 일반 글 미리보기 ==========\n" + body + "\n")
+        if path:
+            print(f"이미지: {card} / {sub} → {path}\n")
         return 0
     try:
-        pid = main.threads_post(body)
+        pid = main.threads_post(body, [url], "image") if url else main.threads_post(body)
     except Exception as e:
         log(f"  ✗ threads 일반 글: {e}")
         return 1
