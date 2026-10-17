@@ -14,7 +14,7 @@
     }
   },
   "_meta": {
-    "last_kind": "video",
+    "last_kind": "image",
     "last_slot": "2026-10-17 12:00"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -82,6 +82,17 @@
     "link": "https://link.coupang.com/a/hgUgTgcnxk",
     "account": 2,
     "page_at": "2026-10-13T00:00:00",
-    "category": "식품"
+    "category": "식품",
+    "threads": {
+      "id": "18151718617530665",
+      "kind": "image",
+      "at": "2026-10-17T22:18:51",
+      "reply": "18069945740505011"
+    },
+    "instagram": {
+      "id": "18425424034145850",
+      "kind": "carousel",
+      "at": "2026-10-17T22:20:25"
+    }
   }
 }
