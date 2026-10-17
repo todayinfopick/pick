@@ -171,10 +171,14 @@ def append_product(name, link, memo, category=""):
 
 
 def category_choices():
-    """분류 선택지: 1번 계정 '뷰티' + 2번 계정 분류(ACCOUNT_CATEGORY_2의 첫 단어, 기본 '생활')."""
+    """분류 선택지: 1번 계정 분류(ACCOUNT_CATEGORY, 기본 '뷰티 건강') + 2번 계정 분류(ACCOUNT_CATEGORY_2, 기본 '생활 식품')."""
     import os
-    second = ((os.getenv("ACCOUNT_CATEGORY_2") or "생활").replace(",", " ").split() or ["생활"])[0]
-    return ["뷰티", second] if second != "뷰티" else ["뷰티"]
+    out = []
+    for key, dflt in (("ACCOUNT_CATEGORY", "뷰티 건강"), ("ACCOUNT_CATEGORY_2", "생활 식품")):
+        for w in (os.getenv(key) or dflt).replace(",", " ").split():
+            if w not in out:
+                out.append(w)
+    return out
 
 
 def photo_folder(name):
