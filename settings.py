@@ -38,8 +38,8 @@ SPEC = [
     # ---------------------------------------------------------------- 쓰레드
     {"group": "쓰레드", "key": "THREADS_MEDIA", "label": "원본 사진·영상 붙이기", "kind": "bool", "default": "1",
      "help": "자막·[광고] 표시·소리 없이 원본 그대로. 끄면 글만"},
-    {"group": "쓰레드", "key": "THREADS_REPLY", "label": "첫 댓글 자동 작성", "kind": "bool", "default": "1",
-     "help": "메타 앱 권한에 threads_manage_replies가 있어야 해요"},
+    {"group": "쓰레드", "key": "THREADS_REPLY", "label": "첫 댓글 자동 작성", "kind": "bool", "default": "0",
+     "help": "메타 앱 권한에 threads_manage_replies를 추가한 뒤 켜세요. 꺼져 있으면 링크는 본문에 들어가요"},
     {"group": "쓰레드", "key": "THREADS_LINK_IN_REPLY", "label": "구매 링크는 댓글에", "kind": "bool", "default": "1",
      "help": "끄면 링크를 본문 끝에 넣어요"},
     {"group": "쓰레드", "key": "THREADS_LINK_REPEAT", "label": "댓글에 링크 반복 횟수", "kind": "int", "default": "3"},

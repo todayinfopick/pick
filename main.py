@@ -550,7 +550,7 @@ def generate(item):
 def link_in_reply():
     """THREADS_LINK_IN_REPLY=1(기본)이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다.
     첫 댓글을 끈 경우(THREADS_REPLY=0)에는 링크가 사라지지 않게 본문에 넣는다."""
-    return env("THREADS_LINK_IN_REPLY", "1") == "1" and env("THREADS_REPLY", "1") == "1"
+    return env("THREADS_LINK_IN_REPLY", "1") == "1" and env("THREADS_REPLY", "0") == "1"
 
 
 def threads_media():
@@ -570,7 +570,7 @@ def compose_threads(body, link, disclosure=DISCLOSURE):
 def compose_threads_reply(text, link, disclosure=DISCLOSURE):
     """쓰레드 첫 댓글: [광고] 한 줄 + 대가성 문구 + 링크 여러 번(한 개가 죽을 때 대비).
     링크를 본문에 두는 설정이면 한 줄만. 쓸 내용이 없으면 ''(댓글을 달지 않음)."""
-    if env("THREADS_REPLY", "1") != "1":
+    if env("THREADS_REPLY", "0") != "1":
         return ""
     line = text.get("threads_reply", "").strip()
     if not link_in_reply():
