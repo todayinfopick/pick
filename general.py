@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""일반 글(광고 아님) 자동 게시: 쓰레드에 링크 없는 소통용 글을 올린다.
+"""일반 글(광고 아님) 자동 게시: 쓰레드에 링크 없는 소통용 글(+사진)을, 인스타에는 같은 글을 글자 카드로 올린다.
 
   python general.py               : 지금 한 개 게시
   python general.py --dry-run     : 글만 만들어 보여 주기
@@ -33,8 +33,9 @@ photo: 함께 올릴 사진을 무료 사진 사이트에서 찾을 영어 검�
   손·물건·장면 위주로. 상품·브랜드 이름 금지. 예: "knit sweater closeup", "lip balm hands"
 card: 사진이 없을 때 쓸 글자 카드의 큰 한 줄 (16자 이내, 고민·질문형, 이모지 없음). 예: "니트 정전기 그만!"
 card_sub: 글자 카드 아래쪽 작은 한 줄 (20자 이내). 예: "외출 전 1분이면 끝"
+tags: 인스타그램용 한국어 해시태그 4~6개, 띄어쓰기로 구분 (상품·브랜드 이름 금지). 예: "#니트관리 #정전기 #가을꿀팁"
 
-다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문", "photo": "...", "card": "...", "card_sub": "..."}}"""
+다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문", "photo": "...", "card": "...", "card_sub": "...", "tags": "..."}}"""
 
 SEASONS = {12: "겨울", 1: "겨울", 2: "겨울", 3: "봄", 4: "봄", 5: "봄", 6: "여름", 7: "여름", 8: "여름",
            9: "가을", 10: "가을", 11: "늦가을·초겨울"}
@@ -109,7 +110,8 @@ def write(theme, topic, recent):
         raise RuntimeError(f"AI가 쓴 글이 너무 짧습니다: {body!r}")
     return {"topic": str(data.get("topic", topic)).strip() or topic, "text": body[:500],
             "photo": str(data.get("photo", "")).strip()[:60],
-            "card": str(data.get("card", "")).strip()[:24], "card_sub": str(data.get("card_sub", "")).strip()[:30]}
+            "card": str(data.get("card", "")).strip()[:24], "card_sub": str(data.get("card_sub", "")).strip()[:30],
+            "tags": " ".join(t for t in str(data.get("tags", "")).split() if t.startswith("#"))[:200]}
 
 
 def stock_photo(query, used):
@@ -189,13 +191,23 @@ def run(dry=False, slot=""):
     return code
 
 
+def ig_card(post, dry):
+    """인스타용 글자 카드 → (파일 경로, 공개 주소). 인스타는 피드에서 이미지만 보여서 사진 대신 카드."""
+    import image_tools
+    path = image_tools.make_tip_card(post["card"] or post["topic"], post["card_sub"], env("GENERAL_THEME", ""),
+                                     key="general_ig")
+    return path, (None if dry else image_tools.upload(path))
+
+
 def post_one(posted, dry, account=1):
-    """한 계정의 쓰레드에 일반 글 한 개."""
+    """한 계정의 쓰레드(+인스타)에 일반 글 한 개."""
     if env("GENERAL_ON", "1") == "0":
         log("일반 글: 이 계정은 꺼져 있어 건너뜁니다.")
         return 0
-    if not dry and not main.threads_on():
-        log("일반 글: 쓰레드 연결 정보가 없거나 꺼져 있어 건너뜁니다.")
+    use_threads = dry or main.threads_on()
+    use_ig = env("GENERAL_IG", "1") != "0" and (dry or main.ig_on())
+    if not use_threads and not use_ig:
+        log("일반 글: 쓰레드·인스타 연결 정보가 없거나 꺼져 있어 건너뜁니다.")
         return 0
     history = posted.setdefault("_general", [])
     mine = [h for h in history if h.get("account", 1) == account]
@@ -208,7 +220,9 @@ def post_one(posted, dry, account=1):
         return 1
     topic, body = post["topic"], post["text"]
     log(f"일반 글: {topic}")
-    path, url, photo_id = post_image(post, {h.get("photo_id") for h in history}, dry)
+    path, url, photo_id = (post_image(post, {h.get("photo_id") for h in history}, dry) if use_threads
+                           else (None, None, None))
+    caption = body + ("\n\n" + post["tags"] if post["tags"] else "")
     if dry:
         print("\n========== 일반 글 미리보기 ==========\n" + body + "\n")
         if path:
@@ -216,14 +230,26 @@ def post_one(posted, dry, account=1):
             print(f"이미지: {what} → {path}\n")
         else:
             print(f"이미지 없음 (사진 검색어였던 것: {post['photo']})\n")
+        if use_ig:
+            print("========== 인스타 일반 글 미리보기 ==========\n" + caption)
+            print(f"이미지: 글자 카드 '{post['card']}' → {ig_card(post, True)[0]}\n")
         return 0
-    try:
-        pid = main.threads_post(body, [url], "image") if url else main.threads_post(body)
-    except Exception as e:
-        log(f"  ✗ threads 일반 글: {e}")
+    pid = ig_id = None
+    if use_threads:
+        try:
+            pid = main.threads_post(body, [url], "image") if url else main.threads_post(body)
+            log(f"  ✓ threads 일반 글 완료 (id {pid})")
+        except Exception as e:
+            log(f"  ✗ threads 일반 글: {e}")
+    if use_ig:
+        try:
+            ig_id = main.instagram_post([ig_card(post, False)[1]], caption)
+            log(f"  ✓ instagram 일반 글(글자 카드) 완료 (id {ig_id})")
+        except Exception as e:
+            log(f"  ✗ instagram 일반 글: {e}")
+    if not pid and not ig_id:
         return 1
-    log(f"  ✓ threads 일반 글 완료 (id {pid})")
-    history.append({"topic": topic, "id": pid, "photo_id": photo_id, "account": account,
+    history.append({"topic": topic, "id": pid, "ig_id": ig_id, "photo_id": photo_id, "account": account,
                     "at": datetime.datetime.now().isoformat(timespec="seconds")})
     posted["_general"] = history[-120:]
     main.save_posted(posted)

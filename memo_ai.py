@@ -15,7 +15,7 @@ import time
 import requests
 
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-FALLBACK_MODELS = ["gemini-flash-latest", "gemini-2.5-flash"]
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest"]
 MAX_PARTS = 16      # 한 번에 보내는 이미지 조각 수
 CHUNK_H = 1600      # 긴 상세페이지 캡처는 이 높이로 잘라서 보냄 (글씨가 읽히게)
 MAX_W = 1000
@@ -86,16 +86,16 @@ def generate(parts, json_out=True, temperature=0.2):
     models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
     r = None
     for model in dict.fromkeys(models):
-        for wait in (0, 5, 20):  # 붐빌 때(503)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
+        for wait in (0, 5, 20, 40):  # 붐빌 때(503)·분당 한도(429)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
             if wait:
                 time.sleep(wait)
             r = _call(model, body)
-            if r.status_code not in (500, 502, 503, 504):
+            if r.status_code not in (429, 500, 502, 503, 504):
                 break
-        if r.status_code not in (404, 500, 502, 503, 504):
+        if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
     if r.status_code == 429:
-        raise RuntimeError("제미나이 무료 사용량을 다 썼습니다. 내일 다시 시도해 주세요.")
+        raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 다음 회차에 다시 시도해요.")
     if r.status_code >= 400:
         raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
     try:

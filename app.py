@@ -85,18 +85,18 @@ def in_thread(root, work, done):
 
 # ---------------------------------------------------------------- 상품 목록 탭
 class ListTab:
-    COLS = [("name", "상품명", 170), ("cat", "분류", 40), ("memo", "메모", 36), ("photos", "사진", 36),
-            ("threads", "쓰레드", 70), ("instagram", "인스타", 70)]
+    COLS = [("name", "상품명", 80), ("cat", "분류", 34), ("memo", "메모", 30), ("photos", "사진", 30),
+            ("threads", "쓰레드", 48), ("instagram", "인스타", 48)]
 
     def __init__(self, app, frame):
         self.app, self.root = app, app.root
         bar = tk.Frame(frame)
         bar.pack(fill="x", padx=10, pady=8)
-        tk.Button(bar, text="↻ 새로고침", command=self.refresh).pack(side="left")
-        tk.Button(bar, text="✎ 수정", command=self.edit).pack(side="left", padx=4)
-        tk.Button(bar, text="✨ 메모 다시", command=self.rememo).pack(side="left")
-        tk.Button(bar, text="🗑 삭제", command=self.delete).pack(side="left", padx=4)
-        tk.Button(bar, text="📁 폴더", command=self.open_folder).pack(side="right")
+        tk.Button(bar, text="↻", command=self.refresh).pack(side="left")
+        tk.Button(bar, text="✎ 수정", command=self.edit).pack(side="left", padx=2)
+        tk.Button(bar, text="✨ 메모", command=self.rememo).pack(side="left")
+        tk.Button(bar, text="🗑", command=self.delete).pack(side="left", padx=2)
+        tk.Button(bar, text="📁", command=self.open_folder).pack(side="right")
 
         box = tk.Frame(frame)
         box.pack(fill="both", expand=True, padx=10)
@@ -112,7 +112,7 @@ class ListTab:
         self.tree.tag_configure("done", foreground="#888")
         self.tree.tag_configure("nomemo", foreground="#B45309")
 
-        self.detail = tk.Label(frame, text="", anchor="w", justify="left", wraplength=420, fg="#333")
+        self.detail = tk.Label(frame, text="", anchor="w", justify="left", wraplength=250, fg="#333")
         self.detail.pack(fill="x", padx=10, pady=4)
         self.tree.bind("<<TreeviewSelect>>", lambda e: self.show_detail())
         self.status = tk.Label(frame, text="", anchor="w", fg="#555")
@@ -259,32 +259,33 @@ class ListTab:
 class PostTab:
     def __init__(self, app, frame):
         self.app, self.root = app, app.root
-        self.info = tk.Label(frame, text="", anchor="w", justify="left", font=("", 10), wraplength=430)
+        self.info = tk.Label(frame, text="", anchor="w", justify="left", font=("", 9), wraplength=260)
         self.info.pack(fill="x", padx=12, pady=(12, 6))
 
         bar = tk.Frame(frame)  # 좁은 창이라 2줄로
         bar.pack(fill="x", padx=10, pady=4)
-        tk.Button(bar, text="▶ 지금 게시", bg="#2563EB", fg="white", width=13, height=2,
+        tk.Button(bar, text="▶ 지금 게시", bg="#2563EB", fg="white", width=9, height=2,
                   command=lambda: self.run("지금 게시")).grid(row=0, column=0, padx=(0, 6), pady=2)
-        tk.Button(bar, text="👁 미리보기", width=13, height=2,
+        tk.Button(bar, text="👁 미리보기", width=9, height=2,
                   command=lambda: self.run("미리보기")).grid(row=0, column=1, pady=2)
-        tk.Button(bar, text="✍ 일반 글 게시", width=13, height=2,
+        tk.Button(bar, text="✍ 일반 글 게시", width=9, height=2,
                   command=lambda: self.run("일반 글 게시")).grid(row=1, column=0, padx=(0, 6), pady=2)
-        tk.Button(bar, text="🔑 토큰 연장", width=13, height=2,
+        tk.Button(bar, text="🔑 토큰 연장", width=9, height=2,
                   command=lambda: self.run("토큰 연장")).grid(row=1, column=1, pady=2)
-        tk.Button(bar, text="↻ 새로고침", command=self.refresh).grid(row=0, column=2, sticky="ne", padx=(6, 0))
+
 
         links = tk.Frame(frame)
         links.pack(fill="x", padx=10, pady=4)
-        for text, url in (("실행 기록 (깃허브)", lambda: f"https://github.com/{repo()}/actions"),
+        tk.Button(links, text="↻", command=self.refresh).pack(side="left", padx=(0, 4))
+        for text, url in (("실행 기록", lambda: f"https://github.com/{repo()}/actions"),
                           ("링크 페이지", lambda: "https://{}.github.io/{}/".format(*repo().split("/"))),
-                          ("깃허브 키 만드는 법", None)):
-            tk.Button(links, text=text, relief="flat", fg="#2563EB", cursor="hand2",
+                          ("키 안내", None)):
+            tk.Button(links, text=text, relief="flat", fg="#2563EB", cursor="hand2", padx=1,
                       command=(lambda u=url: webbrowser.open(u())) if url else self.key_help).pack(side="left")
 
         tk.Label(frame, text="최근 서버 실행", anchor="w", font=("", 10, "bold")).pack(fill="x", padx=12, pady=(10, 0))
         self.runs = ttk.Treeview(frame, columns=("at", "what", "result"), show="headings", height=6)
-        for k, t, w in (("at", "시각", 90), ("what", "종류", 90), ("result", "결과", 240)):
+        for k, t, w in (("at", "시각", 70), ("what", "종류", 60), ("result", "결과", 130)):
             self.runs.heading(k, text=t)
             self.runs.column(k, width=w, anchor="w")
         self.runs.pack(fill="x", padx=10)
@@ -293,7 +294,7 @@ class PostTab:
 
         tk.Label(frame, text="최근 게시", anchor="w", font=("", 10, "bold")).pack(fill="x", padx=12, pady=(10, 0))
         self.posts = ttk.Treeview(frame, columns=("at", "name", "where"), show="headings", height=7)
-        for k, t, w in (("at", "시각", 90), ("name", "상품", 220), ("where", "채널", 110)):
+        for k, t, w in (("at", "시각", 70), ("name", "상품", 120), ("where", "채널", 70)):
             self.posts.heading(k, text=t)
             self.posts.column(k, width=w, anchor="w")
         self.posts.pack(fill="both", expand=True, padx=10)
@@ -316,7 +317,7 @@ class PostTab:
         if vals.get("GENERAL_ON", "1") != "0":
             tlist += f"\n일반 글: {vals.get('GENERAL_TIMES', '')}"
         self.info.config(text=(f"자동 게시: {'켜짐' if auto else '꺼짐'} (한국 시간)\n상품 글: {tlist}\n"
-                               + (f"다음 회차: {nxt:%m/%d %H:%M} (서버가 15분마다 확인해서 보통 곧 올라가요)"
+                               + (f"다음 회차: {nxt:%m/%d %H:%M} (보통 조금 늦게 올라가요)"
                                   if auto and nxt else "설정 탭에서 바꿀 수 있어요")))
 
     def refresh(self):
@@ -348,7 +349,8 @@ class PostTab:
                 if isinstance(v.get(ch), dict):
                     rows.append((v[ch].get("at", ""), str(v.get("name", "")).split(",")[0], label))
         for g in posted.get("_general", []):
-            rows.append((g.get("at", ""), "💬 " + g.get("topic", ""), "쓰레드(일반 글)"))
+            where = "·".join(n for k, n in (("id", "쓰레드"), ("ig_id", "인스타")) if g.get(k)) or "쓰레드"
+            rows.append((g.get("at", ""), "💬 " + g.get("topic", ""), where + "(일반 글)"))
         rows.sort(reverse=True)
         for at, name, ch in rows[:20]:
             self.posts.insert("", "end", values=(at[5:16].replace("T", " ").replace("-", "/"), name, ch))
@@ -402,10 +404,10 @@ class SettingsTab:
         self.app, self.root = app, app.root
         top = tk.Frame(frame)
         top.pack(fill="x", padx=10, pady=8)
-        tk.Button(top, text="💾 저장", bg="#2563EB", fg="white", width=12, command=self.save).pack(side="left")
+        tk.Button(top, text="💾 저장", bg="#2563EB", fg="white", width=9, command=self.save).pack(side="left")
         tk.Button(top, text="↺ 다시 불러오기", command=self.reload).pack(side="left", padx=6)
-        self.status = tk.Label(top, text="", fg="#555", anchor="w")
-        self.status.pack(side="left", fill="x", padx=8)
+        self.status = tk.Label(frame, text="", fg="#555", anchor="w", justify="left", wraplength=260)
+        self.status.pack(fill="x", padx=10)
 
         canvas = tk.Canvas(frame, highlightthickness=0)
         sb = ttk.Scrollbar(frame, orient="vertical", command=canvas.yview)
@@ -427,9 +429,9 @@ class SettingsTab:
             for row, spec in enumerate(s for s in settings.SPEC if s["group"] == group):
                 self.add_field(box, row, spec)
         if group:
-            tk.Label(inner, text="공용 설정은 구글 시트 '_설정' 탭에 저장되어 다음 서버 실행부터 적용돼요.\n"
+            tk.Label(inner, text="공용 설정은 구글 시트 '_설정' 탭에 저장되어 다음 서버 실행부터 적용돼요. "
                                  "PC 설정(사진 폴더, 깃허브 키)은 이 PC에만 저장돼요.",
-                     fg="#666", justify="left").pack(anchor="w", pady=8)
+                     fg="#666", justify="left", wraplength=240).pack(anchor="w", pady=8)
 
     def add_field(self, box, row, spec):
         tk.Label(box, text=spec["label"], anchor="w", font=("", 9, "bold")) \
@@ -447,10 +449,10 @@ class SettingsTab:
             tk.Button(w, text="보기", command=lambda e=e: e.config(show="" if e.cget("show") else "•")) \
                 .pack(side="left", padx=4)
         else:
-            w = tk.Entry(box, textvariable=var, width=8 if kind == "int" else 30)
+            w = tk.Entry(box, textvariable=var, width=8 if kind == "int" else 18)
         w.grid(row=row * 3 + 1, column=0, sticky="w" if kind in ("bool", "choice", "int") else "we", padx=(8, 0))
         if spec.get("help"):
-            tk.Label(box, text=spec["help"], fg="#888", anchor="w", justify="left", wraplength=360) \
+            tk.Label(box, text=spec["help"], fg="#888", anchor="w", justify="left", wraplength=220) \
                 .grid(row=row * 3 + 2, column=0, sticky="w", padx=8)
         self.vars[spec["key"]] = var
 
@@ -495,37 +497,48 @@ class SettingsTab:
 
 
 # ---------------------------------------------------------------- 창
+def set_icon(root):
+    """창·작업 표시줄 아이콘 (exe 안에 묶인 icon.ico, 없으면 기본 아이콘)."""
+    import sys
+    path = os.path.join(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))), "icon.ico")
+    try:
+        root.iconbitmap(default=path)
+    except Exception:
+        pass
+
+
 class App:
     def __init__(self, root):
         import helper
         self.root = root
         self.values = {}
         root.title(APP_TITLE)
+        set_icon(root)
         # 쿠팡 페이지를 보면서 쓰도록 좁게, 화면 오른쪽에 붙여서 연다
         sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
-        width, height = 470, min(860, sh - 80)
+        width, height = 290, min(860, sh - 80)
         root.geometry(f"{width}x{height}+{sw - width - 16}+0")
-        root.minsize(400, 480)
+        root.minsize(270, 480)
 
         head = tk.Frame(root)
         head.pack(fill="x", padx=10, pady=(6, 0))
-        tk.Label(head, text=APP_TITLE, font=("", 13, "bold")).pack(side="left")
+        tk.Label(head, text=APP_TITLE, font=("", 11, "bold")).pack(side="left")
         self.topmost = tk.BooleanVar(value=False)
-        tk.Checkbutton(head, text="창 항상 위에", variable=self.topmost,
+        tk.Checkbutton(head, text="항상 위", variable=self.topmost,
                        command=lambda: root.attributes("-topmost", self.topmost.get())).pack(side="right")
 
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
         self.reg_frame = tk.Frame(self.notebook)
         frames = {}
-        for title in ("상품 목록", "게시", "설정"):
+        for title in ("목록", "게시", "설정"):
             frames[title] = tk.Frame(self.notebook)
-        self.notebook.add(self.reg_frame, text="  상품 등록  ")
+        self.notebook.add(self.reg_frame, text="등록")
         for title, f in frames.items():
-            self.notebook.add(f, text=f"  {title}  ")
+            self.notebook.add(f, text=title)
 
         self.helper = helper.Helper(root, self.reg_frame)
-        self.list = ListTab(self, frames["상품 목록"])
+        self.list = ListTab(self, frames["목록"])
         self.post = PostTab(self, frames["게시"])
         self.settings = SettingsTab(self, frames["설정"])
         self.notebook.bind("<<NotebookTabChanged>>", self.on_tab)

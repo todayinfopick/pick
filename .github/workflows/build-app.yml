@@ -6,7 +6,7 @@ name: 프로그램(exe) 만들기
 on:
   push:
     paths: [app.py, helper.py, settings.py, memo_ai.py, general.py, main.py, gcloud.py, image_tools.py,
-            affiliates.py, requirements-app.txt, .github/workflows/build-app.yml]
+            affiliates.py, icon.ico, requirements-app.txt, .github/workflows/build-app.yml]
   workflow_dispatch:
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
         run: pip install -q -r requirements-app.txt pyinstaller
 
       - name: exe 만들기
-        run: pyinstaller --noconfirm --onefile --windowed --name CoupangAutopost --exclude-module imageio_ffmpeg app.py
+        run: pyinstaller --noconfirm --onefile --windowed --name CoupangAutopost --icon icon.ico --add-data "icon.ico;." --exclude-module imageio_ffmpeg app.py
 
       - name: 실행 확인 (가져오기만)
         run: python -c "import app, helper, settings, memo_ai, main, gcloud; print('ok')"
