@@ -54,11 +54,11 @@ jobs:
         run: python cloud_sync.py due
 
       - name: 글꼴 준비
-        if: steps.check.outputs.due != '0'
+        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
         run: sudo apt-get install -y -qq fonts-nanum > /dev/null
 
       - name: 시트·사진 받기
-        if: steps.check.outputs.due != '0'
+        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
@@ -78,11 +78,11 @@ jobs:
         run: python main.py
 
       - name: 링크 페이지 만들기
-        if: always() && steps.check.outputs.due != '0'
+        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
         run: python build_page.py
 
       - name: 결과 저장
-        if: always() && steps.check.outputs.due != '0'
+        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
         run: |
           python cloud_sync.py push || true
           git config user.name "autopost-bot"
