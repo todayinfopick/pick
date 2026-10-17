@@ -19,7 +19,7 @@ import gcloud
 import image_tools
 from main import PRODUCTS, log, product_key
 
-COLUMNS = ["상품명", "파트너스링크", "형식", "미디어", "소재이미지", "게시시간", "특징메모"]
+COLUMNS = ["상품명", "파트너스링크", "형식", "미디어", "소재이미지", "게시시간", "특징메모", "분류"]
 POLL_MS = 500
 MAX_PHOTOS = image_tools.MAX_PHOTOS  # 한 줄 5장 × 2줄 (인스타 캐러셀 최대 장수와 같음)
 
@@ -72,14 +72,15 @@ def name_key(name):
 
 def find_product(link=None, name=None):
     """등록된 상품 찾기: 링크가 같거나, 상품명이 같으면(쿠팡 링크는 만들 때마다 바뀜) 그 상품.
-    찾으면 {'name', 'memo', 'link'}, 없으면 None."""
+    찾으면 {'name', 'memo', 'link', 'category'}, 없으면 None."""
     header, rows = read_rows()
     li, ni, mi = header.index("파트너스링크"), header.index("상품명"), header.index("특징메모")
+    ci = header.index("분류")
     nk = name_key(name) if name else None
     for r in rows:
         cell = lambda i: r[i].strip() if len(r) > i else ""
         if (link and cell(li) == link.strip()) or (nk and name_key(cell(ni)) == nk):
-            return {"name": cell(ni), "memo": cell(mi), "link": cell(li)}
+            return {"name": cell(ni), "memo": cell(mi), "link": cell(li), "category": cell(ci)}
     return None
 
 
@@ -87,8 +88,8 @@ def find_by_link(link):
     return find_product(link=link)
 
 
-def update_product(old_link, name, memo, new_link=None):
-    """등록된 상품(old_link로 찾음)의 상품명·특징메모·링크를 고친다. 바뀌기 전 상품명을 돌려준다."""
+def update_product(old_link, name, memo, new_link=None, category=None):
+    """등록된 상품(old_link로 찾음)의 상품명·특징메모·링크·분류를 고친다. 바뀌기 전 상품명을 돌려준다."""
     header, rows = read_rows()
     li, ni, mi = header.index("파트너스링크"), header.index("상품명"), header.index("특징메모")
     old = None
@@ -100,6 +101,8 @@ def update_product(old_link, name, memo, new_link=None):
             r[mi] = memo
             if new_link:
                 r[li] = new_link
+            if category is not None:
+                r[header.index("분류")] = category
             break
     write_rows(header, rows)
     return old
@@ -153,7 +156,7 @@ def move_photos(old_name, new_name):
         pass
 
 
-def append_product(name, link, memo):
+def append_product(name, link, memo, category=""):
     header, rows = read_rows()
     li = header.index("파트너스링크")
     if any(len(r) > li and r[li].strip() == link for r in rows):
@@ -162,8 +165,16 @@ def append_product(name, link, memo):
     row[header.index("상품명")] = name
     row[li] = link
     row[header.index("특징메모")] = memo
+    row[header.index("분류")] = category
     rows.append(row)
     write_rows(header, rows)
+
+
+def category_choices():
+    """분류 선택지: 1번 계정 '뷰티' + 2번 계정 분류(ACCOUNT_CATEGORY_2의 첫 단어, 기본 '생활')."""
+    import os
+    second = ((os.getenv("ACCOUNT_CATEGORY_2") or "생활").replace(",", " ").split() or ["생활"])[0]
+    return ["뷰티", second] if second != "뷰티" else ["뷰티"]
 
 
 def photo_folder(name):
@@ -275,6 +286,13 @@ class Helper:
         tk.Label(box, text="③ 특징메모 (비우면 저장할 때 AI가 캡처를 읽고 자동 작성)", anchor="w").pack(fill="x", **pad)
         self.memo = tk.Text(box, height=3, wrap="word")
         self.memo.pack(fill="x", padx=10)
+
+        cat = tk.Frame(box)
+        cat.pack(fill="x", padx=10, pady=(4, 0))
+        tk.Label(cat, text="분류 (올릴 계정):").pack(side="left")
+        self.category = tk.StringVar(value="")
+        for val, txt in [("", "AI가 정함")] + [(c, c) for c in category_choices()]:
+            tk.Radiobutton(cat, text=txt, value=val, variable=self.category).pack(side="left")
 
         bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
@@ -390,6 +408,7 @@ class Helper:
                 self.name.insert(0, found["name"])
                 self.memo.delete("1.0", "end")
                 self.memo.insert("1.0", found["memo"])
+                self.category.set(found.get("category", ""))
                 self.name_replace_next = True  # 다음에 복사한 글은 상품명을 바꿈
                 self.set_mode(edit_name=found["name"])
                 self.load_existing_photos(found["name"])
@@ -577,6 +596,7 @@ class Helper:
         self.link.delete(0, "end")
         self.name.delete(0, "end")
         self.memo.delete("1.0", "end")
+        self.category.set("")
         self.images.clear()
         self.photos_loaded = False
         self.photos_dirty = False
@@ -600,12 +620,13 @@ class Helper:
             self.say("⚠ 캡처한 사진이 없어 메모를 쓸 수 없습니다. 상품 사진·설명을 캡처해 주세요.")
             return
         images, name, link = list(self.images), self.name.get().strip(), self.link.get().strip()
+        cats = category_choices()
         self.save_btn.config(state="disabled")
         self.say("✨ AI가 캡처를 읽고 메모를 쓰는 중… (10~20초)")
 
         def work():
             try:
-                res, err = memo_ai.write_memo(images, name, link), None
+                res, err = memo_ai.write_memo(images, name, link, cats), None
             except Exception as e:
                 res, err = None, e
             self.root.after(0, lambda: done(res, err))
@@ -621,10 +642,12 @@ class Helper:
             else:
                 if res["name"] and not self.name.get().strip():
                     self.name.insert(0, res["name"][:200])
-                if res["memo"]:
+                if res["memo"] and (then is None or not self.memo.get("1.0", "end").strip()):
                     self.memo.delete("1.0", "end")
                     self.memo.insert("1.0", res["memo"])
                 self.info_idx = res["info"]
+                if res.get("category") in cats and not self.category.get():
+                    self.category.set(res["category"])
                 extra = f"\n설명 캡처 {len(self.info_idx)}장은 메모용으로만 저장합니다." if self.info_idx else ""
                 self.say(("✓ 메모를 채웠습니다. 확인하고 고칠 수 있어요." if res["memo"]
                           else "⚠ 캡처에서 특징을 찾지 못했습니다. 상세 설명을 캡처해 보세요.") + extra)
@@ -659,7 +682,8 @@ class Helper:
             messagebox.showwarning("확인", "제휴 링크(예: https://link.coupang.com/a/...)를 넣어 주세요." + extra)
             return
         import memo_ai
-        if (not memo or not name) and self.images and memo_ai.enabled() and not self.ai_done:
+        if ((not memo or not name or not self.category.get()) and self.images and memo_ai.enabled()
+                and not self.ai_done):
             self.run_ai(self.save)  # 메모(또는 상품명)를 AI가 채운 뒤 저장 계속
             return
         if not name:
@@ -680,6 +704,9 @@ class Helper:
                 changes.append("특징메모 수정")
             if link != existing["link"]:
                 changes.append("링크를 새 링크로 교체")
+            category = self.category.get()
+            if category != existing.get("category", ""):
+                changes.append(f"분류: {existing.get('category') or '없음'} → {category or '없음'}")
             if self.photos_dirty:
                 changes.append(f"사진을 지금 목록({len(self.images)}장)으로 저장" if self.photos_loaded
                                else f"사진 {len(self.images)}장 추가")
@@ -690,7 +717,7 @@ class Helper:
                                        + "\n".join("• " + c for c in changes)):
                 return
             try:
-                old = update_product(existing["link"], name, memo, new_link=link)
+                old = update_product(existing["link"], name, memo, new_link=link, category=category)
             except PermissionError:
                 messagebox.showerror("저장 실패", "products.csv가 엑셀에 열려 있습니다. 엑셀을 닫고 다시 눌러 주세요.")
                 return
@@ -705,7 +732,7 @@ class Helper:
             self.say(f"✓ 업데이트 완료: {name}\n다음 상품의 링크를 복사하세요.")
             return
         try:
-            append_product(name, link, memo)
+            append_product(name, link, memo, self.category.get())
         except PermissionError:
             messagebox.showerror("저장 실패", "products.csv가 엑셀에 열려 있습니다. 엑셀을 닫고 다시 눌러 주세요.")
             return

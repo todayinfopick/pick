@@ -85,7 +85,7 @@ def in_thread(root, work, done):
 
 # ---------------------------------------------------------------- 상품 목록 탭
 class ListTab:
-    COLS = [("name", "상품명", 300), ("memo", "메모", 50), ("photos", "사진", 50),
+    COLS = [("name", "상품명", 280), ("cat", "분류", 50), ("memo", "메모", 45), ("photos", "사진", 45),
             ("threads", "쓰레드", 95), ("instagram", "인스타", 95)]
 
     def __init__(self, app, frame):
@@ -141,12 +141,12 @@ class ListTab:
             self.status.config(text=f"⚠ 목록을 읽지 못했습니다: {err}")
             return
         header, rows, posted = res
-        idx = {c: header.index(c) for c in ("상품명", "파트너스링크", "특징메모")}
+        idx = {c: header.index(c) for c in ("상품명", "파트너스링크", "특징메모", "분류") if c in header}
         self.tree.delete(*self.tree.get_children())
         self.items = {}
         waiting = 0
         for n, r in enumerate(rows, start=2):
-            cell = lambda c: r[idx[c]].strip() if len(r) > idx[c] else ""
+            cell = lambda c: r[idx[c]].strip() if c in idx and len(r) > idx[c] else ""
             name, link, memo = cell("상품명"), cell("파트너스링크"), cell("특징메모")
             if not name:
                 continue
@@ -160,7 +160,8 @@ class ListTab:
             when = {ch: kst(rec[ch]["at"])[:11] if ch in rec else "" for ch in ("threads", "instagram")}
             done = bool(when["threads"] or when["instagram"])
             waiting += not done
-            iid = self.tree.insert("", "end", values=(name.split(",")[0], "✓" if memo else "—", nphotos,
+            iid = self.tree.insert("", "end", values=(name.split(",")[0], cell("분류") or "—",
+                                                      "✓" if memo else "—", nphotos,
                                                       when["threads"] or "대기", when["instagram"] or "대기"),
                                    tags=("done",) if done else (() if memo else ("nomemo",)))
             self.items[iid] = item
