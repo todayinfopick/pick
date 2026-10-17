@@ -103,6 +103,17 @@ def write_tab(rows, tab=PRODUCT_TAB):
                f"구글 시트 '{tab}' 저장")
 
 
+def write_cell(row, col, value, tab=PRODUCT_TAB):
+    """칸 하나만 바꾼다. row·col은 1부터 (1행=제목)."""
+    letters = ""
+    while col:
+        col, rem = divmod(col - 1, 26)
+        letters = chr(65 + rem) + letters
+    _check(session().put(f"{SHEETS}/{env('GOOGLE_SHEET_ID')}/values/{_rng(tab, f'{letters}{row}')}",
+                         params={"valueInputOption": "RAW"}, json={"values": [[value]]}, timeout=60),
+           f"구글 시트 '{tab}' {letters}{row} 저장")
+
+
 def read_settings():
     return {r[0].strip(): (r[1] if len(r) > 1 else "") for r in read_tab(SETTINGS_TAB) if r and r[0].strip()}
 

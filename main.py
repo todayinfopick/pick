@@ -416,12 +416,13 @@ def remember_memo(item):
 def research(item):
     """특징메모가 비었을 때 AI가 웹 검색으로 상품 특징을 찾는다. 못 찾으면 빈 문자열.
     한 번 찾은 결과는 상품명 기준으로 저장해 두고 다시 쓴다(검색 비용 0)."""
-    if env("AUTO_RESEARCH", "1") == "0" or not env("ANTHROPIC_API_KEY"):
-        return ""
+    # Claude가 미리 조사해 둔 메모(research.json)는 자동 조사를 꺼 둬도 쓴다
     cache = _load_json(research_path())
     hit = cache.get(name_key(item["name"]))
     if hit is not None:
         return hit.get("facts", "")
+    if env("AUTO_RESEARCH", "1") == "0" or not env("ANTHROPIC_API_KEY"):
+        return ""
 
     r = _ask_ai({
         "model": env("CLAUDE_MODEL", "claude-haiku-5-5"),

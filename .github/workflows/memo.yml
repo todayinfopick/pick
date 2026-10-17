@@ -1,0 +1,42 @@
+name: 특징메모 정리
+
+# Claude가 research.json에 써 둔 메모를 시트의 빈 특징메모 칸에 넣고,
+# 아직 메모가 없는 상품 목록을 memo_todo.json으로 저장한다 (게시는 하지 않음)
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PYTHONUTF8: "1"
+      GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+      GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 준비
+        run: pip install -q -r requirements.txt
+
+      - name: 메모 정리
+        run: python cloud_sync.py memo
+
+      - name: 결과 저장
+        run: |
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          git add -f memo_todo.json
+          git diff --cached --quiet || (git commit -q -m "특징메모 목록 업데이트" && git pull -q --rebase && git push -q)
