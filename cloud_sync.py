@@ -24,6 +24,7 @@ PRODUCTS = BASE / "products.csv"
 # PC 전용 경로라 서버에서는 쓰지 않는 설정
 PC_ONLY = {"PHOTO_DIR", "BGM_DIR", "FONT_PATH", "RESEARCH_FILE", "GOOGLE_SA_FILE"}
 TOKEN_KEYS = ["THREADS_ACCESS_TOKEN", "THREADS_USER_ID", "IG_ACCESS_TOKEN", "IG_USER_ID"]
+TOKEN_KEYS += [k + "_2" for k in TOKEN_KEYS]  # 두 번째 계정 (accounts.py)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")

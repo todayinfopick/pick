@@ -10,6 +10,7 @@ import base64
 import io
 import json
 import os
+import time
 
 import requests
 
@@ -83,8 +84,13 @@ def generate(parts, json_out=True, temperature=0.2):
     models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
     r = None
     for model in dict.fromkeys(models):
-        r = _call(model, body)
-        if r.status_code != 404:
+        for wait in (0, 5, 20):  # 붐빌 때(503)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
+            if wait:
+                time.sleep(wait)
+            r = _call(model, body)
+            if r.status_code not in (500, 502, 503, 504):
+                break
+        if r.status_code not in (404, 500, 502, 503, 504):
             break
     if r.status_code == 429:
         raise RuntimeError("제미나이 무료 사용량을 다 썼습니다. 내일 다시 시도해 주세요.")

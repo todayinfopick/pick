@@ -27,7 +27,24 @@ def suffix(n):
 
 
 def connected2():
-    return bool(_get("THREADS_USER_ID_2") or _get("IG_USER_ID_2"))
+    return bool(_get("THREADS_ACCESS_TOKEN_2") or _get("IG_ACCESS_TOKEN_2"))
+
+
+def _fill_ids(sfx):
+    """토큰만 넣고 사용자 ID를 비워 둔 경우 토큰으로 ID를 알아낸다."""
+    import requests
+    for idk, tk, url, fields in (("THREADS_USER_ID", "THREADS_ACCESS_TOKEN", "https://graph.threads.net/v1.0/me", "id"),
+                                 ("IG_USER_ID", "IG_ACCESS_TOKEN", "https://graph.instagram.com/me", "user_id,id")):
+        if _get(idk + sfx) or not _get(tk + sfx):
+            continue
+        try:
+            r = requests.get(url, params={"fields": fields, "access_token": _get(tk + sfx)}, timeout=30)
+            j = r.json() if r.ok else {}
+            uid = str(j.get("user_id") or j.get("id") or "")
+            if uid:
+                os.environ[idk + sfx] = uid
+        except Exception:
+            pass
 
 
 def listing():
@@ -39,6 +56,8 @@ def use(n):
     """n번 계정 설정을 기본 이름(THREADS_ACCESS_TOKEN 등)에 덮어 쓴다. use(1)이면 원래대로."""
     if not _base:
         _base.update({k: os.environ.get(k) for k in KEYS})
+    if n != 1:
+        _fill_ids(suffix(n))
     for k in KEYS:
         v = _base[k] if n == 1 else os.environ.get(k + suffix(n))
         if n != 1 and not (v or "").strip() and k in SHARED_SWITCHES:

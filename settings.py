@@ -77,6 +77,8 @@ SPEC = [
      "default": "0", "help": "켜면 메모가 끝까지 비었을 때 검색 1회 약 15원"},
 
     # ---------------------------------------------------------------- 계정·키
+    {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "aisidehustle_kr",
+     "help": "기록에 보이는 이름. 상품 '분류'가 2번 계정 분류에 해당하지 않으면 전부 1번 계정에 올라가요"},
     {"group": "계정·키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (글 작성)", "kind": "secret", "default": ""},
     {"group": "계정·키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text", "default": "claude-haiku-5-5"},
     {"group": "계정·키", "key": "THREADS_ACCESS_TOKEN", "label": "쓰레드 토큰", "kind": "secret", "default": ""},
@@ -89,6 +91,24 @@ SPEC = [
      "default": "", "pc": True, "help": "게시 탭의 '키 만드는 법' 참고"},
     {"group": "계정·키", "key": "GITHUB_REPO", "label": "깃허브 저장소", "kind": "text",
      "default": "todayinfopick/pick", "pc": True},
+
+    # ---------------------------------------------------------------- 2번 계정
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_NAME_2", "label": "2번 계정 이름", "kind": "text",
+     "default": "todayzip_kr"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_CATEGORY_2", "label": "이 계정에 올릴 분류", "kind": "text",
+     "default": "생활", "help": "시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정에 올려요. 여러 개는 띄어쓰기로 (예: 생활 주방 청소)"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "GENERAL_THEME_2", "label": "일반 글 주제", "kind": "text",
+     "default": "살림·청소·정리 꿀팁"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_ACCESS_TOKEN_2", "label": "쓰레드 토큰", "kind": "secret",
+     "default": "", "help": "비워 두면 2번 계정은 쓰지 않아요 (모든 상품이 1번 계정으로)"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_USER_ID_2", "label": "쓰레드 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_ACCESS_TOKEN_2", "label": "인스타 토큰", "kind": "secret",
+     "default": ""},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_USER_ID_2", "label": "인스타 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "PAGE_TITLE_2", "label": "링크 페이지 제목", "kind": "text",
+     "default": "오늘의 살림템", "help": "2번 계정 링크 페이지: todayinfopick.github.io/pick/2/"},
 
     # ---------------------------------------------------------------- PC
     {"group": "PC", "key": "PHOTO_DIR", "label": "사진 폴더", "kind": "text", "default": "", "pc": True,
