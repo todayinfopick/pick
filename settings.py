@@ -24,6 +24,8 @@ SPEC = [
     {"group": "예약·게시", "key": "POST_TIMES", "label": "게시 시각 (한국 시간)", "kind": "times",
      "default": "07:00 12:00 19:00",
      "help": "띄어쓰기로 구분, 예: 07:00 12:00 19:00 · 서버가 15분마다 확인해서 시간이 지난 회차를 올려요"},
+    {"group": "예약·게시", "key": "GENERAL_TIMES", "label": "일반 글 시각 (한국 시간)", "kind": "times",
+     "default": "09:30 21:30", "help": "광고 아닌 소통 글(쓰레드)을 올리는 시각. 끄고 켜기는 아래 '일반 글' 칸에서"},
     {"group": "예약·게시", "key": "POSTS_PER_RUN", "label": "한 번에 올릴 상품 수", "kind": "int", "default": "1"},
     {"group": "예약·게시", "key": "THREADS_ON", "label": "쓰레드에 게시", "kind": "bool", "default": "1"},
     {"group": "예약·게시", "key": "IG_ON", "label": "인스타그램에 게시", "kind": "bool", "default": "1"},
@@ -38,8 +40,6 @@ SPEC = [
     # ---------------------------------------------------------------- 일반 글
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_ON", "label": "일반 글 자동 게시 (쓰레드)", "kind": "bool",
      "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요"},
-    {"group": "일반 글 (광고 아님)", "key": "GENERAL_TIMES", "label": "일반 글 시각 (한국 시간)", "kind": "times",
-     "default": "09:30 21:30"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "일반 글 이미지", "kind": "choice",
      "choices": ["사진", "카드", "없음"], "default": "사진",
      "help": "사진: 글감에 맞는 무료 사진 한 장(Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
