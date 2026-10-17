@@ -29,10 +29,12 @@ PROMPT = """너는 쓰레드(Threads)에 글을 올리는 '{theme}' 계정 주�
 - 특정 상품명·브랜드·링크·가격·구매 권유 금지. 광고처럼 읽히면 안 된다.
 - 의학적 효과 단정, 과장 금지. 이모지 0~2개, 해시태그 없음.
 
-card: 함께 올릴 이미지에 크게 넣을 한 줄 (16자 이내, 고민·질문형, 이모지 없음). 예: "니트 정전기 그만!"
-card_sub: 이미지 아래쪽 작은 한 줄 (20자 이내). 예: "외출 전 1분이면 끝"
+photo: 함께 올릴 사진을 무료 사진 사이트에서 찾을 영어 검색어 2~4단어. 글 분위기에 맞고 사람 얼굴보다
+  손·물건·장면 위주로. 상품·브랜드 이름 금지. 예: "knit sweater closeup", "lip balm hands"
+card: 사진이 없을 때 쓸 글자 카드의 큰 한 줄 (16자 이내, 고민·질문형, 이모지 없음). 예: "니트 정전기 그만!"
+card_sub: 글자 카드 아래쪽 작은 한 줄 (20자 이내). 예: "외출 전 1분이면 끝"
 
-다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문", "card": "...", "card_sub": "..."}}"""
+다른 말 없이 JSON만 출력: {{"topic": "글감 한 줄", "text": "본문", "photo": "...", "card": "...", "card_sub": "..."}}"""
 
 SEASONS = {12: "겨울", 1: "겨울", 2: "겨울", 3: "봄", 4: "봄", 5: "봄", 6: "여름", 7: "여름", 8: "여름",
            9: "가을", 10: "가을", 11: "늦가을·초겨울"}
@@ -98,21 +100,54 @@ def write(theme, topic, recent):
     body = str(data.get("text", "")).strip()
     if len(body) < 20:
         raise RuntimeError(f"AI가 쓴 글이 너무 짧습니다: {body!r}")
-    return (str(data.get("topic", topic)).strip() or topic, body[:500],
-            str(data.get("card", "")).strip()[:24], str(data.get("card_sub", "")).strip()[:30])
+    return {"topic": str(data.get("topic", topic)).strip() or topic, "text": body[:500],
+            "photo": str(data.get("photo", "")).strip()[:60],
+            "card": str(data.get("card", "")).strip()[:24], "card_sub": str(data.get("card_sub", "")).strip()[:30]}
 
 
-def card_image(card, sub, dry):
-    """일반 글에 붙일 글자 카드 → (파일 경로, 공개 주소). 끄거나 실패하면 (None, None)."""
-    if env("GENERAL_IMAGE", "카드") != "카드" or not card:
+def pexels_photo(query, used):
+    """Pexels(무료 사진)에서 검색어에 맞는 세로 사진 한 장 → (저장한 파일, 사진 id). 없으면 (None, None)."""
+    import random
+    import requests
+    import image_tools
+    key = env("PEXELS_API_KEY")
+    if not key or not query:
         return None, None
+    r = requests.get("https://api.pexels.com/v1/search", headers={"Authorization": key}, timeout=30,
+                     params={"query": query, "orientation": "portrait", "per_page": 15, "size": "medium"})
+    main.check(r, "Pexels 사진 검색")
+    photos = [p for p in r.json().get("photos", []) if str(p["id"]) not in used] or r.json().get("photos", [])
+    if not photos:
+        return None, None
+    p = random.choice(photos[:8])
+    img = requests.get(p["src"].get("large2x") or p["src"]["original"], timeout=60)
+    img.raise_for_status()
+    image_tools.OUT_DIR.mkdir(exist_ok=True)
+    path = image_tools.OUT_DIR / "general.jpg"
+    path.write_bytes(img.content)
+    return path, str(p["id"])
+
+
+def post_image(post, used, dry):
+    """일반 글에 붙일 이미지 → (파일 경로, 공개 주소, 사진 id).
+    사진: Pexels 키가 있으면 글감에 맞는 사진 / 카드: 글자 카드 / 없음. 실패하면 글만."""
+    mode = env("GENERAL_IMAGE", "사진")
     try:
         import image_tools
-        path = image_tools.make_tip_card(card, sub, env("GENERAL_THEME", ""), key="general")
-        return path, (None if dry else image_tools.upload(path))
+        path, pid = None, None
+        if mode == "사진":
+            if not env("PEXELS_API_KEY"):
+                log("  (Pexels 키가 없어 사진 없이 글만 올립니다. 설정 → 일반 글에서 넣어 주세요)")
+                return None, None, None
+            path, pid = pexels_photo(post["photo"], used)
+        elif mode == "카드" and post["card"]:
+            path = image_tools.make_tip_card(post["card"], post["card_sub"], env("GENERAL_THEME", ""), key="general")
+        if not path:
+            return None, None, None
+        return path, (None if dry else image_tools.upload(path)), pid
     except Exception as e:
-        log(f"  (일반 글 이미지를 만들지 못해 글만 올립니다: {e})")
-        return None, None
+        log(f"  (일반 글 이미지를 준비하지 못해 글만 올립니다: {e})")
+        return None, None, None
 
 
 def run(dry=False, slot=""):
@@ -127,17 +162,20 @@ def run(dry=False, slot=""):
     history = posted.setdefault("_general", [])
     row, topic = sheet_topic()
     try:
-        topic, body, card, sub = write(env("GENERAL_THEME", "뷰티·생활 꿀팁"), topic,
-                                       [h.get("topic", "") for h in history])
+        post = write(env("GENERAL_THEME", "뷰티·생활 꿀팁"), topic, [h.get("topic", "") for h in history])
     except Exception as e:
         log(f"일반 글 ✗ {e}")
         return 1
+    topic, body = post["topic"], post["text"]
     log(f"일반 글: {topic}")
-    path, url = card_image(card, sub, dry)
+    path, url, photo_id = post_image(post, {h.get("photo_id") for h in history}, dry)
     if dry:
         print("\n========== 일반 글 미리보기 ==========\n" + body + "\n")
         if path:
-            print(f"이미지: {card} / {sub} → {path}\n")
+            what = f"Pexels 사진 '{post['photo']}' (id {photo_id})" if photo_id else f"글자 카드 {post['card']}"
+            print(f"이미지: {what} → {path}\n")
+        else:
+            print(f"이미지 없음 (사진 검색어였던 것: {post['photo']})\n")
         return 0
     try:
         pid = main.threads_post(body, [url], "image") if url else main.threads_post(body)
@@ -145,7 +183,8 @@ def run(dry=False, slot=""):
         log(f"  ✗ threads 일반 글: {e}")
         return 1
     log(f"  ✓ threads 일반 글 완료 (id {pid})")
-    history.append({"topic": topic, "id": pid, "at": datetime.datetime.now().isoformat(timespec="seconds")})
+    history.append({"topic": topic, "id": pid, "photo_id": photo_id,
+                    "at": datetime.datetime.now().isoformat(timespec="seconds")})
     posted["_general"] = history[-60:]
     main.save_posted(posted)
     if row:
