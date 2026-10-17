@@ -275,36 +275,35 @@ class Helper:
         pad = {"padx": 10, "pady": 3}
         pick = tk.Frame(box, bg="#EEF2FF")
         pick.pack(fill="x", padx=10, pady=(8, 2))
-        tk.Label(pick, text="복사한 글 넣을 칸:", bg="#EEF2FF").pack(side="left", padx=4)
-        for val, txt in (("auto", "자동"), ("name", "상품명"), ("memo", "특징메모")):
+        tk.Label(pick, text="복사→", bg="#EEF2FF").pack(side="left", padx=4)
+        for val, txt in (("auto", "자동"), ("name", "상품명"), ("memo", "메모")):
             tk.Radiobutton(pick, text=txt, value=val, variable=self.target, bg="#EEF2FF",
                            command=self.on_target).pack(side="left")
-        tk.Label(box, text="① 제휴 링크 (복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        tk.Label(box, text="① 제휴 링크 (복사하면 자동)", anchor="w").pack(fill="x", **pad)
         self.link = tk.Entry(box)
         self.link.pack(fill="x", padx=10)
 
-        tk.Label(box, text="② 상품명 (드래그해서 복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        tk.Label(box, text="② 상품명 (복사하면 자동)", anchor="w").pack(fill="x", **pad)
         self.name = tk.Entry(box)
         self.name.pack(fill="x", padx=10)
 
-        tk.Label(box, text="③ 특징메모 (비우면 저장할 때 AI가 캡처를 읽고 자동 작성)", anchor="w").pack(fill="x", **pad)
+        tk.Label(box, text="③ 특징메모 (비우면 AI가 작성)", anchor="w").pack(fill="x", **pad)
         self.memo = tk.Text(box, height=3, wrap="word")
         self.memo.pack(fill="x", padx=10)
 
         cat = tk.Frame(box)
         cat.pack(fill="x", padx=10, pady=(4, 0))
-        tk.Label(cat, text="분류:").pack(side="left")
+        tk.Label(cat, text="분류:").grid(row=0, column=0, sticky="w")
         self.category = tk.StringVar(value="")
-        for val, txt in [("", "AI가 정함")] + [(c, c) for c in category_choices()]:
-            tk.Radiobutton(cat, text=txt, value=val, variable=self.category).pack(side="left")
+        for i, (val, txt) in enumerate([("", "AI")] + [(c, c) for c in category_choices()]):
+            tk.Radiobutton(cat, text=txt, value=val, variable=self.category) \
+                .grid(row=i // 3, column=1 + i % 3, sticky="w")  # 좁은 창이라 3개씩 줄바꿈
 
         bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
-        tk.Button(bar, text="📷 사진 캡처", command=self.capture, width=11).pack(side="left")
-        tk.Button(bar, text="↩ 사진 취소", command=self.undo_image).pack(side="left", padx=4)
-        tk.Button(bar, text="✨ 메모 작성", command=lambda: self.run_ai(None)).pack(side="left")
-        self.count = tk.Label(bar, text=f"사진 0/{MAX_PHOTOS}장")
-        self.count.pack(side="right")
+        tk.Button(bar, text="📷 캡처", command=self.capture).pack(side="left")
+        tk.Button(bar, text="↩ 취소", command=self.undo_image).pack(side="left", padx=3)
+        tk.Button(bar, text="✨ 메모", command=lambda: self.run_ai(None)).pack(side="left")
 
         # 캡처한 사진 미리보기 (클릭하면 삭제)
         self.thumbs = tk.Frame(box, bg="#F1F5F9")
@@ -312,9 +311,12 @@ class Helper:
         self.thumb_refs = []
         self.empty_thumb = tk.Label(self.thumbs, text="(캡처한 사진이 여기에 표시됩니다)", bg="#F1F5F9",
                                     fg="#999", height=3)
-        self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
-        tk.Label(box, text="사진을 클릭하면 그 사진만 지워집니다", fg="#888",
-                 anchor="w").pack(fill="x", padx=10)
+        self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
+        hint = tk.Frame(box)
+        hint.pack(fill="x", padx=10)
+        tk.Label(hint, text="사진을 누르면 지워져요", fg="#888").pack(side="left")
+        self.count = tk.Label(hint, text=f"0/{MAX_PHOTOS}장")
+        self.count.pack(side="right")
 
         self.save_btn = tk.Button(box, text="저장 → 다음 상품", command=self.save, height=2,
                                   bg="#2563EB", fg="white", activebackground="#1D4ED8")
@@ -322,13 +324,13 @@ class Helper:
 
         bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
-        tk.Checkbutton(bottom, text="복사 자동 감지", variable=self.watch).pack(side="left")
-        tk.Button(bottom, text="새 상품(초기화)", command=self.new_product).pack(side="left", padx=6)
+        tk.Checkbutton(bottom, text="복사 감지", variable=self.watch).pack(side="left")
+        tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="left", padx=4)
         tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
 
         self.status = tk.Label(box, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.\n"
                                          "상세 설명 부분도 캡처해 두면 AI가 읽고 메모를 씁니다(게시엔 안 씀).", fg="#555",
-                               anchor="w", justify="left", wraplength=380)
+                               anchor="w", justify="left", wraplength=250)
         self.status.pack(fill="x", padx=10, pady=6)
 
         self.prime_clipboard()
@@ -505,24 +507,24 @@ class Helper:
                 w.destroy()
         self.thumb_refs = []
         if not self.images:
-            self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
+            self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
         else:
             self.empty_thumb.grid_remove()
-        per_row = 5
+        per_row = 4
         for i, im in enumerate(self.images):
             t = im.convert("RGB").copy()
-            t.thumbnail((64, 64))
+            t.thumbnail((52, 52))
             ph = ImageTk.PhotoImage(t)
             self.thumb_refs.append(ph)
             cell = tk.Frame(self.thumbs, bg="#F1F5F9")
             cell.grid(row=i // per_row, column=i % per_row, padx=2, pady=2)
-            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=66, height=66)
+            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=54, height=54)
             lb.pack()
             num = tk.Label(cell, text=f"{i + 1}  ✕", bg="#F1F5F9", fg="#555", cursor="hand2")
             num.pack()
             for w in (lb, num):
                 w.bind("<Button-1>", lambda e, idx=i: self.remove_image(idx))
-        self.count.config(text=f"사진 {len(self.images)}/{MAX_PHOTOS}장")
+        self.count.config(text=f"{len(self.images)}/{MAX_PHOTOS}장")
 
     def remove_image(self, idx):
         if 0 <= idx < len(self.images):
