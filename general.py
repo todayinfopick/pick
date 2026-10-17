@@ -40,8 +40,9 @@ SEASONS = {12: "겨울", 1: "겨울", 2: "겨울", 3: "봄", 4: "봄", 5: "봄",
            9: "가을", 10: "가을", 11: "늦가을·초겨울"}
 
 
-def sheet_topic():
-    """시트 '일반글' 탭에서 아직 안 쓴 첫 주제 → (행 번호, 주제). 없으면 (None, '')."""
+def sheet_topic(account=1):
+    """시트 '일반글' 탭에서 아직 안 쓴 첫 주제 → (행 번호, 주제). 없으면 (None, '').
+    '분류' 칸이 있으면 그 계정 것만 (accounts.route), 없으면 1번 계정만 시트 글감을 쓴다."""
     try:
         import gcloud
         if not gcloud.enabled():
@@ -57,9 +58,15 @@ def sheet_topic():
         return None, ""
     ti = head.index("주제")
     di = head.index("게시일") if "게시일" in head else None
+    ci = head.index("분류") if "분류" in head else None
+    if ci is None and account != 1:
+        return None, ""
+    import accounts
     for n, r in enumerate(rows[1:], start=2):
         topic = r[ti].strip() if len(r) > ti else ""
         done = r[di].strip() if di is not None and len(r) > di else ""
+        if ci is not None and accounts.route(r[ci] if len(r) > ci else "") != account:
+            continue
         if topic and not done:
             return n, topic
     return None, ""
@@ -131,6 +138,7 @@ def stock_photo(query, used):
     if not found:
         return None, None
     pid, url = random.choice(found[:8])
+    log(f"  사진: {pid} {url}")
     img = requests.get(url, timeout=60)
     img.raise_for_status()
     image_tools.OUT_DIR.mkdir(exist_ok=True)
@@ -169,13 +177,32 @@ def run(dry=False, slot=""):
     if slot:
         meta["last_general_slot"] = slot
         main.save_posted(posted)  # 실패해도 같은 회차를 매시간 다시 시도하지 않도록 먼저 기록
+    import accounts
+    nums = accounts.listing()
+    code = 0
+    for n in nums:
+        accounts.use(n)
+        if len(nums) > 1:
+            log(f"[{accounts.label(n)}]")
+        code = post_one(posted, dry, n) or code
+    accounts.use(1)
+    return code
+
+
+def post_one(posted, dry, account=1):
+    """한 계정의 쓰레드에 일반 글 한 개."""
+    if env("GENERAL_ON", "1") == "0":
+        log("일반 글: 이 계정은 꺼져 있어 건너뜁니다.")
+        return 0
     if not dry and not main.threads_on():
         log("일반 글: 쓰레드 연결 정보가 없거나 꺼져 있어 건너뜁니다.")
         return 0
     history = posted.setdefault("_general", [])
-    row, topic = sheet_topic()
+    mine = [h for h in history if h.get("account", 1) == account]
+    row, topic = sheet_topic(account)
+    theme = env("GENERAL_THEME") or ("뷰티·생활 꿀팁" if account == 1 else "살림·생활 꿀팁")
     try:
-        post = write(env("GENERAL_THEME", "뷰티·생활 꿀팁"), topic, [h.get("topic", "") for h in history])
+        post = write(theme, topic, [h.get("topic", "") for h in mine])
     except Exception as e:
         log(f"일반 글 ✗ {e}")
         return 1
@@ -196,9 +223,9 @@ def run(dry=False, slot=""):
         log(f"  ✗ threads 일반 글: {e}")
         return 1
     log(f"  ✓ threads 일반 글 완료 (id {pid})")
-    history.append({"topic": topic, "id": pid, "photo_id": photo_id,
+    history.append({"topic": topic, "id": pid, "photo_id": photo_id, "account": account,
                     "at": datetime.datetime.now().isoformat(timespec="seconds")})
-    posted["_general"] = history[-60:]
+    posted["_general"] = history[-120:]
     main.save_posted(posted)
     if row:
         mark_sheet(row, f"{datetime.datetime.now():%Y-%m-%d %H:%M}")
