@@ -19,7 +19,8 @@ def refresh(name, url, grant, key):
 
 
 if __name__ == "__main__":
-    refresh("쓰레드", "https://graph.threads.net/refresh_access_token",
-            "th_refresh_token", "THREADS_ACCESS_TOKEN")
-    refresh("인스타그램", "https://graph.instagram.com/refresh_access_token",
-            "ig_refresh_token", "IG_ACCESS_TOKEN")
+    for sfx, who in (("", ""), ("_2", " (2번 계정)")):  # 두 번째 계정은 _2 (accounts.py)
+        refresh("쓰레드" + who, "https://graph.threads.net/refresh_access_token",
+                "th_refresh_token", "THREADS_ACCESS_TOKEN" + sfx)
+        refresh("인스타그램" + who, "https://graph.instagram.com/refresh_access_token",
+                "ig_refresh_token", "IG_ACCESS_TOKEN" + sfx)

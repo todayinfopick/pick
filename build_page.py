@@ -25,14 +25,23 @@ try:
 except Exception:
     pass
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv(BASE / ".env")
+except ImportError:
+    pass
+
 TITLE = (os.getenv("PAGE_TITLE") or "오늘의 추천 상품").strip()
 
 
-def items():
+def items(account=1):
+    """그 계정에 게시된 상품 (예전 기록처럼 계정 표시가 없으면 1번 계정)."""
     data = json.loads(POSTED.read_text(encoding="utf-8")) if POSTED.exists() else {}
     out = []
     for key, rec in data.items():
         if key == "_meta" or not isinstance(rec, dict) or not rec.get("link"):
+            continue
+        if int(rec.get("account") or 1) != account:
             continue
         times = [rec[c]["at"] for c in ("threads", "instagram") if isinstance(rec.get(c), dict)]
         if not times:
@@ -182,17 +191,25 @@ ROW = """    <a class="item" href="{link}" target="_blank" rel="sponsored noopen
     </a>"""
 
 NEW_DAYS = 3  # 게시 후 이 기간 동안 NEW 표시
-HANDLE = (os.getenv("PAGE_HANDLE") or "aisidehustle_kr").strip().lstrip("@")
+HANDLE = (os.getenv("PAGE_HANDLE") or os.getenv("ACCOUNT_NAME") or "beautyzip_kr").strip().lstrip("@")
 
 
-def build():
+def build(account=1):
+    """1번 계정: docs/index.html, 2번 계정: docs/2/index.html (사진은 docs/thumbs 공용)."""
     import datetime
-    rows = items()
+    if account == 1:
+        out, up, title, handle_name = OUT, "", TITLE, HANDLE
+    else:
+        out, up = OUT.parent / str(account) / "index.html", "../"
+        title = (os.getenv(f"PAGE_TITLE_{account}") or "오늘의 살림템").strip()
+        handle_name = (os.getenv(f"PAGE_HANDLE_{account}") or os.getenv(f"ACCOUNT_NAME_{account}")
+                       or "").strip().lstrip("@")
+    rows = items(account)
     now = datetime.datetime.now()
     lines = []
     for r in rows:
         src = thumb(r)
-        img = (f'<img src="{src}" alt="" loading="lazy">' if src
+        img = (f'<img src="{up}{src}" alt="" loading="lazy">' if src
                else f'<div class="ph">{html.escape(r["name"][:1])}</div>')
         try:
             fresh = (now - datetime.datetime.fromisoformat(r["at"])).days < NEW_DAYS
@@ -201,16 +218,18 @@ def build():
         lines.append(ROW.format(link=html.escape(r["link"], quote=True), name=html.escape(r["name"], quote=True),
                                 date=r["at"][:10].replace("-", "."), img=img,
                                 new='<span class="new">NEW</span>' if fresh else ""))
-    handle = (f'<a class="handle" href="https://www.instagram.com/{html.escape(HANDLE)}/" '
-              f'target="_blank" rel="noopener">@{html.escape(HANDLE)}</a>') if HANDLE else ""
-    page = PAGE.format(title=html.escape(TITLE), rows="\n".join(lines), count=len(rows), handle=handle,
-                       initial=html.escape(TITLE[:1]),
+    handle = (f'<a class="handle" href="https://www.instagram.com/{html.escape(handle_name)}/" '
+              f'target="_blank" rel="noopener">@{html.escape(handle_name)}</a>') if handle_name else ""
+    page = PAGE.format(title=html.escape(title), rows="\n".join(lines), count=len(rows), handle=handle,
+                       initial=html.escape(title[:1]),
                        notice="<br>".join(html.escape(t) for t in disclosure(rows)))
-    OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text(page, encoding="utf-8")
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(page, encoding="utf-8")
     (OUT.parent / ".nojekyll").write_text("", encoding="utf-8")
-    print(f"✓ 링크 페이지에 상품 {len(rows)}개를 넣었습니다: {OUT}")
+    print(f"✓ 링크 페이지에 상품 {len(rows)}개를 넣었습니다: {out}")
 
 
 if __name__ == "__main__":
-    build()
+    build(1)
+    if (os.getenv("THREADS_ACCESS_TOKEN_2") or os.getenv("IG_ACCESS_TOKEN_2") or "").strip():
+        build(2)

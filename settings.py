@@ -23,7 +23,7 @@ SPEC = [
      "help": "끄면 예약 시간이 돼도 게시하지 않아요 (지금 게시 버튼은 됨)"},
     {"group": "예약·게시", "key": "POST_TIMES", "label": "게시 시각 (한국 시간)", "kind": "times",
      "default": "07:00 12:00 19:00",
-     "help": "띄어쓰기로 구분, 예: 07:00 12:00 19:00 · 서버가 매시간 확인해서 시간이 지난 회차를 올려요"},
+     "help": "띄어쓰기로 구분, 예: 07:00 12:00 19:00 · 서버가 15분마다 확인해서 시간이 지난 회차를 올려요"},
     {"group": "예약·게시", "key": "POSTS_PER_RUN", "label": "한 번에 올릴 상품 수", "kind": "int", "default": "1"},
     {"group": "예약·게시", "key": "THREADS_ON", "label": "쓰레드에 게시", "kind": "bool", "default": "1"},
     {"group": "예약·게시", "key": "IG_ON", "label": "인스타그램에 게시", "kind": "bool", "default": "1"},
@@ -34,6 +34,20 @@ SPEC = [
     {"group": "예약·게시", "key": "SAME_PRODUCT", "label": "같은 상품 판단", "kind": "choice",
      "choices": ["쉼표앞", "전체"], "default": "쉼표앞",
      "help": "쉼표앞: 컬러·수량 옵션이 달라도 한 번만 게시 / 전체: 옵션별로 따로 게시"},
+
+    # ---------------------------------------------------------------- 일반 글
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_ON", "label": "일반 글 자동 게시 (쓰레드)", "kind": "bool",
+     "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요"},
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_TIMES", "label": "일반 글 시각 (한국 시간)", "kind": "times",
+     "default": "09:30 21:30"},
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "일반 글 이미지", "kind": "choice",
+     "choices": ["사진", "카드", "없음"], "default": "사진",
+     "help": "사진: 글감에 맞는 무료 사진 한 장(Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
+    {"group": "일반 글 (광고 아님)", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",
+     "default": "", "help": "pixabay.com 가입 → pixabay.com/api/docs 의 key 값 복사 (무료, 출처 표시 필요 없음)"},
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_THEME", "label": "계정 주제", "kind": "text",
+     "default": "뷰티·생활 꿀팁",
+     "help": "AI가 이 주제 안에서 계절에 맞는 글감을 골라요. 시트 '일반글' 탭 '주제' 칸에 적어 두면 그 글감을 먼저 써요"},
 
     # ---------------------------------------------------------------- 쓰레드
     {"group": "쓰레드", "key": "THREADS_MEDIA", "label": "원본 사진·영상 붙이기", "kind": "bool", "default": "1",
@@ -63,6 +77,8 @@ SPEC = [
      "default": "0", "help": "켜면 메모가 끝까지 비었을 때 검색 1회 약 15원"},
 
     # ---------------------------------------------------------------- 계정·키
+    {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "beautyzip_kr",
+     "help": "기록에 보이는 이름. 상품 '분류'가 2번 계정 분류에 해당하지 않으면 전부 1번 계정에 올라가요"},
     {"group": "계정·키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (글 작성)", "kind": "secret", "default": ""},
     {"group": "계정·키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text", "default": "claude-haiku-5-5"},
     {"group": "계정·키", "key": "THREADS_ACCESS_TOKEN", "label": "쓰레드 토큰", "kind": "secret", "default": ""},
@@ -75,6 +91,24 @@ SPEC = [
      "default": "", "pc": True, "help": "게시 탭의 '키 만드는 법' 참고"},
     {"group": "계정·키", "key": "GITHUB_REPO", "label": "깃허브 저장소", "kind": "text",
      "default": "todayinfopick/pick", "pc": True},
+
+    # ---------------------------------------------------------------- 2번 계정
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_NAME_2", "label": "2번 계정 이름", "kind": "text",
+     "default": "todayzip_kr"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_CATEGORY_2", "label": "이 계정에 올릴 분류", "kind": "text",
+     "default": "생활", "help": "시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정에 올려요. 여러 개는 띄어쓰기로 (예: 생활 주방 청소)"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "GENERAL_THEME_2", "label": "일반 글 주제", "kind": "text",
+     "default": "살림·청소·정리 꿀팁"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_ACCESS_TOKEN_2", "label": "쓰레드 토큰", "kind": "secret",
+     "default": "", "help": "비워 두면 2번 계정은 쓰지 않아요 (모든 상품이 1번 계정으로)"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_USER_ID_2", "label": "쓰레드 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_ACCESS_TOKEN_2", "label": "인스타 토큰", "kind": "secret",
+     "default": ""},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_USER_ID_2", "label": "인스타 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"group": "2번 계정 (쓰레드+인스타)", "key": "PAGE_TITLE_2", "label": "링크 페이지 제목", "kind": "text",
+     "default": "오늘의 살림템", "help": "2번 계정 링크 페이지: todayinfopick.github.io/pick/2/"},
 
     # ---------------------------------------------------------------- PC
     {"group": "PC", "key": "PHOTO_DIR", "label": "사진 폴더", "kind": "text", "default": "", "pc": True,

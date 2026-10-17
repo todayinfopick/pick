@@ -5,7 +5,7 @@
                              드라이브 사진 → 사진\\, 저장된 (연장된) 토큰 → .env
   python cloud_sync.py push : .env의 (연장된) 토큰 → 시트 '_설정' 탭
   python cloud_sync.py due  : 예약 회차가 됐는지 확인 → GitHub 출력 due=1/0, slot=회차
-                             (서버는 매시간 이것만 확인하고, 회차가 됐을 때만 게시)
+                             (서버는 15분마다 이것만 확인하고, 회차가 됐을 때만 게시)
 """
 import csv
 import datetime
@@ -24,6 +24,7 @@ PRODUCTS = BASE / "products.csv"
 # PC 전용 경로라 서버에서는 쓰지 않는 설정
 PC_ONLY = {"PHOTO_DIR", "BGM_DIR", "FONT_PATH", "RESEARCH_FILE", "GOOGLE_SA_FILE"}
 TOKEN_KEYS = ["THREADS_ACCESS_TOKEN", "THREADS_USER_ID", "IG_ACCESS_TOKEN", "IG_USER_ID"]
+TOKEN_KEYS += [k + "_2" for k in TOKEN_KEYS]  # 두 번째 계정 (accounts.py)
 
 try:
     sys.stdout.reconfigure(encoding="utf-8")
@@ -96,29 +97,37 @@ def due_slot(now, times, last):
 
 
 def due():
+    """상품 글(POST_TIMES)과 일반 글(GENERAL_TIMES) 각각 게시할 회차가 됐는지."""
     import settings
     saved = gcloud.read_settings()
     get = lambda k: (saved.get(k) or os.getenv(k) or settings.BY_KEY[k]["default"]).strip()
-    slot = None
-    if get("AUTO_POST") != "0":
+    posted = BASE / "posted.json"
+    meta = json.loads(posted.read_text(encoding="utf-8")).get("_meta", {}) if posted.exists() else {}
+    now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).replace(tzinfo=None)
+
+    def check(label, on_key, times_key, last_key):
+        if get(on_key) == "0":
+            print(f"{label}: 꺼져 있음")
+            return None
         try:
-            times = settings.post_times(get("POST_TIMES"))
+            times = settings.post_times(get(times_key))
         except ValueError:
-            print(f"! 게시 시각을 읽을 수 없어 기본값을 씁니다: {get('POST_TIMES')}")
-            times = settings.post_times(settings.BY_KEY["POST_TIMES"]["default"])
-        posted = BASE / "posted.json"
-        last = json.loads(posted.read_text(encoding="utf-8")).get("_meta", {}).get("last_slot", "") \
-            if posted.exists() else ""
-        now = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=9))).replace(tzinfo=None)
+            print(f"! {label} 시각을 읽을 수 없어 기본값을 씁니다: {get(times_key)}")
+            times = settings.post_times(settings.BY_KEY[times_key]["default"])
+        last = meta.get(last_key, "")
         slot = due_slot(now, times, last)
-        print(f"지금 {now:%m/%d %H:%M}, 마지막 회차 {last or '없음'} → "
+        print(f"{label}: 지금 {now:%m/%d %H:%M}, 마지막 회차 {last or '없음'} → "
               + (f"{slot} 회차 게시" if slot else "게시할 회차 없음"))
-    else:
-        print("자동 게시가 꺼져 있습니다.")
+        return slot
+
+    slot = check("상품 글", "AUTO_POST", "POST_TIMES", "last_slot")
+    gslot = check("일반 글", "GENERAL_ON", "GENERAL_TIMES", "last_general_slot")
     out = os.getenv("GITHUB_OUTPUT")
     if out:
         with open(out, "a", encoding="utf-8") as f:
-            f.write(f"due={1 if slot else 0}\nslot={slot or ''}\n")
+            f.write(f"due={1 if slot else 0}\nslot={slot or ''}\n"
+                    f"gdue={1 if gslot else 0}\ngslot={gslot or ''}\n"
+                    f"any={1 if slot or gslot else 0}\n")
 
 
 def push():

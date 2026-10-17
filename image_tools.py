@@ -480,6 +480,35 @@ def make_card(name, headline, photos=None, key="card"):
     return path
 
 
+def make_tip_card(title, sub="", label="", key="tip"):
+    """일반 글(광고 아님)용 글자 카드 1장. 광고 표시·구매 안내 없이 제목만 크게."""
+    OUT_DIR.mkdir(exist_ok=True)
+    bg, accent, fg = random_palette()
+    W = CW - PAD * 2
+
+    def draw(top):
+        img = Image.new("RGB", (CW, CH), bg)
+        d = ImageDraw.Draw(img)
+        d.rectangle((0, 0, CW, 24), fill=accent)
+        y = top
+        if label:
+            lw = d.textlength(label, font=font(40)) + 56
+            pill(d, int((CW - lw) // 2), y, label, font(40), accent, bg)
+            y += 190
+        y = text_block(d, 0, y, title, font(96), fg, W, 126, 4, center_w=CW) + 34
+        d.rectangle((CW // 2 - 60, y, CW // 2 + 60, y + 10), fill=accent)
+        y += 10
+        if sub:
+            y = text_block(d, 0, y + 44, sub, font(46), fg, W, 64, 3, center_w=CW)
+        return img, y
+
+    _, end = draw(0)  # 글 높이를 재서 세로 가운데에 오게
+    img, _ = draw(max(120, (CH - end) // 2))
+    path = OUT_DIR / f"{slug(key)}.jpg"
+    img.save(path, quality=92)
+    return path
+
+
 def make_carousel(name, headline, points, photos=None, key="carousel"):
     """캐러셀(여러 장) 이미지: 표지 → 장점들 → 구매 안내. 파일 경로 목록을 돌려준다."""
     folder = OUT_DIR / slug(key)

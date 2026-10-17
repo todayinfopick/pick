@@ -148,6 +148,7 @@ def load_products():
             "source": r.get("소재이미지", ""),
             "when": when,
             "memo": r.get("특징메모", ""),
+            "category": r.get("분류", ""),  # 계정 나누기용 (accounts.route)
         })
     return items
 
@@ -832,7 +833,21 @@ def main():
     now = datetime.datetime.now()
     items = load_products()
     posted = load_posted()
+    import accounts
+    nums = accounts.listing()
+    code = 0
+    for n in nums:
+        accounts.use(n)
+        mine = [i for i in items if accounts.route(i["category"]) == n]
+        if len(nums) > 1 or args.dry_run:
+            log(f"[{accounts.label(n)}] 상품 {len(mine)}개 · 연결: {accounts.whoami()}")
+        code = post_items(mine, posted, args, now, n) or code
+    accounts.use(1)
+    return code
 
+
+def post_items(items, posted, args, now, account=1):
+    """한 계정(쓰레드+인스타)에 올릴 상품들 중 다음 상품을 게시한다."""
     if not args.dry_run and not threads_on() and not ig_on():
         log("게시할 채널 정보가 없습니다. .env 파일의 쓰레드/인스타그램 항목을 채워 주세요.")
         return 1
@@ -912,6 +927,7 @@ def main():
 
         rec["name"] = item["name"]
         rec["link"] = item["link"]
+        rec["account"] = account
         for k in [k for k, v in posted.items() if v is rec and k != posted_key(item)]:
             posted.pop(k)  # 예전 링크 기준 기록은 상품명 기준으로 옮김
         posted[posted_key(item)] = rec

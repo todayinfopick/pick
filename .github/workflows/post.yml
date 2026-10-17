@@ -2,9 +2,9 @@ name: 자동 게시
 
 on:
   schedule:
-    # 매시간 확인만 하고, 프로그램 설정의 '게시 시각'(시트 '_설정' 탭 POST_TIMES)이 지난 회차만 게시.
-    # 무료 예약은 몇 시간씩 늦거나 빠지기도 해서 매시간 확인하면 놓친 회차를 다음 확인 때 올림
-    - cron: "17 * * * *"
+    # 15분마다 확인만 하고, 프로그램 설정의 '게시 시각'(시트 '_설정' 탭 POST_TIMES)이 지난 회차만 게시.
+    # 무료 예약은 몇 시간씩 늦거나 빠지기도 해서(실제로 하루 몇 번만 돌기도 함) 자주 확인하면 놓친 회차를 다음 확인 때 올림
+    - cron: "7,22,37,52 * * * *"
     # 토큰 연장: 매주 일요일 한국 시간 08:00
     - cron: "0 23 * * 6"
   workflow_dispatch:
@@ -13,7 +13,7 @@ on:
         description: "할 일"
         type: choice
         default: 지금 게시
-        options: [지금 게시, 미리보기, 토큰 연장]
+        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 토큰 연장]
 
 concurrency:
   group: autopost
@@ -47,18 +47,18 @@ jobs:
       - name: 파이썬 준비
         run: pip install -q -r requirements.txt
 
-      # 매시간 예약 실행: 게시할 회차가 됐는지만 먼저 확인 (안 됐으면 여기서 끝)
+      # 15분마다 예약 실행: 게시할 회차가 됐는지만 먼저 확인 (안 됐으면 여기서 끝)
       - name: 예약 회차 확인
         id: check
-        if: github.event.schedule == '17 * * * *'
+        if: github.event.schedule == '7,22,37,52 * * * *'
         run: python cloud_sync.py due
 
       - name: 글꼴 준비
-        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: (github.event.schedule != '7,22,37,52 * * * *' || steps.check.outputs.any == '1')
         run: sudo apt-get install -y -qq fonts-nanum > /dev/null
 
       - name: 시트·사진 받기
-        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: (github.event.schedule != '7,22,37,52 * * * *' || steps.check.outputs.any == '1')
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
@@ -77,12 +77,24 @@ jobs:
         if: inputs.mode == '지금 게시'
         run: python main.py
 
+      - name: 일반 글
+        if: "!cancelled() && steps.check.outputs.gdue == '1'"
+        run: python general.py --slot "${{ steps.check.outputs.gslot }}"
+
+      - name: 일반 글 지금 게시
+        if: inputs.mode == '일반 글 게시'
+        run: python general.py
+
+      - name: 일반 글 미리보기
+        if: inputs.mode == '일반 글 미리보기'
+        run: python general.py --dry-run
+
       - name: 링크 페이지 만들기
-        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: always() && (github.event.schedule != '7,22,37,52 * * * *' || steps.check.outputs.any == '1')
         run: python build_page.py
 
       - name: 결과 저장
-        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: always() && (github.event.schedule != '7,22,37,52 * * * *' || steps.check.outputs.any == '1')
         run: |
           python cloud_sync.py push || true
           git config user.name "autopost-bot"
