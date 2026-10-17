@@ -105,41 +105,54 @@ def write(theme, topic, recent):
             "card": str(data.get("card", "")).strip()[:24], "card_sub": str(data.get("card_sub", "")).strip()[:30]}
 
 
-def pexels_photo(query, used):
-    """Pexels(무료 사진)에서 검색어에 맞는 세로 사진 한 장 → (저장한 파일, 사진 id). 없으면 (None, None)."""
+def stock_photo(query, used):
+    """무료 사진 사이트에서 검색어에 맞는 세로 사진 한 장 → (저장한 파일, 사진 id). 없으면 (None, None).
+    Pixabay 키가 있으면 Pixabay, 없으면 Pexels 키로 찾는다 (둘 다 상업적 사용 가능, 출처 표시 불필요)."""
     import random
     import requests
     import image_tools
-    key = env("PEXELS_API_KEY")
-    if not key or not query:
+    if not query:
         return None, None
-    r = requests.get("https://api.pexels.com/v1/search", headers={"Authorization": key}, timeout=30,
-                     params={"query": query, "orientation": "portrait", "per_page": 15, "size": "medium"})
-    main.check(r, "Pexels 사진 검색")
-    photos = [p for p in r.json().get("photos", []) if str(p["id"]) not in used] or r.json().get("photos", [])
-    if not photos:
+    if env("PIXABAY_API_KEY"):
+        r = requests.get("https://pixabay.com/api/", timeout=30,
+                         params={"key": env("PIXABAY_API_KEY"), "q": query[:100], "image_type": "photo",
+                                 "orientation": "vertical", "safesearch": "true", "per_page": 20})
+        main.check(r, "Pixabay 사진 검색")
+        found = [(f"pixabay:{h['id']}", h["largeImageURL"]) for h in r.json().get("hits", [])]
+    elif env("PEXELS_API_KEY"):
+        r = requests.get("https://api.pexels.com/v1/search", headers={"Authorization": env("PEXELS_API_KEY")},
+                         timeout=30, params={"query": query, "orientation": "portrait", "per_page": 15})
+        main.check(r, "Pexels 사진 검색")
+        found = [(f"pexels:{p['id']}", p["src"].get("large2x") or p["src"]["original"])
+                 for p in r.json().get("photos", [])]
+    else:
         return None, None
-    p = random.choice(photos[:8])
-    img = requests.get(p["src"].get("large2x") or p["src"]["original"], timeout=60)
+    found = [f for f in found if f[0] not in used] or found
+    if not found:
+        return None, None
+    pid, url = random.choice(found[:8])
+    img = requests.get(url, timeout=60)
     img.raise_for_status()
     image_tools.OUT_DIR.mkdir(exist_ok=True)
     path = image_tools.OUT_DIR / "general.jpg"
     path.write_bytes(img.content)
-    return path, str(p["id"])
+    return path, pid
 
 
 def post_image(post, used, dry):
     """일반 글에 붙일 이미지 → (파일 경로, 공개 주소, 사진 id).
-    사진: Pexels 키가 있으면 글감에 맞는 사진 / 카드: 글자 카드 / 없음. 실패하면 글만."""
+    사진: Pixabay(또는 Pexels) 키가 있으면 글감에 맞는 사진 / 카드: 글자 카드 / 없음. 실패하면 글만."""
     mode = env("GENERAL_IMAGE", "사진")
     try:
         import image_tools
         path, pid = None, None
         if mode == "사진":
-            if not env("PEXELS_API_KEY"):
-                log("  (Pexels 키가 없어 사진 없이 글만 올립니다. 설정 → 일반 글에서 넣어 주세요)")
+            if not (env("PIXABAY_API_KEY") or env("PEXELS_API_KEY")):
+                log("  (사진 사이트 키가 없어 사진 없이 글만 올립니다. 설정 → 일반 글에서 Pixabay 키를 넣어 주세요)")
                 return None, None, None
-            path, pid = pexels_photo(post["photo"], used)
+            path, pid = stock_photo(post["photo"], used)
+            if not path:
+                log(f"  ('{post['photo']}' 사진을 찾지 못해 글만 올립니다)")
         elif mode == "카드" and post["card"]:
             path = image_tools.make_tip_card(post["card"], post["card_sub"], env("GENERAL_THEME", ""), key="general")
         if not path:
@@ -172,7 +185,7 @@ def run(dry=False, slot=""):
     if dry:
         print("\n========== 일반 글 미리보기 ==========\n" + body + "\n")
         if path:
-            what = f"Pexels 사진 '{post['photo']}' (id {photo_id})" if photo_id else f"글자 카드 {post['card']}"
+            what = f"무료 사진 '{post['photo']}' ({photo_id})" if photo_id else f"글자 카드 {post['card']}"
             print(f"이미지: {what} → {path}\n")
         else:
             print(f"이미지 없음 (사진 검색어였던 것: {post['photo']})\n")
