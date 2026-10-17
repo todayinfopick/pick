@@ -77,7 +77,7 @@ SPEC = [
      "default": "0", "help": "켜면 메모가 끝까지 비었을 때 검색 1회 약 15원"},
 
     # ---------------------------------------------------------------- 계정·키
-    {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "todaybeauty_kr",
+    {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "beautyzip_kr",
      "help": "기록에 보이는 이름. 상품 '분류'가 2번 계정 분류에 해당하지 않으면 전부 1번 계정에 올라가요"},
     {"group": "계정·키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (글 작성)", "kind": "secret", "default": ""},
     {"group": "계정·키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text", "default": "claude-haiku-5-5"},

@@ -191,7 +191,7 @@ ROW = """    <a class="item" href="{link}" target="_blank" rel="sponsored noopen
     </a>"""
 
 NEW_DAYS = 3  # 게시 후 이 기간 동안 NEW 표시
-HANDLE = (os.getenv("PAGE_HANDLE") or os.getenv("ACCOUNT_NAME") or "todaybeauty_kr").strip().lstrip("@")
+HANDLE = (os.getenv("PAGE_HANDLE") or os.getenv("ACCOUNT_NAME") or "beautyzip_kr").strip().lstrip("@")
 
 
 def build(account=1):
