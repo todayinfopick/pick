@@ -5,7 +5,7 @@
                              드라이브 사진 → 사진\\, 저장된 (연장된) 토큰 → .env
   python cloud_sync.py push : .env의 (연장된) 토큰 → 시트 '_설정' 탭
   python cloud_sync.py due  : 예약 회차가 됐는지 확인 → GitHub 출력 due=1/0, slot=회차
-                             (서버는 매시간 이것만 확인하고, 회차가 됐을 때만 게시)
+                             (서버는 15분마다 이것만 확인하고, 회차가 됐을 때만 게시)
 """
 import csv
 import datetime

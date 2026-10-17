@@ -23,7 +23,7 @@ SPEC = [
      "help": "끄면 예약 시간이 돼도 게시하지 않아요 (지금 게시 버튼은 됨)"},
     {"group": "예약·게시", "key": "POST_TIMES", "label": "게시 시각 (한국 시간)", "kind": "times",
      "default": "07:00 12:00 19:00",
-     "help": "띄어쓰기로 구분, 예: 07:00 12:00 19:00 · 서버가 매시간 확인해서 시간이 지난 회차를 올려요"},
+     "help": "띄어쓰기로 구분, 예: 07:00 12:00 19:00 · 서버가 15분마다 확인해서 시간이 지난 회차를 올려요"},
     {"group": "예약·게시", "key": "POSTS_PER_RUN", "label": "한 번에 올릴 상품 수", "kind": "int", "default": "1"},
     {"group": "예약·게시", "key": "THREADS_ON", "label": "쓰레드에 게시", "kind": "bool", "default": "1"},
     {"group": "예약·게시", "key": "IG_ON", "label": "인스타그램에 게시", "kind": "bool", "default": "1"},

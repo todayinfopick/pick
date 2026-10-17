@@ -316,7 +316,7 @@ class PostTab:
         if vals.get("GENERAL_ON", "1") != "0":
             tlist += f"   ·   일반 글: {vals.get('GENERAL_TIMES', '')}"
         self.info.config(text=(f"자동 게시: {'켜짐' if auto else '꺼짐'}   ·   게시 시각: {tlist} (한국 시간)\n"
-                               + (f"다음 회차: {nxt:%m/%d %H:%M} (서버가 매시간 확인해서 보통 1시간 안에 올라가요)"
+                               + (f"다음 회차: {nxt:%m/%d %H:%M} (서버가 15분마다 확인해서 보통 곧 올라가요)"
                                   if auto and nxt else "설정 탭에서 바꿀 수 있어요")))
 
     def refresh(self):
