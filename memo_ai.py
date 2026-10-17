@@ -77,11 +77,14 @@ def _call(model, body):
                          json=body, timeout=120)
 
 
-def generate(parts, json_out=True, temperature=0.2):
-    """제미나이에 요청해 답 글자를 돌려준다 (모델 이름이 없어졌으면 다음 이름으로)."""
+def generate(parts, json_out=True, temperature=0.2, search=False):
+    """제미나이에 요청해 답 글자를 돌려준다 (모델 이름이 없어졌으면 다음 이름으로).
+    search=True면 구글 검색으로 최신 정보를 찾아 보고 답한다 (이때는 JSON 형식 지정을 못 씀)."""
     body = {"contents": [{"role": "user", "parts": parts}],
             "generationConfig": {"temperature": temperature}}
-    if json_out:
+    if search:
+        body["tools"] = [{"google_search": {}}]
+    elif json_out:
         body["generationConfig"]["responseMimeType"] = "application/json"
     models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
     r = None
