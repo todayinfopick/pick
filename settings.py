@@ -38,9 +38,11 @@ SPEC = [
      "help": "쉼표앞: 컬러·수량 옵션이 달라도 한 번만 게시 / 전체: 옵션별로 따로 게시"},
 
     # ---------------------------------------------------------------- 일반 글
-    {"group": "일반 글 (광고 아님)", "key": "GENERAL_ON", "label": "일반 글 자동 게시 (쓰레드)", "kind": "bool",
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_ON", "label": "일반 글 자동 게시", "kind": "bool",
      "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요"},
-    {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "일반 글 이미지", "kind": "choice",
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_IG", "label": "인스타에도 올리기 (글자 카드)", "kind": "bool",
+     "default": "1", "help": "인스타는 피드에서 이미지만 보여서, 제목을 크게 넣은 글자 카드로 올려요"},
+    {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "쓰레드 일반 글 이미지", "kind": "choice",
      "choices": ["사진", "카드", "없음"], "default": "사진",
      "help": "사진: 글감에 맞는 무료 사진 한 장(Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
     {"group": "일반 글 (광고 아님)", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",

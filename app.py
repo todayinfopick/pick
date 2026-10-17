@@ -348,7 +348,8 @@ class PostTab:
                 if isinstance(v.get(ch), dict):
                     rows.append((v[ch].get("at", ""), str(v.get("name", "")).split(",")[0], label))
         for g in posted.get("_general", []):
-            rows.append((g.get("at", ""), "💬 " + g.get("topic", ""), "쓰레드(일반 글)"))
+            where = "·".join(n for k, n in (("id", "쓰레드"), ("ig_id", "인스타")) if g.get(k)) or "쓰레드"
+            rows.append((g.get("at", ""), "💬 " + g.get("topic", ""), where + "(일반 글)"))
         rows.sort(reverse=True)
         for at, name, ch in rows[:20]:
             self.posts.insert("", "end", values=(at[5:16].replace("T", " ").replace("-", "/"), name, ch))
@@ -495,12 +496,23 @@ class SettingsTab:
 
 
 # ---------------------------------------------------------------- 창
+def set_icon(root):
+    """창·작업 표시줄 아이콘 (exe 안에 묶인 icon.ico, 없으면 기본 아이콘)."""
+    import sys
+    path = os.path.join(getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__))), "icon.ico")
+    try:
+        root.iconbitmap(default=path)
+    except Exception:
+        pass
+
+
 class App:
     def __init__(self, root):
         import helper
         self.root = root
         self.values = {}
         root.title(APP_TITLE)
+        set_icon(root)
         # 쿠팡 페이지를 보면서 쓰도록 좁게, 화면 오른쪽에 붙여서 연다
         sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
         width, height = 470, min(860, sh - 80)
