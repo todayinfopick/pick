@@ -15,7 +15,7 @@ import time
 import requests
 
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-FALLBACK_MODELS = ["gemini-flash-latest", "gemini-2.5-flash"]
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest"]
 MAX_PARTS = 16      # 한 번에 보내는 이미지 조각 수
 CHUNK_H = 1600      # 긴 상세페이지 캡처는 이 높이로 잘라서 보냄 (글씨가 읽히게)
 MAX_W = 1000
