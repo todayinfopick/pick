@@ -47,6 +47,23 @@ def _fill_ids(sfx):
             pass
 
 
+def whoami():
+    """지금 계정(use 뒤)의 토큰이 맞는지: '쓰레드 @아이디 · 인스타 @아이디' (실패는 ✗ 이유)."""
+    import requests
+    out = []
+    for label_, tk, url in (("쓰레드", "THREADS_ACCESS_TOKEN", "https://graph.threads.net/v1.0/me"),
+                            ("인스타", "IG_ACCESS_TOKEN", "https://graph.instagram.com/me")):
+        if not _get(tk):
+            out.append(f"{label_} 없음")
+            continue
+        try:
+            r = requests.get(url, params={"fields": "username", "access_token": _get(tk)}, timeout=30)
+            out.append(f"{label_} @{r.json()['username']}" if r.ok else f"{label_} ✗ {r.text[:120]}")
+        except Exception as e:
+            out.append(f"{label_} ✗ {e}")
+    return " · ".join(out)
+
+
 def listing():
     """연결된 계정 번호 목록. 1번은 늘 포함."""
     return [1, 2] if connected2() else [1]

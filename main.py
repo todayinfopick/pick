@@ -840,7 +840,7 @@ def main():
         accounts.use(n)
         mine = [i for i in items if accounts.route(i["category"]) == n]
         if len(nums) > 1:
-            log(f"[{accounts.label(n)}] 상품 {len(mine)}개")
+            log(f"[{accounts.label(n)}] 상품 {len(mine)}개 · 연결: {accounts.whoami()}")
         code = post_items(mine, posted, args, now, n) or code
     accounts.use(1)
     return code
