@@ -44,6 +44,8 @@ def items(account=1):
         if int(rec.get("account") or 1) != account:
             continue
         times = [rec[c]["at"] for c in ("threads", "instagram") if isinstance(rec.get(c), dict)]
+        if rec.get("page_at"):
+            times.append(rec["page_at"])  # 예전에 다른 곳(인포크 등)에서 올린 상품을 페이지에만 넣은 경우
         if not times:
             continue  # 아직 어디에도 올라가지 않은 상품은 페이지에 넣지 않음
         name = str(rec.get("name", "")).split(",")[0].strip() or rec["link"]
@@ -203,7 +205,7 @@ def build(account=1):
         out, up = OUT.parent / str(account) / "index.html", "../"
         title = (os.getenv(f"PAGE_TITLE_{account}") or "오늘의 살림템").strip()
         handle_name = (os.getenv(f"PAGE_HANDLE_{account}") or os.getenv(f"ACCOUNT_NAME_{account}")
-                       or "").strip().lstrip("@")
+                       or ("todayzip_kr" if account == 2 else "")).strip().lstrip("@")
     rows = items(account)
     now = datetime.datetime.now()
     lines = []
