@@ -55,14 +55,32 @@ def add_products(rows):
     if "상품명" not in head:
         return rows
     ni = head.index("상품명")
-    have = {r[ni].strip() for r in rows[1:] if len(r) > ni}
-    new = [[e.get(h, "") or "" for h in head] for e in extra
-           if (e.get("상품명") or "").strip() and e["상품명"].strip() not in have]
-    if not new:
+    byname = {r[ni].strip(): n for n, r in enumerate(rows) if n and len(r) > ni}
+    changed, added = False, []
+    for e in extra:
+        name = (e.get("상품명") or "").strip()
+        if not name:
+            continue
+        for h in e:  # 시트에 없는 칸(예: 분류)은 제목줄에 새로 만든다
+            if h and h.strip() not in head and (e.get(h) or "").strip():
+                head.append(h.strip())
+                changed = True
+        if name in byname:  # 이미 있는 줄은 빈 칸만 채운다
+            r = rows[byname[name]]
+            r += [""] * (len(head) - len(r))
+            for i, h in enumerate(head):
+                if not r[i].strip() and (e.get(h) or "").strip():
+                    r[i] = e[h]
+                    changed = True
+        else:
+            rows.append([e.get(h, "") or "" for h in head])
+            added.append(name)
+            changed = True
+    if not changed:
         return rows
-    rows = rows + new
+    rows[0] = head
     gcloud.write_tab(rows)
-    print(f"✓ 추가상품 {len(new)}개를 시트에 붙였습니다: " + ", ".join(r[ni] for r in new))
+    print("✓ 추가상품을 시트에 반영했습니다" + (": " + ", ".join(added) if added else " (빈 칸 채움)"))
     return rows
 
 
