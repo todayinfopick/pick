@@ -548,8 +548,9 @@ def generate(item):
 
 
 def link_in_reply():
-    """THREADS_LINK_IN_REPLY=1(기본)이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다."""
-    return env("THREADS_LINK_IN_REPLY", "1") == "1"
+    """THREADS_LINK_IN_REPLY=1(기본)이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다.
+    첫 댓글을 끈 경우(THREADS_REPLY=0)에는 링크가 사라지지 않게 본문에 넣는다."""
+    return env("THREADS_LINK_IN_REPLY", "1") == "1" and env("THREADS_REPLY", "1") == "1"
 
 
 def threads_media():
