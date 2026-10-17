@@ -21,6 +21,8 @@ import gcloud
 BASE = pathlib.Path(__file__).resolve().parent
 ENV_PATH = BASE / ".env"
 PRODUCTS = BASE / "products.csv"
+# 채팅으로 받은 상품: 시트에 없는 상품명만 시트 맨 아래에 한 번 붙인다 (그 뒤엔 시트에서 고치면 됨)
+ADD_PRODUCTS = BASE / "추가상품.csv"
 # PC 전용 경로라 서버에서는 쓰지 않는 설정
 PC_ONLY = {"PHOTO_DIR", "BGM_DIR", "FONT_PATH", "RESEARCH_FILE", "GOOGLE_SA_FILE"}
 TOKEN_KEYS = ["THREADS_ACCESS_TOKEN", "THREADS_USER_ID", "IG_ACCESS_TOKEN", "IG_USER_ID"]
@@ -43,9 +45,48 @@ def write_env():
     print("✓ 설정(.env)을 준비했습니다.")
 
 
+def add_products(rows):
+    """추가상품.csv 의 상품 중 시트에 없는 것을 시트에 붙인다. 붙였으면 새 rows."""
+    if not ADD_PRODUCTS.exists() or not rows:
+        return rows
+    with open(ADD_PRODUCTS, encoding="utf-8-sig", newline="") as f:
+        extra = list(csv.DictReader(f))
+    head = [h.strip() for h in rows[0]]
+    if "상품명" not in head:
+        return rows
+    ni = head.index("상품명")
+    byname = {r[ni].strip(): n for n, r in enumerate(rows) if n and len(r) > ni}
+    changed, added = False, []
+    for e in extra:
+        name = (e.get("상품명") or "").strip()
+        if not name:
+            continue
+        for h in e:  # 시트에 없는 칸(예: 분류)은 제목줄에 새로 만든다
+            if h and h.strip() not in head and (e.get(h) or "").strip():
+                head.append(h.strip())
+                changed = True
+        if name in byname:  # 이미 있는 줄은 빈 칸만 채운다
+            r = rows[byname[name]]
+            r += [""] * (len(head) - len(r))
+            for i, h in enumerate(head):
+                if not r[i].strip() and (e.get(h) or "").strip():
+                    r[i] = e[h]
+                    changed = True
+        else:
+            rows.append([e.get(h, "") or "" for h in head])
+            added.append(name)
+            changed = True
+    if not changed:
+        return rows
+    rows[0] = head
+    gcloud.write_tab(rows)
+    print("✓ 추가상품을 시트에 반영했습니다" + (": " + ", ".join(added) if added else " (빈 칸 채움)"))
+    return rows
+
+
 def pull():
     write_env()
-    rows = gcloud.read_tab()
+    rows = add_products(gcloud.read_tab())
     if not rows:
         raise SystemExit("구글 시트 '상품' 탭이 비어 있습니다.")
     with open(PRODUCTS, "w", encoding="utf-8-sig", newline="") as f:
