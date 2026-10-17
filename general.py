@@ -200,7 +200,7 @@ def post_one(posted, dry, account=1):
     history = posted.setdefault("_general", [])
     mine = [h for h in history if h.get("account", 1) == account]
     row, topic = sheet_topic(account)
-    theme = env("GENERAL_THEME") or ("뷰티·생활 꿀팁" if account == 1 else "살림·생활 꿀팁")
+    theme = env("GENERAL_THEME") or ("뷰티·건강 꿀팁" if account == 1 else "살림·식품 꿀팁")
     try:
         post = write(theme, topic, [h.get("topic", "") for h in mine])
     except Exception as e:

@@ -4,8 +4,8 @@
 1번 계정: 지금까지 쓰던 설정 이름 그대로 (THREADS_ACCESS_TOKEN, IG_USER_ID, GENERAL_THEME …)
 2번 계정: 같은 이름 뒤에 _2 (THREADS_ACCESS_TOKEN_2, IG_USER_ID_2, GENERAL_THEME_2 …)
 
-상품은 시트 '분류' 칸을 보고 계정을 정한다. ACCOUNT_CATEGORY_2(예: 생활)에 적힌 말이 들어 있으면 2번,
-그 밖(비었거나 뷰티 등)은 1번. 2번 계정이 연결되지 않았으면 전부 1번.
+상품은 시트 '분류' 칸을 보고 계정을 정한다. ACCOUNT_CATEGORY_2(기본: 생활 식품)에 적힌 말이 들어 있으면 2번,
+그 밖(비었거나 뷰티·건강 등)은 1번. 2번 계정이 연결되지 않았으면 전부 1번.
 """
 import os
 
@@ -94,7 +94,7 @@ def route(category):
     """상품 '분류' 칸 값 → 올릴 계정 번호."""
     c = "".join((category or "").split())
     if c and connected2():
-        for word in _get("ACCOUNT_CATEGORY_2").replace(",", " ").split():
+        for word in (_get("ACCOUNT_CATEGORY_2") or "생활 식품").replace(",", " ").split():
             if word and word in c:
                 return 2
     return 1

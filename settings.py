@@ -46,7 +46,7 @@ SPEC = [
     {"group": "일반 글 (광고 아님)", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",
      "default": "", "help": "pixabay.com 가입 → pixabay.com/api/docs 의 key 값 복사 (무료, 출처 표시 필요 없음)"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_THEME", "label": "계정 주제", "kind": "text",
-     "default": "뷰티·생활 꿀팁",
+     "default": "뷰티·건강 꿀팁",
      "help": "AI가 이 주제 안에서 계절에 맞는 글감을 골라요. 시트 '일반글' 탭 '주제' 칸에 적어 두면 그 글감을 먼저 써요"},
 
     # ---------------------------------------------------------------- 쓰레드
@@ -79,6 +79,8 @@ SPEC = [
     # ---------------------------------------------------------------- 계정·키
     {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "beautyzip_kr",
      "help": "기록에 보이는 이름. 상품 '분류'가 2번 계정 분류에 해당하지 않으면 전부 1번 계정에 올라가요"},
+    {"group": "계정·키", "key": "ACCOUNT_CATEGORY", "label": "1번 계정 분류", "kind": "text", "default": "뷰티 건강",
+     "help": "캡처도우미 분류 버튼에 나오는 말. 2번 계정 분류에 없는 상품은 모두 1번 계정으로 가요"},
     {"group": "계정·키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (글 작성)", "kind": "secret", "default": ""},
     {"group": "계정·키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text", "default": "claude-haiku-5-5"},
     {"group": "계정·키", "key": "THREADS_ACCESS_TOKEN", "label": "쓰레드 토큰", "kind": "secret", "default": ""},
@@ -96,9 +98,9 @@ SPEC = [
     {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_NAME_2", "label": "2번 계정 이름", "kind": "text",
      "default": "todayzip_kr"},
     {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_CATEGORY_2", "label": "이 계정에 올릴 분류", "kind": "text",
-     "default": "생활", "help": "시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정에 올려요. 여러 개는 띄어쓰기로 (예: 생활 주방 청소)"},
+     "default": "생활 식품", "help": "시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정에 올려요. 여러 개는 띄어쓰기로 (예: 생활 식품 주방)"},
     {"group": "2번 계정 (쓰레드+인스타)", "key": "GENERAL_THEME_2", "label": "일반 글 주제", "kind": "text",
-     "default": "살림·청소·정리 꿀팁"},
+     "default": "살림·식품 꿀팁"},
     {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_ACCESS_TOKEN_2", "label": "쓰레드 토큰", "kind": "secret",
      "default": "", "help": "비워 두면 2번 계정은 쓰지 않아요 (모든 상품이 1번 계정으로)"},
     {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_USER_ID_2", "label": "쓰레드 사용자 ID", "kind": "text",
