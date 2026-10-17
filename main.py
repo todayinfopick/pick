@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 
 import affiliates
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 ENV_PATH = BASE / ".env"
 load_dotenv(ENV_PATH)
 
@@ -199,11 +199,11 @@ def queue(items, now):
 
 # ---------------------------------------------------------------- 채널·형식 판단
 def threads_on():
-    return bool(env("THREADS_USER_ID") and env("THREADS_ACCESS_TOKEN"))
+    return env("THREADS_ON", "1") != "0" and bool(env("THREADS_USER_ID") and env("THREADS_ACCESS_TOKEN"))
 
 
 def ig_on():
-    return bool(env("IG_USER_ID") and env("IG_ACCESS_TOKEN"))
+    return env("IG_ON", "1") != "0" and bool(env("IG_USER_ID") and env("IG_ACCESS_TOKEN"))
 
 
 def media_ext(src):
@@ -303,12 +303,18 @@ points: 이미지·영상의 장점 3개. 각각 12자 이내 짧은 구절.
   성분·공법·기술 용어를 그대로 쓰지 말고, 그 덕분에 사용자가 느끼는 변화로 바꿔 써라.
   좋은 예: "덧발라도 안 두꺼워요", "오후에도 촉촉하게", "거품 하나로 메이크업까지"
   나쁜 예: "극저온 동결·진공 건조", "저분자 히알루론산 함유"
-threads: 220자 이내. 첫 문장은 눈길을 끄는 한 줄. 이모지 0~2개, 해시태그 없음.
+threads: 300자 이내. 쓰레드는 글이 주인공이고 사진·영상은 참고용일 뿐이다. 글만 읽어도 상품이 이해되고
+  댓글로 이야기하고 싶어지게 써라. 친구한테 말하듯 반말을 섞은 편한 말투
+  (예: "이거 알아?", "~더라", "~하면 딱이야", "~거든요"처럼 반말 위주에 존댓말 살짝).
+  첫 문장은 눈길을 끄는 한 줄, 마지막은 읽는 사람에게 던지는 가벼운 질문 한 줄.
+  이모지 0~2개, 해시태그 없음. 써본 척 금지 규칙은 그대로 지켜라.
+threads_reply: 쓰레드 첫 댓글 맨 위 [광고] 뒤에 붙을 짧은 한 줄. 25자 이내, 반말 섞인 감탄·공감형.
+  예: "나만 몰랐네..이 좋은 걸 ㅠㅠ", "이건 진짜 알려줘야 돼". 링크·광고 문구는 넣지 마라(프로그램이 붙인다).
 instagram: 350자 이내 본문. 줄바꿈으로 읽기 쉽게. 해시태그 없음.
 hashtags: 관련 해시태그 5~8개를 한 줄로 (#으로 시작, 띄어쓰기로 구분).
 
 다른 말 없이 아래 JSON만 출력:
-{{"headline": "...", "points": ["...", "...", "..."], "threads": "...", "instagram": "...", "hashtags": "..."}}"""
+{{"headline": "...", "points": ["...", "...", "..."], "threads": "...", "threads_reply": "...", "instagram": "...", "hashtags": "..."}}"""
 
 
 POST_TOOL = {
@@ -319,11 +325,12 @@ POST_TOOL = {
         "properties": {
             "headline": {"type": "string", "description": "첫 화면 문구, 18자 이내, 고민·상황·질문형"},
             "points": {"type": "array", "items": {"type": "string"}, "description": "장점 3개, 각 12자 이내, 기술 용어 대신 사용자가 느끼는 변화"},
-            "threads": {"type": "string", "description": "쓰레드 본문, 220자 이내"},
+            "threads": {"type": "string", "description": "쓰레드 본문, 300자 이내, 글이 주인공, 반말 섞인 말투, 끝은 가벼운 질문"},
+            "threads_reply": {"type": "string", "description": "쓰레드 첫 댓글 한 줄, 25자 이내, 반말 섞인 감탄·공감형, 링크 없음"},
             "instagram": {"type": "string", "description": "인스타 본문, 350자 이내, 해시태그 없음"},
             "hashtags": {"type": "string", "description": "해시태그 5~8개, 띄어쓰기로 구분"},
         },
-        "required": ["headline", "points", "threads", "instagram", "hashtags"],
+        "required": ["headline", "points", "threads", "threads_reply", "instagram", "hashtags"],
     },
 }
 
@@ -413,15 +420,61 @@ def remember_memo(item):
     save_research(cache)
 
 
-def research(item):
-    """특징메모가 비었을 때 AI가 웹 검색으로 상품 특징을 찾는다. 못 찾으면 빈 문자열.
-    한 번 찾은 결과는 상품명 기준으로 저장해 두고 다시 쓴다(검색 비용 0)."""
-    if env("AUTO_RESEARCH", "1") == "0" or not env("ANTHROPIC_API_KEY"):
+def gemini_memo(item):
+    """제미나이(무료 키)가 사진 폴더의 캡처(_설명 폴더 포함)를 읽고 특징메모를 쓴다. 못 쓰면 ''."""
+    import memo_ai
+    if not memo_ai.enabled():
         return ""
+    try:
+        import image_tools
+        from PIL import Image
+        folder = image_tools.photo_root() / image_tools.folder_name(item["name"])
+        files = []
+        for d in (folder, folder / "_설명"):
+            if d.is_dir():
+                files += image_tools.images_in(d)
+        images = []
+        for f in files[:12]:
+            with Image.open(f) as im:
+                images.append(im.copy())
+        if not images:
+            return ""
+        return memo_ai.write_memo(images, item["name"], item["link"])["memo"]
+    except Exception as e:
+        log(f"  ! 제미나이 메모 작성 실패: {e}")
+        return ""
+
+
+def save_memo_to_sheet(item, memo):
+    """서버에서 채운 메모를 시트 특징메모 칸에도 적어 둔다 (보고 고칠 수 있게). 실패해도 계속."""
+    try:
+        import gcloud
+        if gcloud.enabled() and (gcloud.env("GOOGLE_SA_JSON") or gcloud.env("GOOGLE_SA_FILE")):
+            gcloud.set_memo(item["name"], memo)
+    except Exception as e:
+        log(f"  (시트에 메모를 적지 못했습니다: {e})")
+
+
+def research(item):
+    """특징메모가 비었을 때 특징을 찾는다. 못 찾으면 빈 문자열.
+    1) 저장해 둔 메모(research.json) 2) 제미나이가 캡처 읽기(무료) 3) Claude 웹 검색(유료, AUTO_RESEARCH=1일 때만)
+    찾은 결과는 상품명 기준으로 저장해 두고 다시 쓴다."""
     cache = _load_json(research_path())
     hit = cache.get(name_key(item["name"]))
+    if hit is not None and hit.get("facts"):
+        return hit["facts"]
+    facts = gemini_memo(item)
+    if facts:
+        cache[name_key(item["name"])] = {"name": item["name"], "facts": facts, "link": item["link"],
+                                         "source": "제미나이(캡처)",
+                                         "at": datetime.datetime.now().isoformat(timespec="seconds")}
+        save_research(cache)
+        save_memo_to_sheet(item, facts)
+        return facts
     if hit is not None:
-        return hit.get("facts", "")
+        return ""  # 예전에 유료 검색으로도 못 찾은 상품
+    if env("AUTO_RESEARCH", "0") == "0" or not env("ANTHROPIC_API_KEY"):
+        return ""
 
     r = _ask_ai({
         "model": env("CLAUDE_MODEL", "claude-haiku-5-5"),
@@ -488,18 +541,43 @@ def generate(item):
         "headline": str(data.get("headline", "")).strip() or item["short"][:16],
         "points": points or [item["short"]],
         "threads": str(data["threads"]).strip(),
+        "threads_reply": str(data.get("threads_reply", "")).strip(),
         "instagram": str(data["instagram"]).strip(),
         "hashtags": str(data.get("hashtags", "")).strip(),
     }
 
 
+def link_in_reply():
+    """THREADS_LINK_IN_REPLY=1(기본)이면 쓰레드 본문 대신 첫 댓글에 구매 링크를 넣는다.
+    첫 댓글을 끈 경우(THREADS_REPLY=0)에는 링크가 사라지지 않게 본문에 넣는다."""
+    return env("THREADS_LINK_IN_REPLY", "1") == "1" and env("THREADS_REPLY", "0") == "1"
+
+
+def threads_media():
+    """THREADS_MEDIA=1(기본)이면 쓰레드에 원본 사진·영상을 붙인다(자막·나레이션·소리 없이). 0이면 글만."""
+    return env("THREADS_MEDIA", "1") == "1"
+
+
 def compose_threads(body, link, disclosure=DISCLOSURE):
     head = f"{disclosure}\n\n"
-    tail = f"\n\n👉 {link}"
+    tail = "\n\n👇 구매 링크는 댓글에" if link_in_reply() else f"\n\n👉 {link}"
     room = 500 - len(head) - len(tail)  # 쓰레드 글자 수 제한 500자
     if len(body) > room:
         body = body[:room - 1].rstrip() + "…"
     return head + body + tail
+
+
+def compose_threads_reply(text, link, disclosure=DISCLOSURE):
+    """쓰레드 첫 댓글: [광고] 한 줄 + 대가성 문구 + 링크 여러 번(한 개가 죽을 때 대비).
+    링크를 본문에 두는 설정이면 한 줄만. 쓸 내용이 없으면 ''(댓글을 달지 않음)."""
+    if env("THREADS_REPLY", "0") != "1":
+        return ""
+    line = text.get("threads_reply", "").strip()
+    if not link_in_reply():
+        return line[:500]
+    repeat = max(1, int(env("THREADS_LINK_REPEAT", "3") or 3))
+    lines = [f"[광고] {line}".strip(), disclosure] + [link] * repeat
+    return "\n".join(lines)[:500]
 
 
 def compose_instagram(text, name, disclosure=DISCLOSURE):
@@ -540,6 +618,46 @@ def local_media(item, kind, text):
     if kind == "carousel":
         return image_tools.make_carousel(item["short"], text["headline"], text["points"], photos, key)
     return [image_tools.make_card(item["short"], text["headline"], photos, key)]
+
+
+def threads_raw_media(item):
+    """쓰레드용 원본 미디어 (파일 목록, 형식). 자동 카드·영상의 자막·[광고] 표시·소리는 넣지 않는다.
+    - 미디어 칸에 직접 만든 완성본이 있으면 그대로
+    - 사진 폴더에 영상이 있고 형식이 영상(또는 비움)이면 그 영상을 소리만 빼서
+    - 아니면 상품 사진 원본 (1장=이미지, 여러 장=캐러셀)"""
+    import image_tools
+    files = media_list(item)
+    if files:
+        kind = "video" if media_ext(files[0]) in VIDEO_EXT else ("carousel" if len(files) > 1 else "image")
+        return [m if m.startswith("http") else image_tools.resolve_path(m) for m in files], kind
+    key = item["link"].rsplit("/", 1)[-1]
+    own = folder_video(item)
+    if own and item["kind_pref"] in ("", "video") and can_host("video"):
+        import video_tools
+        return [video_tools.mute_video(own, f"{key}_threads")], "video"
+    photos = image_tools.load_photos(item["source"], item["name"])
+    image_tools.OUT_DIR.mkdir(exist_ok=True)
+    paths = []
+    for i, im in enumerate(photos[:10], start=1):
+        p = image_tools.OUT_DIR / f"{image_tools.slug(key)}_threads_{i:02d}.jpg"
+        im.convert("RGB").save(p, quality=92)
+        paths.append(p)
+    return paths, ("carousel" if len(paths) > 1 else "image")
+
+
+def resolve_threads_media(item):
+    """쓰레드 원본 미디어 공개 주소와 형식. 없거나 실패하면 ([], 'text')."""
+    if not threads_media():
+        return [], "text"
+    try:
+        import image_tools
+        files, kind = threads_raw_media(item)
+        if not files or not can_host(kind):
+            return [], "text"
+        return [f if isinstance(f, str) else image_tools.upload(f) for f in files], kind
+    except Exception as e:
+        log(f"  ✗ 쓰레드 사진·영상 준비 실패, 글만 올립니다: {e}")
+        return [], "text"
 
 
 def resolve_media(item, kind, text):
@@ -596,7 +714,7 @@ def wait_container(url, params, field, ok, timeout):
     raise RuntimeError("미디어 처리 시간이 너무 오래 걸립니다. 다음 실행 때 다시 시도합니다.")
 
 
-def threads_post(text, urls=None, kind="image"):
+def threads_post(text, urls=None, kind="image", reply_to=None):
     ver = env("THREADS_API_VERSION", "v1.0")
     uid, tok = env("THREADS_USER_ID"), env("THREADS_ACCESS_TOKEN")
     base = f"https://graph.threads.net/{ver}"
@@ -618,12 +736,27 @@ def threads_post(text, urls=None, kind="image"):
         cid = create({"media_type": "VIDEO", "video_url": urls[0], "text": text}, 600)
     elif urls:
         cid = create({"media_type": "IMAGE", "image_url": urls[0], "text": text})
+    elif reply_to:
+        cid = create({"media_type": "TEXT", "text": text, "reply_to_id": reply_to})
     else:
         cid = create({"media_type": "TEXT", "text": text})
     r = requests.post(f"{base}/{uid}/threads_publish",
                       data={"creation_id": cid, "access_token": tok}, timeout=60)
     check(r, "쓰레드 게시")
     return r.json()["id"]
+
+
+def threads_reply(rec, text, item):
+    """방금 올린 쓰레드 글에 첫 댓글을 단다. 실패해도 본글은 그대로 둔다."""
+    body = compose_threads_reply(text, item["link"], item["aff"]["disclosure"])
+    if not body:
+        return
+    time.sleep(int(env("THREADS_REPLY_DELAY", "20") or 20))  # 본글이 반영될 시간을 조금 준다
+    try:
+        rec["reply"] = threads_post(body, reply_to=rec["id"])
+        log(f"  ✓ threads 댓글 완료 (id {rec['reply']})")
+    except Exception as e:
+        log(f"  ✗ threads 댓글: {e} (메타 앱 권한에 threads_manage_replies가 있는지 확인)")
 
 
 def instagram_post(urls, caption, kind="image", cover=None):
@@ -662,6 +795,10 @@ KIND_LABEL = {"video": "영상(릴스)", "carousel": "캐러셀(여러 장)", "i
 def preview(item, kind, text):
     print("\n========== 쓰레드 미리보기 ==========")
     print(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]))
+    reply = compose_threads_reply(text, item["link"], item["aff"]["disclosure"])
+    if reply:
+        print("\n---------- 쓰레드 첫 댓글 ----------")
+        print(reply)
     print("\n========== 인스타그램 미리보기 ==========")
     print(compose_instagram(text, item["short"], item["aff"]["disclosure"]))
     print(f"\n========== {KIND_LABEL[kind]} ==========")
@@ -685,7 +822,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true", help="게시하지 않고 미리보기만")
     ap.add_argument("--count", type=int, default=int(env("POSTS_PER_RUN", "1") or 1))
+    ap.add_argument("--slot", default="", help="예약 회차(예: 2026-10-17 07:00). 게시 기록에 남겨 같은 회차를 다시 올리지 않게")
     args = ap.parse_args()
+    if args.slot:
+        posted = load_posted()
+        posted.setdefault("_meta", {})["last_slot"] = args.slot
+        save_posted(posted)  # 실패해도 같은 회차를 매시간 다시 시도하지 않도록 먼저 기록
 
     now = datetime.datetime.now()
     items = load_products()
@@ -737,7 +879,7 @@ def main():
             continue
 
         urls = []
-        if media_possible(item, kind):
+        if media_possible(item, kind) and "instagram" in channels:
             try:
                 urls = resolve_media(item, kind, text)
             except Exception as e:
@@ -748,16 +890,21 @@ def main():
         for ch in channels:
             try:
                 if ch == "threads":
-                    pid = threads_post(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]), urls, kind)
+                    t_urls, t_kind = resolve_threads_media(item)
+                    pid = threads_post(compose_threads(text["threads"], item["link"], item["aff"]["disclosure"]),
+                                       t_urls, t_kind)
                 else:
                     if not urls:
                         raise RuntimeError(f"{label}이(가) 없어 인스타그램에 올릴 수 없습니다.")
                     pid = instagram_post(urls, compose_instagram(text, item["short"], item["aff"]["disclosure"]),
                                          kind, cover)
-                rec[ch] = {"id": pid, "kind": kind if urls else "text",
+                used = (t_kind if t_urls else "text") if ch == "threads" else (kind if urls else "text")
+                rec[ch] = {"id": pid, "kind": used,
                            "at": datetime.datetime.now().isoformat(timespec="seconds")}
                 ok = True
                 log(f"  ✓ {ch} 게시 완료 (id {pid})")
+                if ch == "threads":
+                    threads_reply(rec[ch], text, item)
             except Exception as e:
                 fails = rec.setdefault("fails", {})
                 fails[ch] = fails.get(ch, 0) + 1

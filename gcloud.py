@@ -13,9 +13,10 @@
 import json
 import os
 import pathlib
+import sys
 import urllib.parse
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets",
           "https://www.googleapis.com/auth/drive.readonly"]
 PRODUCT_TAB = "상품"
@@ -101,6 +102,35 @@ def write_tab(rows, tab=PRODUCT_TAB):
         _check(session().put(f"{SHEETS}/{sid}/values/{_rng(tab, 'A1')}",
                              params={"valueInputOption": "RAW"}, json={"values": rows}, timeout=60),
                f"구글 시트 '{tab}' 저장")
+
+
+def write_cell(row, col, value, tab=PRODUCT_TAB):
+    """칸 하나만 바꾼다. row·col은 1부터 (1행=제목)."""
+    letters = ""
+    while col:
+        col, rem = divmod(col - 1, 26)
+        letters = chr(65 + rem) + letters
+    _check(session().put(f"{SHEETS}/{env('GOOGLE_SHEET_ID')}/values/{_rng(tab, f'{letters}{row}')}",
+                         params={"valueInputOption": "RAW"}, json={"values": [[value]]}, timeout=60),
+           f"구글 시트 '{tab}' {letters}{row} 저장")
+
+
+def set_memo(name, memo):
+    """상품명이 같은 줄의 특징메모 칸이 비어 있으면 memo를 적는다. 적었으면 True."""
+    rows = read_tab()
+    if not rows:
+        return False
+    head = [h.strip() for h in rows[0]]
+    if "상품명" not in head or "특징메모" not in head:
+        return False
+    ni, mi = head.index("상품명"), head.index("특징메모")
+    for n, r in enumerate(rows[1:], start=2):
+        if len(r) > ni and r[ni].strip() == name.strip():
+            if len(r) > mi and r[mi].strip():
+                return False
+            write_cell(n, mi + 1, memo)
+            return True
+    return False
 
 
 def read_settings():
