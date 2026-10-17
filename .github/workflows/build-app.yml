@@ -5,7 +5,7 @@ name: 프로그램(exe) 만들기
 #   https://github.com/<계정>/<저장소>/releases/download/app/CoupangAutopost.exe
 on:
   push:
-    paths: [app.py, helper.py, settings.py, memo_ai.py, main.py, gcloud.py, image_tools.py,
+    paths: [app.py, helper.py, settings.py, memo_ai.py, general.py, main.py, gcloud.py, image_tools.py,
             affiliates.py, requirements-app.txt, .github/workflows/build-app.yml]
   workflow_dispatch:
 

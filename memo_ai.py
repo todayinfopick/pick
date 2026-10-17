@@ -74,6 +74,29 @@ def _call(model, body):
                          json=body, timeout=120)
 
 
+def generate(parts, json_out=True, temperature=0.2):
+    """제미나이에 요청해 답 글자를 돌려준다 (모델 이름이 없어졌으면 다음 이름으로)."""
+    body = {"contents": [{"role": "user", "parts": parts}],
+            "generationConfig": {"temperature": temperature}}
+    if json_out:
+        body["generationConfig"]["responseMimeType"] = "application/json"
+    models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
+    r = None
+    for model in dict.fromkeys(models):
+        r = _call(model, body)
+        if r.status_code != 404:
+            break
+    if r.status_code == 429:
+        raise RuntimeError("제미나이 무료 사용량을 다 썼습니다. 내일 다시 시도해 주세요.")
+    if r.status_code >= 400:
+        raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
+    try:
+        cand = r.json()["candidates"][0]
+        return "".join(p.get("text", "") for p in cand["content"]["parts"])
+    except (KeyError, IndexError, ValueError) as e:
+        raise RuntimeError(f"제미나이 답을 읽지 못했습니다: {e}")
+
+
 def write_memo(images, name="", link=""):
     """캡처 사진(PIL 이미지 목록)으로 상품명·메모·설명캡처 번호를 얻는다.
     반환 {'name': str, 'memo': str, 'info': [0부터 시작하는 사진 번호]}. 실패하면 RuntimeError."""
@@ -85,24 +108,10 @@ def write_memo(images, name="", link=""):
     parts = [{"text": PROMPT.format(hint=hint)}]
     for label, data in _pieces(images):
         parts += [{"text": label}, {"inline_data": {"mime_type": "image/jpeg", "data": data}}]
-    body = {"contents": [{"role": "user", "parts": parts}],
-            "generationConfig": {"temperature": 0.2, "responseMimeType": "application/json"}}
-
-    models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
-    r = None
-    for model in dict.fromkeys(models):
-        r = _call(model, body)
-        if r.status_code != 404:  # 모델 이름이 없어졌으면 다음 이름으로
-            break
-    if r.status_code == 429:
-        raise RuntimeError("제미나이 무료 사용량을 다 썼습니다. 내일 다시 시도해 주세요.")
-    if r.status_code >= 400:
-        raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
+    text = generate(parts)
     try:
-        cand = r.json()["candidates"][0]
-        text = "".join(p.get("text", "") for p in cand["content"]["parts"])
         data = json.loads(text[text.find("{"):text.rfind("}") + 1])
-    except (KeyError, IndexError, ValueError) as e:
+    except ValueError as e:
         raise RuntimeError(f"제미나이 답을 읽지 못했습니다: {e}")
     info = []
     for v in data.get("info_images") or []:

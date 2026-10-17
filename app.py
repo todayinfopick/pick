@@ -267,8 +267,10 @@ class PostTab:
                   command=lambda: self.run("지금 게시")).pack(side="left")
         tk.Button(bar, text="👁 미리보기", width=12, height=2,
                   command=lambda: self.run("미리보기")).pack(side="left", padx=6)
+        tk.Button(bar, text="✍ 일반 글 게시", width=12, height=2,
+                  command=lambda: self.run("일반 글 게시")).pack(side="left")
         tk.Button(bar, text="🔑 토큰 연장", width=12, height=2,
-                  command=lambda: self.run("토큰 연장")).pack(side="left")
+                  command=lambda: self.run("토큰 연장")).pack(side="left", padx=6)
         tk.Button(bar, text="↻ 새로고침", command=self.refresh).pack(side="right")
 
         links = tk.Frame(frame)
@@ -310,6 +312,8 @@ class PostTab:
         if nxt is None and times:
             nxt = (now + datetime.timedelta(days=1)).replace(hour=times[0][0], minute=times[0][1], second=0)
         tlist = ", ".join(f"{h:02d}:{m:02d}" for h, m in times) or "(없음)"
+        if vals.get("GENERAL_ON", "1") != "0":
+            tlist += f"   ·   일반 글: {vals.get('GENERAL_TIMES', '')}"
         self.info.config(text=(f"자동 게시: {'켜짐' if auto else '꺼짐'}   ·   게시 시각: {tlist} (한국 시간)\n"
                                + (f"다음 회차: {nxt:%m/%d %H:%M} (서버가 매시간 확인해서 보통 1시간 안에 올라가요)"
                                   if auto and nxt else "설정 탭에서 바꿀 수 있어요")))
@@ -342,6 +346,8 @@ class PostTab:
             for ch, label in (("threads", "쓰레드"), ("instagram", "인스타")):
                 if isinstance(v.get(ch), dict):
                     rows.append((v[ch].get("at", ""), str(v.get("name", "")).split(",")[0], label))
+        for g in posted.get("_general", []):
+            rows.append((g.get("at", ""), "💬 " + g.get("topic", ""), "쓰레드(일반 글)"))
         rows.sort(reverse=True)
         for at, name, ch in rows[:20]:
             self.posts.insert("", "end", values=(at[5:16].replace("T", " ").replace("-", "/"), name, ch))
@@ -362,6 +368,7 @@ class PostTab:
             return
         msg = {"지금 게시": "다음 상품 1개를 지금 바로 게시할까요?",
                "미리보기": "게시하지 않고 글·이미지만 만들어 볼까요?\n(결과는 실행 기록에서 확인)",
+               "일반 글 게시": "쓰레드에 일반 글(광고 아님) 1개를 지금 올릴까요?",
                "토큰 연장": "쓰레드·인스타 토큰을 지금 연장할까요?"}[mode]
         if not messagebox.askyesno(APP_TITLE, msg):
             return
@@ -455,11 +462,12 @@ class SettingsTab:
 
     def save(self):
         new = {k: v.get().strip() for k, v in self.vars.items()}
-        try:
-            settings.post_times(new["POST_TIMES"])
-        except ValueError:
-            messagebox.showwarning("설정", "게시 시각을 '07:00 12:00 19:00'처럼 적어 주세요.")
-            return
+        for k in (s["key"] for s in settings.SPEC if s["kind"] == "times"):
+            try:
+                settings.post_times(new[k])
+            except ValueError:
+                messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'을(를) '07:00 12:00 19:00'처럼 적어 주세요.")
+                return
         for k in ("POSTS_PER_RUN", "THREADS_LINK_REPEAT", "THREADS_REPLY_DELAY"):
             if not new[k].isdigit():
                 messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'은(는) 숫자로 적어 주세요.")

@@ -13,7 +13,7 @@ on:
         description: "할 일"
         type: choice
         default: 지금 게시
-        options: [지금 게시, 미리보기, 토큰 연장]
+        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 토큰 연장]
 
 concurrency:
   group: autopost
@@ -54,11 +54,11 @@ jobs:
         run: python cloud_sync.py due
 
       - name: 글꼴 준비
-        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.any == '1')
         run: sudo apt-get install -y -qq fonts-nanum > /dev/null
 
       - name: 시트·사진 받기
-        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: (github.event.schedule != '17 * * * *' || steps.check.outputs.any == '1')
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
@@ -77,12 +77,24 @@ jobs:
         if: inputs.mode == '지금 게시'
         run: python main.py
 
+      - name: 일반 글
+        if: "!cancelled() && steps.check.outputs.gdue == '1'"
+        run: python general.py --slot "${{ steps.check.outputs.gslot }}"
+
+      - name: 일반 글 지금 게시
+        if: inputs.mode == '일반 글 게시'
+        run: python general.py
+
+      - name: 일반 글 미리보기
+        if: inputs.mode == '일반 글 미리보기'
+        run: python general.py --dry-run
+
       - name: 링크 페이지 만들기
-        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.any == '1')
         run: python build_page.py
 
       - name: 결과 저장
-        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.due == '1')
+        if: always() && (github.event.schedule != '17 * * * *' || steps.check.outputs.any == '1')
         run: |
           python cloud_sync.py push || true
           git config user.name "autopost-bot"
