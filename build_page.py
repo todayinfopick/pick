@@ -14,7 +14,7 @@ import sys
 
 import affiliates
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 POSTED = BASE / "posted.json"
 OUT = BASE / "docs" / "index.html"
 THUMBS = OUT.parent / "thumbs"

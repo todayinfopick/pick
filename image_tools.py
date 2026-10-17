@@ -8,6 +8,7 @@ import hashlib
 import io
 import os
 import pathlib
+import sys
 import random
 import re
 import time
@@ -16,7 +17,7 @@ import urllib.parse
 import requests
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 OUT_DIR = BASE / "media"
 
 FONT_CANDIDATES = [

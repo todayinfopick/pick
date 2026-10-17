@@ -232,8 +232,13 @@ def is_plain_store(text):
 
 # ---------------------------------------------------------------- 화면
 class Helper:
-    def __init__(self, root):
+    def __init__(self, root, parent=None):
+        """parent를 주면 그 안에 그린다(통합 프로그램의 '상품 등록' 탭). 없으면 작은 창 하나."""
         self.root = root
+        self.standalone = parent is None
+        box = root if parent is None else parent
+        self.ai_done = False  # 이번 저장에서 제미나이 메모 작성을 이미 했는지
+        self.info_idx = []  # 제미나이가 '설명 캡처'라고 본 사진 번호 (게시에 안 씀)
         self.images = []
         self.last_text = None
         self.last_img_hash = None
@@ -244,60 +249,63 @@ class Helper:
         self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
         self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
 
-        root.title("쿠팡 캡처 도우미 — 새 상품 등록")
-        root.attributes("-topmost", True)
-        root.resizable(False, False)
-        sw = root.winfo_screenwidth()
-        root.geometry(f"+{sw - 420}+40")  # 높이는 사진 수에 맞춰 자동
-        root.minsize(400, 0)
+        if self.standalone:
+            root.title("쿠팡 캡처 도우미 — 새 상품 등록")
+            root.attributes("-topmost", True)
+            root.resizable(False, False)
+            sw = root.winfo_screenwidth()
+            root.geometry(f"+{sw - 420}+40")  # 높이는 사진 수에 맞춰 자동
+            root.minsize(400, 0)
 
         pad = {"padx": 10, "pady": 3}
-        pick = tk.Frame(root, bg="#EEF2FF")
+        pick = tk.Frame(box, bg="#EEF2FF")
         pick.pack(fill="x", padx=10, pady=(8, 2))
         tk.Label(pick, text="복사한 글 넣을 칸:", bg="#EEF2FF").pack(side="left", padx=4)
         for val, txt in (("auto", "자동"), ("name", "상품명"), ("memo", "특징메모")):
             tk.Radiobutton(pick, text=txt, value=val, variable=self.target, bg="#EEF2FF",
                            command=self.on_target).pack(side="left")
-        tk.Label(root, text="① 제휴 링크 (복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
-        self.link = tk.Entry(root)
+        tk.Label(box, text="① 제휴 링크 (복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        self.link = tk.Entry(box)
         self.link.pack(fill="x", padx=10)
 
-        tk.Label(root, text="② 상품명 (드래그해서 복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
-        self.name = tk.Entry(root)
+        tk.Label(box, text="② 상품명 (드래그해서 복사하면 자동 입력)", anchor="w").pack(fill="x", **pad)
+        self.name = tk.Entry(box)
         self.name.pack(fill="x", padx=10)
 
-        tk.Label(root, text="③ 특징메모 (선택 · 비우면 AI가 검색)", anchor="w").pack(fill="x", **pad)
-        self.memo = tk.Text(root, height=3, wrap="word")
+        tk.Label(box, text="③ 특징메모 (비우면 저장할 때 AI가 캡처를 읽고 자동 작성)", anchor="w").pack(fill="x", **pad)
+        self.memo = tk.Text(box, height=3, wrap="word")
         self.memo.pack(fill="x", padx=10)
 
-        bar = tk.Frame(root)
+        bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
         tk.Button(bar, text="📷 사진 캡처", command=self.capture, width=12).pack(side="left")
         tk.Button(bar, text="↩ 마지막 사진 취소", command=self.undo_image).pack(side="left", padx=6)
+        tk.Button(bar, text="✨ 메모 자동 작성", command=lambda: self.run_ai(None)).pack(side="left")
         self.count = tk.Label(bar, text=f"사진 0/{MAX_PHOTOS}장")
         self.count.pack(side="right")
 
         # 캡처한 사진 미리보기 (클릭하면 삭제)
-        self.thumbs = tk.Frame(root, bg="#F1F5F9")
+        self.thumbs = tk.Frame(box, bg="#F1F5F9")
         self.thumbs.pack(fill="x", padx=10)
         self.thumb_refs = []
         self.empty_thumb = tk.Label(self.thumbs, text="(캡처한 사진이 여기에 표시됩니다)", bg="#F1F5F9",
                                     fg="#999", height=3)
         self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
-        tk.Label(root, text="사진을 클릭하면 그 사진만 지워집니다", fg="#888",
+        tk.Label(box, text="사진을 클릭하면 그 사진만 지워집니다", fg="#888",
                  anchor="w").pack(fill="x", padx=10)
 
-        self.save_btn = tk.Button(root, text="저장 → 다음 상품", command=self.save, height=2,
+        self.save_btn = tk.Button(box, text="저장 → 다음 상품", command=self.save, height=2,
                                   bg="#2563EB", fg="white", activebackground="#1D4ED8")
         self.save_btn.pack(fill="x", padx=10, pady=4)
 
-        bottom = tk.Frame(root)
+        bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
         tk.Checkbutton(bottom, text="복사 자동 감지", variable=self.watch).pack(side="left")
         tk.Button(bottom, text="새 상품(초기화)", command=self.new_product).pack(side="left", padx=6)
         tk.Button(bottom, text="사진 폴더 열기", command=self.open_folder).pack(side="right")
 
-        self.status = tk.Label(root, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.", fg="#555",
+        self.status = tk.Label(box, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.\n"
+                                         "상세 설명 부분도 캡처해 두면 AI가 읽고 메모를 씁니다(게시엔 안 씀).", fg="#555",
                                anchor="w", justify="left", wraplength=380)
         self.status.pack(fill="x", padx=10, pady=6)
 
@@ -464,6 +472,7 @@ class Helper:
             return
         self.images.append(img.copy())
         self.photos_dirty = True
+        self.ai_done = False  # 새 캡처가 생겼으니 저장할 때 메모를 다시 읽을 수 있게
         self.refresh_thumbs()
         self.say(f"✓ 사진 추가 ({img.size[0]}×{img.size[1]}). 잘못 찍었으면 사진을 클릭해 지우세요.")
 
@@ -495,6 +504,7 @@ class Helper:
     def remove_image(self, idx):
         if 0 <= idx < len(self.images):
             del self.images[idx]
+            self.info_idx = [i - (i > idx) for i in self.info_idx if i != idx]
             self.photos_dirty = True
             self.refresh_thumbs()
             self.say(f"사진 {idx + 1}번을 지웠습니다. (남은 사진 {len(self.images)}장)")
@@ -527,12 +537,13 @@ class Helper:
 
     def set_mode(self, edit_name=None):
         """새 등록(파란 버튼) / 수정 중(주황 버튼) 표시."""
+        title = (lambda t: self.root.title(t)) if self.standalone else (lambda t: None)
         if edit_name is None:
-            self.root.title("쿠팡 캡처 도우미 — 새 상품 등록")
+            title("쿠팡 캡처 도우미 — 새 상품 등록")
             self.save_btn.config(text="저장 → 다음 상품", bg="#2563EB", activebackground="#1D4ED8")
         else:
             short = edit_name if len(edit_name) <= 24 else edit_name[:24] + "…"
-            self.root.title(f"쿠팡 캡처 도우미 — 수정 중: {short}")
+            title(f"쿠팡 캡처 도우미 — 수정 중: {short}")
             self.save_btn.config(text="✎ 수정 내용 저장 (이미 등록된 상품)", bg="#EA580C",
                                  activebackground="#C2410C")
 
@@ -569,7 +580,75 @@ class Helper:
         self.images.clear()
         self.photos_loaded = False
         self.photos_dirty = False
+        self.ai_done = False
+        self.info_idx = []
         self.refresh_thumbs()
+
+    # ------------------------------------------------ 제미나이 메모 자동 작성
+    def run_ai(self, then):
+        """캡처를 제미나이에 보내 상품명·특징메모를 채운다. then이 있으면 끝난 뒤 호출(저장 계속)."""
+        import threading
+        import memo_ai
+        if not memo_ai.env("GEMINI_API_KEY"):
+            if then is None:
+                messagebox.showinfo("메모 자동 작성", "설정 → 특징메모에서 제미나이 키를 넣어 주세요 (무료).")
+            self.ai_done = True
+            if then:
+                then()
+            return
+        if not self.images:
+            self.say("⚠ 캡처한 사진이 없어 메모를 쓸 수 없습니다. 상품 사진·설명을 캡처해 주세요.")
+            return
+        images, name, link = list(self.images), self.name.get().strip(), self.link.get().strip()
+        self.save_btn.config(state="disabled")
+        self.say("✨ AI가 캡처를 읽고 메모를 쓰는 중… (10~20초)")
+
+        def work():
+            try:
+                res, err = memo_ai.write_memo(images, name, link), None
+            except Exception as e:
+                res, err = None, e
+            self.root.after(0, lambda: done(res, err))
+
+        def done(res, err):
+            self.save_btn.config(state="normal")
+            self.ai_done = True
+            if err is not None:
+                self.say(f"⚠ 메모 자동 작성 실패: {err}")
+                if then and not messagebox.askyesno("메모 자동 작성 실패",
+                                                    f"{err}\n\n메모 없이 저장할까요? (게시 전에 서버가 한 번 더 시도해요)"):
+                    return
+            else:
+                if res["name"] and not self.name.get().strip():
+                    self.name.insert(0, res["name"][:200])
+                if res["memo"]:
+                    self.memo.delete("1.0", "end")
+                    self.memo.insert("1.0", res["memo"])
+                self.info_idx = res["info"]
+                extra = f"\n설명 캡처 {len(self.info_idx)}장은 메모용으로만 저장합니다." if self.info_idx else ""
+                self.say(("✓ 메모를 채웠습니다. 확인하고 고칠 수 있어요." if res["memo"]
+                          else "⚠ 캡처에서 특징을 찾지 못했습니다. 상세 설명을 캡처해 보세요.") + extra)
+            if then:
+                then()
+
+        threading.Thread(target=work, daemon=True).start()
+
+    def split_images(self):
+        """(게시용 사진, 설명 캡처) 나누기."""
+        post = [im for i, im in enumerate(self.images) if i not in self.info_idx]
+        info = [im for i, im in enumerate(self.images) if i in self.info_idx]
+        return post, info
+
+    def save_info(self, name, info):
+        """설명 캡처는 사진 폴더 안 _설명 폴더에 (게시에는 안 쓰고, 메모 다시 쓸 때 읽음)."""
+        if not info:
+            return
+        folder = photo_folder(name) / "_설명"
+        folder.mkdir(parents=True, exist_ok=True)
+        n = len(image_tools.images_in(folder))
+        for im in info:
+            n += 1
+            im.convert("RGB").save(folder / f"{n:02d}.jpg", quality=90)
 
     def save(self):
         link = self.link.get().strip()
@@ -578,6 +657,10 @@ class Helper:
         if not is_link(link):
             extra = "\n\n일반 쇼핑몰 주소는 수익이 잡히지 않습니다." if is_plain_store(link) else ""
             messagebox.showwarning("확인", "제휴 링크(예: https://link.coupang.com/a/...)를 넣어 주세요." + extra)
+            return
+        import memo_ai
+        if (not memo or not name) and self.images and memo_ai.enabled() and not self.ai_done:
+            self.run_ai(self.save)  # 메모(또는 상품명)를 AI가 채운 뒤 저장 계속
             return
         if not name:
             messagebox.showwarning("확인", "상품명을 넣어 주세요.")
@@ -614,7 +697,9 @@ class Helper:
             if old and old != name:
                 move_photos(old, name)
             if self.photos_dirty:
-                save_photos(name, self.images, replace=self.photos_loaded)
+                post, info = self.split_images()
+                save_photos(name, post, replace=self.photos_loaded)
+                self.save_info(name, info)
             log(f"캡처 도우미: '{name}' 업데이트 ({', '.join(changes)})")
             self.reset_fields()
             self.say(f"✓ 업데이트 완료: {name}\n다음 상품의 링크를 복사하세요.")
@@ -627,8 +712,10 @@ class Helper:
         except Exception as e:
             messagebox.showerror("저장 실패", str(e))
             return
-        n = len(self.images)
-        folder = save_photos(name, self.images) if n else None
+        post, info = self.split_images()
+        n = len(post)
+        folder = save_photos(name, post) if n else None
+        self.save_info(name, info)
         log(f"캡처 도우미: '{name}' 추가 (사진 {n}장)")
         self.tidy_sheet()
 

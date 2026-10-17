@@ -1,0 +1,48 @@
+name: 프로그램(exe) 만들기
+
+# app.py 등 PC 프로그램 파일이 바뀌면 윈도우용 CoupangAutopost.exe를 새로 만든다.
+# main에서는 릴리스 'app'에 올려 아래 주소로 받을 수 있게 함:
+#   https://github.com/<계정>/<저장소>/releases/download/app/CoupangAutopost.exe
+on:
+  push:
+    paths: [app.py, helper.py, settings.py, memo_ai.py, main.py, gcloud.py, image_tools.py,
+            affiliates.py, requirements-app.txt, .github/workflows/build-app.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 준비
+        run: pip install -q -r requirements-app.txt pyinstaller
+
+      - name: exe 만들기
+        run: pyinstaller --noconfirm --onefile --windowed --name CoupangAutopost --exclude-module imageio_ffmpeg app.py
+
+      - name: 실행 확인 (가져오기만)
+        run: python -c "import app, helper, settings, memo_ai, main, gcloud; print('ok')"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: CoupangAutopost
+          path: dist/CoupangAutopost.exe
+
+      - name: 릴리스에 올리기
+        if: github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release delete app --yes --cleanup-tag || true
+          gh release create app dist/CoupangAutopost.exe --title "쿠팡 자동게시 프로그램" \
+            --notes "CoupangAutopost.exe를 받아 .env·google-key.json이 있는 프로그램 폴더에 넣고 실행하세요. (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ))" --latest

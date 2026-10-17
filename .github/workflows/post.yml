@@ -2,10 +2,9 @@ name: 자동 게시
 
 on:
   schedule:
-    # 한국 시간 07:00, 12:00, 19:00 (GitHub는 UTC 기준이라 9시간 빼서 적음)
-    - cron: "0 22 * * *"
-    - cron: "0 3 * * *"
-    - cron: "0 10 * * *"
+    # 매시간 확인만 하고, 프로그램 설정의 '게시 시각'(시트 '_설정' 탭 POST_TIMES)이 지난 회차만 게시.
+    # 무료 예약은 몇 시간씩 늦거나 빠지기도 해서 매시간 확인하면 놓친 회차를 다음 확인 때 올림
+    - cron: "17 * * * *"
     # 토큰 연장: 매주 일요일 한국 시간 08:00
     - cron: "0 23 * * 6"
   workflow_dispatch:
@@ -37,8 +36,6 @@ jobs:
       ENV_FILE: ${{ secrets.ENV_FILE }}
       GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
       GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
-      AUTO_RESEARCH: ${{ vars.AUTO_RESEARCH || '0' }}
-      POSTS_PER_RUN: ${{ vars.POSTS_PER_RUN || '1' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -47,12 +44,21 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: 준비
-        run: |
-          sudo apt-get install -y -qq fonts-nanum > /dev/null
-          pip install -q -r requirements.txt
+      - name: 파이썬 준비
+        run: pip install -q -r requirements.txt
+
+      # 매시간 예약 실행: 게시할 회차가 됐는지만 먼저 확인 (안 됐으면 여기서 끝)
+      - name: 예약 회차 확인
+        id: check
+        if: github.event.schedule == '17 * * * *'
+        run: python cloud_sync.py due
+
+      - name: 글꼴 준비
+        if: steps.check.outputs.due != '0'
+        run: sudo apt-get install -y -qq fonts-nanum > /dev/null
 
       - name: 시트·사진 받기
+        if: steps.check.outputs.due != '0'
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
@@ -64,15 +70,19 @@ jobs:
         run: python main.py --dry-run
 
       - name: 게시
-        if: github.event.schedule != '0 23 * * 6' && (inputs.mode == '' || inputs.mode == null || inputs.mode == '지금 게시')
+        if: steps.check.outputs.due == '1'
+        run: python main.py --slot "${{ steps.check.outputs.slot }}"
+
+      - name: 지금 게시
+        if: inputs.mode == '지금 게시'
         run: python main.py
 
       - name: 링크 페이지 만들기
-        if: always()
+        if: always() && steps.check.outputs.due != '0'
         run: python build_page.py
 
       - name: 결과 저장
-        if: always()
+        if: always() && steps.check.outputs.due != '0'
         run: |
           python cloud_sync.py push || true
           git config user.name "autopost-bot"

@@ -21,7 +21,7 @@ from dotenv import load_dotenv
 
 import affiliates
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 ENV_PATH = BASE / ".env"
 load_dotenv(ENV_PATH)
 
@@ -199,11 +199,11 @@ def queue(items, now):
 
 # ---------------------------------------------------------------- 채널·형식 판단
 def threads_on():
-    return bool(env("THREADS_USER_ID") and env("THREADS_ACCESS_TOKEN"))
+    return env("THREADS_ON", "1") != "0" and bool(env("THREADS_USER_ID") and env("THREADS_ACCESS_TOKEN"))
 
 
 def ig_on():
-    return bool(env("IG_USER_ID") and env("IG_ACCESS_TOKEN"))
+    return env("IG_ON", "1") != "0" and bool(env("IG_USER_ID") and env("IG_ACCESS_TOKEN"))
 
 
 def media_ext(src):
@@ -420,15 +420,61 @@ def remember_memo(item):
     save_research(cache)
 
 
-def research(item):
-    """특징메모가 비었을 때 AI가 웹 검색으로 상품 특징을 찾는다. 못 찾으면 빈 문자열.
-    한 번 찾은 결과는 상품명 기준으로 저장해 두고 다시 쓴다(검색 비용 0)."""
-    if env("AUTO_RESEARCH", "1") == "0" or not env("ANTHROPIC_API_KEY"):
+def gemini_memo(item):
+    """제미나이(무료 키)가 사진 폴더의 캡처(_설명 폴더 포함)를 읽고 특징메모를 쓴다. 못 쓰면 ''."""
+    import memo_ai
+    if not memo_ai.enabled():
         return ""
+    try:
+        import image_tools
+        from PIL import Image
+        folder = image_tools.photo_root() / image_tools.folder_name(item["name"])
+        files = []
+        for d in (folder, folder / "_설명"):
+            if d.is_dir():
+                files += image_tools.images_in(d)
+        images = []
+        for f in files[:12]:
+            with Image.open(f) as im:
+                images.append(im.copy())
+        if not images:
+            return ""
+        return memo_ai.write_memo(images, item["name"], item["link"])["memo"]
+    except Exception as e:
+        log(f"  ! 제미나이 메모 작성 실패: {e}")
+        return ""
+
+
+def save_memo_to_sheet(item, memo):
+    """서버에서 채운 메모를 시트 특징메모 칸에도 적어 둔다 (보고 고칠 수 있게). 실패해도 계속."""
+    try:
+        import gcloud
+        if gcloud.enabled() and (gcloud.env("GOOGLE_SA_JSON") or gcloud.env("GOOGLE_SA_FILE")):
+            gcloud.set_memo(item["name"], memo)
+    except Exception as e:
+        log(f"  (시트에 메모를 적지 못했습니다: {e})")
+
+
+def research(item):
+    """특징메모가 비었을 때 특징을 찾는다. 못 찾으면 빈 문자열.
+    1) 저장해 둔 메모(research.json) 2) 제미나이가 캡처 읽기(무료) 3) Claude 웹 검색(유료, AUTO_RESEARCH=1일 때만)
+    찾은 결과는 상품명 기준으로 저장해 두고 다시 쓴다."""
     cache = _load_json(research_path())
     hit = cache.get(name_key(item["name"]))
+    if hit is not None and hit.get("facts"):
+        return hit["facts"]
+    facts = gemini_memo(item)
+    if facts:
+        cache[name_key(item["name"])] = {"name": item["name"], "facts": facts, "link": item["link"],
+                                         "source": "제미나이(캡처)",
+                                         "at": datetime.datetime.now().isoformat(timespec="seconds")}
+        save_research(cache)
+        save_memo_to_sheet(item, facts)
+        return facts
     if hit is not None:
-        return hit.get("facts", "")
+        return ""  # 예전에 유료 검색으로도 못 찾은 상품
+    if env("AUTO_RESEARCH", "0") == "0" or not env("ANTHROPIC_API_KEY"):
+        return ""
 
     r = _ask_ai({
         "model": env("CLAUDE_MODEL", "claude-haiku-5-5"),
@@ -775,7 +821,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true", help="게시하지 않고 미리보기만")
     ap.add_argument("--count", type=int, default=int(env("POSTS_PER_RUN", "1") or 1))
+    ap.add_argument("--slot", default="", help="예약 회차(예: 2026-10-17 07:00). 게시 기록에 남겨 같은 회차를 다시 올리지 않게")
     args = ap.parse_args()
+    if args.slot:
+        posted = load_posted()
+        posted.setdefault("_meta", {})["last_slot"] = args.slot
+        save_posted(posted)  # 실패해도 같은 회차를 매시간 다시 시도하지 않도록 먼저 기록
 
     now = datetime.datetime.now()
     items = load_products()

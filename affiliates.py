@@ -3,8 +3,9 @@
 설정은 '제휴처.csv'(엑셀로 편집)에 있다. 없으면 기본값으로 만든다."""
 import csv
 import pathlib
+import sys
 
-BASE = pathlib.Path(__file__).resolve().parent
+BASE = pathlib.Path(sys.executable if getattr(sys, "frozen", False) else __file__).resolve().parent  # exe면 exe 폴더
 CONFIG = BASE / "제휴처.csv"
 
 HEADER = ["제휴처", "제휴링크_주소", "일반주소_경고", "대가성문구", "짧은문구"]
