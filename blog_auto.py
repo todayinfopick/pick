@@ -90,7 +90,7 @@ WRITE_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' {platform} 블로
 ### 작은 소제목        ← 필요할 때만
 문단은 한 줄에 하나
 - 목록 한 줄
-| 칸 | 칸 | 칸          ← 표 1개 이상, 첫 줄이 제목줄, 한 줄에 한 행
+| 칸 | 칸 | 칸          ← 표 1개 이상, 첫 줄이 제목줄, 한 줄에 한 행, 칸을 비우지 말 것(없으면 -)
 > 인용 상자에 넣을 한 줄 (1개)
 ! 강조 상자에 넣을 주의·팁 한 줄 (1~2개)
 **핵심 문구**는 소제목마다 1~2개만
@@ -264,7 +264,8 @@ def parse(text, blog, topic):
         nonlocal table
         if table and len(table) > 1:
             width = len(table[0])
-            add("TABLE", headers=table[0], rows=[(r + [""] * width)[:width] for r in table[1:]])
+            add("TABLE", headers=table[0],  # 빈 칸은 '-'로: 네이버에 붙일 때 끝의 빈 칸이 빠져 표가 깨짐
+                rows=[[c or "-" for c in (r + [""] * width)[:width]] for r in table[1:]])
         table = None
 
     for line in text.splitlines():
