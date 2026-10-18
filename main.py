@@ -504,9 +504,38 @@ def research(item):
 
 
 def generate(item):
-    if not env("ANTHROPIC_API_KEY"):
-        raise RuntimeError(".env 파일에 ANTHROPIC_API_KEY가 없습니다.")
+    """쇼핑 글 쓰기: Claude(유료 크레딧)로 쓰고, 키가 없거나 실패하면(크레딧 소진 등) 제미나이(무료)가 대신 쓴다."""
     prompt = PROMPT.format(name=item["name"], memo=item["memo"] or "(없음)")
+    has_gemini = bool(env("GEMINI_API_KEY"))
+    if not env("ANTHROPIC_API_KEY"):
+        if not has_gemini:
+            raise RuntimeError(".env 파일에 ANTHROPIC_API_KEY(또는 예비용 GEMINI_API_KEY)가 없습니다.")
+        log("  ↪ Claude 키가 없어 제미나이로 글을 씁니다")
+        return _post_fields(_gemini_post(prompt), item)
+    try:
+        return _post_fields(_claude_post(prompt), item)
+    except Exception as e:
+        if not has_gemini:
+            raise
+        log(f"  ↪ Claude 글 작성 실패, 제미나이로 대신 씁니다: {e}")
+        return _post_fields(_gemini_post(prompt), item)
+
+
+def _gemini_post(prompt):
+    """예비: 제미나이로 같은 양식(POST_TOOL)의 글을 받는다."""
+    import memo_ai
+    fields = POST_TOOL["input_schema"]["properties"]
+    spec = "\n".join(f'- "{k}": {v["description"]}' + (" (문자열 배열)" if v["type"] == "array" else "")
+                     for k, v in fields.items())
+    text = memo_ai.generate([{"text": f"{prompt}\n\n아래 키를 가진 JSON 하나만 출력하라.\n{spec}"}],
+                            temperature=0.8)
+    start, end = text.find("{"), text.rfind("}")
+    if start < 0 or end < 0:
+        raise RuntimeError(f"제미나이 답을 해석하지 못했습니다: {text[:200]}")
+    return json.loads(text[start:end + 1], strict=False)
+
+
+def _claude_post(prompt):
     base = {"model": env("CLAUDE_MODEL", "claude-haiku-5-5"), "max_tokens": 4096,
             "messages": [{"role": "user", "content": prompt}]}
 
@@ -533,7 +562,10 @@ def generate(item):
             last_err = e
     if data is None:
         raise RuntimeError(f"AI 응답을 해석하지 못했습니다. 잠시 후 다시 시도해 주세요. ({last_err})")
+    return data
 
+
+def _post_fields(data, item):
     points = data.get("points", [])
     if isinstance(points, str):
         points = [p for p in points.replace("|", "\n").split("\n")]
