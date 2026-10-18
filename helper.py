@@ -267,6 +267,14 @@ def load_page_text(name):
 
 
 # ---------------------------------------------------------------- 크롬 확장프로그램 연결
+def is_product_photo(im):
+    """띠 모양 배너·작은 아이콘 같은 건 빼고 상품 사진만."""
+    if im is None:
+        return False
+    w, h = im.size
+    return min(w, h) >= 200 and max(w, h) <= 3 * min(w, h)
+
+
 def start_bridge(inbox):
     """127.0.0.1:BRIDGE_PORT에서 확장프로그램이 보낸 상품 페이지 내용을 받아 inbox에 넣는다.
     사진은 여기(뒤쪽)에서 미리 받아 둔다. 이미 다른 창이 쓰고 있으면 False."""
@@ -282,7 +290,7 @@ def start_bridge(inbox):
                 size = int(self.headers.get("Content-Length") or 0)
                 data = json.loads(self.rfile.read(min(size, 5_000_000)).decode("utf-8"))
                 urls = [u for u in data.get("images") or [] if isinstance(u, str) and u.startswith("http")]
-                photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if im is not None]
+                photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if is_product_photo(im)]
                 inbox.put({"name": " ".join(str(data.get("name") or "").split())[:200],
                            "text": str(data.get("text") or "").strip(),
                            "url": str(data.get("url") or ""), "images": photos})
