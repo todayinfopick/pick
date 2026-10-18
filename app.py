@@ -438,8 +438,8 @@ class BlogTab:
                           command=lambda u=url: webbrowser.open(u())).pack(side="left")
 
         tk.Label(frame, text="서버가 만든 글", anchor="w", font=("", 10, "bold")).pack(fill="x", padx=12, pady=(10, 0))
-        self.posts = ttk.Treeview(frame, columns=("at", "blog", "title"), show="headings", height=12)
-        for k, t, w in (("at", "날짜", 40), ("blog", "블로그", 80), ("title", "제목", 140)):
+        self.posts = ttk.Treeview(frame, columns=("kind", "at", "blog", "title"), show="headings", height=12)
+        for k, t, w in (("kind", "구분", 46), ("at", "날짜", 40), ("blog", "블로그", 76), ("title", "제목", 130)):
             self.posts.heading(k, text=t)
             self.posts.column(k, width=w, anchor="w")
         self.posts.pack(fill="both", expand=True, padx=10)
@@ -470,9 +470,18 @@ class BlogTab:
         index, runs = res
         self.posts.delete(*self.posts.get_children())
         self.ids = {}
-        for p in index.get("packages", [])[:40]:
+        today = datetime.date.today().isoformat()
+
+        def rank(p):  # 급한 글(마감이 가까운 순) → 상시 글 → 기한 지난 글
+            if not p.get("urgent"):
+                return (1, "")
+            until = p.get("until") or ""
+            return (2, "") if until and until < today else (0, until or "9999")
+        for p in sorted(index.get("packages", [])[:40], key=rank):
             short = "⚠ " if (p.get("chars") or 0) < 1500 else ""
-            iid = self.posts.insert("", "end", values=(p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
+            r = rank(p)[0]
+            kind = ("급함" + (" ~" + p["until"][5:].replace("-", "/") if p.get("until") else "")) if r == 0 else ("상시" if r == 1 else "지남")
+            iid = self.posts.insert("", "end", values=(kind, p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
                                                       short + p.get("title", "")))
             self.ids[iid] = p.get("id")
         last = ""

@@ -58,8 +58,10 @@ TOPIC_PROMPT = """오늘은 {today} 한국 날짜다. 너는 '{name}' {platform}
   category: {cats} 중 하나를 글자 그대로
   angle: 글에서 다룰 내용 한 줄 (독자가 얻는 것 위주)
   photo: 무료 사진 사이트에서 찾을 영어 검색어 2~3단어 (사람 얼굴보다 물건·장면, 상표 이름 금지)
+  urgent: 빨리 올려야 의미 있는 글(신청 마감, 출시·행사 소식처럼 날짜가 지나면 쓸모가 줄어드는 글)이면 true, 언제 올려도 되는 글이면 false
+  until: urgent가 true이고 날짜가 확인되면 그 글이 쓸모 있는 마지막 날 YYYY-MM-DD, 아니면 ""
 
-다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "..."}}]"""
+다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "...", "urgent": true, "until": ""}}]"""
 
 WRITE_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' {platform} 블로그에 올릴 글을 한국어로 써라.
 글감: {topic}
@@ -393,11 +395,22 @@ def next_id(index, date, key):
     return f"{date}/{key}-{k}"
 
 
-def add_to_index(index, pid, date, blog, pkg, text, writer, now):
+def urgency(topic):
+    """급함(날짜가 지나면 쓸모가 줄어드는 글)인지와 그 마지막 날. 시간 여유가 있는 글은 (False, "")."""
+    u = topic.get("urgent", False)
+    if isinstance(u, str):
+        u = u.strip().lower() in ("true", "1", "yes", "급함", "급", "신속")
+    until = str(topic.get("until") or "").strip()
+    return bool(u), until if re.fullmatch(r"\d{4}-\d{2}-\d{2}", until) else ""
+
+
+def add_to_index(index, pid, date, blog, pkg, text, writer, now, topic=None):
     chars = body_chars(text)
+    urgent, until = urgency(topic or {})
     index["packages"].insert(0, {"id": pid, "date": date, "blogKey": blog["key"], "blogName": blog["name"],
                                  "platform": blog["platform"], "category": pkg["category"],
                                  "title": pkg["title"], "chars": chars, "writer": writer,
+                                 "urgent": urgent, "until": until,
                                  "files": ["content.json"] + [i["file"] for i in pkg["images"]],
                                  "createdAt": now.isoformat(timespec="seconds")})
     log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
@@ -405,7 +418,8 @@ def add_to_index(index, pid, date, blog, pkg, text, writer, now):
 
 def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     """초안 파일 하나에 사진·카드를 붙여 패키지로 만들고 지운다. 성공하면 True.
-    초안 머리: @blog(key 또는 이름) @category @topic @photo(대표 사진 영어 검색어) @title @tags, 그 아래는 본문 형식 그대로."""
+    초안 머리: @blog(key 또는 이름) @category @topic @photo(대표 사진 영어 검색어) @title @tags, 그 아래는 본문 형식 그대로.
+    @urgent: 급함(빨리 올릴 글)이면 급함, 아니면 상시(생략해도 상시). @until: 급한 글이 쓸모 있는 마지막 날 YYYY-MM-DD."""
     text = clean(path.read_text(encoding="utf-8"))
     meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
     blog = find_blog(cfg, meta.get("blog", ""))
@@ -417,7 +431,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     cat = meta.get("category", "")
     topic = {"topic": meta.get("topic") or meta.get("title", path.stem),
              "category": cat if cat in blog["categories"] else blog["categories"][0],
-             "photo": meta.get("photo", "")}
+             "photo": meta.get("photo", ""), "urgent": meta.get("urgent", ""), "until": meta.get("until", "")}
     pid = next_id(index, date, blog["key"])
     log(f"[{blog['name']}] 초안 정리: {path.parent.name}/{path.name}")
     try:
@@ -426,7 +440,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
         log(f"  ! 초안을 패키지로 만들지 못했습니다: {e}")
         shutil.rmtree(site / pid, ignore_errors=True)
         return False
-    add_to_index(index, pid, date, blog, pkg, text, "Claude", now)
+    add_to_index(index, pid, date, blog, pkg, text, "Claude", now, topic)
     h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
     h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
     path.unlink()
@@ -514,7 +528,7 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
                     stop = True
                     break
                 continue
-            add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude", now)
+            add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude", now, t)
             made += 1
             if not dry:
                 h["topics"].append(t["topic"])
