@@ -27,6 +27,7 @@ import main
 from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
+STOCK = "stock"
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
 WEEKDAYS = "월화수목금토일"
@@ -402,41 +403,59 @@ def add_to_index(index, pid, date, blog, pkg, text, writer, now):
     log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
 
 
-def process_drafts(site, cfg, index, hist, used_photos, now):
-    """drafts/날짜/*.txt (Claude가 쓴 글)에 사진·카드를 붙여 패키지로 만든다. 끝난 초안은 지운다.
+def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
+    """초안 파일 하나에 사진·카드를 붙여 패키지로 만들고 지운다. 성공하면 True.
     초안 머리: @blog(key 또는 이름) @category @topic @photo(대표 사진 영어 검색어) @title @tags, 그 아래는 본문 형식 그대로."""
+    text = clean(path.read_text(encoding="utf-8"))
+    meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
+    blog = find_blog(cfg, meta.get("blog", ""))
+    if not blog:
+        log(f"  ! 초안 {path.name}: 블로그 '{meta.get('blog')}'를 blog_config.json에서 찾지 못했습니다")
+        return False
+    if not date:
+        date = path.parent.name if re.fullmatch(r"\d{4}-\d{2}-\d{2}", path.parent.name) else now.strftime("%Y-%m-%d")
+    cat = meta.get("category", "")
+    topic = {"topic": meta.get("topic") or meta.get("title", path.stem),
+             "category": cat if cat in blog["categories"] else blog["categories"][0],
+             "photo": meta.get("photo", "")}
+    pid = next_id(index, date, blog["key"])
+    log(f"[{blog['name']}] 초안 정리: {path.parent.name}/{path.name}")
+    try:
+        pkg = build_package(site / pid, blog, topic, text, used_photos)
+    except Exception as e:
+        log(f"  ! 초안을 패키지로 만들지 못했습니다: {e}")
+        shutil.rmtree(site / pid, ignore_errors=True)
+        return False
+    add_to_index(index, pid, date, blog, pkg, text, "Claude", now)
+    h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
+    h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
+    path.unlink()
+    return True
+
+
+def process_drafts(site, cfg, index, hist, used_photos, now):
+    """drafts/날짜/*.txt (Claude가 쓴 그날 글)를 패키지로 만든다. drafts/stock/은 비상용이라 여기서는 건드리지 않는다."""
     made = failed = 0
     for path in sorted((site / "drafts").glob("**/*.txt")):
-        text = clean(path.read_text(encoding="utf-8"))
-        meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
-        blog = find_blog(cfg, meta.get("blog", ""))
-        if not blog:
-            log(f"  ! 초안 {path.name}: 블로그 '{meta.get('blog')}'를 blog_config.json에서 찾지 못했습니다")
-            failed += 1
+        if STOCK in path.parts:
             continue
-        date = path.parent.name if re.fullmatch(r"\d{4}-\d{2}-\d{2}", path.parent.name) else now.strftime("%Y-%m-%d")
-        cat = meta.get("category", "")
-        topic = {"topic": meta.get("topic") or meta.get("title", path.stem),
-                 "category": cat if cat in blog["categories"] else blog["categories"][0],
-                 "photo": meta.get("photo", "")}
-        pid = next_id(index, date, blog["key"])
-        log(f"[{blog['name']}] 초안 정리: {path.name}")
-        try:
-            pkg = build_package(site / pid, blog, topic, text, used_photos)
-        except Exception as e:
-            log(f"  ! 초안을 패키지로 만들지 못했습니다: {e}")
-            shutil.rmtree(site / pid, ignore_errors=True)
+        if draft_package(path, site, cfg, index, hist, used_photos, now):
+            made += 1
+        else:
             failed += 1
-            continue
-        add_to_index(index, pid, date, blog, pkg, text, "Claude", now)
-        h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
-        h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
-        path.unlink()
-        made += 1
     for d in sorted((site / "drafts").glob("*"), reverse=True):
-        if d.is_dir() and not any(d.iterdir()):
+        if d.is_dir() and d.name != STOCK and not any(d.iterdir()):
             d.rmdir()
     return made, failed
+
+
+def use_stock(site, blog, n, cfg, index, hist, used_photos, now):
+    """오늘 글이 빈 블로그에 비상용 글(drafts/stock/<key>-*.txt, 날짜와 상관없는 글)을 n편까지 꺼내 쓴다."""
+    made = 0
+    for path in sorted((site / "drafts" / STOCK).glob(f"{blog['key']}-*.txt"))[:n]:
+        if draft_package(path, site, cfg, index, hist, used_photos, now, now.strftime("%Y-%m-%d")):
+            made += 1
+    return made
 
 
 def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=False):
@@ -454,15 +473,23 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
     made, failed = process_drafts(site, cfg, index, hist, used_photos, now)
     stop = drafts_only
     for blog in cfg["blogs"]:
-        if stop:
-            break
         if only and blog["key"] not in only:
             continue
+        if stop and not scheduled:
+            break
         if scheduled and any(p["date"] == date and p["blogKey"] == blog["key"] for p in index["packages"]):
             log(f"[{blog['name']}] 오늘 글이 이미 있어 건너뜁니다")
             continue
         h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
         n_posts = count or int(env("BLOG_POSTS_PER_BLOG") or cfg.get("posts_per_blog", 2))
+        if scheduled:  # 새벽 글이 빠진 날: 쌓아 둔 비상용 글이 있으면 그것부터 (제미나이 한도를 아낌)
+            got = use_stock(site, blog, n_posts, cfg, index, hist, used_photos, now)
+            made += got
+            n_posts -= got
+            if n_posts <= 0:
+                continue
+        if stop:  # 제미나이 한도에 걸린 뒤로는 비상용 글만 꺼냄
+            continue
         log(f"[{blog['name']}] 글감 고르는 중")
         try:
             topics = pick_topics(blog, n_posts, h["topics"], today)
