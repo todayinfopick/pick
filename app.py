@@ -61,6 +61,39 @@ def gh_runs(n=12, workflow=WORKFLOW):
     return r.json().get("workflow_runs", [])
 
 
+def gh_put_file(path, text, message, branch="blog-packages"):
+    """저장소 branch에 텍스트 파일 하나를 새로 올린다 (깃허브 키에 Contents 쓰기 권한 필요)."""
+    import base64
+    r = requests.put(f"https://api.github.com/repos/{repo()}/contents/{path}", headers=gh_headers(), timeout=30,
+                     json={"message": message, "branch": branch,
+                           "content": base64.b64encode(text.encode("utf-8")).decode()})
+    if r.status_code in (401, 403, 404):
+        raise RuntimeError(f"깃허브 키를 확인해 주세요 ({r.status_code}). 키에 Contents 쓰기 권한이 있어야 해요.")
+    if r.status_code >= 400:
+        raise RuntimeError(f"서버에 올리지 못했어요 ({r.status_code}): {r.text[:200]}")
+
+
+def draft_check(text):
+    """붙여 넣은 초안 → (블로그 key, 제목, 공백 뺀 본문 글자 수, 문제 목록)."""
+    meta, n = {}, 0
+    for ln in text.splitlines():
+        if ln.startswith("@") and ":" in ln:
+            k, v = ln[1:].split(":", 1)
+            meta[k.strip()] = v.strip()
+        elif not ln.startswith(("[사진", "[카드")):
+            n += len("".join(ln.lstrip("#>!- ").replace("**", "").replace("|", "").split()))
+    want = meta.get("blog", "")
+    key = BLOGS.get(want) or (want if want in BLOGS.values() and want else "")
+    problems = []
+    if not key:
+        problems.append("@blog 줄이 없거나 블로그를 알 수 없어요 (tistory, naver1, naver2, naver3)")
+    if not meta.get("title"):
+        problems.append("@title 줄이 없어요")
+    if n < 1500:
+        problems.append(f"본문이 공백 빼고 {n}자예요 (1,500자 이상 권장)")
+    return key, meta.get("title", ""), n, problems
+
+
 def gh_posted():
     r = requests.get(f"https://raw.githubusercontent.com/{repo()}/main/posted.json",
                      params={"t": datetime.datetime.now().timestamp()}, timeout=30)
@@ -425,7 +458,9 @@ class BlogTab:
         tk.Spinbox(pick, from_=1, to=3, textvariable=self.count, width=3).pack(side="left", padx=(8, 2))
         tk.Label(pick, text="편씩").pack(side="left")
         tk.Button(frame, text="✍ 지금 글 쓰기", bg="#2563EB", fg="white", height=2,
-                  command=self.run).pack(fill="x", padx=10, pady=6)
+                  command=self.run).pack(fill="x", padx=10, pady=(6, 2))
+        tk.Button(frame, text="📋 초안 붙여넣기 (GPT·제미나이 글 → 서버)",
+                  command=self.paste).pack(fill="x", padx=10, pady=(2, 6))
 
         links = tk.Frame(frame)
         links.pack(fill="x", padx=10, pady=2)
@@ -496,6 +531,62 @@ class BlogTab:
         sel = self.posts.selection()
         if sel and self.ids.get(sel[0]):
             webbrowser.open(f"https://github.com/{repo()}/tree/blog-packages/{self.ids[sel[0]]}")
+
+    def paste(self):
+        """채팅 AI가 쓴 초안(안내서 '서버 초안' 형식)을 blog-packages/drafts/에 올린다. 이미지는 서버가 붙임."""
+        if not (os.getenv("GITHUB_TOKEN") or "").strip():
+            messagebox.showwarning(APP_TITLE, "서버에 올리려면 깃허브 키가 필요해요. (키 탭 → 깃허브 키)")
+            return
+        win = tk.Toplevel(self.root)
+        win.title("초안 붙여넣기")
+        win.geometry("560x620")
+        tk.Label(win, text="GPT·제미나이가 쓴 초안을 @blog 줄부터 그대로 붙여 넣으세요. 사진·카드는 서버가 붙여요.",
+                 anchor="w", justify="left", wraplength=520).pack(fill="x", padx=10, pady=(10, 4))
+        box = tk.Text(win, wrap="word", undo=True, font=("", 10))
+        box.pack(fill="both", expand=True, padx=10)
+        kind = tk.StringVar(value="today")
+        row = tk.Frame(win)
+        row.pack(fill="x", padx=10, pady=6)
+        tk.Radiobutton(row, text="오늘 글 (바로 패키지로)", variable=kind, value="today").pack(side="left")
+        tk.Radiobutton(row, text="비상용 (빈 날에 꺼내 씀)", variable=kind, value="stock").pack(side="left", padx=8)
+        msg = tk.Label(win, text="", anchor="w", justify="left", fg="#555", wraplength=520)
+        msg.pack(fill="x", padx=10)
+
+        def send():
+            text = box.get("1.0", "end").strip().replace("```", "").strip()
+            key, title, n, problems = draft_check(text)
+            if not key or not title:
+                messagebox.showwarning(APP_TITLE, "\n".join(problems), parent=win)
+                return
+            if problems and not messagebox.askyesno(APP_TITLE, "\n".join(problems) + "\n\n그래도 올릴까요?", parent=win):
+                return
+            now = datetime.datetime.now()
+            stock = kind.get() == "stock"
+            folder = "stock" if stock else now.strftime("%Y-%m-%d")
+            path = f"drafts/{folder}/{key}-chat-{now:%H%M%S}.txt"
+            msg.config(text="올리는 중…")
+
+            def work():
+                runs = gh_runs(1, BLOG_WORKFLOW)
+                if runs and runs[0].get("status") != "completed":  # 도는 중에 올리면 서버 저장 때 덮어써질 수 있음
+                    raise RuntimeError("지금 서버 블로그 작업이 도는 중이에요. 끝난 뒤(몇 분 뒤) 다시 올려 주세요.")
+                gh_put_file(path, text + "\n", f"초안 붙여넣기: {title[:40]}")
+                if not stock:
+                    gh_dispatch("", BLOG_WORKFLOW, {"mode": "초안 정리", "blog": "", "count": "0"})
+
+            def done(_r, err):
+                if err:
+                    msg.config(text=f"⚠ {err}", fg="#c0392b")
+                    return
+                box.delete("1.0", "end")
+                msg.config(fg="#1e7e34", text=(f"✓ 비상용으로 올렸어요 ({n}자): {title}" if stock else
+                                               f"✓ 올리고 서버 작업을 시작했어요 ({n}자). 5~10분 뒤 스튜디오 '서버에서 불러오기'에 나와요."))
+                self.root.after(20000, self.refresh)
+
+            in_thread(self.root, work, done)
+
+        tk.Button(win, text="⬆ 서버로 올리기", bg="#2563EB", fg="white", height=2, command=send) \
+            .pack(fill="x", padx=10, pady=(4, 10))
 
     def run(self):
         if not (os.getenv("GITHUB_TOKEN") or "").strip():
