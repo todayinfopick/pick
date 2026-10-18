@@ -447,6 +447,13 @@ class Helper:
 
     # ------------------------------------------------ 클립보드 감지
     def poll(self):
+        try:
+            self._poll_once()
+        except Exception as e:  # 한 번 실패해도 복사 감지는 계속 (멈추면 링크가 안 들어감)
+            log(f"캡처 도우미: 복사 감지 오류 {e}")
+        self.root.after(POLL_MS, self.poll)
+
+    def _poll_once(self):
         while not self.inbox.empty():
             self.take_page(self.inbox.get())
         if self.watch.get():
@@ -464,11 +471,15 @@ class Helper:
                 if text is not None and text != self.last_text:
                     self.last_text = text
                     self.take_text(text.strip())
-        self.root.after(POLL_MS, self.poll)
 
     def take_text(self, text):
         if not text:
             return
+        if not affiliates.looks_like_link(text):
+            # 제휴 링크 복사 기능이 '상품명 + 링크'처럼 여러 줄로 복사하는 경우: 링크만 꺼내 쓴다
+            found = [w for w in text.split() if w.startswith("http") and is_link(w)]
+            if found:
+                text = found[0]
         if is_plain_store(text):
             name = affiliates.detect(text)["name"]
             self.say(f"⚠ {name} 제휴 링크가 아닌 일반 주소라 넣지 않았습니다. 수익이 잡히지 않아요!\n"
