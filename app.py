@@ -101,10 +101,12 @@ def gh_posted():
 
 
 def kst(iso):
-    """깃허브 시간(UTC 'Z') → 한국 시간 'MM/DD HH:MM'."""
+    """깃허브 시간(UTC 'Z') → 한국 시간 'MM/DD HH:MM'. 시간대 없는 값(posted.json)은 이미 한국 시간."""
     try:
         t = datetime.datetime.fromisoformat(iso.replace("Z", "+00:00"))
-        return (t + datetime.timedelta(hours=9)).strftime("%m/%d %H:%M")
+        if t.tzinfo:
+            t = t.astimezone(datetime.timezone.utc).replace(tzinfo=None) + datetime.timedelta(hours=9)
+        return t.strftime("%m/%d %H:%M")
     except Exception:
         return iso or ""
 
