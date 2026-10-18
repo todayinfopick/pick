@@ -455,7 +455,7 @@ class BlogTab:
         on = vals.get("BLOG_ON", "1") != "0"
         n = vals.get("BLOG_POSTS_PER_BLOG", "2")
         self.info.config(text=(f"블로그 자동 작성: {'켜짐' if on else '꺼짐'}\n"
-                               f"매일 새벽 5시 30분쯤 블로그 4곳에 {n}편씩\n"
+                               f"매일 새벽 4시쯤 블로그 4곳에 {n}편씩\n"
                                f"글 쓰는 AI: {vals.get('BLOG_WRITER', '제미나이')} · 설정 탭에서 바꿔요"))
 
     def refresh(self):
