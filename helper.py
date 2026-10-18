@@ -267,6 +267,14 @@ def load_page_text(name):
 
 
 # ---------------------------------------------------------------- 크롬 확장프로그램 연결
+def is_product_photo(im):
+    """띠 모양 배너·작은 아이콘 같은 건 빼고 상품 사진만."""
+    if im is None:
+        return False
+    w, h = im.size
+    return min(w, h) >= 200 and max(w, h) <= 3 * min(w, h)
+
+
 def start_bridge(inbox):
     """127.0.0.1:BRIDGE_PORT에서 확장프로그램이 보낸 상품 페이지 내용을 받아 inbox에 넣는다.
     사진은 여기(뒤쪽)에서 미리 받아 둔다. 이미 다른 창이 쓰고 있으면 False."""
@@ -282,7 +290,7 @@ def start_bridge(inbox):
                 size = int(self.headers.get("Content-Length") or 0)
                 data = json.loads(self.rfile.read(min(size, 5_000_000)).decode("utf-8"))
                 urls = [u for u in data.get("images") or [] if isinstance(u, str) and u.startswith("http")]
-                photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if im is not None]
+                photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if is_product_photo(im)]
                 inbox.put({"name": " ".join(str(data.get("name") or "").split())[:200],
                            "text": str(data.get("text") or "").strip(),
                            "url": str(data.get("url") or ""), "images": photos})
@@ -361,7 +369,7 @@ class Helper:
         self.name.pack(fill="x", padx=10)
 
         tk.Label(box, text="③ 특징메모 (비우면 AI가 작성)", anchor="w").pack(fill="x", **pad)
-        self.memo = tk.Text(box, height=3, wrap="word")
+        self.memo = tk.Text(box, height=2, wrap="word")
         self.memo.pack(fill="x", padx=10)
 
         cat = tk.Frame(box)
@@ -384,7 +392,7 @@ class Helper:
         self.thumb_refs = []
         self.empty_thumb = tk.Label(self.thumbs, text="(캡처한 사진이 여기에 표시됩니다)", bg="#F1F5F9",
                                     fg="#999", height=3)
-        self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
+        self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
         hint = tk.Frame(box)
         hint.pack(fill="x", padx=10)
         tk.Label(hint, text="사진을 누르면 지워져요", fg="#888").pack(side="left")
@@ -613,18 +621,18 @@ class Helper:
                 w.destroy()
         self.thumb_refs = []
         if not self.images:
-            self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
+            self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
         else:
             self.empty_thumb.grid_remove()
-        per_row = 4
+        per_row = 5  # 낮은 창에 10장이 두 줄로 들어가게
         for i, im in enumerate(self.images):
             t = im.convert("RGB").copy()
-            t.thumbnail((52, 52))
+            t.thumbnail((40, 40))
             ph = ImageTk.PhotoImage(t)
             self.thumb_refs.append(ph)
             cell = tk.Frame(self.thumbs, bg="#F1F5F9")
-            cell.grid(row=i // per_row, column=i % per_row, padx=2, pady=2)
-            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=54, height=54)
+            cell.grid(row=i // per_row, column=i % per_row, padx=1, pady=1)
+            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=42, height=42)
             lb.pack()
             num = tk.Label(cell, text=f"{i + 1}  ✕", bg="#F1F5F9", fg="#555", cursor="hand2")
             num.pack()

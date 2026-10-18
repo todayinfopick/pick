@@ -65,8 +65,11 @@
   const btn = document.createElement("button");
   btn.id = "pick-send-btn";
   btn.textContent = "📥 등록 도우미로 보내기";
+  // 기본은 왼쪽 아래 (PC 프로그램 창이 오른쪽에 붙어 있어서). 끌어서 옮기면 그 자리를 기억함.
+  let pos = { left: 20, bottom: 20 };
+  try { pos = JSON.parse(localStorage.getItem("pick-btn-pos")) || pos; } catch (e) {}
   Object.assign(btn.style, {
-    position: "fixed", right: "20px", bottom: "20px", zIndex: 2147483647, padding: "12px 16px",
+    position: "fixed", left: pos.left + "px", bottom: pos.bottom + "px", zIndex: 2147483647, padding: "12px 16px",
     background: "#2563EB", color: "#fff", border: "none", borderRadius: "10px", fontSize: "15px",
     fontWeight: "bold", boxShadow: "0 4px 12px rgba(0,0,0,.25)", cursor: "pointer",
   });
@@ -76,7 +79,29 @@
     setTimeout(() => { btn.textContent = "📥 등록 도우미로 보내기"; btn.style.background = "#2563EB"; }, 4000);
   };
 
+  let drag = null, moved = false;
+  btn.addEventListener("mousedown", (e) => {
+    drag = { x: e.clientX, y: e.clientY, left: btn.offsetLeft, top: btn.offsetTop };
+    moved = false;
+  });
+  document.addEventListener("mousemove", (e) => {
+    if (!drag) return;
+    const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+    if (!moved && Math.abs(dx) + Math.abs(dy) < 5) return;
+    moved = true;
+    const left = Math.max(0, Math.min(window.innerWidth - btn.offsetWidth, drag.left + dx));
+    const top = Math.max(0, Math.min(window.innerHeight - btn.offsetHeight, drag.top + dy));
+    pos = { left: Math.round(left), bottom: Math.round(window.innerHeight - top - btn.offsetHeight) };
+    btn.style.left = pos.left + "px";
+    btn.style.bottom = pos.bottom + "px";
+  });
+  document.addEventListener("mouseup", () => {
+    if (drag && moved) try { localStorage.setItem("pick-btn-pos", JSON.stringify(pos)); } catch (e) {}
+    drag = null;
+  });
+
   btn.addEventListener("click", () => {
+    if (moved) { moved = false; return; } // 끌어서 옮긴 경우엔 보내지 않음
     btn.textContent = "보내는 중…";
     const data = { name: productName(), images: productImages(), text: detailText(), url: location.href };
     chrome.runtime.sendMessage({ type: "send", data }, (res) => {
