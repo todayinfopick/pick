@@ -7,8 +7,11 @@
 import csv
 import hashlib
 import io
+import json
 import os
+import queue
 import subprocess
+import threading
 import tkinter as tk
 from tkinter import messagebox
 
@@ -21,6 +24,8 @@ from main import PRODUCTS, log, product_key
 
 COLUMNS = ["상품명", "파트너스링크", "형식", "미디어", "소재이미지", "게시시간", "특징메모", "분류"]
 POLL_MS = 500
+BRIDGE_PORT = 27183  # 크롬 확장프로그램이 상품 페이지 내용을 보내는 PC 안 주소 (127.0.0.1만)
+PAGE_TEXT_FILE = "페이지글.txt"  # 확장프로그램이 가져온 상세페이지 글 전체 (게시엔 안 씀, 메모용)
 MAX_PHOTOS = image_tools.MAX_PHOTOS  # 한 줄 5장 × 2줄 (인스타 캐러셀 최대 장수와 같음)
 
 
@@ -245,6 +250,71 @@ def is_plain_store(text):
     return affiliates.looks_like_link(text) and affiliates.detect(text)["plain"]
 
 
+def save_page_text(name, text):
+    if not text:
+        return
+    folder = photo_folder(name)
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / PAGE_TEXT_FILE).write_text(text, encoding="utf-8")
+
+
+def load_page_text(name):
+    f = photo_folder(name) / PAGE_TEXT_FILE
+    try:
+        return f.read_text(encoding="utf-8")
+    except OSError:
+        return ""
+
+
+# ---------------------------------------------------------------- 크롬 확장프로그램 연결
+def start_bridge(inbox):
+    """127.0.0.1:BRIDGE_PORT에서 확장프로그램이 보낸 상품 페이지 내용을 받아 inbox에 넣는다.
+    사진은 여기(뒤쪽)에서 미리 받아 둔다. 이미 다른 창이 쓰고 있으면 False."""
+    from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+
+    class Handler(BaseHTTPRequestHandler):
+        def do_POST(self):
+            # 확장프로그램만 받는다: 일반 웹페이지는 이 머리글을 붙이면 브라우저가 막는다(CORS 사전 확인)
+            if self.path != "/page" or self.headers.get("X-Pick") != "1":
+                self.send_error(403)
+                return
+            try:
+                size = int(self.headers.get("Content-Length") or 0)
+                data = json.loads(self.rfile.read(min(size, 5_000_000)).decode("utf-8"))
+                urls = [u for u in data.get("images") or [] if isinstance(u, str) and u.startswith("http")]
+                photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if im is not None]
+                inbox.put({"name": " ".join(str(data.get("name") or "").split())[:200],
+                           "text": str(data.get("text") or "").strip(),
+                           "url": str(data.get("url") or ""), "images": photos})
+                body, code = {"ok": True, "photos": len(photos)}, 200
+            except Exception as e:
+                body, code = {"ok": False, "error": str(e)}, 400
+            out = json.dumps(body, ensure_ascii=False).encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+
+        def do_GET(self):  # 확장프로그램이 '프로그램 켜져 있나' 확인용
+            out = b'{"ok": true}'
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(out)))
+            self.end_headers()
+            self.wfile.write(out)
+
+        def log_message(self, *a):
+            pass
+
+    try:
+        server = ThreadingHTTPServer(("127.0.0.1", BRIDGE_PORT), Handler)
+    except OSError:
+        return False
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    return True
+
+
 # ---------------------------------------------------------------- 화면
 class Helper:
     def __init__(self, root, parent=None):
@@ -263,6 +333,9 @@ class Helper:
         self.editing = None  # 수정 중인 등록 상품 {'name','memo','link'}
         self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
         self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
+        self.page_text = ""  # 확장프로그램이 보낸 상세페이지 글
+        self.inbox = queue.Queue()
+        start_bridge(self.inbox)
 
         if self.standalone:
             root.title("쿠팡 캡처 도우미 — 새 상품 등록")
@@ -366,6 +439,8 @@ class Helper:
 
     # ------------------------------------------------ 클립보드 감지
     def poll(self):
+        while not self.inbox.empty():
+            self.take_page(self.inbox.get())
         if self.watch.get():
             img = self.grab_image()
             if img is not None:
@@ -393,7 +468,7 @@ class Helper:
             self.root.bell()
             return
         if is_link(text):
-            if text.strip() != self.link.get().strip():
+            if self.link.get().strip() and text.strip() != self.link.get().strip():
                 # 다른 링크 = 새 상품: 이전 내용을 비운다 (저장 안 한 사진이 있으면 확인)
                 if self.photos_dirty and self.images and not messagebox.askyesno(
                         "새 상품", f"저장하지 않은 사진 {len(self.images)}장이 있습니다.\n"
@@ -462,6 +537,37 @@ class Helper:
         self.memo.delete("1.0", "end")
         self.memo.insert("1.0", f"{cur}, {one_line}" if cur else one_line)
         self.say("✓ 특징메모에 추가됨. (상품명을 바꾸려면 위 '상품명'을 고르고 복사하세요)")
+
+    def take_page(self, data):
+        """확장프로그램에서 받은 상품 페이지 내용: 상품명·사진·상세페이지 글."""
+        name, cur = data["name"], self.name.get().strip()
+        if cur and name and name_key(cur) != name_key(name) and not self.editing:
+            if not messagebox.askyesno("새 상품", f"지금 입력 중인 상품과 다른 상품입니다.\n\n"
+                                                f"지금: {cur[:40]}\n받은 것: {name[:40]}\n\n지우고 새로 시작할까요?"):
+                self.say("확장프로그램에서 받은 내용을 무시했습니다.")
+                return
+            self.reset_fields()
+        if name and (not self.name.get().strip() or self.name_replace_next):
+            self.name.delete(0, "end")
+            self.name.insert(0, name)
+            self.name_replace_next = False
+        if data["text"]:
+            self.page_text = data["text"]
+            self.ai_done = False
+        added = 0
+        for im in data["images"]:
+            if len(self.images) >= MAX_PHOTOS:
+                break
+            if not image_tools.is_duplicate(im, self.images):
+                self.images.append(im)
+                added += 1
+        if added:
+            self.photos_dirty = True
+            self.ai_done = False
+            self.refresh_thumbs()
+        self.root.bell()
+        need_link = "" if self.link.get().strip() else "\n이제 파트너스 링크를 복사하세요."
+        self.say(f"✓ 확장프로그램: 상품명, 사진 {added}장, 상세 글 {len(data['text']):,}자를 받았습니다.{need_link}")
 
     def on_target(self):
         msg = {"auto": "자동: 상품명이 비어 있으면 상품명, 아니면 특징메모에 넣습니다.",
@@ -608,6 +714,7 @@ class Helper:
         self.photos_dirty = False
         self.ai_done = False
         self.info_idx = []
+        self.page_text = ""
         self.refresh_thumbs()
 
     # ------------------------------------------------ 제미나이 메모 자동 작성
@@ -622,17 +729,18 @@ class Helper:
             if then:
                 then()
             return
-        if not self.images:
+        if not self.images and not self.page_text:
             self.say("⚠ 캡처한 사진이 없어 메모를 쓸 수 없습니다. 상품 사진·설명을 캡처해 주세요.")
             return
         images, name, link = list(self.images), self.name.get().strip(), self.link.get().strip()
+        page_text = self.page_text
         cats = category_choices()
         self.save_btn.config(state="disabled")
         self.say("✨ AI가 캡처를 읽고 메모를 쓰는 중… (10~20초)")
 
         def work():
             try:
-                res, err = memo_ai.write_memo(images, name, link, cats), None
+                res, err = memo_ai.write_memo(images, name, link, cats, page_text), None
             except Exception as e:
                 res, err = None, e
             self.root.after(0, lambda: done(res, err))
@@ -688,7 +796,7 @@ class Helper:
             messagebox.showwarning("확인", "제휴 링크(예: https://link.coupang.com/a/...)를 넣어 주세요." + extra)
             return
         import memo_ai
-        if ((not memo or not name or not self.category.get()) and self.images and memo_ai.enabled()
+        if ((not memo or not name or not self.category.get()) and (self.images or self.page_text) and memo_ai.enabled()
                 and not self.ai_done):
             self.run_ai(self.save)  # 메모(또는 상품명)를 AI가 채운 뒤 저장 계속
             return
@@ -716,6 +824,8 @@ class Helper:
             if self.photos_dirty:
                 changes.append(f"사진을 지금 목록({len(self.images)}장)으로 저장" if self.photos_loaded
                                else f"사진 {len(self.images)}장 추가")
+            if self.page_text and self.page_text != load_page_text(existing["name"]):
+                changes.append(f"상세 글 {len(self.page_text):,}자 저장")
             if not changes:
                 messagebox.showinfo("변경 없음", "이미 등록된 상품이고 바뀐 내용이 없습니다.")
                 return
@@ -733,6 +843,7 @@ class Helper:
                 post, info = self.split_images()
                 save_photos(name, post, replace=self.photos_loaded)
                 self.save_info(name, info)
+            save_page_text(name, self.page_text)
             log(f"캡처 도우미: '{name}' 업데이트 ({', '.join(changes)})")
             self.reset_fields()
             self.say(f"✓ 업데이트 완료: {name}\n다음 상품의 링크를 복사하세요.")
@@ -749,6 +860,7 @@ class Helper:
         n = len(post)
         folder = save_photos(name, post) if n else None
         self.save_info(name, info)
+        save_page_text(name, self.page_text)
         log(f"캡처 도우미: '{name}' 추가 (사진 {n}장)")
         self.tidy_sheet()
 

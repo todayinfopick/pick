@@ -176,7 +176,7 @@ def download_photo_folders(folder_id, dest_root, wanted=None):
         if wanted is not None and f["name"] not in wanted:
             continue
         for p in list_children(f["id"]):
-            if p["mimeType"].startswith(("image/", "video/")):
+            if p["mimeType"].startswith(("image/", "video/")) or p["name"] == "페이지글.txt":
                 download(p["id"], dest_root / f["name"] / p["name"])
         n += 1
     return n

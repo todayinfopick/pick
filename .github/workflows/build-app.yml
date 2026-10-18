@@ -6,7 +6,7 @@ name: 프로그램(exe) 만들기
 on:
   push:
     paths: [app.py, helper.py, settings.py, memo_ai.py, general.py, main.py, gcloud.py, image_tools.py,
-            affiliates.py, icon.ico, requirements-app.txt, .github/workflows/build-app.yml]
+            affiliates.py, icon.ico, requirements-app.txt, "extension/**", .github/workflows/build-app.yml]
   workflow_dispatch:
 
 permissions:
@@ -32,10 +32,16 @@ jobs:
       - name: 실행 확인 (가져오기만)
         run: python -c "import app, helper, settings, memo_ai, main, gcloud; print('ok')"
 
+      - name: 크롬 확장프로그램 묶기
+        shell: pwsh
+        run: Compress-Archive -Path extension/* -DestinationPath dist/CoupangHelper-extension.zip
+
       - uses: actions/upload-artifact@v4
         with:
           name: CoupangAutopost
-          path: dist/CoupangAutopost.exe
+          path: |
+            dist/CoupangAutopost.exe
+            dist/CoupangHelper-extension.zip
 
       - name: 릴리스에 올리기
         if: github.ref == 'refs/heads/main'
@@ -44,5 +50,5 @@ jobs:
         shell: bash
         run: |
           gh release delete app --yes --cleanup-tag || true
-          gh release create app dist/CoupangAutopost.exe --title "쿠팡 자동게시 프로그램" \
+          gh release create app dist/CoupangAutopost.exe dist/CoupangHelper-extension.zip --title "쿠팡 자동게시 프로그램" \
             --notes "CoupangAutopost.exe를 받아 .env·google-key.json이 있는 프로그램 폴더에 넣고 실행하세요. (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ))" --latest

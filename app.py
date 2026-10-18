@@ -236,13 +236,14 @@ class ListTab:
         images = helper.load_saved_photos(item["name"])
         if (folder / "_설명").is_dir():
             images += self._load_dir(folder / "_설명")
-        if not images:
+        page_text = helper.load_page_text(item["name"])
+        if not images and not page_text:
             messagebox.showinfo("메모 다시 쓰기", "이 상품의 사진 폴더에 캡처가 없습니다.")
             return
         self.status.config(text=f"✨ '{item['name'][:20]}' 메모를 쓰는 중…")
 
         def work():
-            res = memo_ai.write_memo(images, item["name"], item["link"])
+            res = memo_ai.write_memo(images, item["name"], item["link"], page_text=page_text)
             if res["memo"]:
                 helper.update_product(item["link"], item["name"], res["memo"])
             return res
