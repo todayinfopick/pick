@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "image",
-    "last_slot": "2026-10-17 19:00",
+    "last_slot": "2026-10-18 07:00",
     "last_general_slot": "2026-10-17 21:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -111,5 +111,37 @@
       "account": 2,
       "at": "2026-10-17T23:11:52"
     }
-  ]
+  ],
+  "상품:솔루시안pdrn+egf리바이탈라이징크림": {
+    "threads": {
+      "id": "18094806776173087",
+      "kind": "carousel",
+      "at": "2026-10-18T08:32:57",
+      "reply": "17909532507578762"
+    },
+    "instagram": {
+      "id": "18103231592568448",
+      "kind": "video",
+      "at": "2026-10-18T08:34:13"
+    },
+    "name": "솔루시안 PDRN + EGF 리바이탈라이징 크림",
+    "link": "https://link.coupang.com/a/hVXqxhX5JA",
+    "account": 1
+  },
+  "상품:코멧사선컷팅테이프클리너리필16cmx12m": {
+    "threads": {
+      "id": "18058455647646033",
+      "kind": "carousel",
+      "at": "2026-10-18T08:35:28",
+      "reply": "18107761565121410"
+    },
+    "instagram": {
+      "id": "17904677823663954",
+      "kind": "carousel",
+      "at": "2026-10-18T08:37:20"
+    },
+    "name": "코멧 사선컷팅 테이프 클리너 리필 16cm x 12m",
+    "link": "https://link.coupang.com/a/hVX50JhOHQ",
+    "account": 2
+  }
 }

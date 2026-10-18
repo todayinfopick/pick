@@ -369,7 +369,7 @@ class PostTab:
     def run(self, mode):
         if not (os.getenv("GITHUB_TOKEN") or "").strip():
             if messagebox.askyesno(APP_TITLE, "버튼으로 서버를 실행하려면 깃허브 키가 필요해요.\n"
-                                              "(설정 → 계정·키 → 깃허브 키)\n\n"
+                                              "(키 탭 → 변경 → 깃허브 키)\n\n"
                                               "지금은 깃허브 화면을 열어 직접 실행할까요?"):
                 webbrowser.open(f"https://github.com/{repo()}/actions/workflows/{WORKFLOW}")
             return
@@ -398,7 +398,7 @@ class PostTab:
             f"4. Repository access: Only select repositories → {repo().split('/')[-1]}\n"
             "5. Permissions → Repository permissions → Actions: Read and write\n"
             "6. 맨 아래 Generate token → 나온 키를 복사\n"
-            "7. 이 프로그램 설정 → 계정·키 → 깃허브 키에 붙여넣고 저장"))
+            "7. 이 프로그램 키 탭 → 변경 → 깃허브 키에 붙여넣고 저장"))
         webbrowser.open("https://github.com/settings/personal-access-tokens/new")
 
 
@@ -517,12 +517,21 @@ class BlogTab:
 
 # ---------------------------------------------------------------- 설정 탭
 class SettingsTab:
-    def __init__(self, app, frame):
+    """'설정' 탭과 '키' 탭. 키 탭(locked)은 처음엔 잠겨 있고 '변경'을 눌러야 고칠 수 있다."""
+
+    def __init__(self, app, frame, tab="설정", locked=False):
         self.app, self.root = app, app.root
+        self.tab, self.locked = tab, locked
+        self.inputs = []  # 잠글 입력칸
         top = tk.Frame(frame)
         top.pack(fill="x", padx=10, pady=8)
-        tk.Button(top, text="💾 저장", bg="#2563EB", fg="white", width=9, command=self.save).pack(side="left")
-        tk.Button(top, text="↺ 다시 불러오기", command=self.reload).pack(side="left", padx=6)
+        self.save_btn = tk.Button(top, text="💾 저장", bg="#2563EB", fg="white", width=9, command=self.save)
+        self.save_btn.pack(side="left")
+        if locked:
+            self.lock_btn = tk.Button(top, text="🔓 변경", width=8, command=self.toggle_lock)
+            self.lock_btn.pack(side="left", padx=6)
+        else:
+            tk.Button(top, text="↺ 다시 불러오기", command=self.reload).pack(side="left", padx=6)
         self.status = tk.Label(frame, text="", fg="#555", anchor="w", justify="left", wraplength=260)
         self.status.pack(fill="x", padx=10)
 
@@ -536,19 +545,35 @@ class SettingsTab:
         canvas.pack(side="left", fill="both", expand=True, padx=(10, 0))
         sb.pack(side="right", fill="y")
         canvas.bind_all("<MouseWheel>", lambda e: canvas.yview_scroll(int(-e.delta / 120), "units")
-                        if self.app.notebook.select() == str(frame) else None)
+                        if self.app.notebook.select() == str(frame) else None, add="+")
 
         self.vars = {}
-        for group in settings.GROUPS:
-            box = tk.LabelFrame(inner, text=group, padx=8, pady=6)
+        for group in settings.groups(tab):
+            box = tk.LabelFrame(inner, text=group, padx=8, pady=6, font=("", 10, "bold"))
             box.pack(fill="x", pady=6, padx=(0, 8))
             box.columnconfigure(0, weight=1)
-            for row, spec in enumerate(s for s in settings.SPEC if s["group"] == group):
+            for row, spec in enumerate(s for s in settings.SPEC if s["group"] == group and s["tab"] == tab):
                 self.add_field(box, row, spec)
-        if group:
-            tk.Label(inner, text="공용 설정은 구글 시트 '_설정' 탭에 저장되어 다음 서버 실행부터 적용돼요. "
-                                 "PC 설정(사진 폴더, 깃허브 키)은 이 PC에만 저장돼요.",
-                     fg="#666", justify="left", wraplength=240).pack(anchor="w", pady=8)
+        tk.Label(inner, text="공용 설정은 구글 시트 '_설정' 탭에 저장되어 다음 서버 실행부터 적용돼요. "
+                             "PC 설정(사진 폴더, 깃허브 키)은 이 PC에만 저장돼요.",
+                 fg="#666", justify="left", wraplength=240).pack(anchor="w", pady=8)
+        if locked:
+            self.set_locked(True)
+
+    def set_locked(self, on):
+        self.locked = on
+        for w in self.inputs:
+            w.config(state="disabled" if on else "normal")
+        self.save_btn.config(state="disabled" if on else "normal")
+        self.lock_btn.config(text="🔓 변경" if on else "🔒 잠그기")
+        self.status.config(text="잠겨 있어요. 고치려면 '변경'을 누르세요." if on else "고친 뒤 저장을 누르세요.")
+
+    def toggle_lock(self):
+        if self.locked and not messagebox.askyesno("키 변경", "키·토큰을 고치면 게시가 멈출 수 있어요.\n변경할까요?"):
+            return
+        if not self.locked:
+            self.fill()  # 저장 안 한 변경은 되돌린다
+        self.set_locked(not self.locked)
 
     def add_field(self, box, row, spec):
         tk.Label(box, text=spec["label"], anchor="w", font=("", 9, "bold")) \
@@ -563,10 +588,12 @@ class SettingsTab:
             w = tk.Frame(box)
             e = tk.Entry(w, textvariable=var, show="•")
             e.pack(side="left", fill="x", expand=True)
+            self.inputs.append(e)
             tk.Button(w, text="보기", command=lambda e=e: e.config(show="" if e.cget("show") else "•")) \
                 .pack(side="left", padx=4)
         else:
             w = tk.Entry(box, textvariable=var, width=8 if kind == "int" else 18)
+            self.inputs.append(w)
         w.grid(row=row * 3 + 1, column=0, sticky="w" if kind in ("bool", "choice", "int") else "we", padx=(8, 0))
         if spec.get("help"):
             tk.Label(box, text=spec["help"], fg="#888", anchor="w", justify="left", wraplength=220) \
@@ -583,13 +610,13 @@ class SettingsTab:
 
     def save(self):
         new = {k: v.get().strip() for k, v in self.vars.items()}
-        for k in (s["key"] for s in settings.SPEC if s["kind"] == "times"):
+        for k in (k for k in self.vars if settings.BY_KEY[k]["kind"] == "times"):
             try:
                 settings.post_times(new[k])
             except ValueError:
                 messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'을(를) '07:00 12:00 19:00'처럼 적어 주세요.")
                 return
-        for k in ("POSTS_PER_RUN", "THREADS_LINK_REPEAT", "THREADS_REPLY_DELAY", "BLOG_POSTS_PER_BLOG"):
+        for k in (k for k in self.vars if settings.BY_KEY[k]["kind"] == "int"):
             if not new[k].isdigit():
                 messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'은(는) 숫자로 적어 주세요.")
                 return
@@ -610,6 +637,9 @@ class SettingsTab:
             self.app.blog.show_info()
             names = ", ".join(settings.BY_KEY[k]["label"] for k in changes)
             self.status.config(text=f"✓ 저장했어요: {names[:60]}")
+            if self.tab == "키":
+                self.set_locked(True)
+                self.status.config(text=f"✓ 저장하고 다시 잠갔어요: {names[:50]}")
 
         in_thread(self.root, lambda: settings.save(changes), done)
 
@@ -649,7 +679,9 @@ class App:
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
         self.reg_frame = tk.Frame(self.notebook)
         frames = {}
-        for title in ("목록", "게시", "블로그", "설정"):
+        # 탭 글씨를 키운다 (탭이 6개라 좁은 창에 다 들어가게 옆 여백은 줄임)
+        ttk.Style(root).configure("TNotebook.Tab", font=("", 11, "bold"), padding=(3, 4))
+        for title in ("목록", "게시", "블로그", "설정", "키"):
             frames[title] = tk.Frame(self.notebook)
         self.notebook.add(self.reg_frame, text="등록")
         for title, f in frames.items():
@@ -660,6 +692,7 @@ class App:
         self.post = PostTab(self, frames["게시"])
         self.blog = BlogTab(self, frames["블로그"])
         self.settings = SettingsTab(self, frames["설정"])
+        self.keys = SettingsTab(self, frames["키"], tab="키", locked=True)
         self.notebook.bind("<<NotebookTabChanged>>", self.on_tab)
         self.loaded = set()
         self.load_settings()
@@ -669,6 +702,7 @@ class App:
             self.values = vals or {s["key"]: s["default"] for s in settings.SPEC}
             apply_env({k: v for k, v in self.values.items() if v})
             self.settings.fill()
+            self.keys.fill()
             self.post.show_info()
             self.blog.show_info()
             if then:
