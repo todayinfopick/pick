@@ -108,17 +108,25 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
         raise RuntimeError(f"제미나이 답을 읽지 못했습니다: {e}")
 
 
-def write_memo(images, name="", link="", cats=("뷰티", "건강", "생활", "식품")):
-    """캡처 사진(PIL 이미지 목록)으로 상품명·메모·분류·설명캡처 번호를 얻는다.
+PAGE_TEXT_MAX = 20000  # 상품 페이지 글자는 앞에서 이만큼만 보냄 (전체는 사진 폴더 페이지글.txt에 저장)
+
+
+def write_memo(images, name="", link="", cats=("뷰티", "건강", "생활", "식품"), page_text=""):
+    """캡처 사진(PIL 이미지 목록)과 상품 페이지 글자(확장프로그램)로 상품명·메모·분류·설명캡처 번호를 얻는다.
     반환 {'name', 'memo', 'category', 'info': [0부터 시작하는 사진 번호]}. 실패하면 RuntimeError."""
     if not env("GEMINI_API_KEY"):
         raise RuntimeError("제미나이 키가 없습니다. 설정 → 특징메모에서 넣어 주세요.")
-    if not images:
+    page_text = (page_text or "").strip()
+    if not images and not page_text:
         raise RuntimeError("읽을 캡처 사진이 없습니다.")
     hint = f"참고 상품명: {name}\n" if name else ""
+    if page_text:
+        hint += "맨 뒤의 '페이지 글'은 상품 페이지에서 그대로 가져온 글자다. 사진보다 정확하니 먼저 참고하라.\n"
     parts = [{"text": PROMPT.format(hint=hint, cats=", ".join(cats))}]
     for label, data in _pieces(images):
         parts += [{"text": label}, {"inline_data": {"mime_type": "image/jpeg", "data": data}}]
+    if page_text:
+        parts.append({"text": "페이지 글:\n" + page_text[:PAGE_TEXT_MAX]})
     text = generate(parts)
     try:
         data = json.loads(text[text.find("{"):text.rfind("}") + 1])

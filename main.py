@@ -438,9 +438,13 @@ def gemini_memo(item):
         for f in files[:12]:
             with Image.open(f) as im:
                 images.append(im.copy())
-        if not images:
+        try:
+            page_text = (folder / "페이지글.txt").read_text(encoding="utf-8")  # 크롬 확장프로그램이 저장
+        except OSError:
+            page_text = ""
+        if not images and not page_text:
             return ""
-        return memo_ai.write_memo(images, item["name"], item["link"])["memo"]
+        return memo_ai.write_memo(images, item["name"], item["link"], page_text=page_text)["memo"]
     except Exception as e:
         log(f"  ! 제미나이 메모 작성 실패: {e}")
         return ""
