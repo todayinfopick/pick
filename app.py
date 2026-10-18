@@ -765,11 +765,11 @@ class App:
         self.values = {}
         root.title(APP_TITLE)
         set_icon(root)
-        # 쿠팡 페이지를 보면서 쓰도록 좁게, 화면 오른쪽에 붙여서 연다
+        # 쿠팡 페이지를 보면서 쓰도록 좁고 낮게, 화면 오른쪽 아래(작업 표시줄 위)에 붙여서 연다
         sw, sh = root.winfo_screenwidth(), root.winfo_screenheight()
-        width, height = 290, min(860, sh - 80)
-        root.geometry(f"{width}x{height}+{sw - width - 16}+0")
-        root.minsize(270, 480)
+        width, height = 290, min(640, sh - 120)
+        root.geometry(f"{width}x{height}+{sw - width - 16}+{max(sh - height - 90, 0)}")
+        root.minsize(270, 400)
 
         head = tk.Frame(root)
         head.pack(fill="x", padx=10, pady=(6, 0))

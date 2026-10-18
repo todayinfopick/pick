@@ -369,7 +369,7 @@ class Helper:
         self.name.pack(fill="x", padx=10)
 
         tk.Label(box, text="③ 특징메모 (비우면 AI가 작성)", anchor="w").pack(fill="x", **pad)
-        self.memo = tk.Text(box, height=3, wrap="word")
+        self.memo = tk.Text(box, height=2, wrap="word")
         self.memo.pack(fill="x", padx=10)
 
         cat = tk.Frame(box)
@@ -392,7 +392,7 @@ class Helper:
         self.thumb_refs = []
         self.empty_thumb = tk.Label(self.thumbs, text="(캡처한 사진이 여기에 표시됩니다)", bg="#F1F5F9",
                                     fg="#999", height=3)
-        self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
+        self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
         hint = tk.Frame(box)
         hint.pack(fill="x", padx=10)
         tk.Label(hint, text="사진을 누르면 지워져요", fg="#888").pack(side="left")
@@ -621,18 +621,18 @@ class Helper:
                 w.destroy()
         self.thumb_refs = []
         if not self.images:
-            self.empty_thumb.grid(row=0, column=0, columnspan=4, sticky="we")
+            self.empty_thumb.grid(row=0, column=0, columnspan=5, sticky="we")
         else:
             self.empty_thumb.grid_remove()
-        per_row = 4
+        per_row = 5  # 낮은 창에 10장이 두 줄로 들어가게
         for i, im in enumerate(self.images):
             t = im.convert("RGB").copy()
-            t.thumbnail((52, 52))
+            t.thumbnail((40, 40))
             ph = ImageTk.PhotoImage(t)
             self.thumb_refs.append(ph)
             cell = tk.Frame(self.thumbs, bg="#F1F5F9")
-            cell.grid(row=i // per_row, column=i % per_row, padx=2, pady=2)
-            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=54, height=54)
+            cell.grid(row=i // per_row, column=i % per_row, padx=1, pady=1)
+            lb = tk.Label(cell, image=ph, cursor="hand2", bd=1, relief="solid", width=42, height=42)
             lb.pack()
             num = tk.Label(cell, text=f"{i + 1}  ✕", bg="#F1F5F9", fg="#555", cursor="hand2")
             num.pack()
