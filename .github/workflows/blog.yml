@@ -2,10 +2,17 @@ name: 블로그 글 만들기
 
 on:
   schedule:
-    # 매일 한국 시간 새벽 5시 30분쯤 (무료 예약은 조금 늦게 돌 수 있음)
-    - cron: "30 20 * * *"
+    # 매일 한국 시간 아침 8시 30분쯤 (무료 예약은 조금 늦게 돌 수 있음)
+    # 글은 새벽 5시에 Claude가 써서 drafts/에 올리고, 이 예약은 남은 초안을 정리한 뒤
+    # 오늘 글이 없는 블로그만 제미나이로 채우는 예비
+    - cron: "30 23 * * *"
   workflow_dispatch:
     inputs:
+      mode:
+        description: "할 일"
+        type: choice
+        default: 글쓰기
+        options: [글쓰기, 초안 정리]
       blog:
         description: "블로그 (비우면 전부, 예: naver1,tistory)"
         type: string
@@ -63,7 +70,10 @@ jobs:
           fi
 
       - name: 글 쓰기
-        run: python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}" ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
+        run: >-
+          python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
+          ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
+          ${{ inputs.mode == '초안 정리' && '--drafts' || '' }}
 
       - name: 결과 저장
         if: always()
