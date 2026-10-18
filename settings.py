@@ -17,7 +17,9 @@ ENV_PATH = BASE / ".env"
 
 # kind: bool(1/0) / text / secret(가려서 표시) / int / choice / times(게시 시각 목록)
 # pc=True: PC에서만 쓰는 설정 (시트에 올리지 않음)
+# tab: 프로그램의 어느 탭에 보일지 (기본 '설정', 키·토큰은 '키')
 SPEC = [
+    # ================================================================ '설정' 탭
     # ---------------------------------------------------------------- 예약·게시
     {"group": "예약·게시", "key": "AUTO_POST", "label": "자동 게시", "kind": "bool", "default": "1",
      "help": "끄면 예약 시간이 돼도 게시하지 않아요 (지금 게시 버튼은 됨)"},
@@ -37,19 +39,29 @@ SPEC = [
      "choices": ["쉼표앞", "전체"], "default": "쉼표앞",
      "help": "쉼표앞: 컬러·수량 옵션이 달라도 한 번만 게시 / 전체: 옵션별로 따로 게시"},
 
+    # ---------------------------------------------------------------- 계정 (1번·2번 같은 모양)
+    {"group": "1번 계정", "key": "ACCOUNT_NAME", "label": "계정 이름", "kind": "text", "default": "beautyzip_kr"},
+    {"group": "1번 계정", "key": "ACCOUNT_CATEGORY", "label": "쇼핑 상품 분류", "kind": "text", "default": "뷰티 건강",
+     "help": "띄어쓰기로 구분 (예: 뷰티 건강 패션). 2번 계정 분류에 없는 상품은 모두 1번 계정으로 가요"},
+    {"group": "1번 계정", "key": "GENERAL_THEME", "label": "일반 글 주제", "kind": "text",
+     "default": "뷰티·건강 꿀팁",
+     "help": "AI가 이 주제 안에서 계절에 맞는 글감을 골라요. 시트 '일반글' 탭 '주제' 칸에 적어 두면 그 글감을 먼저 써요"},
+    {"group": "2번 계정", "key": "ACCOUNT_NAME_2", "label": "계정 이름", "kind": "text", "default": "todayzip_kr"},
+    {"group": "2번 계정", "key": "ACCOUNT_CATEGORY_2", "label": "쇼핑 상품 분류", "kind": "text",
+     "default": "생활 식품", "help": "띄어쓰기로 구분 (예: 생활 식품 주방). 시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정으로 가요"},
+    {"group": "2번 계정", "key": "GENERAL_THEME_2", "label": "일반 글 주제", "kind": "text",
+     "default": "살림·식품 꿀팁"},
+    {"group": "2번 계정", "key": "PAGE_TITLE_2", "label": "링크 페이지 제목", "kind": "text",
+     "default": "오늘의 살림템", "help": "2번 계정 링크 페이지: todayinfopick.github.io/pick/2/"},
+
     # ---------------------------------------------------------------- 일반 글
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_ON", "label": "일반 글 자동 게시", "kind": "bool",
-     "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요"},
+     "default": "1", "help": "링크 없는 소통용 글. 광고 글만 있으면 노출이 줄어서 섞어 올려요. 주제는 위 계정 칸에서"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_IG", "label": "인스타에도 올리기 (글자 카드)", "kind": "bool",
      "default": "1", "help": "인스타는 피드에서 이미지만 보여서, 제목을 크게 넣은 글자 카드로 올려요"},
     {"group": "일반 글 (광고 아님)", "key": "GENERAL_IMAGE", "label": "쓰레드 일반 글 이미지", "kind": "choice",
      "choices": ["사진", "카드", "없음"], "default": "사진",
-     "help": "사진: 글감에 맞는 무료 사진 한 장(Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
-    {"group": "일반 글 (광고 아님)", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",
-     "default": "", "help": "pixabay.com 가입 → pixabay.com/api/docs 의 key 값 복사 (무료, 출처 표시 필요 없음)"},
-    {"group": "일반 글 (광고 아님)", "key": "GENERAL_THEME", "label": "계정 주제", "kind": "text",
-     "default": "뷰티·건강 꿀팁",
-     "help": "AI가 이 주제 안에서 계절에 맞는 글감을 골라요. 시트 '일반글' 탭 '주제' 칸에 적어 두면 그 글감을 먼저 써요"},
+     "help": "사진: 글감에 맞는 무료 사진 한 장(키 탭의 Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
 
     # ---------------------------------------------------------------- 쓰레드
     {"group": "쓰레드", "key": "THREADS_MEDIA", "label": "원본 사진·영상 붙이기", "kind": "bool", "default": "1",
@@ -71,55 +83,54 @@ SPEC = [
     # ---------------------------------------------------------------- 특징메모
     {"group": "특징메모", "key": "AUTO_MEMO", "label": "메모 자동 작성 (제미나이, 무료)", "kind": "bool",
      "default": "1", "help": "메모가 비어 있으면 저장할 때 캡처를 읽고 메모를 써요"},
-    {"group": "특징메모", "key": "GEMINI_API_KEY", "label": "제미나이 키", "kind": "secret", "default": "",
-     "help": "aistudio.google.com → Get API key (무료)"},
-    {"group": "특징메모", "key": "GEMINI_MODEL", "label": "제미나이 모델", "kind": "text",
-     "default": "gemini-flash-latest"},
     {"group": "특징메모", "key": "AUTO_RESEARCH", "label": "유료 AI 웹 검색 (Claude)", "kind": "bool",
      "default": "0", "help": "켜면 메모가 끝까지 비었을 때 검색 1회 약 15원"},
-
-    # ---------------------------------------------------------------- 계정·키
-    {"group": "계정·키", "key": "ACCOUNT_NAME", "label": "1번 계정 이름", "kind": "text", "default": "beautyzip_kr",
-     "help": "기록에 보이는 이름. 상품 '분류'가 2번 계정 분류에 해당하지 않으면 전부 1번 계정에 올라가요"},
-    {"group": "계정·키", "key": "ACCOUNT_CATEGORY", "label": "1번 계정 분류", "kind": "text", "default": "뷰티 건강",
-     "help": "캡처도우미 분류 버튼에 나오는 말. 2번 계정 분류에 없는 상품은 모두 1번 계정으로 가요"},
-    {"group": "계정·키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (글 작성)", "kind": "secret", "default": ""},
-    {"group": "계정·키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text", "default": "claude-haiku-5-5"},
-    {"group": "계정·키", "key": "THREADS_ACCESS_TOKEN", "label": "쓰레드 토큰", "kind": "secret", "default": ""},
-    {"group": "계정·키", "key": "THREADS_USER_ID", "label": "쓰레드 사용자 ID", "kind": "text", "default": ""},
-    {"group": "계정·키", "key": "IG_ACCESS_TOKEN", "label": "인스타 토큰", "kind": "secret", "default": ""},
-    {"group": "계정·키", "key": "IG_USER_ID", "label": "인스타 사용자 ID", "kind": "text", "default": ""},
-    {"group": "계정·키", "key": "CLOUDINARY_URL", "label": "Cloudinary 주소 (사진·영상 올리기)", "kind": "secret",
-     "default": ""},
-    {"group": "계정·키", "key": "GITHUB_TOKEN", "label": "깃허브 키 (지금 게시 버튼용)", "kind": "secret",
-     "default": "", "pc": True, "help": "게시 탭의 '키 만드는 법' 참고"},
-    {"group": "계정·키", "key": "GITHUB_REPO", "label": "깃허브 저장소", "kind": "text",
-     "default": "todayinfopick/pick", "pc": True},
-
-    # ---------------------------------------------------------------- 2번 계정
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_NAME_2", "label": "2번 계정 이름", "kind": "text",
-     "default": "todayzip_kr"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "ACCOUNT_CATEGORY_2", "label": "이 계정에 올릴 분류", "kind": "text",
-     "default": "생활 식품", "help": "시트 '분류' 칸에 이 말이 들어 있는 상품만 2번 계정에 올려요. 여러 개는 띄어쓰기로 (예: 생활 식품 주방)"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "GENERAL_THEME_2", "label": "일반 글 주제", "kind": "text",
-     "default": "살림·식품 꿀팁"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_ACCESS_TOKEN_2", "label": "쓰레드 토큰", "kind": "secret",
-     "default": "", "help": "비워 두면 2번 계정은 쓰지 않아요 (모든 상품이 1번 계정으로)"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "THREADS_USER_ID_2", "label": "쓰레드 사용자 ID", "kind": "text",
-     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_ACCESS_TOKEN_2", "label": "인스타 토큰", "kind": "secret",
-     "default": ""},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "IG_USER_ID_2", "label": "인스타 사용자 ID", "kind": "text",
-     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
-    {"group": "2번 계정 (쓰레드+인스타)", "key": "PAGE_TITLE_2", "label": "링크 페이지 제목", "kind": "text",
-     "default": "오늘의 살림템", "help": "2번 계정 링크 페이지: todayinfopick.github.io/pick/2/"},
 
     # ---------------------------------------------------------------- PC
     {"group": "PC", "key": "PHOTO_DIR", "label": "사진 폴더", "kind": "text", "default": "", "pc": True,
      "help": "구글 드라이브 동기화 폴더, 예: G:\\내 드라이브\\쿠팡사진"},
+
+    # ================================================================ '키' 탭 (잠금, '변경' 눌러야 고침)
+    {"tab": "키", "group": "1번 계정 키", "key": "THREADS_ACCESS_TOKEN", "label": "쓰레드 토큰", "kind": "secret",
+     "default": ""},
+    {"tab": "키", "group": "1번 계정 키", "key": "THREADS_USER_ID", "label": "쓰레드 사용자 ID", "kind": "text",
+     "default": ""},
+    {"tab": "키", "group": "1번 계정 키", "key": "IG_ACCESS_TOKEN", "label": "인스타 토큰", "kind": "secret",
+     "default": ""},
+    {"tab": "키", "group": "1번 계정 키", "key": "IG_USER_ID", "label": "인스타 사용자 ID", "kind": "text", "default": ""},
+    {"tab": "키", "group": "2번 계정 키", "key": "THREADS_ACCESS_TOKEN_2", "label": "쓰레드 토큰", "kind": "secret",
+     "default": "", "help": "비워 두면 2번 계정은 쓰지 않아요 (모든 상품이 1번 계정으로)"},
+    {"tab": "키", "group": "2번 계정 키", "key": "THREADS_USER_ID_2", "label": "쓰레드 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"tab": "키", "group": "2번 계정 키", "key": "IG_ACCESS_TOKEN_2", "label": "인스타 토큰", "kind": "secret",
+     "default": ""},
+    {"tab": "키", "group": "2번 계정 키", "key": "IG_USER_ID_2", "label": "인스타 사용자 ID", "kind": "text",
+     "default": "", "help": "비워 두면 토큰으로 자동으로 알아내요"},
+    {"tab": "키", "group": "AI 키", "key": "ANTHROPIC_API_KEY", "label": "Claude 키 (쇼핑 글 작성)", "kind": "secret",
+     "default": ""},
+    {"tab": "키", "group": "AI 키", "key": "CLAUDE_MODEL", "label": "Claude 모델", "kind": "text",
+     "default": "claude-haiku-5-5"},
+    {"tab": "키", "group": "AI 키", "key": "GEMINI_API_KEY", "label": "제미나이 키 (메모·일반 글)", "kind": "secret",
+     "default": "", "help": "aistudio.google.com → Get API key (무료)"},
+    {"tab": "키", "group": "AI 키", "key": "GEMINI_MODEL", "label": "제미나이 모델", "kind": "text",
+     "default": "gemini-flash-latest"},
+    {"tab": "키", "group": "기타 키", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",
+     "default": "", "help": "pixabay.com 가입 → pixabay.com/api/docs 의 key 값 복사 (무료, 출처 표시 필요 없음)"},
+    {"tab": "키", "group": "기타 키", "key": "CLOUDINARY_URL", "label": "Cloudinary 주소 (사진·영상 올리기)",
+     "kind": "secret", "default": ""},
+    {"tab": "키", "group": "기타 키", "key": "GITHUB_TOKEN", "label": "깃허브 키 (지금 게시 버튼용)", "kind": "secret",
+     "default": "", "pc": True, "help": "게시 탭의 '키 만드는 법' 참고"},
+    {"tab": "키", "group": "기타 키", "key": "GITHUB_REPO", "label": "깃허브 저장소", "kind": "text",
+     "default": "todayinfopick/pick", "pc": True},
 ]
 BY_KEY = {s["key"]: s for s in SPEC}
-GROUPS = list(dict.fromkeys(s["group"] for s in SPEC))
+for _s in SPEC:
+    _s.setdefault("tab", "설정")
+
+
+def groups(tab):
+    """그 탭에 나오는 묶음 이름 (SPEC 순서대로)."""
+    return list(dict.fromkeys(s["group"] for s in SPEC if s["tab"] == tab))
 SHARED_KEYS = [s["key"] for s in SPEC if not s.get("pc")]
 
 
