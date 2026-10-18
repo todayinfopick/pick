@@ -15,6 +15,7 @@
 import argparse
 import datetime
 import json
+import os
 import pathlib
 import re
 import shutil
@@ -371,8 +372,15 @@ def prune(site, index, keep_days):
     index["packages"] = [p for p in index["packages"] if p["date"] >= cutoff]
 
 
+def quota_hit(e):
+    """제미나이 무료 한도(분당·하루)에 걸렸는지. 걸렸으면 남은 글은 쓰지 않고 멈춘다 (쿠팡 자동화 몫을 남기려고)."""
+    return "한도" in str(e)
+
+
 def run(site, only=None, count=None, dry=False):
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
+    if env("BLOG_GEMINI_API_KEY"):  # 블로그 전용 제미나이 키(다른 구글 계정)가 있으면 쿠팡 자동화와 한도를 나눠 쓰지 않음
+        os.environ["GEMINI_API_KEY"] = env("BLOG_GEMINI_API_KEY")
     site.mkdir(parents=True, exist_ok=True)
     hist_path, index_path = site / "history.json", site / "index.json"
     hist = load_json(hist_path, {})
@@ -381,8 +389,10 @@ def run(site, only=None, count=None, dry=False):
     date = now.strftime("%Y-%m-%d")
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     used_photos = hist.setdefault("_photos", [])
-    made, failed = 0, 0
+    made, failed, stop = 0, 0, False
     for blog in cfg["blogs"]:
+        if stop:
+            break
         if only and blog["key"] not in only:
             continue
         h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
@@ -393,6 +403,7 @@ def run(site, only=None, count=None, dry=False):
         except Exception as e:
             log(f"  ! 글감을 고르지 못했습니다: {e}")
             failed += 1
+            stop = quota_hit(e)
             continue
         for t in topics:
             h["tone"] = (h["tone"] + 1) % len(TONES)
@@ -409,6 +420,10 @@ def run(site, only=None, count=None, dry=False):
                 log(f"  ! 글을 만들지 못했습니다: {e}")
                 shutil.rmtree(site / pid, ignore_errors=True)
                 failed += 1
+                if quota_hit(e):
+                    log("  제미나이 무료 한도에 걸려 남은 글은 내일 씁니다.")
+                    stop = True
+                    break
                 continue
             chars = body_chars(text)
             files = ["content.json"] + [i["file"] for i in pkg["images"]]
