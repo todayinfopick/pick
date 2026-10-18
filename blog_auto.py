@@ -4,6 +4,8 @@
   python blog_auto.py --site 폴더           : blog_config.json의 블로그마다 posts_per_blog편씩 만들기
   python blog_auto.py --site 폴더 --blog naver2 --count 1
   python blog_auto.py --site 폴더 --dry-run : 기록(글감 이력)은 남기지 않고 만들어 보기
+  python blog_auto.py --site 폴더 --drafts  : drafts/ 폴더의 초안(Claude가 쓴 글)에 사진만 붙여 패키지로
+  python blog_auto.py --site 폴더 --scheduled : 예약 실행. 초안을 먼저 정리하고, 오늘 글이 없는 블로그만 제미나이로 채움
 
 결과는 --site 폴더(서버에서는 blog-packages 브랜치)에 날짜/블로그-번호/ 로 쌓이고, index.json에 목록이 적힌다.
 스튜디오의 '서버에서 불러오기'가 index.json을 읽어 content.json과 이미지를 그대로 불러온다.
@@ -25,6 +27,7 @@ import main
 from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
+STOCK = "stock"
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
 WEEKDAYS = "월화수목금토일"
@@ -55,8 +58,10 @@ TOPIC_PROMPT = """오늘은 {today} 한국 날짜다. 너는 '{name}' {platform}
   category: {cats} 중 하나를 글자 그대로
   angle: 글에서 다룰 내용 한 줄 (독자가 얻는 것 위주)
   photo: 무료 사진 사이트에서 찾을 영어 검색어 2~3단어 (사람 얼굴보다 물건·장면, 상표 이름 금지)
+  urgent: 빨리 올려야 의미 있는 글(신청 마감, 출시·행사 소식처럼 날짜가 지나면 쓸모가 줄어드는 글)이면 true, 언제 올려도 되는 글이면 false
+  until: urgent가 true이고 날짜가 확인되면 그 글이 쓸모 있는 마지막 날 YYYY-MM-DD, 아니면 ""
 
-다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "..."}}]"""
+다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "...", "urgent": true, "until": ""}}]"""
 
 WRITE_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' {platform} 블로그에 올릴 글을 한국어로 써라.
 글감: {topic}
@@ -377,7 +382,97 @@ def quota_hit(e):
     return "한도" in str(e)
 
 
-def run(site, only=None, count=None, dry=False):
+def find_blog(cfg, name):
+    n = name.replace(" ", "")
+    return next((b for b in cfg["blogs"] if n in (b["key"], b["name"].replace(" ", ""))), None)
+
+
+def next_id(index, date, key):
+    existing = {p["id"] for p in index["packages"]}
+    k = 1
+    while f"{date}/{key}-{k}" in existing:
+        k += 1
+    return f"{date}/{key}-{k}"
+
+
+def urgency(topic):
+    """급함(날짜가 지나면 쓸모가 줄어드는 글)인지와 그 마지막 날. 시간 여유가 있는 글은 (False, "")."""
+    u = topic.get("urgent", False)
+    if isinstance(u, str):
+        u = u.strip().lower() in ("true", "1", "yes", "급함", "급", "신속")
+    until = str(topic.get("until") or "").strip()
+    return bool(u), until if re.fullmatch(r"\d{4}-\d{2}-\d{2}", until) else ""
+
+
+def add_to_index(index, pid, date, blog, pkg, text, writer, now, topic=None):
+    chars = body_chars(text)
+    urgent, until = urgency(topic or {})
+    index["packages"].insert(0, {"id": pid, "date": date, "blogKey": blog["key"], "blogName": blog["name"],
+                                 "platform": blog["platform"], "category": pkg["category"],
+                                 "title": pkg["title"], "chars": chars, "writer": writer,
+                                 "urgent": urgent, "until": until,
+                                 "files": ["content.json"] + [i["file"] for i in pkg["images"]],
+                                 "createdAt": now.isoformat(timespec="seconds")})
+    log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
+
+
+def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
+    """초안 파일 하나에 사진·카드를 붙여 패키지로 만들고 지운다. 성공하면 True.
+    초안 머리: @blog(key 또는 이름) @category @topic @photo(대표 사진 영어 검색어) @title @tags, 그 아래는 본문 형식 그대로.
+    @urgent: 급함(빨리 올릴 글)이면 급함, 아니면 상시(생략해도 상시). @until: 급한 글이 쓸모 있는 마지막 날 YYYY-MM-DD."""
+    text = clean(path.read_text(encoding="utf-8"))
+    meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
+    blog = find_blog(cfg, meta.get("blog", ""))
+    if not blog:
+        log(f"  ! 초안 {path.name}: 블로그 '{meta.get('blog')}'를 blog_config.json에서 찾지 못했습니다")
+        return False
+    if not date:
+        date = path.parent.name if re.fullmatch(r"\d{4}-\d{2}-\d{2}", path.parent.name) else now.strftime("%Y-%m-%d")
+    cat = meta.get("category", "")
+    topic = {"topic": meta.get("topic") or meta.get("title", path.stem),
+             "category": cat if cat in blog["categories"] else blog["categories"][0],
+             "photo": meta.get("photo", ""), "urgent": meta.get("urgent", ""), "until": meta.get("until", "")}
+    pid = next_id(index, date, blog["key"])
+    log(f"[{blog['name']}] 초안 정리: {path.parent.name}/{path.name}")
+    try:
+        pkg = build_package(site / pid, blog, topic, text, used_photos)
+    except Exception as e:
+        log(f"  ! 초안을 패키지로 만들지 못했습니다: {e}")
+        shutil.rmtree(site / pid, ignore_errors=True)
+        return False
+    add_to_index(index, pid, date, blog, pkg, text, "Claude", now, topic)
+    h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
+    h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
+    path.unlink()
+    return True
+
+
+def process_drafts(site, cfg, index, hist, used_photos, now):
+    """drafts/날짜/*.txt (Claude가 쓴 그날 글)를 패키지로 만든다. drafts/stock/은 비상용이라 여기서는 건드리지 않는다."""
+    made = failed = 0
+    for path in sorted((site / "drafts").glob("**/*.txt")):
+        if STOCK in path.parts:
+            continue
+        if draft_package(path, site, cfg, index, hist, used_photos, now):
+            made += 1
+        else:
+            failed += 1
+    for d in sorted((site / "drafts").glob("*"), reverse=True):
+        if d.is_dir() and d.name != STOCK and not any(d.iterdir()):
+            d.rmdir()
+    return made, failed
+
+
+def use_stock(site, blog, n, cfg, index, hist, used_photos, now):
+    """오늘 글이 빈 블로그에 비상용 글(drafts/stock/<key>-*.txt, 날짜와 상관없는 글)을 n편까지 꺼내 쓴다."""
+    made = 0
+    for path in sorted((site / "drafts" / STOCK).glob(f"{blog['key']}-*.txt"))[:n]:
+        if draft_package(path, site, cfg, index, hist, used_photos, now, now.strftime("%Y-%m-%d")):
+            made += 1
+    return made
+
+
+def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=False):
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     if env("BLOG_GEMINI_API_KEY"):  # 블로그 전용 제미나이 키(다른 구글 계정)가 있으면 쿠팡 자동화와 한도를 나눠 쓰지 않음
         os.environ["GEMINI_API_KEY"] = env("BLOG_GEMINI_API_KEY")
@@ -389,14 +484,26 @@ def run(site, only=None, count=None, dry=False):
     date = now.strftime("%Y-%m-%d")
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     used_photos = hist.setdefault("_photos", [])
-    made, failed, stop = 0, 0, False
+    made, failed = process_drafts(site, cfg, index, hist, used_photos, now)
+    stop = drafts_only
     for blog in cfg["blogs"]:
-        if stop:
-            break
         if only and blog["key"] not in only:
+            continue
+        if stop and not scheduled:
+            break
+        if scheduled and any(p["date"] == date and p["blogKey"] == blog["key"] for p in index["packages"]):
+            log(f"[{blog['name']}] 오늘 글이 이미 있어 건너뜁니다")
             continue
         h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
         n_posts = count or int(env("BLOG_POSTS_PER_BLOG") or cfg.get("posts_per_blog", 2))
+        if scheduled:  # 새벽 글이 빠진 날: 쌓아 둔 비상용 글이 있으면 그것부터 (제미나이 한도를 아낌)
+            got = use_stock(site, blog, n_posts, cfg, index, hist, used_photos, now)
+            made += got
+            n_posts -= got
+            if n_posts <= 0:
+                continue
+        if stop:  # 제미나이 한도에 걸린 뒤로는 비상용 글만 꺼냄
+            continue
         log(f"[{blog['name']}] 글감 고르는 중")
         try:
             topics = pick_topics(blog, n_posts, h["topics"], today)
@@ -407,11 +514,7 @@ def run(site, only=None, count=None, dry=False):
             continue
         for t in topics:
             h["tone"] = (h["tone"] + 1) % len(TONES)
-            existing = {p["id"] for p in index["packages"]}
-            k = 1
-            while f"{date}/{blog['key']}-{k}" in existing:
-                k += 1
-            pid = f"{date}/{blog['key']}-{k}"
+            pid = next_id(index, date, blog["key"])
             log(f"  글 쓰는 중: {t['topic']} ({t['category']})")
             try:
                 text = write_post(blog, t, TONES[h["tone"]], cfg, today)
@@ -425,13 +528,7 @@ def run(site, only=None, count=None, dry=False):
                     stop = True
                     break
                 continue
-            chars = body_chars(text)
-            files = ["content.json"] + [i["file"] for i in pkg["images"]]
-            index["packages"].insert(0, {"id": pid, "date": date, "blogKey": blog["key"], "blogName": blog["name"],
-                                         "platform": blog["platform"], "category": pkg["category"],
-                                         "title": pkg["title"], "chars": chars, "files": files,
-                                         "createdAt": now.isoformat(timespec="seconds")})
-            log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
+            add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude", now, t)
             made += 1
             if not dry:
                 h["topics"].append(t["topic"])
@@ -445,7 +542,7 @@ def run(site, only=None, count=None, dry=False):
     if not dry:
         hist_path.write_text(json.dumps(hist, ensure_ascii=False, indent=1), encoding="utf-8")
     log(f"블로그 글 {made}편 완성, 실패 {failed}건")
-    return 0 if made else 1
+    return 1 if failed and not made else 0
 
 
 if __name__ == "__main__":
@@ -454,9 +551,12 @@ if __name__ == "__main__":
     ap.add_argument("--blog", default="", help="이 블로그만 (쉼표로 여러 개, 예: naver1,tistory)")
     ap.add_argument("--count", type=int, default=0, help="블로그마다 몇 편 (기본: 설정의 posts_per_blog)")
     ap.add_argument("--dry-run", action="store_true")
-    ap.add_argument("--scheduled", action="store_true", help="예약 실행: 프로그램 설정에서 블로그 자동 작성을 껐으면 쉼")
+    ap.add_argument("--scheduled", action="store_true",
+                    help="예약 실행: 설정에서 껐으면 쉼. 초안 정리 후 오늘 글이 없는 블로그만 씀")
+    ap.add_argument("--drafts", action="store_true", help="초안(drafts/)만 패키지로 만들고 새 글은 쓰지 않음")
     a = ap.parse_args()
     if a.scheduled and env("BLOG_ON", "1") == "0":
         log("블로그 자동 작성이 꺼져 있어 쉽니다 (프로그램 설정 → 블로그).")
         sys.exit(0)
-    sys.exit(run(pathlib.Path(a.site), [b for b in a.blog.split(",") if b] or None, a.count or None, a.dry_run))
+    sys.exit(run(pathlib.Path(a.site), [b for b in a.blog.split(",") if b] or None, a.count or None, a.dry_run,
+                 a.scheduled, a.drafts))
