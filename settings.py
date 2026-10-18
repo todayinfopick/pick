@@ -63,6 +63,15 @@ SPEC = [
      "choices": ["사진", "카드", "없음"], "default": "사진",
      "help": "사진: 글감에 맞는 무료 사진 한 장(키 탭의 Pixabay 키 필요) / 카드: 제목을 크게 넣은 글자 이미지 / 없음: 글만"},
 
+    # ---------------------------------------------------------------- 블로그
+    {"group": "블로그 (네이버·티스토리)", "key": "BLOG_ON", "label": "블로그 글 자동 작성", "kind": "bool",
+     "default": "1", "help": "매일 새벽 5시 30분쯤 서버가 글을 써 둬요. 크롬 스튜디오 '서버에서 불러오기'로 가져가요"},
+    {"group": "블로그 (네이버·티스토리)", "key": "BLOG_POSTS_PER_BLOG", "label": "블로그마다 하루 몇 편", "kind": "int",
+     "default": "2"},
+    {"group": "블로그 (네이버·티스토리)", "key": "BLOG_WRITER", "label": "글 쓰는 AI", "kind": "choice",
+     "choices": ["제미나이", "Claude"], "default": "제미나이",
+     "help": "제미나이: 무료 키, 구글 검색 / Claude: Claude 키, 웹 검색 (글마다 요금이 조금 나와요)"},
+
     # ---------------------------------------------------------------- 쓰레드
     {"group": "쓰레드", "key": "THREADS_MEDIA", "label": "원본 사진·영상 붙이기", "kind": "bool", "default": "1",
      "help": "자막·[광고] 표시·소리 없이 원본 그대로. 끄면 글만"},
@@ -114,6 +123,9 @@ SPEC = [
      "default": "", "help": "aistudio.google.com → Get API key (무료)"},
     {"tab": "키", "group": "AI 키", "key": "GEMINI_MODEL", "label": "제미나이 모델", "kind": "text",
      "default": "gemini-flash-latest"},
+    {"tab": "키", "group": "AI 키", "key": "BLOG_GEMINI_API_KEY", "label": "블로그 전용 제미나이 키 (선택)",
+     "kind": "secret", "default": "",
+     "help": "비우면 위 제미나이 키를 블로그도 같이 써요. 다른 구글 계정 키를 넣으면 쿠팡 쪽과 무료 한도를 나눠 쓰지 않아요"},
     {"tab": "키", "group": "기타 키", "key": "PIXABAY_API_KEY", "label": "Pixabay 키 (무료 사진)", "kind": "secret",
      "default": "", "help": "pixabay.com 가입 → pixabay.com/api/docs 의 key 값 복사 (무료, 출처 표시 필요 없음)"},
     {"tab": "키", "group": "기타 키", "key": "CLOUDINARY_URL", "label": "Cloudinary 주소 (사진·영상 올리기)",
