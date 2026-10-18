@@ -104,7 +104,7 @@ FIX_PROMPT = """아래 블로그 글은 공백을 뺀 글자 수가 {n}자다. {
 def ask(prompt, search=True, temperature=0.8):
     """글자 답을 돌려준다. 제미나이(구글 검색) 우선, BLOG_WRITER=claude거나 제미나이 키가 없으면 Claude(웹 검색)."""
     import memo_ai
-    if env("BLOG_WRITER", "gemini") != "claude" and memo_ai.env("GEMINI_API_KEY"):
+    if env("BLOG_WRITER", "제미나이").lower() != "claude" and memo_ai.env("GEMINI_API_KEY"):
         return memo_ai.generate([{"text": prompt}], json_out=False, temperature=temperature, search=search)
     if not env("ANTHROPIC_API_KEY"):
         raise RuntimeError("제미나이 키나 Claude 키가 있어야 블로그 글을 쓸 수 있습니다.")
@@ -396,7 +396,7 @@ def run(site, only=None, count=None, dry=False):
         if only and blog["key"] not in only:
             continue
         h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
-        n_posts = count or cfg.get("posts_per_blog", 2)
+        n_posts = count or int(env("BLOG_POSTS_PER_BLOG") or cfg.get("posts_per_blog", 2))
         log(f"[{blog['name']}] 글감 고르는 중")
         try:
             topics = pick_topics(blog, n_posts, h["topics"], today)
@@ -454,5 +454,9 @@ if __name__ == "__main__":
     ap.add_argument("--blog", default="", help="이 블로그만 (쉼표로 여러 개, 예: naver1,tistory)")
     ap.add_argument("--count", type=int, default=0, help="블로그마다 몇 편 (기본: 설정의 posts_per_blog)")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--scheduled", action="store_true", help="예약 실행: 프로그램 설정에서 블로그 자동 작성을 껐으면 쉼")
     a = ap.parse_args()
+    if a.scheduled and env("BLOG_ON", "1") == "0":
+        log("블로그 자동 작성이 꺼져 있어 쉽니다 (프로그램 설정 → 블로그).")
+        sys.exit(0)
     sys.exit(run(pathlib.Path(a.site), [b for b in a.blog.split(",") if b] or None, a.count or None, a.dry_run))

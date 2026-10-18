@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""쿠팡 자동게시 프로그램 (창 하나에 탭 4개).
+"""쿠팡 자동게시 프로그램 (창 하나에 탭 5개).
   상품 등록 : 캡처 도우미 (링크·사진 캡처 → 시트·사진 폴더에 저장, 메모는 AI가 자동 작성)
   상품 목록 : 등록한 상품, 메모·사진·게시 여부 / 수정·메모 다시 쓰기·삭제
   게시      : 지금 게시·미리보기·토큰 연장 (깃허브 서버 실행), 최근 실행·게시 기록
+  블로그    : 네이버·티스토리 글 지금 쓰기 (깃허브 서버 실행), 서버가 만든 글 목록
   설정      : 예약 시각, 채널, 쓰레드 댓글, 메모, 키 등 모든 설정
 실행: python app.py  (또는 CoupangAutopost.exe)
 """
@@ -19,6 +20,9 @@ import settings
 
 APP_TITLE = "쿠팡 자동게시"
 WORKFLOW = "post.yml"
+BLOG_WORKFLOW = "blog.yml"
+# 블로그 이름 → blog_config.json의 key
+BLOGS = {"전체": "", "티스토리": "tistory", "남다른 오늘": "naver1", "알뜰한 오늘": "naver2", "쓸모있는 오늘": "naver3"}
 
 
 def apply_env(vals):
@@ -41,17 +45,17 @@ def gh_headers():
     return h
 
 
-def gh_dispatch(mode):
-    r = requests.post(f"https://api.github.com/repos/{repo()}/actions/workflows/{WORKFLOW}/dispatches",
-                      headers=gh_headers(), json={"ref": "main", "inputs": {"mode": mode}}, timeout=30)
+def gh_dispatch(mode, workflow=WORKFLOW, inputs=None):
+    r = requests.post(f"https://api.github.com/repos/{repo()}/actions/workflows/{workflow}/dispatches",
+                      headers=gh_headers(), json={"ref": "main", "inputs": inputs or {"mode": mode}}, timeout=30)
     if r.status_code in (401, 403, 404):
         raise RuntimeError(f"깃허브 키를 확인해 주세요 ({r.status_code}). 키에 Actions 쓰기 권한이 있어야 해요.")
     if r.status_code >= 400:
         raise RuntimeError(f"깃허브 실행 요청 실패 ({r.status_code}): {r.text[:200]}")
 
 
-def gh_runs(n=12):
-    r = requests.get(f"https://api.github.com/repos/{repo()}/actions/workflows/{WORKFLOW}/runs",
+def gh_runs(n=12, workflow=WORKFLOW):
+    r = requests.get(f"https://api.github.com/repos/{repo()}/actions/workflows/{workflow}/runs",
                      headers=gh_headers(), params={"per_page": n}, timeout=30)
     r.raise_for_status()
     return r.json().get("workflow_runs", [])
@@ -398,6 +402,119 @@ class PostTab:
         webbrowser.open("https://github.com/settings/personal-access-tokens/new")
 
 
+# ---------------------------------------------------------------- 블로그 탭
+def blog_index():
+    """서버가 만든 블로그 글 목록 (blog-packages 브랜치의 index.json). 아직 없으면 빈 목록."""
+    r = requests.get(f"https://raw.githubusercontent.com/{repo()}/blog-packages/index.json",
+                     params={"t": datetime.datetime.now().timestamp()}, timeout=30)
+    return r.json() if r.ok else {"packages": []}
+
+
+class BlogTab:
+    def __init__(self, app, frame):
+        self.app, self.root = app, app.root
+        self.info = tk.Label(frame, text="", anchor="w", justify="left", font=("", 9), wraplength=260)
+        self.info.pack(fill="x", padx=12, pady=(12, 6))
+
+        pick = tk.Frame(frame)
+        pick.pack(fill="x", padx=10, pady=2)
+        self.blog = tk.StringVar(value="전체")
+        ttk.Combobox(pick, textvariable=self.blog, values=list(BLOGS), state="readonly", width=12) \
+            .pack(side="left")
+        self.count = tk.StringVar(value="1")
+        tk.Spinbox(pick, from_=1, to=3, textvariable=self.count, width=3).pack(side="left", padx=(8, 2))
+        tk.Label(pick, text="편씩").pack(side="left")
+        tk.Button(frame, text="✍ 지금 글 쓰기", bg="#2563EB", fg="white", height=2,
+                  command=self.run).pack(fill="x", padx=10, pady=6)
+
+        links = tk.Frame(frame)
+        links.pack(fill="x", padx=10, pady=2)
+        tk.Button(links, text="↻", command=self.refresh).pack(side="left", padx=(0, 4))
+        sheet = (os.getenv("GOOGLE_SHEET_ID") or "").strip()
+        for text, url in (("실행 기록", lambda: f"https://github.com/{repo()}/actions/workflows/{BLOG_WORKFLOW}"),
+                          ("글감 시트", (lambda: f"https://docs.google.com/spreadsheets/d/{sheet}/edit") if sheet else None)):
+            if url:
+                tk.Button(links, text=text, relief="flat", fg="#2563EB", cursor="hand2", padx=1,
+                          command=lambda u=url: webbrowser.open(u())).pack(side="left")
+
+        tk.Label(frame, text="서버가 만든 글", anchor="w", font=("", 10, "bold")).pack(fill="x", padx=12, pady=(10, 0))
+        self.posts = ttk.Treeview(frame, columns=("at", "blog", "title"), show="headings", height=12)
+        for k, t, w in (("at", "날짜", 40), ("blog", "블로그", 80), ("title", "제목", 140)):
+            self.posts.heading(k, text=t)
+            self.posts.column(k, width=w, anchor="w")
+        self.posts.pack(fill="both", expand=True, padx=10)
+        self.posts.bind("<Double-1>", self.open_post)
+        self.ids = {}
+        tk.Label(frame, text="가져오기: 크롬 AI Blog Studio → '서버에서 불러오기'. 발행은 직접 눌러요.",
+                 fg="#666", anchor="w", justify="left", wraplength=260).pack(fill="x", padx=10, pady=(6, 0))
+        self.status = tk.Label(frame, text="", anchor="w", fg="#555", justify="left", wraplength=260)
+        self.status.pack(fill="x", padx=10, pady=8)
+
+    def show_info(self):
+        vals = self.app.values
+        on = vals.get("BLOG_ON", "1") != "0"
+        n = vals.get("BLOG_POSTS_PER_BLOG", "2")
+        self.info.config(text=(f"블로그 자동 작성: {'켜짐' if on else '꺼짐'}\n"
+                               f"매일 새벽 5시 30분쯤 블로그 4곳에 {n}편씩\n"
+                               f"글 쓰는 AI: {vals.get('BLOG_WRITER', '제미나이')} · 설정 탭에서 바꿔요"))
+
+    def refresh(self):
+        self.show_info()
+        self.status.config(text="불러오는 중…")
+        in_thread(self.root, lambda: (blog_index(), gh_runs(1, BLOG_WORKFLOW)), self.fill)
+
+    def fill(self, res, err):
+        if err:
+            self.status.config(text=f"⚠ 목록을 읽지 못했습니다: {err}")
+            return
+        index, runs = res
+        self.posts.delete(*self.posts.get_children())
+        self.ids = {}
+        for p in index.get("packages", [])[:40]:
+            short = "⚠ " if (p.get("chars") or 0) < 1500 else ""
+            iid = self.posts.insert("", "end", values=(p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
+                                                      short + p.get("title", "")))
+            self.ids[iid] = p.get("id")
+        last = ""
+        if runs:
+            r = runs[0]
+            res_text = {"success": "✓ 완료", "failure": "✗ 실패 (실행 기록에서 보기)", "cancelled": "취소됨"}.get(
+                r.get("conclusion"), "진행 중…" if r.get("status") != "completed" else "")
+            last = f"마지막 실행: {kst(r.get('created_at', ''))} {res_text}"
+        self.status.config(text=last or "아직 서버에서 글을 쓴 적이 없어요.")
+
+    def open_post(self, _e):
+        sel = self.posts.selection()
+        if sel and self.ids.get(sel[0]):
+            webbrowser.open(f"https://github.com/{repo()}/tree/blog-packages/{self.ids[sel[0]]}")
+
+    def run(self):
+        if not (os.getenv("GITHUB_TOKEN") or "").strip():
+            if messagebox.askyesno(APP_TITLE, "버튼으로 서버를 실행하려면 깃허브 키가 필요해요.\n"
+                                              "(설정 → 계정·키 → 깃허브 키)\n\n"
+                                              "지금은 깃허브 화면을 열어 직접 실행할까요?"):
+                webbrowser.open(f"https://github.com/{repo()}/actions/workflows/{BLOG_WORKFLOW}")
+            return
+        blog, count = self.blog.get(), self.count.get().strip()
+        if not count.isdigit() or not 1 <= int(count) <= 3:
+            messagebox.showwarning(APP_TITLE, "편수는 1~3 사이 숫자로 적어 주세요.")
+            return
+        where = "블로그 4곳" if blog == "전체" else f"'{blog}'"
+        if not messagebox.askyesno(APP_TITLE, f"{where}에 {count}편씩 지금 글을 쓸까요?\n"
+                                              "(서버에서 몇 분 걸려요. 발행은 하지 않아요)"):
+            return
+        self.status.config(text="요청 중…")
+
+        def done(_r, err):
+            if err:
+                self.status.config(text=f"⚠ {err}")
+                return
+            self.status.config(text="✓ 서버에 요청했어요. 5~10분 뒤 새로고침해 보세요.")
+            self.root.after(15000, self.refresh)
+
+        in_thread(self.root, lambda: gh_dispatch("", BLOG_WORKFLOW, {"blog": BLOGS[blog], "count": count}), done)
+
+
 # ---------------------------------------------------------------- 설정 탭
 class SettingsTab:
     def __init__(self, app, frame):
@@ -472,7 +589,7 @@ class SettingsTab:
             except ValueError:
                 messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'을(를) '07:00 12:00 19:00'처럼 적어 주세요.")
                 return
-        for k in ("POSTS_PER_RUN", "THREADS_LINK_REPEAT", "THREADS_REPLY_DELAY"):
+        for k in ("POSTS_PER_RUN", "THREADS_LINK_REPEAT", "THREADS_REPLY_DELAY", "BLOG_POSTS_PER_BLOG"):
             if not new[k].isdigit():
                 messagebox.showwarning("설정", f"'{settings.BY_KEY[k]['label']}'은(는) 숫자로 적어 주세요.")
                 return
@@ -490,6 +607,7 @@ class SettingsTab:
             self.app.values.update(changes)
             apply_env(changes)
             self.app.post.show_info()
+            self.app.blog.show_info()
             names = ", ".join(settings.BY_KEY[k]["label"] for k in changes)
             self.status.config(text=f"✓ 저장했어요: {names[:60]}")
 
@@ -531,7 +649,7 @@ class App:
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
         self.reg_frame = tk.Frame(self.notebook)
         frames = {}
-        for title in ("목록", "게시", "설정"):
+        for title in ("목록", "게시", "블로그", "설정"):
             frames[title] = tk.Frame(self.notebook)
         self.notebook.add(self.reg_frame, text="등록")
         for title, f in frames.items():
@@ -540,6 +658,7 @@ class App:
         self.helper = helper.Helper(root, self.reg_frame)
         self.list = ListTab(self, frames["목록"])
         self.post = PostTab(self, frames["게시"])
+        self.blog = BlogTab(self, frames["블로그"])
         self.settings = SettingsTab(self, frames["설정"])
         self.notebook.bind("<<NotebookTabChanged>>", self.on_tab)
         self.loaded = set()
@@ -551,6 +670,7 @@ class App:
             apply_env({k: v for k, v in self.values.items() if v})
             self.settings.fill()
             self.post.show_info()
+            self.blog.show_info()
             if then:
                 then()
         in_thread(self.root, settings.load, done)
@@ -563,6 +683,9 @@ class App:
         elif cur == 2 and "post" not in self.loaded:
             self.loaded.add("post")
             self.post.refresh()
+        elif cur == 3 and "blog" not in self.loaded:
+            self.loaded.add("blog")
+            self.blog.refresh()
 
 
 def main():

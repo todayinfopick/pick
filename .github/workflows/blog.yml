@@ -49,7 +49,7 @@ jobs:
           sudo apt-get install -y -qq fonts-nanum > /dev/null
 
       - name: 설정 준비
-        run: python -c "import cloud_sync; cloud_sync.write_env()"
+        run: python cloud_sync.py env
 
       # 만든 글은 main이 아니라 blog-packages 브랜치에 쌓음 (자동 게시 기록과 섞이지 않게)
       - name: 패키지 브랜치 받기
@@ -63,7 +63,7 @@ jobs:
           fi
 
       - name: 글 쓰기
-        run: python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
+        run: python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}" ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
 
       - name: 결과 저장
         if: always()

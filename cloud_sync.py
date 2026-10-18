@@ -3,6 +3,7 @@
 
   python cloud_sync.py pull : 비밀값 ENV_FILE(PC .env 통째) → .env, 시트 → products.csv,
                              드라이브 사진 → 사진\\, 저장된 (연장된) 토큰 → .env
+  python cloud_sync.py env  : 설정만 준비 (ENV_FILE → .env, 시트 '_설정' 값 덮어쓰기). 블로그 글 쓰기용
   python cloud_sync.py push : .env의 (연장된) 토큰 → 시트 '_설정' 탭
   python cloud_sync.py due  : 예약 회차가 됐는지 확인 → GitHub 출력 due=1/0, slot=회차
                              (서버는 15분마다 이것만 확인하고, 회차가 됐을 때만 게시)
@@ -84,17 +85,9 @@ def add_products(rows):
     return rows
 
 
-def pull():
-    write_env()
-    rows = add_products(gcloud.read_tab())
-    if not rows:
-        raise SystemExit("구글 시트 '상품' 탭이 비어 있습니다.")
-    with open(PRODUCTS, "w", encoding="utf-8-sig", newline="") as f:
-        csv.writer(f).writerows(rows)
-    print(f"✓ 상품 목록 {len(rows) - 1}줄을 시트에서 받았습니다.")
-
-    # 프로그램 설정 화면에서 바꾼 값(시트 '_설정' 탭)이 .env보다 우선.
-    # 토큰은 시트에 저장된 (연장된) 값, 없으면 처음 넣어 둔 비밀값(INIT_...)
+def apply_saved():
+    """프로그램 설정 화면에서 바꾼 값(시트 '_설정' 탭)을 .env에 덮어쓴다.
+    토큰은 시트에 저장된 (연장된) 값, 없으면 처음 넣어 둔 비밀값(INIT_...)"""
     saved = gcloud.read_settings()
     ENV_PATH.touch()
     for key in TOKEN_KEYS:
@@ -109,6 +102,26 @@ def pull():
         n += 1
     if n:
         print(f"✓ 프로그램에서 바꾼 설정 {n}개를 적용했습니다.")
+
+
+def env_only():
+    write_env()
+    try:
+        apply_saved()
+    except Exception as e:  # 시트를 못 읽어도 비밀값(.env)만으로 글은 쓸 수 있게
+        print(f"! 시트 '_설정' 탭을 읽지 못해 처음 넣어 둔 설정으로 씁니다: {e}")
+
+
+def pull():
+    write_env()
+    rows = add_products(gcloud.read_tab())
+    if not rows:
+        raise SystemExit("구글 시트 '상품' 탭이 비어 있습니다.")
+    with open(PRODUCTS, "w", encoding="utf-8-sig", newline="") as f:
+        csv.writer(f).writerows(rows)
+    print(f"✓ 상품 목록 {len(rows) - 1}줄을 시트에서 받았습니다.")
+
+    apply_saved()
 
     folder = gcloud.env("GOOGLE_PHOTO_FOLDER_ID")
     if folder:
@@ -180,4 +193,4 @@ def push():
 
 
 if __name__ == "__main__":
-    {"pull": pull, "push": push, "due": due}[sys.argv[1] if len(sys.argv) > 1 else "pull"]()
+    {"pull": pull, "push": push, "due": due, "env": env_only}[sys.argv[1] if len(sys.argv) > 1 else "pull"]()
