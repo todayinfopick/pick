@@ -157,6 +157,9 @@ def move_photos(old_name, new_name):
     start = len(image_tools.images_in(dst))
     for n, f in enumerate(image_tools.images_in(src), start=start + 1):
         f.rename(dst / f"{n:02d}{f.suffix.lower()}")
+    sub = src / image_tools.DETAIL_DIR  # 상세 조각 폴더도 함께
+    if sub.is_dir() and not (dst / image_tools.DETAIL_DIR).exists():
+        sub.rename(dst / image_tools.DETAIL_DIR)
     try:
         src.rmdir()
     except OSError:
@@ -242,6 +245,18 @@ def save_photos(name, images, replace=False):
     return folder
 
 
+def save_details(name, pieces):
+    """상세페이지 조각을 사진 폴더/상세 에 저장 (전에 있던 조각은 지우고 새로)."""
+    if not pieces:
+        return
+    folder = photo_folder(name) / image_tools.DETAIL_DIR
+    folder.mkdir(parents=True, exist_ok=True)
+    for f in image_tools.images_in(folder):
+        f.unlink()
+    for i, im in enumerate(pieces, start=1):
+        im.convert("RGB").save(folder / f"{i:02d}.jpg", quality=92)
+
+
 def is_link(text):
     """게시에 쓸 수 있는 제휴 링크인지 (제휴처.csv 기준, 목록에 없는 링크는 '기타'로 허용)."""
     return affiliates.looks_like_link(text) and affiliates.detect(text)["ok"]
@@ -304,10 +319,14 @@ def start_bridge(inbox):
                 data = json.loads(self.rfile.read(min(size, 5_000_000)).decode("utf-8"))
                 urls = [u for u in data.get("images") or [] if isinstance(u, str) and u.startswith("http")]
                 photos = [im for im in (image_tools.load_photo(u) for u in urls[:MAX_PHOTOS]) if is_product_photo(im)]
+                # 상세페이지 이미지: 3:4로 자르고 빈 조각·배너·작은 이미지는 뺀다 (캐러셀·영상용)
+                durls = [u for u in data.get("details") or [] if isinstance(u, str) and u.startswith("http")][:40]
+                details = image_tools.detail_pieces(
+                    [im for im in (image_tools.load_photo(u) for u in durls) if im is not None])
                 inbox.put({"name": " ".join(str(data.get("name") or "").split())[:200],
                            "text": str(data.get("text") or "").strip(),
-                           "url": str(data.get("url") or ""), "images": photos})
-                body, code = {"ok": True, "photos": len(photos)}, 200
+                           "url": str(data.get("url") or ""), "images": photos, "details": details})
+                body, code = {"ok": True, "photos": len(photos), "details": len(details)}, 200
             except Exception as e:
                 body, code = {"ok": False, "error": str(e)}, 400
             out = json.dumps(body, ensure_ascii=False).encode("utf-8")
@@ -363,6 +382,7 @@ class Helper:
         self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
         self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
         self.page_text = ""  # 확장프로그램이 보낸 상세페이지 글
+        self.details = []  # 확장프로그램이 보낸 상세페이지 이미지 조각 (3:4, 캐러셀·영상용)
         self.inbox = queue.Queue()
         start_bridge(self.inbox)
 
@@ -600,6 +620,8 @@ class Helper:
         if data["text"]:
             self.page_text = data["text"]
             self.ai_done = False
+        if data.get("details"):
+            self.details = data["details"]
         added = 0
         for im in data["images"]:
             if len(self.images) >= MAX_PHOTOS:
@@ -613,7 +635,8 @@ class Helper:
             self.refresh_thumbs()
         self.root.bell()
         need_link = "" if self.link.get().strip() else "\n이제 파트너스 링크를 복사하세요."
-        self.say(f"✓ 확장프로그램: 상품명, 사진 {added}장, 상세 글 {len(data['text']):,}자를 받았습니다.{need_link}")
+        self.say(f"✓ 확장프로그램: 상품명, 사진 {added}장, 상세 이미지 {len(data.get('details') or [])}장, "
+                 f"상세 글 {len(data['text']):,}자를 받았습니다.{need_link}")
 
     def on_target(self):
         msg = {"auto": "자동: 상품명이 비어 있으면 상품명, 아니면 특징메모에 넣습니다.",
@@ -761,6 +784,7 @@ class Helper:
         self.ai_done = False
         self.info_idx = []
         self.page_text = ""
+        self.details = []
         self.refresh_thumbs()
 
     # ------------------------------------------------ 제미나이 메모 자동 작성
@@ -872,6 +896,8 @@ class Helper:
                                else f"사진 {len(self.images)}장 추가")
             if self.page_text and self.page_text != load_page_text(existing["name"]):
                 changes.append(f"상세 글 {len(self.page_text):,}자 저장")
+            if self.details:
+                changes.append(f"상세 이미지 {len(self.details)}장 저장")
             if not changes:
                 messagebox.showinfo("변경 없음", "이미 등록된 상품이고 바뀐 내용이 없습니다.")
                 return
@@ -890,6 +916,7 @@ class Helper:
                 save_photos(name, post, replace=self.photos_loaded)
                 self.save_info(name, info)
             save_page_text(name, self.page_text)
+            save_details(name, self.details)
             log(f"캡처 도우미: '{name}' 업데이트 ({', '.join(changes)})")
             self.reset_fields()
             self.say(f"✓ 업데이트 완료: {name}\n다음 상품의 링크를 복사하세요.")
@@ -907,7 +934,8 @@ class Helper:
         folder = save_photos(name, post) if n else None
         self.save_info(name, info)
         save_page_text(name, self.page_text)
-        log(f"캡처 도우미: '{name}' 추가 (사진 {n}장)")
+        save_details(name, self.details)
+        log(f"캡처 도우미: '{name}' 추가 (사진 {n}장, 상세 이미지 {len(self.details)}장)")
         self.tidy_sheet()
 
         self.reset_fields()

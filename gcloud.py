@@ -178,5 +178,9 @@ def download_photo_folders(folder_id, dest_root, wanted=None):
         for p in list_children(f["id"]):
             if p["mimeType"].startswith(("image/", "video/")) or p["name"] == "페이지글.txt":
                 download(p["id"], dest_root / f["name"] / p["name"])
+            elif p["mimeType"] == FOLDER_MIME and p["name"] == "상세":  # 상세페이지 조각 (캐러셀·영상용)
+                for q in list_children(p["id"]):
+                    if q["mimeType"].startswith("image/"):
+                        download(q["id"], dest_root / f["name"] / "상세" / q["name"])
         n += 1
     return n

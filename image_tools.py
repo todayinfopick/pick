@@ -311,6 +311,58 @@ def load_photos(field, name=None):
     return photos
 
 
+# ---------------------------------------------------------------- 상세 이미지
+DETAIL_DIR = "상세"  # 상품 사진 폴더 안: 상세페이지 이미지를 3:4로 자른 조각 (캐러셀·영상용)
+DETAIL_MAX = 8      # 캐러셀 = 표지 + 상세 조각 최대 8장 + 구매 안내 (인스타 최대 10장)
+
+
+def is_blank(im, limit=18):
+    """글씨·그림이 거의 없는 한 색 조각(여백·띠)인지."""
+    from PIL import ImageStat
+    return ImageStat.Stat(im.convert("L").resize((64, 64))).stddev[0] < limit
+
+
+def split_tall(im, max_pieces=6):
+    """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
+    w, h = im.size
+    step = int(w * 4 / 3)
+    pieces = []
+    for top in range(0, h, step):
+        bottom = min(top + step, h)
+        if bottom - top < w * 0.5:  # 끝에 남은 짧은 띠
+            break
+        piece = im.crop((0, top, w, bottom))
+        if is_blank(piece):
+            continue
+        pieces.append(piece)
+        if len(pieces) >= max_pieces:
+            break
+    return pieces or [im]
+
+
+def detail_pieces(images, limit=DETAIL_MAX):
+    """상세페이지 이미지들 → 캐러셀에 쓸 조각들. 작은 이미지·가로 띠(배너)·빈 이미지는 빼고, 긴 이미지는 3:4로 자른다."""
+    out = []
+    for im in images:
+        w, h = im.size
+        if min(w, h) < 300 or w > h * 3:
+            continue
+        for piece in (split_tall(im, limit) if h > w * 1.6 else [im]):
+            if not is_blank(piece) and not is_duplicate(piece, out):
+                out.append(piece)
+        if len(out) >= limit:
+            break
+    return out[:limit]
+
+
+def detail_photos(name):
+    """사진 폴더/상세 의 조각들 (없으면 빈 목록)."""
+    folder = photo_root() / folder_name(name) / DETAIL_DIR
+    if not folder.is_dir():
+        return []
+    return [im for im in (load_photo(str(f)) for f in images_in(folder)) if im is not None][:DETAIL_MAX]
+
+
 # ---------------------------------------------------------------- 카드 이미지
 CW, CH, PAD = 1080, 1350, 88  # 인스타 4:5
 
@@ -544,6 +596,36 @@ def make_carousel(name, headline, points, photos=None, key="carousel"):
         slides.append(render_point(i, total, pt, ph(i), layout, pal))
     slides.append(render_cta(name, ph(len(points) + 1), pal))
 
+    paths = []
+    for n, im in enumerate(slides, start=1):
+        p = folder / f"{n:02d}.jpg"
+        add_ad_tag(im).save(p, quality=92)
+        paths.append(p)
+    return paths
+
+
+def render_detail(piece):
+    """상세 조각 한 장: 조각 전체가 보이게 4:5 화면 가운데에, 남는 곳은 조각 가장자리 색으로 채운다."""
+    from PIL import ImageStat
+    edge = piece.convert("RGB").crop((0, 0, piece.width, max(1, piece.height // 40)))
+    bg = tuple(int(c) for c in ImageStat.Stat(edge).median)
+    img = Image.new("RGB", (CW, CH), bg)
+    fit = ImageOps.contain(piece.convert("RGB"), (CW, CH), Image.LANCZOS)
+    img.paste(fit, ((CW - fit.width) // 2, (CH - fit.height) // 2))
+    return img
+
+
+def make_detail_carousel(name, headline, photos, details, key="carousel"):
+    """원본 이미지 캐러셀: 표지(대표 이미지 + 제목) → 상세페이지 조각들 그대로 → 구매 안내."""
+    folder = OUT_DIR / slug(key)
+    folder.mkdir(parents=True, exist_ok=True)
+    for old in folder.glob("*.jpg"):
+        old.unlink()
+    pal = random_palette()
+    first = photos[0] if photos else details[0]
+    slides = [render_cover(name, headline, first, pick_layout(first), pal, footer=False)]
+    slides += [render_detail(d) for d in details[:DETAIL_MAX]]
+    slides.append(render_cta(name, photos[1] if len(photos) > 1 else first, pal))
     paths = []
     for n, im in enumerate(slides, start=1):
         p = folder / f"{n:02d}.jpg"

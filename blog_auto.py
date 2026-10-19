@@ -27,6 +27,7 @@ import sys
 import requests
 
 import main
+from image_tools import split_tall  # 긴 상세 이미지 → 3:4 조각 (쿠팡 쪽과 같이 씀)
 from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
@@ -614,25 +615,6 @@ def product_photos(urls, limit=14):
         if len(out) >= limit:
             break
     return out[:limit]
-
-
-def split_tall(im, max_pieces=6):
-    """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
-    from PIL import ImageStat
-    w, h = im.size
-    step = int(w * 4 / 3)
-    pieces = []
-    for top in range(0, h, step):
-        bottom = min(top + step, h)
-        if bottom - top < w * 0.5:  # 끝에 남은 짧은 띠
-            break
-        piece = im.crop((0, top, w, bottom))
-        if ImageStat.Stat(piece.convert("L").resize((64, 64))).stddev[0] < 18:  # 거의 한 색 = 빈 조각
-            continue
-        pieces.append(piece)
-        if len(pieces) >= max_pieces:
-            break
-    return pieces or [im]
 
 
 def product_keyword_block(cands):
