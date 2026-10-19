@@ -293,7 +293,8 @@ def is_product_photo(im):
 
 
 # 제휴 링크를 복사하면 그 페이지를 크롬에서 열고, 확장프로그램이 스스로 끝까지 내려 수집한 뒤 창을 닫는다.
-# 확장프로그램은 상품 페이지가 열릴 때 /auto 로 '이번 페이지는 자동 수집인가'를 물어본다 (한 번 답하면 끝).
+# 확장프로그램은 상품 페이지가 열릴 때 /auto 로 '이번 페이지는 자동 수집인가'를 물어본다.
+# 제휴 링크는 쿠팡 안에서 한두 번 다시 열리므로(이동·보안 확인) 물어볼 때 끄지 않고, 내용을 받으면 끈다.
 AUTO_WAIT = 90  # 링크를 연 뒤 이 시간(초) 안에 열린 쿠팡 상품 페이지만 자동 수집
 _auto = {"until": 0.0}
 
@@ -323,6 +324,7 @@ def start_bridge(inbox):
                 durls = [u for u in data.get("details") or [] if isinstance(u, str) and u.startswith("http")][:40]
                 details = image_tools.detail_pieces(
                     [im for im in (image_tools.load_photo(u) for u in durls) if im is not None])
+                _auto["until"] = 0.0
                 inbox.put({"name": " ".join(str(data.get("name") or "").split())[:200],
                            "text": str(data.get("text") or "").strip(),
                            "url": str(data.get("url") or ""), "images": photos, "details": details})
@@ -343,7 +345,6 @@ def start_bridge(inbox):
                     self.send_error(403)
                     return
                 auto = time.time() < _auto["until"]
-                _auto["until"] = 0.0
                 out = json.dumps({"ok": True, "auto": auto}).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
