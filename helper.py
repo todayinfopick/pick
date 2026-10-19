@@ -12,7 +12,9 @@ import os
 import queue
 import subprocess
 import threading
+import time
 import tkinter as tk
+import webbrowser
 from tkinter import messagebox
 
 from PIL import Image, ImageGrab, ImageTk
@@ -275,6 +277,17 @@ def is_product_photo(im):
     return min(w, h) >= 200 and max(w, h) <= 3 * min(w, h)
 
 
+# 제휴 링크를 복사하면 그 페이지를 크롬에서 열고, 확장프로그램이 스스로 끝까지 내려 수집한 뒤 창을 닫는다.
+# 확장프로그램은 상품 페이지가 열릴 때 /auto 로 '이번 페이지는 자동 수집인가'를 물어본다 (한 번 답하면 끝).
+AUTO_WAIT = 90  # 링크를 연 뒤 이 시간(초) 안에 열린 쿠팡 상품 페이지만 자동 수집
+_auto = {"until": 0.0}
+
+
+def open_for_collect(link):
+    _auto["until"] = time.time() + AUTO_WAIT
+    webbrowser.open(link)
+
+
 def start_bridge(inbox):
     """127.0.0.1:BRIDGE_PORT에서 확장프로그램이 보낸 상품 페이지 내용을 받아 inbox에 넣는다.
     사진은 여기(뒤쪽)에서 미리 받아 둔다. 이미 다른 창이 쓰고 있으면 False."""
@@ -304,8 +317,15 @@ def start_bridge(inbox):
             self.end_headers()
             self.wfile.write(out)
 
-        def do_GET(self):  # 확장프로그램이 '프로그램 켜져 있나' 확인용
+        def do_GET(self):  # 확장프로그램이 '프로그램 켜져 있나' 확인용, /auto: 자동 수집할 페이지인지
             out = b'{"ok": true}'
+            if self.path == "/auto":
+                if self.headers.get("X-Pick") != "1":
+                    self.send_error(403)
+                    return
+                auto = time.time() < _auto["until"]
+                _auto["until"] = 0.0
+                out = json.dumps({"ok": True, "auto": auto}).encode("utf-8")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(out)))
@@ -336,6 +356,7 @@ class Helper:
         self.last_text = None
         self.last_img_hash = None
         self.watch = tk.BooleanVar(value=True)
+        self.auto_collect = tk.BooleanVar(value=True)  # 쿠팡 링크 복사 → 페이지 열어 자동 수집
         self.target = tk.StringVar(value="auto")
         self.name_replace_next = False
         self.editing = None  # 수정 중인 등록 상품 {'name','memo','link'}
@@ -406,6 +427,7 @@ class Helper:
         bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
         tk.Checkbutton(bottom, text="복사 감지", variable=self.watch).pack(side="left")
+        tk.Checkbutton(bottom, text="자동 수집", variable=self.auto_collect).pack(side="left")
         tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="left", padx=4)
         tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
 
@@ -521,7 +543,12 @@ class Helper:
                              "상품명을 복사하면 바뀌고, 그다음 복사한 글은 특징메모에 붙습니다.")
             else:
                 self.name_replace_next = False
-                self.say(f"✓ 링크 입력됨 ({aff}). 이제 상품명을 드래그해서 복사하세요.")
+                if aff == "쿠팡파트너스" and self.auto_collect.get():
+                    open_for_collect(text)
+                    self.say("✓ 링크 입력됨. 쿠팡 페이지를 열어 상품명·사진·상세 글을 자동으로 가져옵니다…\n"
+                             "(확장프로그램이 끝까지 내려 수집한 뒤 창을 닫아요)")
+                else:
+                    self.say(f"✓ 링크 입력됨 ({aff}). 이제 상품명을 드래그해서 복사하세요.")
             return
         if text.startswith("http"):
             return
