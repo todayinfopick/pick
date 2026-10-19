@@ -8,6 +8,7 @@
 실행: python app.py  (또는 CoupangAutopost.exe)
 """
 import datetime
+import json
 import os
 import threading
 import tkinter as tk
@@ -61,16 +62,59 @@ def gh_runs(n=12, workflow=WORKFLOW):
     return r.json().get("workflow_runs", [])
 
 
-def gh_put_file(path, text, message, branch="blog-packages"):
-    """저장소 branch에 텍스트 파일 하나를 새로 올린다 (깃허브 키에 Contents 쓰기 권한 필요)."""
+def gh_put_file(path, text, message, branch="blog-packages", sha=None):
+    """저장소 branch에 텍스트 파일 하나를 올린다 (깃허브 키에 Contents 쓰기 권한 필요). 있던 파일을 바꿀 땐 sha를 줌."""
     import base64
+    body = {"message": message, "branch": branch, "content": base64.b64encode(text.encode("utf-8")).decode()}
+    if sha:
+        body["sha"] = sha
     r = requests.put(f"https://api.github.com/repos/{repo()}/contents/{path}", headers=gh_headers(), timeout=30,
-                     json={"message": message, "branch": branch,
-                           "content": base64.b64encode(text.encode("utf-8")).decode()})
+                     json=body)
     if r.status_code in (401, 403, 404):
         raise RuntimeError(f"깃허브 키를 확인해 주세요 ({r.status_code}). 키에 Contents 쓰기 권한이 있어야 해요.")
     if r.status_code >= 400:
         raise RuntimeError(f"서버에 올리지 못했어요 ({r.status_code}): {r.text[:200]}")
+
+
+def gh_delete_file(path, message, branch="blog-packages"):
+    """저장소 branch의 파일 하나를 지운다. 이미 없으면 그냥 넘어감."""
+    r = requests.get(f"https://api.github.com/repos/{repo()}/contents/{path}", headers=gh_headers(),
+                     params={"ref": branch}, timeout=30)
+    if r.status_code == 404:
+        return
+    r.raise_for_status()
+    r = requests.delete(f"https://api.github.com/repos/{repo()}/contents/{path}", headers=gh_headers(), timeout=30,
+                        json={"message": message, "branch": branch, "sha": r.json()["sha"]})
+    if r.status_code in (401, 403):
+        raise RuntimeError(f"깃허브 키를 확인해 주세요 ({r.status_code}). 키에 Contents 쓰기 권한이 있어야 해요.")
+    r.raise_for_status()
+
+
+def blog_delete(ids):
+    """서버 글 패키지를 지운다: index.json 목록에서 빼고 폴더 파일도 지움 (스튜디오 목록에서도 사라짐)."""
+    import base64
+    r = requests.get(f"https://api.github.com/repos/{repo()}/contents/index.json", headers=gh_headers(),
+                     params={"ref": "blog-packages"}, timeout=30)
+    r.raise_for_status()
+    index = json.loads(base64.b64decode(r.json()["content"]).decode("utf-8"))
+    gone = [p for p in index["packages"] if p["id"] in ids]
+    index["packages"] = [p for p in index["packages"] if p["id"] not in ids]
+    gh_put_file("index.json", json.dumps(index, ensure_ascii=False, indent=1), f"글 {len(gone)}개 지움",
+                sha=r.json()["sha"])
+    for p in gone:
+        for name in p.get("files") or ["content.json"]:
+            gh_delete_file(f"{p['id']}/{name}", f"글 지움: {p['id']}")
+
+
+def blog_done():
+    """발행 완료로 표시한 글 (blog-packages/done.json) → ({id: 표시한 때}, sha). 없으면 빈 것."""
+    r = requests.get(f"https://api.github.com/repos/{repo()}/contents/done.json", headers=gh_headers(),
+                     params={"ref": "blog-packages", "t": datetime.datetime.now().timestamp()}, timeout=30)
+    if not r.ok:
+        return {}, None
+    import base64
+    data = json.loads(base64.b64decode(r.json()["content"]).decode("utf-8") or "{}")
+    return data.get("done", {}), r.json()["sha"]
 
 
 def draft_check(text):
@@ -475,7 +519,11 @@ class BlogTab:
                 tk.Button(links, text=text, relief="flat", fg="#2563EB", cursor="hand2", padx=1,
                           command=lambda u=url: webbrowser.open(u())).pack(side="left")
 
-        tk.Label(frame, text="서버가 만든 글", anchor="w", font=("", 10, "bold")).pack(fill="x", padx=12, pady=(10, 0))
+        head = tk.Frame(frame)
+        head.pack(fill="x", padx=10, pady=(10, 0))
+        tk.Label(head, text="서버가 만든 글", anchor="w", font=("", 10, "bold")).pack(side="left")
+        self.show_done = tk.BooleanVar(value=False)
+        tk.Checkbutton(head, text="완료 글도 보기", variable=self.show_done, command=self.refresh).pack(side="right")
         self.posts = ttk.Treeview(frame, columns=("kind", "at", "blog", "title"), show="headings", height=12)
         for k, t, w in (("kind", "구분", 46), ("at", "날짜", 40), ("blog", "블로그", 76), ("title", "제목", 130)):
             self.posts.heading(k, text=t)
@@ -483,7 +531,12 @@ class BlogTab:
         self.posts.pack(fill="both", expand=True, padx=10)
         self.posts.bind("<Double-1>", self.open_post)
         self.ids = {}
-        tk.Label(frame, text="가져오기: 크롬 AI Blog Studio → '서버에서 불러오기'. 발행은 직접 눌러요.",
+        self.done = {}
+        acts = tk.Frame(frame)
+        acts.pack(fill="x", padx=10, pady=(4, 0))
+        tk.Button(acts, text="✅ 발행 완료 표시/취소", command=self.mark_done).pack(side="left", fill="x", expand=True)
+        tk.Button(acts, text="🗑 지우기", fg="#c0392b", command=self.delete).pack(side="left", padx=(4, 0))
+        tk.Label(frame, text="가져오기: 크롬 AI Blog Studio → '서버에서 불러오기'. 발행은 직접 눌러요. 완료 표시는 스튜디오 목록에도 보여요.",
                  fg="#666", anchor="w", justify="left", wraplength=260).pack(fill="x", padx=10, pady=(6, 0))
         self.status = tk.Label(frame, text="", anchor="w", fg="#555", justify="left", wraplength=260)
         self.status.pack(fill="x", padx=10, pady=8)
@@ -499,26 +552,30 @@ class BlogTab:
     def refresh(self):
         self.show_info()
         self.status.config(text="불러오는 중…")
-        in_thread(self.root, lambda: (blog_index(), gh_runs(1, BLOG_WORKFLOW)), self.fill)
+        in_thread(self.root, lambda: (blog_index(), gh_runs(1, BLOG_WORKFLOW), blog_done()[0]), self.fill)
 
     def fill(self, res, err):
         if err:
             self.status.config(text=f"⚠ 목록을 읽지 못했습니다: {err}")
             return
-        index, runs = res
+        index, runs, self.done = res
         self.posts.delete(*self.posts.get_children())
         self.ids = {}
         today = datetime.date.today().isoformat()
 
-        def rank(p):  # 급한 글(마감이 가까운 순) → 상시 글 → 기한 지난 글
+        def rank(p):  # 급한 글(마감이 가까운 순) → 상시 글 → 기한 지난 글 → 발행 완료한 글
+            if p.get("id") in self.done:
+                return (3, "")
             if not p.get("urgent"):
                 return (1, "")
             until = p.get("until") or ""
             return (2, "") if until and until < today else (0, until or "9999")
-        for p in sorted(index.get("packages", [])[:40], key=rank):
+        pkgs = [p for p in index.get("packages", [])[:60] if self.show_done.get() or rank(p)[0] < 3]
+        for p in sorted(pkgs, key=rank):
             short = "⚠ " if (p.get("chars") or 0) < 1500 else ""
             r = rank(p)[0]
-            kind = ("급함" + (" ~" + p["until"][5:].replace("-", "/") if p.get("until") else "")) if r == 0 else ("상시" if r == 1 else "지남")
+            kind = ("급함" + (" ~" + p["until"][5:].replace("-", "/") if p.get("until") else "")) if r == 0 else \
+                ("상시", "지남", "✅완료")[r - 1]
             iid = self.posts.insert("", "end", values=(kind, p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
                                                       short + p.get("title", "")))
             self.ids[iid] = p.get("id")
@@ -529,6 +586,53 @@ class BlogTab:
                 r.get("conclusion"), "진행 중…" if r.get("status") != "completed" else "")
             last = f"마지막 실행: {kst(r.get('created_at', ''))} {res_text}"
         self.status.config(text=last or "아직 서버에서 글을 쓴 적이 없어요.")
+
+    def mark_done(self):
+        """고른 글을 발행 완료로 표시(이미 완료면 취소)해 서버 done.json에 저장. 스튜디오 목록도 이걸 읽음."""
+        ids = [self.ids[i] for i in self.posts.selection() if self.ids.get(i)]
+        if not ids:
+            messagebox.showinfo(APP_TITLE, "목록에서 글을 먼저 고르세요 (Ctrl·Shift로 여러 개).")
+            return
+        if not (os.getenv("GITHUB_TOKEN") or "").strip():
+            messagebox.showwarning(APP_TITLE, "서버에 저장하려면 깃허브 키가 필요해요. (키 탭 → 깃허브 키)")
+            return
+        self.status.config(text="저장하는 중…")
+
+        def work():
+            runs = gh_runs(1, BLOG_WORKFLOW)
+            if runs and runs[0].get("status") != "completed":
+                raise RuntimeError("지금 서버 블로그 작업이 도는 중이에요. 끝난 뒤 다시 눌러 주세요.")
+            done, sha = blog_done()
+            now = datetime.datetime.now().isoformat(timespec="seconds")
+            for pid in ids:
+                if pid in done:
+                    done.pop(pid)
+                else:
+                    done[pid] = now
+            gh_put_file("done.json", json.dumps({"done": done}, ensure_ascii=False, indent=1) + "\n",
+                        f"발행 완료 표시 {len(ids)}개", sha=sha)
+
+        in_thread(self.root, work, lambda _r, err: self.status.config(text=f"⚠ {err}") if err else self.refresh())
+
+    def delete(self):
+        """고른 글을 서버에서 지운다 (중복·잘못 올린 글). 되돌릴 수 없음."""
+        sel = [i for i in self.posts.selection() if self.ids.get(i)]
+        if not sel:
+            messagebox.showinfo(APP_TITLE, "목록에서 지울 글을 먼저 고르세요 (Ctrl·Shift로 여러 개).")
+            return
+        titles = "\n".join("· " + str(self.posts.item(i, "values")[3])[:40] for i in sel)
+        if not messagebox.askyesno(APP_TITLE, f"이 글 {len(sel)}개를 서버에서 지울까요? 되돌릴 수 없어요.\n\n{titles}"):
+            return
+        ids = [self.ids[i] for i in sel]
+        self.status.config(text="지우는 중…")
+
+        def work():
+            runs = gh_runs(1, BLOG_WORKFLOW)
+            if runs and runs[0].get("status") != "completed":
+                raise RuntimeError("지금 서버 블로그 작업이 도는 중이에요. 끝난 뒤 다시 눌러 주세요.")
+            blog_delete(ids)
+
+        in_thread(self.root, work, lambda _r, err: self.status.config(text=f"⚠ {err}") if err else self.refresh())
 
     def open_post(self, _e):
         sel = self.posts.selection()
