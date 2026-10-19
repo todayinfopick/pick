@@ -31,6 +31,7 @@ from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
+MIN_PRODUCT_PHOTOS = 10  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 9장 (+카드 = 11장, 네이버 홈판은 보통 10장 이상)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
@@ -107,11 +108,11 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 상품명: {product}
 가격(재료를 모은 날 페이지 기준): {price}
 상품 페이지 주소: {url}
-상품 페이지 글(판매자 설명, 일부):
+상품 페이지 글(판매자 설명이나 상품 정보, 일부):
 {page}
 함께 보낸 사진은 상품 페이지의 대표·상세 이미지다. 사진 속 글씨(성분, 용량, 사용법, 구성)도 읽어서 써라.
 
-이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라. 의약품처럼 치료 효과를 단정하지 마라.
+{facts} 의약품처럼 치료 효과를 단정하지 마라.
 직접 써 봤다는 경험담은 절대 지어내지 마라. "판매 페이지를 보면", "상세 설명에 따르면" 같은 표현은 괜찮다.
 누구에게 맞고 누구에게는 덜 맞는지, 고를 때 볼 점을 담백하게 정리해라. 과장 광고 말투는 쓰지 마라.
 
@@ -126,6 +127,8 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 형식: 아래 표시만 써라. 마크다운 제목(#), 코드 블록(```), 굵은 소제목은 쓰지 마라.
 @title: 제목 (상품 종류와 핵심 특징을 앞쪽에, 25~40자, 글자 수 표시 넣지 말 것)
 @tags: 태그 8~10개, 쉼표로 구분, # 없이
+@video: 짧은 상품 영상 표지 문구 (상품이 무엇인지 한눈에, 8~16자)
+@clips: 영상 사진마다 넣을 자막 5개, 각각 15자 이내, ' / '로 구분 (구성·용량·특징·가격 같은 핵심만)
 (빈 줄 없이 바로 본문. 첫 문단은 소제목 없이 시작)
 ## 소제목              ← 3~5개
 문단은 한 줄에 하나
@@ -134,7 +137,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 > 인용 상자에 넣을 한 줄 (1개)
 ! 강조 상자에 넣을 주의·팁 한 줄 (1~2개)
 **핵심 문구**는 소제목마다 1~2개만
-[사진: 상품 | 사진 설명]          ← 소제목 아래마다 하나씩, 3~4개 (상품 사진이 차례로 들어감)
+[사진: 상품 | 사진 설명]          ← 본문 곳곳에 9~10개, 문단 사이에 고르게 (상품 사진이 차례로 들어감)
 [카드: 카드 제목 | 줄1 / 줄2 / 줄3 / 줄4 | 이미지 설명]   ← 핵심 정리 카드 1개, 줄마다 20자 이내"""
 
 FIX_PROMPT = """아래 블로그 글은 공백을 뺀 글자 수가 {n}자다. {need}
@@ -164,15 +167,15 @@ def ask(prompt, search=True, temperature=0.8):
     return "".join(b.get("text", "") for b in blocks[last + 1:] if b.get("type") == "text")
 
 
-def ask_with_photos(prompt, photos, temperature=0.8):
-    """사진을 함께 보고 쓰기 (제미나이). 제미나이 키가 없으면 글자만으로 Claude."""
+def ask_with_photos(prompt, photos, temperature=0.8, search=False):
+    """사진을 함께 보고 쓰기 (제미나이). 제미나이 키가 없으면 글자만으로 Claude. search=True면 검색으로 보충."""
     import memo_ai
     if env("BLOG_WRITER", "제미나이").lower() == "claude" or not memo_ai.env("GEMINI_API_KEY"):
-        return ask(prompt, search=False, temperature=temperature)
+        return ask(prompt, search=search, temperature=temperature)
     parts = [{"text": prompt}]
     for label, b64 in memo_ai._pieces(photos):
         parts += [{"text": label}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]
-    return memo_ai.generate(parts, json_out=False, temperature=temperature)
+    return memo_ai.generate(parts, json_out=False, temperature=temperature, search=search)
 
 
 def json_array(text):
@@ -412,8 +415,23 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
             alt = p["parts"][2] if len(p["parts"]) > 2 else ctitle
         images.append({"id": f"img{n}", "file": name, "alt": alt, "anchorBlockId": p["after"],
                        "position": "after_block"})
-        if n >= (6 if topic.get("own_photos") else 3):
+        if n >= (14 if topic.get("own_photos") else 3):
             break
+    if topic.get("own_photos"):  # 상품 글: 상품 사진이 본문에 최소 9장 들어가게, 남은 사진을 빈 문단 뒤에 고르게 넣음
+        used = {i.get("anchorBlockId") for i in images}
+        spots = [b["id"] for b in blocks if b["type"] == "PARAGRAPH" and b["id"] not in used]
+        want = min(len(photos), max(0, MIN_PRODUCT_PHOTOS - 1 - sum(1 for i in images if i["file"].endswith("-photo.jpg"))))
+        for k in range(want):
+            if not spots:
+                break
+            at = spots[min(len(spots) - 1, (k + 1) * len(spots) // (want + 1))]
+            spots.remove(at)
+            n += 1
+            name = f"{n:02d}-photo.jpg"
+            blog_images.photo(folder / name, photos.pop(0))
+            images.append({"id": f"img{n}", "file": name, "alt": f"{topic['topic']} 상품 사진", "anchorBlockId": at,
+                           "position": "after_block"})
+        images.sort(key=lambda i: -1 if i.get("role") == "COVER" else order.index(i["anchorBlockId"]))
     pkg = {"schemaVersion": 1, "platform": blog["platform"], "blogName": blog["name"],
            "category": topic["category"], "title": title, "tags": tags, "blocks": blocks, "images": images}
     (folder / "content.json").write_text(json.dumps(pkg, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -512,7 +530,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
-def product_photos(urls, limit=8):
+def product_photos(urls, limit=14):
     """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
     from PIL import Image
     out = []
@@ -531,6 +549,29 @@ def product_photos(urls, limit=8):
     return out
 
 
+def product_videos(folder, text, name, photos):
+    """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
+    표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
+    import blog_video
+    meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
+    title = (meta.get("video") or re.sub(r"\[.*?\]|\(.*?\)", "", name)).strip()[:24] or "오늘의 상품"
+    lines = [x.strip() for x in re.split(r"\s*/\s*", meta.get("clips", "")) if x.strip()]
+    if len(lines) < 4:  # 자막이 없으면 소제목으로
+        lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
+    lines = [x if len(x) <= 18 else x[:17] + "…" for x in lines]
+    shots = photos[1:7] if len(photos) >= 7 else photos[:6]  # 첫 장은 대표(표지) 사진이라 그다음부터
+    out = []
+    for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
+        try:
+            blog_video.make(folder / fname, title, shots, lines, *size)
+            out.append(fname)
+        except Exception as e:
+            log(f"    (영상 {fname}을 만들지 못했습니다: {e})")
+    if out:
+        log(f"    영상 {len(out)}개 만듦: {', '.join(out)}")
+    return out
+
+
 def product_package(path, site, cfg, index, hist, now):
     """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
     재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(사진 주소)."""
@@ -539,8 +580,8 @@ def product_package(path, site, cfg, index, hist, now):
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
     log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
     photos = product_photos(d.get("images") or [])
-    if not photos:
-        log("  ! 상품 사진을 하나도 받지 못해 이 재료는 지웁니다 (페이지에서 다시 보내 주세요)")
+    if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 9장이 안 되면 쓰지 않음 (사용자 기준)
+        log(f"  ! 쓸 만한 상품 사진이 {len(photos)}장뿐이라 글을 쓰지 않고 재료를 지웁니다 (최소 {MIN_PRODUCT_PHOTOS}장)")
         path.unlink()
         return False
     lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
@@ -549,8 +590,11 @@ def product_package(path, site, cfg, index, hist, now):
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     prompt = PRODUCT_PROMPT.format(today=today, name=blog["name"], product=d.get("name", ""), price=d.get("price") or "-",
                                    url=d.get("url", ""), page=(d.get("text") or "")[:8000], min=lo, max=hi,
-                                   tone=TONES[h["tone"]])
-    text = clean(ask_with_photos(prompt, photos[:6]))
+                                   tone=TONES[h["tone"]],
+                                   facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
+                                          "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
+                                          "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
+    text = clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
     for _ in range(2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
@@ -572,6 +616,9 @@ def product_package(path, site, cfg, index, hist, now):
     add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude",
                  now, topic)
     index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
+    videos = product_videos(site / pid, text, d.get("name", ""), photos)
+    if videos:
+        index["packages"][0]["videos"] = videos
     h["topics"] = (h["topics"] + [d.get("name", "")[:60]])[-60:]
     path.unlink()
     return True
