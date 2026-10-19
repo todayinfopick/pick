@@ -16,6 +16,7 @@
 """
 import argparse
 import datetime
+import io
 import json
 import os
 import pathlib
@@ -23,11 +24,14 @@ import re
 import shutil
 import sys
 
+import requests
+
 import main
 from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
+PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
 WEEKDAYS = "월화수목금토일"
@@ -98,6 +102,41 @@ WRITE_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' {platform} 블로
 [카드: 카드 제목 | 줄1 / 줄2 / 줄3 / 줄4 | 이미지 설명]   ← 핵심 정리 카드 1개, 줄마다 20자 이내
 출처: 참고한 기관·언론사 이름 (마지막 줄, 주소 말고 이름만)"""
 
+PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블로그에 올릴 상품 소개 글을 한국어로 써라.
+네이버 쇼핑커넥트 글이고, 상품 링크 카드와 대가성 안내 문구는 글쓴이가 따로 넣는다. 본문에 링크·안내 문구는 쓰지 마라.
+상품명: {product}
+가격(재료를 모은 날 페이지 기준): {price}
+상품 페이지 주소: {url}
+상품 페이지 글(판매자 설명, 일부):
+{page}
+함께 보낸 사진은 상품 페이지의 대표·상세 이미지다. 사진 속 글씨(성분, 용량, 사용법, 구성)도 읽어서 써라.
+
+이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라. 의약품처럼 치료 효과를 단정하지 마라.
+직접 써 봤다는 경험담은 절대 지어내지 마라. "판매 페이지를 보면", "상세 설명에 따르면" 같은 표현은 괜찮다.
+누구에게 맞고 누구에게는 덜 맞는지, 고를 때 볼 점을 담백하게 정리해라. 과장 광고 말투는 쓰지 마라.
+
+길이: 공백을 뺀 글자 수로 {min}~{max}자 (표 안의 글자 포함). {min}자보다 짧으면 안 된다.
+말투와 구성: {tone}
+
+문체
+- 사람이 쓴 블로그 글처럼 자연스럽게. 짧은 문장과 긴 문장을 섞고, 문단 첫머리를 매번 다르게 시작해라.
+- 쓰지 말 것: "~에 대해 알아보겠습니다", "결론적으로", "~하는 것이 중요합니다", "도움이 되셨길 바랍니다",
+  "다양한·효율적인·혁신적인" 남발, 소제목마다 끝에 요약 문장, 모든 목록을 3개로 맞추기. 이모지와 해시태그도 쓰지 마라.
+
+형식: 아래 표시만 써라. 마크다운 제목(#), 코드 블록(```), 굵은 소제목은 쓰지 마라.
+@title: 제목 (상품 종류와 핵심 특징을 앞쪽에, 25~40자, 글자 수 표시 넣지 말 것)
+@tags: 태그 8~10개, 쉼표로 구분, # 없이
+(빈 줄 없이 바로 본문. 첫 문단은 소제목 없이 시작)
+## 소제목              ← 3~5개
+문단은 한 줄에 하나
+- 목록 한 줄
+| 칸 | 칸 | 칸          ← 구성·용량·가격 같은 정보 표 1개, 첫 줄이 제목줄, 칸을 비우지 말 것(없으면 -)
+> 인용 상자에 넣을 한 줄 (1개)
+! 강조 상자에 넣을 주의·팁 한 줄 (1~2개)
+**핵심 문구**는 소제목마다 1~2개만
+[사진: 상품 | 사진 설명]          ← 소제목 아래마다 하나씩, 3~4개 (상품 사진이 차례로 들어감)
+[카드: 카드 제목 | 줄1 / 줄2 / 줄3 / 줄4 | 이미지 설명]   ← 핵심 정리 카드 1개, 줄마다 20자 이내"""
+
 FIX_PROMPT = """아래 블로그 글은 공백을 뺀 글자 수가 {n}자다. {need}
 형식 표시(@title, @tags, ##, -, |, >, !, **, [사진: ...], [카드: ...], 출처:)와 사실은 그대로 두고,
 확인되지 않은 새 숫자나 경험담은 넣지 마라. 고친 글 전체만 출력해라.
@@ -123,6 +162,17 @@ def ask(prompt, search=True, temperature=0.8):
     blocks = r.json().get("content", [])
     last = max([i for i, b in enumerate(blocks) if b.get("type") == "web_search_tool_result"], default=-1)
     return "".join(b.get("text", "") for b in blocks[last + 1:] if b.get("type") == "text")
+
+
+def ask_with_photos(prompt, photos, temperature=0.8):
+    """사진을 함께 보고 쓰기 (제미나이). 제미나이 키가 없으면 글자만으로 Claude."""
+    import memo_ai
+    if env("BLOG_WRITER", "제미나이").lower() == "claude" or not memo_ai.env("GEMINI_API_KEY"):
+        return ask(prompt, search=False, temperature=temperature)
+    parts = [{"text": prompt}]
+    for label, b64 in memo_ai._pieces(photos):
+        parts += [{"text": label}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]
+    return memo_ai.generate(parts, json_out=False, temperature=temperature)
 
 
 def json_array(text):
@@ -306,8 +356,10 @@ def parse(text, blog, topic):
     return title, tags, blocks, images
 
 
-def build_package(folder, blog, topic, text, used_photos):
+def build_package(folder, blog, topic, text, used_photos, photos=None):
+    """photos: 상품 페이지에서 받은 사진(PIL) 목록. 주면 Pixabay 대신 이 사진을 차례로 씀."""
     import blog_images
+    photos = list(photos or [])
     title, tags, blocks, plan = parse(text, blog, topic)
     if not any(b["type"] == "H2" for b in blocks):
         raise RuntimeError("AI가 쓴 글에 소제목이 없어 형식이 깨진 것 같습니다.")
@@ -322,6 +374,10 @@ def build_package(folder, blog, topic, text, used_photos):
     images = []
 
     def get_photo(query):
+        if photos:
+            return photos.pop(0), None
+        if topic.get("own_photos"):  # 상품 글: 상품과 상관없는 무료 사진은 넣지 않음
+            return None, None
         try:
             return blog_images.find_photo(query, used_photos)
         except Exception as e:
@@ -343,7 +399,8 @@ def build_package(folder, blog, topic, text, used_photos):
             if im is None:
                 n -= 1
                 continue
-            used_photos.append(pid)
+            if pid:
+                used_photos.append(pid)
             name = f"{n:02d}-photo.jpg"
             blog_images.photo(folder / name, im)
             alt = p["parts"][1] if len(p["parts"]) > 1 else topic["topic"]
@@ -355,7 +412,7 @@ def build_package(folder, blog, topic, text, used_photos):
             alt = p["parts"][2] if len(p["parts"]) > 2 else ctitle
         images.append({"id": f"img{n}", "file": name, "alt": alt, "anchorBlockId": p["after"],
                        "position": "after_block"})
-        if n >= 3:
+        if n >= (6 if topic.get("own_photos") else 3):
             break
     pkg = {"schemaVersion": 1, "platform": blog["platform"], "blogName": blog["name"],
            "category": topic["category"], "title": title, "tags": tags, "blocks": blocks, "images": images}
@@ -455,6 +512,71 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
+def product_photos(urls, limit=8):
+    """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
+    from PIL import Image
+    out = []
+    for u in urls:
+        try:
+            r = requests.get(u, timeout=30, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://smartstore.naver.com/"})
+            r.raise_for_status()
+            im = Image.open(io.BytesIO(r.content)).convert("RGB")
+        except Exception as e:
+            log(f"    (상품 사진을 받지 못했습니다: {e})")
+            continue
+        if min(im.size) >= 300:
+            out.append(im)
+        if len(out) >= limit:
+            break
+    return out
+
+
+def product_package(path, site, cfg, index, hist, now):
+    """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
+    재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(사진 주소)."""
+    d = json.loads(path.read_text(encoding="utf-8"))
+    blog = find_blog(cfg, d.get("blog", "")) or find_blog(cfg, "naver2")
+    cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
+    log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
+    photos = product_photos(d.get("images") or [])
+    if not photos:
+        log("  ! 상품 사진을 하나도 받지 못해 이 재료는 지웁니다 (페이지에서 다시 보내 주세요)")
+        path.unlink()
+        return False
+    lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
+    h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
+    h["tone"] = (h["tone"] + 1) % len(TONES)
+    today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
+    prompt = PRODUCT_PROMPT.format(today=today, name=blog["name"], product=d.get("name", ""), price=d.get("price") or "-",
+                                   url=d.get("url", ""), page=(d.get("text") or "")[:8000], min=lo, max=hi,
+                                   tone=TONES[h["tone"]])
+    text = clean(ask_with_photos(prompt, photos[:6]))
+    for _ in range(2):
+        n = body_chars(text)
+        if lo <= n <= hi + 300:
+            break
+        need = (f"{lo + 150}자 정도가 되게 늘려라. 재료에 있는 구성·사용법·고를 때 볼 점을 더 자세히 풀어라."
+                if n < lo else f"{hi - 100}자 정도가 되게 줄여라. 겹치는 설명부터 빼라.")
+        log(f"    글자 수 {n}자 → 다시 쓰기")
+        fixed = clean(ask(FIX_PROMPT.format(n=n, need=need, text=text), search=False, temperature=0.6))
+        if "@title" in fixed and body_chars(fixed) > 200:
+            text = fixed
+    date = now.strftime("%Y-%m-%d")
+    topic = {"topic": d.get("name", ""), "category": cat, "photo": "", "own_photos": True}
+    pid = next_id(index, date, blog["key"])
+    try:
+        pkg = build_package(site / pid, blog, topic, text, [], photos)
+    except Exception:
+        shutil.rmtree(site / pid, ignore_errors=True)
+        raise
+    add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude",
+                 now, topic)
+    index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
+    h["topics"] = (h["topics"] + [d.get("name", "")[:60]])[-60:]
+    path.unlink()
+    return True
+
+
 def process_drafts(site, cfg, index, hist, used_photos, now):
     """drafts/날짜/*.txt (Claude가 쓴 그날 글)를 패키지로 만든다. drafts/stock/은 비상용이라 여기서는 건드리지 않는다."""
     made = failed = 0
@@ -465,6 +587,13 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
             made += 1
         else:
             failed += 1
+    for path in sorted((site / "drafts" / PRODUCT).glob("*.json")):
+        try:
+            ok = product_package(path, site, cfg, index, hist, now)
+        except Exception as e:  # 제미나이 한도 등: 재료는 남겨 두고 다음 실행 때 다시
+            log(f"  ! 상품 글을 만들지 못했습니다 (재료는 남겨 둠): {e}")
+            ok = False
+        made, failed = (made + 1, failed) if ok else (made, failed + 1)
     for d in sorted((site / "drafts").glob("*"), reverse=True):
         if d.is_dir() and d.name != STOCK and not any(d.iterdir()):
             d.rmdir()
