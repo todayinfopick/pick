@@ -133,6 +133,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 @keyword: 이 글의 핵심 검색 키워드 하나 (사람들이 네이버에서 찾는 말, 제목 맨 앞쪽에 넣은 것)
 @video: 짧은 상품 영상 표지 문구 (상품이 무엇인지 한눈에, 8~16자)
 @clips: 영상 사진마다 넣을 자막 5개, 각각 15자 이내, ' / '로 구분 (구성·용량·특징·가격 같은 핵심만)
+@videospot: 상품 영상을 넣기 가장 어울리는 소제목 하나 (아래 ## 소제목 중 하나를 글자 그대로. 영상은 그 소제목 바로 밑에 들어감)
 (빈 줄 없이 바로 본문. 첫 문단은 소제목 없이 시작)
 ## 소제목              ← 3~5개
 문단은 한 줄에 하나
@@ -723,6 +724,11 @@ def product_package(path, site, cfg, index, hist, now):
                  now, topic)
     index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
     videos = product_videos(site / pid, text, d.get("name", ""), photos) if d.get("video", True) else []
+    spot = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln).get("videospot", "")
+    heads = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
+    spot = next((h for h in heads if spot.strip() and (h == spot.strip() or spot.strip() in h)), "")
+    if videos and spot:  # 스튜디오가 네이버에 영상을 이 소제목 바로 밑에 넣음 (없으면 서론 뒤)
+        index["packages"][0]["videoSpot"] = spot
     if videos:
         index["packages"][0]["videos"] = videos
     h["topics"] = (h["topics"] + [d.get("name", "")[:60]])[-60:]
