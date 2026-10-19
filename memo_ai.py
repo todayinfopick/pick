@@ -97,6 +97,9 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
                 break
         if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
+    if search and r.status_code == 429:  # 무료 등급은 Gemini 3 이후 모델의 구글 검색 한도가 0 → 검색 없이 다시
+        print("  ↪ 제미나이 구글 검색 한도가 없어 검색 없이 씁니다", flush=True)
+        return generate(parts, json_out=False, temperature=temperature, search=False)
     if r.status_code == 429:
         try:  # 구글이 알려 준 걸린 한도 이름 (예: ...PerMinute..., ...PerDay...)
             why = ", ".join(v.get("quotaId", "") for d in r.json()["error"].get("details", [])
