@@ -334,18 +334,27 @@ def _quiet_rows(im, scale_w=200):
     return out
 
 
+def _trim_blank(piece, margin=0.04, quiet=4):
+    """조각 위아래의 글씨·그림 없는 빈 줄을 잘라냄 (여백은 폭의 4%만 남김)."""
+    rows = [y for y, score in _quiet_rows(piece) if score > quiet]
+    if not rows:
+        return piece
+    m = int(piece.width * margin)
+    return piece.crop((0, max(0, rows[0] - m), piece.width, min(piece.height, rows[-1] + m + 2)))
+
+
 def _pad_to(piece, w, h):
-    """조각을 w×h(3:4)로 맞춤: 모자란 아래쪽은 잘린 줄 색으로 채움."""
+    """조각을 w×h(3:4)로 맞춤: 내용은 가운데, 모자란 위아래는 가장자리 배경색으로 채움."""
     if piece.height >= h:
         return piece
     edge = piece.convert("RGB").crop((0, piece.height - 1, max(1, w // 50), piece.height))  # 맨 아래 줄 왼쪽 끝(배경색)
     color = edge.resize((1, 1)).getpixel((0, 0))
     canvas = Image.new("RGB", (w, h), color)
-    canvas.paste(piece.convert("RGB"), (0, 0))
+    canvas.paste(piece.convert("RGB"), (0, (h - piece.height) // 2))
     return canvas
 
 
-def split_tall(im, max_pieces=6):
+def split_tall(im, max_pieces=6, pad=True):
     """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·사진 중간이 잘리지 않게 3:4 길이 안에서
     가장 빈 줄(여백)을 골라 자르고, 짧아진 조각은 아래를 같은 색으로 채워 3:4로 맞춘다.
     글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
@@ -365,7 +374,10 @@ def split_tall(im, max_pieces=6):
         top = bottom
         if is_blank(piece):
             continue
-        pieces.append(_pad_to(piece, w, step))
+        piece = _trim_blank(piece)
+        if piece.height < step * 0.3:  # 빈 여백을 빼고 나니 내용이 조금뿐인 조각은 뺌
+            continue
+        pieces.append(_pad_to(piece, w, step) if pad else piece)  # pad=False(블로그): 빈 여백 없이 내용 크기 그대로
         if len(pieces) >= max_pieces:
             break
     return pieces or [im]
