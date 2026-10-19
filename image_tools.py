@@ -394,6 +394,70 @@ def detail_photos(name):
     return [im for im in (load_photo(str(f)) for f in images_in(folder)) if im is not None][:DETAIL_MAX]
 
 
+# ---------------------------------------------------------------- 글자 없는 사진 고르기
+# 인스타·쓰레드 사진 위에는 우리가 자막을 얹으므로, 원래 글자가 박힌 사진(상세페이지 설명, 광고 문구)은 피한다.
+# 서버(GitHub Actions)에는 tesseract(한국어)가 깔려 있어 OCR로 확인. 없으면(PC 등) 대표 사진은 그대로 쓰고 상세 조각은 안 쓴다.
+_OCR = {"ok": None}
+
+
+def _ocr_ready():
+    if _OCR["ok"] is None:
+        try:
+            import pytesseract
+            _OCR["ok"] = "kor" in pytesseract.get_languages(config="")
+        except Exception:
+            _OCR["ok"] = False
+        if not _OCR["ok"]:
+            print("  (글자 확인(OCR)을 쓸 수 없어 사진 글자 검사를 건너뜁니다)")
+    return _OCR["ok"]
+
+
+def has_text(im):
+    """사진에 글자가 있는지 (한국어·영어 OCR). 확인할 수 없으면 None.
+    상품 포장에 작게 찍힌 글씨 정도는 넘어가고, 글자가 OCR_WORDS(기본 3)개 이상이거나
+    글자 영역이 사진의 OCR_AREA(기본 1.5)% 이상이면 '글자 있음'."""
+    if not _ocr_ready():
+        return None
+    import pytesseract
+    g = im.convert("L")
+    if max(g.size) > 1200:
+        g = ImageOps.contain(g, (1200, 1200))
+    try:
+        data = pytesseract.image_to_data(g, lang="kor+eng", config="--psm 11",
+                                         output_type=pytesseract.Output.DICT, timeout=30)
+    except Exception:
+        return None
+    words, area = 0, 0
+    for txt, conf, w, h in zip(data["text"], data["conf"], data["width"], data["height"]):
+        t = re.sub(r"[^0-9A-Za-z가-힣]", "", txt or "")
+        if len(t) >= 2 and float(conf) >= 70:
+            words += 1
+            area += w * h
+    max_words = _env_int("OCR_WORDS", 3)
+    max_area = float(os.getenv("OCR_AREA") or 1.5) / 100
+    return words >= max_words or area >= g.width * g.height * max_area
+
+
+def pick_photos(photos, details, need, strict=False):
+    """게시에 쓸 사진: 글자 없는 대표·썸네일 → (모자라면) 글자 없는 상세 조각.
+    strict=False(인스타): 그래도 모자라면 글자 있는 대표 사진으로 채움. strict=True(쓰레드): 글자 없는 것만.
+    상세 조각은 글자가 있으면 절대 쓰지 않는다."""
+    flags = [has_text(im) for im in photos]
+    clean = [im for im, f in zip(photos, flags) if not f]
+    texty = [im for im, f in zip(photos, flags) if f]
+    out = clean[:need]
+    for im in details:
+        if len(out) >= need:
+            break
+        if has_text(im) is False:  # 확인해서 글자 없다고 나온 조각만
+            out.append(im)
+    if not strict:
+        out += texty[:max(0, need - len(out))]
+    if texty or len(clean) < len(photos):
+        print(f"  (글자 있는 대표 사진 {len(texty)}장은 {'뺐습니다' if strict else '뒤로 미뤘습니다'})")
+    return out
+
+
 # ---------------------------------------------------------------- 카드 이미지
 CW, CH, PAD = 1080, 1350, 88  # 인스타 4:5
 
@@ -627,36 +691,6 @@ def make_carousel(name, headline, points, photos=None, key="carousel"):
         slides.append(render_point(i, total, pt, ph(i), layout, pal))
     slides.append(render_cta(name, ph(len(points) + 1), pal))
 
-    paths = []
-    for n, im in enumerate(slides, start=1):
-        p = folder / f"{n:02d}.jpg"
-        add_ad_tag(im).save(p, quality=92)
-        paths.append(p)
-    return paths
-
-
-def render_detail(piece):
-    """상세 조각 한 장: 조각 전체가 보이게 4:5 화면 가운데에, 남는 곳은 조각 가장자리 색으로 채운다."""
-    from PIL import ImageStat
-    edge = piece.convert("RGB").crop((0, 0, piece.width, max(1, piece.height // 40)))
-    bg = tuple(int(c) for c in ImageStat.Stat(edge).median)
-    img = Image.new("RGB", (CW, CH), bg)
-    fit = ImageOps.contain(piece.convert("RGB"), (CW, CH), Image.LANCZOS)
-    img.paste(fit, ((CW - fit.width) // 2, (CH - fit.height) // 2))
-    return img
-
-
-def make_detail_carousel(name, headline, photos, details, key="carousel"):
-    """원본 이미지 캐러셀: 표지(대표 이미지 + 제목) → 상세페이지 조각들 그대로 → 구매 안내."""
-    folder = OUT_DIR / slug(key)
-    folder.mkdir(parents=True, exist_ok=True)
-    for old in folder.glob("*.jpg"):
-        old.unlink()
-    pal = random_palette()
-    first = photos[0] if photos else details[0]
-    slides = [render_cover(name, headline, first, pick_layout(first), pal, footer=False)]
-    slides += [render_detail(d) for d in details[:DETAIL_MAX]]
-    slides.append(render_cta(name, photos[1] if len(photos) > 1 else first, pal))
     paths = []
     for n, im in enumerate(slides, start=1):
         p = folder / f"{n:02d}.jpg"

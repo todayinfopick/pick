@@ -55,9 +55,10 @@ jobs:
         if: env.CHECK == 'true'
         run: python cloud_sync.py due
 
-      - name: 글꼴 준비
+      # 글꼴 + 사진 속 글자 확인(OCR, 한국어): 글자 박힌 사진은 인스타·쓰레드에 안 쓰려고
+      - name: 글꼴·글자 인식 준비
         if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
-        run: sudo apt-get install -y -qq fonts-nanum > /dev/null
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
 
       - name: 시트·사진 받기
         if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
