@@ -10,10 +10,11 @@
 import datetime
 import json
 import os
+import re
 import threading
 import tkinter as tk
 import webbrowser
-from tkinter import messagebox, ttk
+from tkinter import filedialog, messagebox, ttk
 
 import requests
 
@@ -102,7 +103,7 @@ def blog_delete(ids):
     gh_put_file("index.json", json.dumps(index, ensure_ascii=False, indent=1), f"글 {len(gone)}개 지움",
                 sha=r.json()["sha"])
     for p in gone:
-        for name in p.get("files") or ["content.json"]:
+        for name in (p.get("files") or ["content.json"]) + (p.get("videos") or []):
             gh_delete_file(f"{p['id']}/{name}", f"글 지움: {p['id']}")
 
 
@@ -531,10 +532,12 @@ class BlogTab:
         self.posts.pack(fill="both", expand=True, padx=10)
         self.posts.bind("<Double-1>", self.open_post)
         self.ids = {}
+        self.pkgs = {}
         self.done = {}
         acts = tk.Frame(frame)
         acts.pack(fill="x", padx=10, pady=(4, 0))
         tk.Button(acts, text="✅ 발행 완료 표시/취소", command=self.mark_done).pack(side="left", fill="x", expand=True)
+        tk.Button(acts, text="🎬 영상 받기", command=self.save_videos).pack(side="left", padx=(4, 0))
         tk.Button(acts, text="🗑 지우기", fg="#c0392b", command=self.delete).pack(side="left", padx=(4, 0))
         tk.Label(frame, text="가져오기: 크롬 AI Blog Studio → '서버에서 불러오기'. 발행은 직접 눌러요. 완료 표시는 스튜디오 목록에도 보여요.",
                  fg="#666", anchor="w", justify="left", wraplength=260).pack(fill="x", padx=10, pady=(6, 0))
@@ -561,6 +564,7 @@ class BlogTab:
         index, runs, self.done = res
         self.posts.delete(*self.posts.get_children())
         self.ids = {}
+        self.pkgs = {p.get("id"): p for p in index.get("packages", [])}
         today = datetime.date.today().isoformat()
 
         def rank(p):  # 급한 글(마감이 가까운 순) → 상시 글 → 기한 지난 글 → 발행 완료한 글
@@ -577,7 +581,7 @@ class BlogTab:
             kind = ("급함" + (" ~" + p["until"][5:].replace("-", "/") if p.get("until") else "")) if r == 0 else \
                 ("상시", "지남", "✅완료")[r - 1]
             iid = self.posts.insert("", "end", values=(kind, p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
-                                                      short + p.get("title", "")))
+                                                      short + ("🎬 " if p.get("videos") else "") + p.get("title", "")))
             self.ids[iid] = p.get("id")
         last = ""
         if runs:
@@ -633,6 +637,44 @@ class BlogTab:
             blog_delete(ids)
 
         in_thread(self.root, work, lambda _r, err: self.status.config(text=f"⚠ {err}") if err else self.refresh())
+
+    def save_videos(self):
+        """고른 상품 글의 짧은 영상(가로·세로)을 내 컴퓨터 폴더에 받는다. 네이버 글쓰기 서론 뒤에 끌어다 넣으면 됨."""
+        pkgs = [self.pkgs.get(self.ids[i]) for i in self.posts.selection() if self.ids.get(i)]
+        pkgs = [p for p in pkgs if p and p.get("videos")]
+        if not pkgs:
+            messagebox.showinfo(APP_TITLE, "영상이 있는 글(제목 앞 🎬)을 목록에서 먼저 고르세요.")
+            return
+        down = os.path.join(os.path.expanduser("~"), "Downloads")
+        folder = filedialog.askdirectory(title="영상을 저장할 폴더", initialdir=down if os.path.isdir(down) else None)
+        if not folder:
+            return
+        self.status.config(text="영상 받는 중…")
+
+        def work():
+            saved = []
+            for p in pkgs:
+                base = re.sub(r'[\\/:*?"<>|]', "", p.get("title") or p["id"])[:40].strip()
+                for name in p["videos"]:
+                    r = requests.get(f"https://raw.githubusercontent.com/{repo()}/blog-packages/{p['id']}/{name}", timeout=120)
+                    r.raise_for_status()
+                    out = os.path.join(folder, f"{base}_{'세로' if 'vertical' in name else '가로'}.mp4")
+                    with open(out, "wb") as f:
+                        f.write(r.content)
+                    saved.append(out)
+            return saved
+
+        def done(saved, err):
+            if err:
+                self.status.config(text=f"⚠ 영상을 받지 못했습니다: {err}")
+                return
+            self.status.config(text=f"🎬 영상 {len(saved)}개 저장: {folder}")
+            try:
+                os.startfile(folder)  # 윈도우: 폴더 열기
+            except Exception:
+                pass
+
+        in_thread(self.root, work, done)
 
     def open_post(self, _e):
         sel = self.posts.selection()

@@ -127,6 +127,8 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 형식: 아래 표시만 써라. 마크다운 제목(#), 코드 블록(```), 굵은 소제목은 쓰지 마라.
 @title: 제목 (상품 종류와 핵심 특징을 앞쪽에, 25~40자, 글자 수 표시 넣지 말 것)
 @tags: 태그 8~10개, 쉼표로 구분, # 없이
+@video: 짧은 상품 영상 표지 문구 (상품이 무엇인지 한눈에, 8~16자)
+@clips: 영상 사진마다 넣을 자막 5개, 각각 15자 이내, ' / '로 구분 (구성·용량·특징·가격 같은 핵심만)
 (빈 줄 없이 바로 본문. 첫 문단은 소제목 없이 시작)
 ## 소제목              ← 3~5개
 문단은 한 줄에 하나
@@ -547,6 +549,29 @@ def product_photos(urls, limit=14):
     return out
 
 
+def product_videos(folder, text, name, photos):
+    """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
+    표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
+    import blog_video
+    meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
+    title = (meta.get("video") or re.sub(r"\[.*?\]|\(.*?\)", "", name)).strip()[:24] or "오늘의 상품"
+    lines = [x.strip() for x in re.split(r"\s*/\s*", meta.get("clips", "")) if x.strip()]
+    if len(lines) < 4:  # 자막이 없으면 소제목으로
+        lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
+    lines = [x if len(x) <= 18 else x[:17] + "…" for x in lines]
+    shots = photos[1:7] if len(photos) >= 7 else photos[:6]  # 첫 장은 대표(표지) 사진이라 그다음부터
+    out = []
+    for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
+        try:
+            blog_video.make(folder / fname, title, shots, lines, *size)
+            out.append(fname)
+        except Exception as e:
+            log(f"    (영상 {fname}을 만들지 못했습니다: {e})")
+    if out:
+        log(f"    영상 {len(out)}개 만듦: {', '.join(out)}")
+    return out
+
+
 def product_package(path, site, cfg, index, hist, now):
     """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
     재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(사진 주소)."""
@@ -591,6 +616,9 @@ def product_package(path, site, cfg, index, hist, now):
     add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude",
                  now, topic)
     index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
+    videos = product_videos(site / pid, text, d.get("name", ""), photos)
+    if videos:
+        index["packages"][0]["videos"] = videos
     h["topics"] = (h["topics"] + [d.get("name", "")[:60]])[-60:]
     path.unlink()
     return True
