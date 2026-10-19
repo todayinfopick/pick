@@ -134,7 +134,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 > 인용 상자에 넣을 한 줄 (1개)
 ! 강조 상자에 넣을 주의·팁 한 줄 (1~2개)
 **핵심 문구**는 소제목마다 1~2개만
-[사진: 상품 | 사진 설명]          ← 소제목 아래마다 하나씩, 3~4개 (상품 사진이 차례로 들어감)
+[사진: 상품 | 사진 설명]          ← 본문 곳곳에 6~7개, 문단 사이에 고르게 (상품 사진이 차례로 들어감)
 [카드: 카드 제목 | 줄1 / 줄2 / 줄3 / 줄4 | 이미지 설명]   ← 핵심 정리 카드 1개, 줄마다 20자 이내"""
 
 FIX_PROMPT = """아래 블로그 글은 공백을 뺀 글자 수가 {n}자다. {need}
@@ -412,8 +412,23 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
             alt = p["parts"][2] if len(p["parts"]) > 2 else ctitle
         images.append({"id": f"img{n}", "file": name, "alt": alt, "anchorBlockId": p["after"],
                        "position": "after_block"})
-        if n >= (6 if topic.get("own_photos") else 3):
+        if n >= (10 if topic.get("own_photos") else 3):
             break
+    if topic.get("own_photos"):  # 상품 글: 상품 사진이 본문에 최소 7장 들어가게, 남은 사진을 빈 문단 뒤에 고르게 넣음
+        used = {i.get("anchorBlockId") for i in images}
+        spots = [b["id"] for b in blocks if b["type"] == "PARAGRAPH" and b["id"] not in used]
+        want = min(len(photos), max(0, 7 - sum(1 for i in images if i["file"].endswith("-photo.jpg"))))
+        for k in range(want):
+            if not spots:
+                break
+            at = spots[min(len(spots) - 1, (k + 1) * len(spots) // (want + 1))]
+            spots.remove(at)
+            n += 1
+            name = f"{n:02d}-photo.jpg"
+            blog_images.photo(folder / name, photos.pop(0))
+            images.append({"id": f"img{n}", "file": name, "alt": f"{topic['topic']} 상품 사진", "anchorBlockId": at,
+                           "position": "after_block"})
+        images.sort(key=lambda i: -1 if i.get("role") == "COVER" else order.index(i["anchorBlockId"]))
     pkg = {"schemaVersion": 1, "platform": blog["platform"], "blogName": blog["name"],
            "category": topic["category"], "title": title, "tags": tags, "blocks": blocks, "images": images}
     (folder / "content.json").write_text(json.dumps(pkg, ensure_ascii=False, indent=1), encoding="utf-8")
@@ -512,7 +527,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
-def product_photos(urls, limit=8):
+def product_photos(urls, limit=10):
     """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
     from PIL import Image
     out = []
@@ -553,7 +568,7 @@ def product_package(path, site, cfg, index, hist, now):
                                    facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
-    text = clean(ask_with_photos(prompt, photos[:6], search=bool(d.get("search"))))
+    text = clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
     for _ in range(2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
