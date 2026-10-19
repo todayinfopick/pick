@@ -31,7 +31,7 @@ from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
-MIN_PRODUCT_PHOTOS = 8  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 7장
+MIN_PRODUCT_PHOTOS = 10  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 9장 (+카드 = 11장, 네이버 홈판은 보통 10장 이상)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
@@ -135,7 +135,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 > 인용 상자에 넣을 한 줄 (1개)
 ! 강조 상자에 넣을 주의·팁 한 줄 (1~2개)
 **핵심 문구**는 소제목마다 1~2개만
-[사진: 상품 | 사진 설명]          ← 본문 곳곳에 6~7개, 문단 사이에 고르게 (상품 사진이 차례로 들어감)
+[사진: 상품 | 사진 설명]          ← 본문 곳곳에 9~10개, 문단 사이에 고르게 (상품 사진이 차례로 들어감)
 [카드: 카드 제목 | 줄1 / 줄2 / 줄3 / 줄4 | 이미지 설명]   ← 핵심 정리 카드 1개, 줄마다 20자 이내"""
 
 FIX_PROMPT = """아래 블로그 글은 공백을 뺀 글자 수가 {n}자다. {need}
@@ -413,12 +413,12 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
             alt = p["parts"][2] if len(p["parts"]) > 2 else ctitle
         images.append({"id": f"img{n}", "file": name, "alt": alt, "anchorBlockId": p["after"],
                        "position": "after_block"})
-        if n >= (10 if topic.get("own_photos") else 3):
+        if n >= (14 if topic.get("own_photos") else 3):
             break
-    if topic.get("own_photos"):  # 상품 글: 상품 사진이 본문에 최소 7장 들어가게, 남은 사진을 빈 문단 뒤에 고르게 넣음
+    if topic.get("own_photos"):  # 상품 글: 상품 사진이 본문에 최소 9장 들어가게, 남은 사진을 빈 문단 뒤에 고르게 넣음
         used = {i.get("anchorBlockId") for i in images}
         spots = [b["id"] for b in blocks if b["type"] == "PARAGRAPH" and b["id"] not in used]
-        want = min(len(photos), max(0, 7 - sum(1 for i in images if i["file"].endswith("-photo.jpg"))))
+        want = min(len(photos), max(0, MIN_PRODUCT_PHOTOS - 1 - sum(1 for i in images if i["file"].endswith("-photo.jpg"))))
         for k in range(want):
             if not spots:
                 break
@@ -528,7 +528,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
-def product_photos(urls, limit=10):
+def product_photos(urls, limit=14):
     """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
     from PIL import Image
     out = []
@@ -555,7 +555,7 @@ def product_package(path, site, cfg, index, hist, now):
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
     log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
     photos = product_photos(d.get("images") or [])
-    if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 7장이 안 되면 쓰지 않음 (사용자 기준)
+    if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 9장이 안 되면 쓰지 않음 (사용자 기준)
         log(f"  ! 쓸 만한 상품 사진이 {len(photos)}장뿐이라 글을 쓰지 않고 재료를 지웁니다 (최소 {MIN_PRODUCT_PHOTOS}장)")
         path.unlink()
         return False
