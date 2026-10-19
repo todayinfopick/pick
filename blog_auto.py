@@ -23,7 +23,6 @@ import pathlib
 import re
 import shutil
 import sys
-import time
 
 import requests
 
@@ -698,14 +697,7 @@ def product_package(path, site, cfg, index, hist, now):
                                    facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
-    try:
-        text = clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
-    except RuntimeError as e:  # 한도에 걸리면 구글 검색(따로 세는 한도)을 빼고 사진도 줄여 한 번 더
-        if not quota_hit(e):
-            raise
-        log(f"    한도에 걸려 검색 없이 사진 4장으로 다시 시도: {e}")
-        time.sleep(60)
-        text = clean(ask_with_photos(prompt, photos[:4], search=False))
+    text = clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
     for _ in range(2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
