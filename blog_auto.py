@@ -574,11 +574,32 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
+def product_image_urls(urls):
+    """사진 주소 정리: 브랜드커넥트 썸네일(dthumb-phinf ?src="원본")은 원본 주소로 풀고, 크기 지정(?type=)은 떼고,
+    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)는 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
+    out, seen = [], set()
+    for u in urls:
+        u = str(u or "").strip()
+        m = re.search(r"[?&]src=([^&]+)", u)
+        if "dthumb" in u and m:
+            u = requests.utils.unquote(m.group(1)).strip('"\'')
+        if u.startswith("//"):
+            u = "https:" + u
+        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/", u):
+            continue
+        u = re.sub(r"\?type=[^&]*$", "", u)
+        key = re.sub(r"^https?:", "", u).split("?")[0]
+        if key not in seen:
+            seen.add(key)
+            out.append(u)
+    return out
+
+
 def product_photos(urls, limit=14):
     """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
     from PIL import Image
     out = []
-    for u in urls:
+    for u in product_image_urls(urls):
         try:
             r = requests.get(u, timeout=30, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://smartstore.naver.com/"})
             r.raise_for_status()
@@ -701,6 +722,12 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
         except Exception as e:  # 제미나이 한도 등: 재료는 남겨 두고 다음 실행 때 다시
             log(f"  ! 상품 글을 만들지 못했습니다 (재료는 남겨 둠): {e}")
             ok = False
+            try:  # 왜 안 됐는지 재료에 적어 둠 (스튜디오·Claude가 확인)
+                d = json.loads(path.read_text(encoding="utf-8"))
+                d["error"] = f"{now:%m-%d %H:%M} {type(e).__name__}: {e}"[:500]
+                path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            except Exception:
+                pass
         made, failed = (made + 1, failed) if ok else (made, failed + 1)
     for d in sorted((site / "drafts").glob("*"), reverse=True):
         if d.is_dir() and d.name != STOCK and not any(d.iterdir()):
