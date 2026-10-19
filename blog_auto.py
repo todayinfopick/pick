@@ -301,6 +301,7 @@ def parse(text, blog, topic):
             add("PARAGRAPH", line)
     flush()
     title = meta.get("title") or topic["topic"]
+    title = re.sub(r"\s+\(?[12],?[0-9]00\s*자?\s*(이상)?\)?$", "", title)  # 채팅 AI가 글자 수 요청을 제목 끝에 붙인 것
     tags = [t.strip().lstrip("#") for t in re.split(r"[,，]", meta.get("tags", "")) if t.strip()][:10]
     return title, tags, blocks, images
 
@@ -376,6 +377,12 @@ def prune(site, index, keep_days):
         if d.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}", d.name) and d.name < cutoff:
             shutil.rmtree(d)
     index["packages"] = [p for p in index["packages"] if p["date"] >= cutoff]
+    index["packages"] = [p for p in index["packages"] if (site / p["id"]).is_dir()]  # 깃허브에서 직접 지운 글은 목록에서도 뺌
+    done = load_json(site / "done.json", {})  # 발행 완료 표시(프로그램·스튜디오가 씀): 목록에서 빠진 글은 정리
+    ids = {p["id"] for p in index["packages"]}
+    if done.get("done"):
+        done["done"] = {k: v for k, v in done["done"].items() if k in ids}
+        (site / "done.json").write_text(json.dumps(done, ensure_ascii=False, indent=1), encoding="utf-8")
 
 
 def quota_hit(e):
@@ -441,7 +448,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
         log(f"  ! 초안을 패키지로 만들지 못했습니다: {e}")
         shutil.rmtree(site / pid, ignore_errors=True)
         return False
-    add_to_index(index, pid, date, blog, pkg, text, "Claude", now, topic)
+    add_to_index(index, pid, date, blog, pkg, text, "채팅" if "-chat-" in path.name else "Claude", now, topic)
     h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
     h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
     path.unlink()
