@@ -6,13 +6,15 @@ on:
     # 글은 새벽 4시에 Claude가 써서 drafts/에 올리고, 이 예약은 남은 초안을 정리한 뒤
     # 오늘 글이 없는 블로그만 비상용 글(drafts/stock/)이나 제미나이로 채우는 예비
     - cron: "30 20 * * *"
+    # 새벽 3시 25분쯤: 인기 검색어·검색량만 모아 keywords.json으로 (3시 52분 Claude 글쓰기가 읽음)
+    - cron: "25 18 * * *"
   workflow_dispatch:
     inputs:
       mode:
         description: "할 일"
         type: choice
         default: 글쓰기
-        options: [글쓰기, 초안 정리]
+        options: [글쓰기, 초안 정리, 키워드]
       blog:
         description: "블로그 (비우면 전부, 예: naver1,tistory)"
         type: string
@@ -69,7 +71,13 @@ jobs:
             git -C site rm -rq --cached . && find site -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           fi
 
+      - name: 키워드 모으기 (인기 검색어·검색량·경쟁도)
+        if: inputs.mode != '초안 정리'
+        continue-on-error: true
+        run: python blog_keywords.py --site site
+
       - name: 글 쓰기
+        if: inputs.mode != '키워드' && github.event.schedule != '25 18 * * *'
         run: >-
           python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
           ${{ github.event_name == 'schedule' && '--scheduled' || '' }}

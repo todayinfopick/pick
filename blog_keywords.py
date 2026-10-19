@@ -165,7 +165,28 @@ def build(cfg):
         top.sort(key=lambda x: ({"낮음": 0, "보통": 1, "": 2, "높음": 3}[x.get("level", "")], -x["volume"]))
         rep["blogs"][blog["key"]] = top[:25]
         log(f"  {blog['name']}: 키워드 후보 {len(top[:25])}개")
+    rep["products"] = product_ideas(cfg.get("shop_seed_keywords") or [])
+    log(f"  상품 추천 키워드 {len(rep['products'])}개")
     return rep
+
+
+SHOPPY = re.compile(r"추천|비교|순위|가격|후기|브랜드|세트|용품|선물|기|기기|크림|세럼|패딩|이불|매트|청소기|가습기|영양제|텀블러|신발|가방")
+
+
+def product_ideas(seeds, limit=20):
+    """쇼핑커넥트·쿠팡파트너스로 올리면 좋은 상품 키워드: 상품 분야(blog_config shop_seed_keywords)의 연관 키워드 → 검색량 많고 경쟁 낮은 순."""
+    if not has_ad() or not seeds:
+        return []
+    found, rel = lookup(seeds)
+    pool = {}
+    for info in list(found.values()) + rel:
+        if info["volume"] >= MIN_VOLUME and (SHOPPY.search(info["keyword"]) or _norm(info["keyword"]) in found):
+            pool.setdefault(_norm(info["keyword"]), info)
+    top = sorted(pool.values(), key=lambda x: -x["volume"])[:30]
+    for info in top:
+        enrich(info)
+    top.sort(key=lambda x: ({"낮음": 0, "보통": 1, "": 2, "높음": 3}[x.get("level", "")], -x["volume"]))
+    return top[:limit]
 
 
 def load(site):
