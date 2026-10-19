@@ -658,8 +658,7 @@ def video_only_package(d, blog, site, index, now, photos):
     index["packages"].insert(0, {"id": pid, "date": pid.split("/")[0], "blogKey": blog["key"], "blogName": blog["name"],
                                  "platform": blog["platform"], "category": "영상", "kind": "영상",
                                  "title": re.sub(r"\s+", " ", name).strip()[:60] or "상품 영상", "chars": 0,
-                                 "files": [], "videos": videos, "link": d.get("link", ""), "source": d.get("url", ""),
-                                 "sellerVideo": d.get("seller_video", ""), "createdAt": now.isoformat(timespec="seconds")})
+                                 "files": [], "videos": videos, "link": d.get("link", ""), "source": d.get("url", ""), "createdAt": now.isoformat(timespec="seconds")})
     return True
 
 
@@ -720,8 +719,7 @@ def product_package(path, site, cfg, index, hist, now):
         raise
     add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude",
                  now, topic)
-    index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", ""),
-                                 "sellerVideo": d.get("seller_video", "")})
+    index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
     videos = product_videos(site / pid, text, d.get("name", ""), photos) if d.get("video", True) else []
     if videos:
         index["packages"][0]["videos"] = videos
