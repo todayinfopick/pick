@@ -611,7 +611,7 @@ def product_photos(urls, limit=14):
             continue
         if min(im.size) < 300:
             continue
-        out += split_tall(im) if im.height > im.width * 1.6 else [im]  # 긴 상세 이미지는 화면 한 장 크기로 잘라 여러 장
+        out += split_tall(im, pad=False) if im.height > im.width * 1.6 else [im]  # 긴 상세 이미지는 화면 한 장 크기로 잘라 여러 장
         if len(out) >= limit:
             break
     return out[:limit]
