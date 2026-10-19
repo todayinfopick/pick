@@ -133,8 +133,20 @@ def _bgm():
     return str(random.choice(files)) if files else None
 
 
-def make(out, title, photos, lines, w=1920, h=1080):
-    """영상 하나를 out(mp4)에 만든다. photos: PIL 이미지(4~6장 씀), lines: 자막(사진마다 한 줄)."""
+def _footer(w, h, text):
+    """모든 장면 맨 아래에 작게 까는 한 줄 (쿠팡 릴스의 대가성 문구)."""
+    size = max(22, int(min(w, h) * 0.026))
+    fnt = it.font(size)
+    bh = int(size * 1.9)
+    ov = Image.new("RGBA", (w, bh), (0, 0, 0, 140))
+    ImageDraw.Draw(ov).text((w // 2, bh // 2), text, font=fnt, fill=(235, 235, 235), anchor="mm")
+    return ov
+
+
+def make(out, title, photos, lines, w=1920, h=1080, end=("자세한 내용은 본문에서", "아래 글에서 구성·가격을 확인하세요"),
+         footer=""):
+    """영상 하나를 out(mp4)에 만든다. photos: PIL 이미지(4~6장 씀), lines: 자막(사진마다 한 줄).
+    end: 마무리 카드 (제목, 작은 글), footer: 모든 장면 아래에 까는 한 줄 (비우면 없음)."""
     shots = photos[:6]
     if len(shots) < 4:
         raise RuntimeError("영상에 쓸 상품 사진이 4장보다 적습니다.")
@@ -142,7 +154,8 @@ def make(out, title, photos, lines, w=1920, h=1080):
     scenes = [(COVER_SEC, Still(_title_card(w, h, title)))]
     for k, ph in enumerate(shots):
         scenes.append((PHOTO_SEC, Photo(w, h, ph, caps[k] if k < len(caps) else "", k)))
-    scenes.append((END_SEC, Still(_title_card(w, h, "자세한 내용은 본문에서", "아래 글에서 구성·가격을 확인하세요"))))
+    scenes.append((END_SEC, Still(_title_card(w, h, *end))))
+    foot = _footer(w, h, footer) if footer else None
     total = sum(s for s, _ in scenes)
     bgm = _bgm()
     cmd = [_ffmpeg(), "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{w}x{h}",
@@ -167,6 +180,9 @@ def make(out, title, photos, lines, w=1920, h=1080):
                 if k + 1 not in nxt:
                     nxt[k + 1] = scenes[k + 1][1].render(0)
                 frame = Image.blend(frame, nxt[k + 1], (t - start - (dur - FADE)) / FADE)
+            if foot is not None:
+                frame = frame.copy()
+                frame.paste(foot, (0, h - foot.height), foot)
             proc.stdin.write(frame.tobytes())
     finally:
         proc.stdin.close()

@@ -19,25 +19,59 @@
   // 썸네일 크기(.../48x48ex/...)만 다른 같은 사진은 하나로
   const photoKey = (u) => u.replace(/\/\d{2,4}x\d{2,4}ex\//, "/").replace(/^https?:/, "").split("?")[0];
 
+  // 이 상품 사진이 아닌 곳: 리뷰, 다른 상품 추천·광고, 배너. 영상은 아예 안 가져온다.
+  const NOT_PRODUCT = [
+    "[class*='review' i]", "[id*='review' i]", "[class*='recommend' i]", "[id*='recommend' i]",
+    "[class*='banner' i]", "[class*='advert' i]", "[class*='other-seller' i]", "[class*='sdp-review']",
+    "[class*='related' i]", "[class*='similar' i]", "[class*='together' i]",
+  ].join(",");
+
+  function imgUrl(img) {
+    let u = img.getAttribute("data-src") || img.getAttribute("data-img-src") || img.currentSrc || img.src || "";
+    if (u.startsWith("//")) u = "https:" + u;
+    return u;
+  }
+
+  function usable(img, u) {
+    if (!/^https?:/.test(u) || !/coupangcdn\.com/.test(u)) return false;
+    if (/\.gif(\?|$)/i.test(u) || /icon|badge|logo|sprite|banner/i.test(u)) return false;
+    if (img.closest(NOT_PRODUCT)) return false;
+    return true;
+  }
+
+  // 대표 이미지 + 썸네일 갤러리 (원본 크기는 PC 프로그램이 더 큰 주소로 받아 옴)
   function productImages() {
     const urls = [];
-    const add = (u) => {
-      if (!u) return;
-      if (u.startsWith("//")) u = "https:" + u;
-      if (!/^https?:/.test(u) || !/coupangcdn\.com/.test(u)) return;
-      if (/\.gif(\?|$)/i.test(u) || /icon|badge|logo|sprite/i.test(u)) return;
+    const add = (img, u) => {
+      if (!usable(img, u)) return;
       if (!urls.some((x) => photoKey(x) === photoKey(u))) urls.push(u);
     };
     const og = document.querySelector("meta[property='og:image']");
-    if (og) add(og.content);
+    if (og && og.content) add(document.body, og.content.startsWith("//") ? "https:" + og.content : og.content);
     const sels = [
       ".prod-image__item img", ".prod-image__items img", "#repImageContainer img", ".prod-image img",
-      "[class*='product-image'] img", "[class*='thumbnail'] img", "[class*='Thumbnail'] img",
+      "[class*='product-image'] img", "[class*='prod-image'] img",
+    ];
+    for (const s of sels) document.querySelectorAll(s).forEach((img) => add(img, imgUrl(img)));
+    return urls.slice(0, 10);
+  }
+
+  // 상세페이지 이미지: 상세정보 영역 안의 이미지만 (리뷰·추천 영역 제외)
+  function detailImages() {
+    const urls = [];
+    const sels = [
+      "#productDetail img", ".product-detail-content-inside img", ".product-detail-content img",
+      ".subType-IMAGE img", ".vendor-item img", "[class*='product-detail'] img", "[class*='productDetail'] img",
     ];
     for (const s of sels) {
-      document.querySelectorAll(s).forEach((img) => add(img.getAttribute("data-src") || img.currentSrc || img.src));
+      document.querySelectorAll(s).forEach((img) => {
+        const u = imgUrl(img);
+        if (!usable(img, u)) return;
+        if (img.naturalWidth && img.naturalWidth < 300) return; // 작은 아이콘·버튼
+        if (!urls.includes(u)) urls.push(u);
+      });
     }
-    return urls.slice(0, 10);
+    return urls.slice(0, 40);
   }
 
   function detailText() {
@@ -100,15 +134,66 @@
     drag = null;
   });
 
-  btn.addEventListener("click", () => {
-    if (moved) { moved = false; return; } // 끌어서 옮긴 경우엔 보내지 않음
+  function send(auto) {
     btn.textContent = "보내는 중…";
-    const data = { name: productName(), images: productImages(), text: detailText(), url: location.href };
-    chrome.runtime.sendMessage({ type: "send", data }, (res) => {
-      if (res && res.ok) show(`✓ 보냄 (사진 ${res.photos}장, 글 ${data.text.length.toLocaleString()}자)`, "#16A34A");
+    const data = { name: productName(), images: productImages(), details: detailImages(), text: detailText(), url: location.href };
+    chrome.runtime.sendMessage({ type: "send", data, close: auto }, (res) => {
+      if (res && res.ok) show(`✓ 보냄 (사진 ${res.photos}장, 상세 ${res.details || 0}장, 글 ${data.text.length.toLocaleString()}자)`, "#16A34A");
       else if (res && res.error === "offline") show("⚠ PC 프로그램을 먼저 켜 주세요", "#DC2626");
       else show("⚠ 보내지 못했어요", "#DC2626");
     });
+  }
+
+  btn.addEventListener("click", () => {
+    if (moved) { moved = false; return; } // 끌어서 옮긴 경우엔 보내지 않음
+    send(false);
   });
+
+  // 자동 수집: PC 프로그램이 제휴 링크로 이 페이지를 열었을 때만.
+  // 끝까지 천천히 내려서 늦게 뜨는 내용을 불러오고, '상세정보 펼쳐보기'를 눌러 펼친 뒤 보내고 창을 닫는다.
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  async function scrollToEnd(maxSteps) {
+    let last = -1, same = 0;
+    for (let i = 0; i < maxSteps && same < 4; i++) {
+      window.scrollBy(0, Math.round(window.innerHeight * 0.8));
+      await sleep(350);
+      const h = document.documentElement.scrollHeight;
+      const atEnd = window.scrollY + window.innerHeight >= h - 5;
+      same = atEnd && h === last ? same + 1 : 0;
+      last = h;
+    }
+  }
+
+  function clickExpand() {
+    let n = 0;
+    document.querySelectorAll("button, a, [role='button']").forEach((el) => {
+      const t = clean(el.innerText);
+      if (t.length > 20 || el.dataset.pickClicked) return;
+      if (/상세\s*정보\s*펼쳐|펼쳐\s*보기|상품\s*정보\s*더\s*보기/.test(t)) {
+        el.dataset.pickClicked = "1";
+        el.click();
+        n++;
+      }
+    });
+    return n;
+  }
+
+  async function autoCollect() {
+    btn.textContent = "⏳ 자동 수집 중…";
+    btn.style.background = "#9333EA";
+    await sleep(1500);
+    await scrollToEnd(25);
+    if (clickExpand()) { await sleep(1500); }
+    await scrollToEnd(80);
+    clickExpand();
+    await sleep(800);
+    send(true);
+  }
+
+  chrome.runtime.sendMessage({ type: "auto?" }, (res) => {
+    if (res && res.auto) autoCollect();
+  });
+
   document.body.appendChild(btn);
 })();

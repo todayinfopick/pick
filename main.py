@@ -649,10 +649,23 @@ def local_media(item, kind, text):
         print(f"  (폴더에 넣은 영상 사용: {own.name})")
         return [video_tools.prepare_own_video(own, key)]
     photos = image_tools.load_photos(item["source"], item["name"])
+    details = image_tools.detail_photos(item["name"])  # 확장프로그램이 모은 상세페이지 조각 (사진 폴더/상세)
     if kind == "video":
+        shots = (photos[:2] + details)[:6] if details else []
+        if len(shots) >= 4:  # 원본 이미지 영상: 표지 → 대표·상세 이미지 + 장점 자막 → 구매 안내
+            import blog_video
+            out = image_tools.OUT_DIR / f"{image_tools.slug(key)}.mp4"
+            image_tools.OUT_DIR.mkdir(exist_ok=True)
+            lines = [p for p in text["points"] if p]
+            lines = [x if len(x) <= 18 else x[:17] + "…" for x in [text["headline"]] + lines]
+            return [blog_video.make(out, item["short"][:24], shots, lines, 1080, 1920,
+                                    end=("구매 링크 확인하기", image_tools.CTA),
+                                    footer="광고 · " + image_tools.DISCLOSURE_SHORT)]
         import video_tools
         return [video_tools.make_video(item["short"], text["headline"], text["points"], photos, key)]
     if kind == "carousel":
+        if details:
+            return image_tools.make_detail_carousel(item["short"], text["headline"], photos, details, key)
         return image_tools.make_carousel(item["short"], text["headline"], text["points"], photos, key)
     return [image_tools.make_card(item["short"], text["headline"], photos, key)]
 
@@ -673,6 +686,7 @@ def threads_raw_media(item):
         import video_tools
         return [video_tools.mute_video(own, f"{key}_threads")], "video"
     photos = image_tools.load_photos(item["source"], item["name"])
+    photos = photos[:2] + image_tools.detail_photos(item["name"]) + photos[2:]  # 대표 이미지 다음에 상세 조각
     image_tools.OUT_DIR.mkdir(exist_ok=True)
     paths = []
     for i, im in enumerate(photos[:10], start=1):
