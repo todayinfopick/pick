@@ -384,7 +384,13 @@ class Helper:
         self.page_text = ""  # 확장프로그램이 보낸 상세페이지 글
         self.details = []  # 확장프로그램이 보낸 상세페이지 이미지 조각 (3:4, 캐러셀·영상용)
         self.inbox = queue.Queue()
-        start_bridge(self.inbox)
+        if not start_bridge(self.inbox):
+            # 확장프로그램 연결 칸(27183)을 다른 창(예전 버전 프로그램 등)이 잡고 있으면 자동 수집이 이 창으로 안 옴
+            root.after(800, lambda: messagebox.showwarning(
+                "확장프로그램 연결 안 됨",
+                "쿠팡 자동게시 프로그램이 이미 하나 더 켜져 있어서 확장프로그램과 연결하지 못했습니다.\n\n"
+                "작업 표시줄·트레이에서 다른 쿠팡 자동게시(또는 캡처 도우미) 창을 모두 닫고 다시 켜 주세요.\n"
+                "(그래도 안 되면 PC를 다시 시작해 주세요)"))
 
         if self.standalone:
             root.title("쿠팡 캡처 도우미 — 새 상품 등록")
