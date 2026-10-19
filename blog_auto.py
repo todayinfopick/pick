@@ -107,11 +107,11 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 상품명: {product}
 가격(재료를 모은 날 페이지 기준): {price}
 상품 페이지 주소: {url}
-상품 페이지 글(판매자 설명, 일부):
+상품 페이지 글(판매자 설명이나 상품 정보, 일부):
 {page}
 함께 보낸 사진은 상품 페이지의 대표·상세 이미지다. 사진 속 글씨(성분, 용량, 사용법, 구성)도 읽어서 써라.
 
-이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라. 의약품처럼 치료 효과를 단정하지 마라.
+{facts} 의약품처럼 치료 효과를 단정하지 마라.
 직접 써 봤다는 경험담은 절대 지어내지 마라. "판매 페이지를 보면", "상세 설명에 따르면" 같은 표현은 괜찮다.
 누구에게 맞고 누구에게는 덜 맞는지, 고를 때 볼 점을 담백하게 정리해라. 과장 광고 말투는 쓰지 마라.
 
@@ -164,15 +164,15 @@ def ask(prompt, search=True, temperature=0.8):
     return "".join(b.get("text", "") for b in blocks[last + 1:] if b.get("type") == "text")
 
 
-def ask_with_photos(prompt, photos, temperature=0.8):
-    """사진을 함께 보고 쓰기 (제미나이). 제미나이 키가 없으면 글자만으로 Claude."""
+def ask_with_photos(prompt, photos, temperature=0.8, search=False):
+    """사진을 함께 보고 쓰기 (제미나이). 제미나이 키가 없으면 글자만으로 Claude. search=True면 검색으로 보충."""
     import memo_ai
     if env("BLOG_WRITER", "제미나이").lower() == "claude" or not memo_ai.env("GEMINI_API_KEY"):
-        return ask(prompt, search=False, temperature=temperature)
+        return ask(prompt, search=search, temperature=temperature)
     parts = [{"text": prompt}]
     for label, b64 in memo_ai._pieces(photos):
         parts += [{"text": label}, {"inline_data": {"mime_type": "image/jpeg", "data": b64}}]
-    return memo_ai.generate(parts, json_out=False, temperature=temperature)
+    return memo_ai.generate(parts, json_out=False, temperature=temperature, search=search)
 
 
 def json_array(text):
@@ -549,8 +549,11 @@ def product_package(path, site, cfg, index, hist, now):
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     prompt = PRODUCT_PROMPT.format(today=today, name=blog["name"], product=d.get("name", ""), price=d.get("price") or "-",
                                    url=d.get("url", ""), page=(d.get("text") or "")[:8000], min=lo, max=hi,
-                                   tone=TONES[h["tone"]])
-    text = clean(ask_with_photos(prompt, photos[:6]))
+                                   tone=TONES[h["tone"]],
+                                   facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
+                                          "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
+                                          "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
+    text = clean(ask_with_photos(prompt, photos[:6], search=bool(d.get("search"))))
     for _ in range(2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
