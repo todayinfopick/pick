@@ -180,11 +180,12 @@ class ListTab:
         tk.Button(bar, text="✎ 수정", command=self.edit).pack(side="left", padx=2)
         tk.Button(bar, text="✨ 메모", command=self.rememo).pack(side="left")
         tk.Button(bar, text="🗑", command=self.delete).pack(side="left", padx=2)
+        tk.Button(bar, text="게시됨", command=self.select_done).pack(side="left")
         tk.Button(bar, text="📁", command=self.open_folder).pack(side="right")
 
         box = tk.Frame(frame)
         box.pack(fill="both", expand=True, padx=10)
-        self.tree = ttk.Treeview(box, columns=[c[0] for c in self.COLS], show="headings", selectmode="browse")
+        self.tree = ttk.Treeview(box, columns=[c[0] for c in self.COLS], show="headings", selectmode="extended")
         for key, title, w in self.COLS:
             self.tree.heading(key, text=title)
             self.tree.column(key, width=w, anchor="w" if key == "name" else "center", stretch=key == "name")
@@ -199,7 +200,7 @@ class ListTab:
         self.detail = tk.Label(frame, text="", anchor="w", justify="left", wraplength=250, fg="#333")
         self.detail.pack(fill="x", padx=10, pady=4)
         self.tree.bind("<<TreeviewSelect>>", lambda e: self.show_detail())
-        self.status = tk.Label(frame, text="", anchor="w", fg="#555")
+        self.status = tk.Label(frame, text="", anchor="w", fg="#555", justify="left", wraplength=260)
         self.status.pack(fill="x", padx=10, pady=(0, 8))
         self.items = {}
 
@@ -234,7 +235,7 @@ class ListTab:
             name, link, memo = cell("상품명"), cell("파트너스링크"), cell("특징메모")
             if not name:
                 continue
-            item = {"name": name, "link": link, "memo": memo, "row": n}
+            item = {"name": name, "link": link, "memo": memo, "row": n, "done": False}
             rec = main.get_rec(posted, item)
             folder = helper.photo_folder(name)
             try:
@@ -244,13 +245,15 @@ class ListTab:
             when = {ch: kst(rec[ch]["at"])[:11] if ch in rec else "" for ch in ("threads", "instagram")}
             done = bool(when["threads"] or when["instagram"])
             waiting += not done
+            item["done"] = done
             iid = self.tree.insert("", "end", values=(name.split(",")[0], cell("분류") or "—",
                                                       "✓" if memo else "—", nphotos,
                                                       when["threads"] or "대기", when["instagram"] or "대기"),
                                    tags=("done",) if done else (() if memo else ("nomemo",)))
             self.items[iid] = item
         self.status.config(text=f"상품 {len(self.items)}개 · 게시 대기 {waiting}개 · "
-                                f"주황색 = 메모 없음(게시 전에 AI가 채움) · 회색 = 게시됨")
+                                f"주황색 = 메모 없음(게시 전에 AI가 채움) · 회색 = 게시됨 · "
+                                f"Ctrl·Shift+클릭으로 여러 개 선택")
 
     def selected(self):
         sel = self.tree.selection()
@@ -314,20 +317,58 @@ class ListTab:
                 out.append(im.copy())
         return out
 
+    def select_done(self):
+        """게시된 상품을 모두 선택 (한 번에 지울 때)."""
+        done = [iid for iid, it in self.items.items() if it.get("done")]
+        self.tree.selection_set(done)
+        if done:
+            self.tree.see(done[0])
+        self.status.config(text=f"게시된 상품 {len(done)}개를 골랐습니다. 🗑을 누르면 한꺼번에 지웁니다.")
+
     def delete(self):
+        import shutil
         import helper
-        item = self.selected()
-        if not item or not messagebox.askyesno(
-                "삭제", f"'{item['name']}'을(를) 목록에서 지울까요?\n(사진 폴더는 그대로 둡니다)"):
+        import image_tools
+        items = [self.items[i] for i in self.tree.selection() if i in self.items]
+        if not items:
+            messagebox.showinfo("상품 목록", "목록에서 상품을 먼저 골라 주세요.")
             return
+        what = f"'{items[0]['name'][:30]}'" if len(items) == 1 else f"상품 {len(items)}개"
+        if not messagebox.askyesno("삭제", f"{what}을(를) 목록에서 지울까요?\n"
+                                         "(게시된 상품은 링크 페이지에 그대로 남습니다)"):
+            return
+        # 사진 폴더는 구글 드라이브 폴더라 지워도 드라이브 휴지통에서 30일 동안 되살릴 수 있음
+        folders = [helper.photo_folder(it["name"]) for it in items]
+        root = image_tools.photo_root().resolve()
+        folders = [f for f in folders if f.is_dir() and f.resolve().parent == root]  # 상품 폴더만 (사진 폴더 전체는 절대 안 지움)
+        others = {helper.photo_folder(it["name"]) for it in self.items.values() if it not in items}
+        folders = [f for f in folders if f not in others]  # 남는 상품과 같이 쓰는 폴더는 둠
+        drop_photos = bool(folders) and messagebox.askyesno(
+            "사진 폴더", f"사진 폴더 {len(folders)}개도 같이 지울까요?\n(구글 드라이브 휴지통에서 되살릴 수 있어요)")
+        links = {it["link"] for it in items}
 
         def work():
             header, rows = helper.read_rows()
             li = header.index("파트너스링크")
-            keep = [r for r in rows if not (len(r) > li and r[li].strip() == item["link"])]
+            keep = [r for r in rows if not (len(r) > li and r[li].strip() in links)]
             helper.write_rows(header, keep)
+            failed = 0
+            for f in folders if drop_photos else []:
+                try:
+                    shutil.rmtree(f)
+                except OSError:
+                    failed += 1
+            return failed
 
-        in_thread(self.root, work, lambda r, e: (self.status.config(text=f"⚠ {e}") if e else self.refresh()))
+        def done(failed, e):
+            if e:
+                self.status.config(text=f"⚠ {e}")
+                return
+            self.refresh()
+            if failed:
+                messagebox.showwarning("사진 폴더", f"사진 폴더 {failed}개는 지우지 못했습니다. (열려 있는 파일이 있으면 닫고 직접 지워 주세요)")
+
+        in_thread(self.root, work, done)
 
     def open_folder(self):
         import helper
