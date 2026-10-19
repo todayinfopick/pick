@@ -182,6 +182,7 @@
   async function autoCollect() {
     btn.textContent = "⏳ 자동 수집 중…";
     btn.style.background = "#9333EA";
+    while (document.readyState !== "complete") await sleep(300);
     await sleep(1500);
     await scrollToEnd(25);
     if (clickExpand()) { await sleep(1500); }
@@ -196,4 +197,6 @@
   });
 
   document.body.appendChild(btn);
+  // 쿠팡 화면이 다시 그려지면서 버튼이 지워질 때가 있어서, 없어지면 다시 붙인다
+  setInterval(() => { if (!btn.isConnected) document.body.appendChild(btn); }, 1000);
 })();
