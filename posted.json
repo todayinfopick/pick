@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "image",
-    "last_slot": "2026-10-19 18:00",
+    "last_slot": "2026-10-19 21:00",
     "last_general_slot": "2026-10-19 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -366,6 +366,38 @@
     },
     "name": "리빙선데이 스마트 6종 채칼 세트",
     "link": "https://link.coupang.com/a/hWLN3j702e",
+    "account": 2
+  },
+  "상품:롬앤한올브로우카라9g": {
+    "threads": {
+      "id": "18103587725567004",
+      "kind": "carousel",
+      "at": "2026-10-19T21:04:41",
+      "reply": "18089288234262002"
+    },
+    "instagram": {
+      "id": "18218405092346131",
+      "kind": "video",
+      "at": "2026-10-19T21:05:56"
+    },
+    "name": "롬앤 한올 브로우 카라 9g, 12 소이 베이지, 1개",
+    "link": "https://link.coupang.com/a/hWL5UfLIUS",
+    "account": 1
+  },
+  "상품:마더케이영유아핀셋네일케어4종세트": {
+    "threads": {
+      "id": "18163153597494764",
+      "kind": "carousel",
+      "at": "2026-10-19T21:07:39",
+      "reply": "18083362787523318"
+    },
+    "instagram": {
+      "id": "17938453869389383",
+      "kind": "carousel",
+      "at": "2026-10-19T21:09:09"
+    },
+    "name": "마더케이 영유아 핀셋 네일케어 4종 세트, 민트 + 화이트, 1세트",
+    "link": "https://link.coupang.com/a/hWOGTa6cfY",
     "account": 2
   }
 }
