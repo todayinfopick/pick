@@ -31,6 +31,7 @@ from main import env, log
 
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
+MIN_PRODUCT_PHOTOS = 8  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 7장
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
@@ -554,8 +555,8 @@ def product_package(path, site, cfg, index, hist, now):
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
     log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
     photos = product_photos(d.get("images") or [])
-    if not photos:
-        log("  ! 상품 사진을 하나도 받지 못해 이 재료는 지웁니다 (페이지에서 다시 보내 주세요)")
+    if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 7장이 안 되면 쓰지 않음 (사용자 기준)
+        log(f"  ! 쓸 만한 상품 사진이 {len(photos)}장뿐이라 글을 쓰지 않고 재료를 지웁니다 (최소 {MIN_PRODUCT_PHOTOS}장)")
         path.unlink()
         return False
     lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
