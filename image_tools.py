@@ -322,19 +322,50 @@ def is_blank(im, limit=18):
     return ImageStat.Stat(im.convert("L").resize((64, 64))).stddev[0] < limit
 
 
+def _quiet_rows(im, scale_w=200):
+    """줄마다 얼마나 '비어 있는지' (작을수록 글씨·그림이 없는 줄). 원본 높이 기준 (줄 위치, 점수) 목록."""
+    from PIL import ImageStat
+    w, h = im.size
+    sh = max(1, round(h * scale_w / w))
+    g = im.convert("L").resize((scale_w, sh))
+    out = []
+    for y in range(sh):
+        out.append((round(y * h / sh), ImageStat.Stat(g.crop((0, y, scale_w, y + 1))).stddev[0]))
+    return out
+
+
+def _pad_to(piece, w, h):
+    """조각을 w×h(3:4)로 맞춤: 모자란 아래쪽은 잘린 줄 색으로 채움."""
+    if piece.height >= h:
+        return piece
+    edge = piece.convert("RGB").crop((0, piece.height - 1, max(1, w // 50), piece.height))  # 맨 아래 줄 왼쪽 끝(배경색)
+    color = edge.resize((1, 1)).getpixel((0, 0))
+    canvas = Image.new("RGB", (w, h), color)
+    canvas.paste(piece.convert("RGB"), (0, 0))
+    return canvas
+
+
 def split_tall(im, max_pieces=6):
-    """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
+    """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·사진 중간이 잘리지 않게 3:4 길이 안에서
+    가장 빈 줄(여백)을 골라 자르고, 짧아진 조각은 아래를 같은 색으로 채워 3:4로 맞춘다.
+    글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
     w, h = im.size
     step = int(w * 4 / 3)
-    pieces = []
-    for top in range(0, h, step):
+    rows = _quiet_rows(im)
+    pieces, top = [], 0
+    while top < h:
         bottom = min(top + step, h)
+        if bottom < h:  # 3:4 길이의 뒤쪽 절반 안에서 가장 조용한 줄에서 자름 (같으면 아래쪽)
+            cand = [(round(score), -y, y) for y, score in rows if top + step * 0.5 <= y <= bottom]
+            if cand:
+                bottom = min(cand)[2]
         if bottom - top < w * 0.5:  # 끝에 남은 짧은 띠
             break
         piece = im.crop((0, top, w, bottom))
+        top = bottom
         if is_blank(piece):
             continue
-        pieces.append(piece)
+        pieces.append(_pad_to(piece, w, step))
         if len(pieces) >= max_pieces:
             break
     return pieces or [im]

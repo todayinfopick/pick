@@ -447,7 +447,7 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
             if pid:
                 used_photos.append(pid)
             name = f"{n:02d}-photo.jpg"
-            blog_images.photo(folder / name, im)
+            blog_images.photo(folder / name, im, keep=bool(topic.get("own_photos")))
             alt = p["parts"][1] if len(p["parts"]) > 1 else topic["topic"]
         else:
             ctitle = p["parts"][0] if p["parts"] else title

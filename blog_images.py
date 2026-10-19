@@ -71,7 +71,14 @@ def cover(path, title, label, photo=None):
     return path
 
 
-def photo(path, im):
+def photo(path, im, keep=False):
+    """keep=True(상품 사진·상세 조각): 가로 3:2로 잘라내지 않고 비율 그대로 폭만 맞춤 (글씨·제품이 잘리지 않게)."""
+    if keep:
+        im = im.convert("RGB")
+        if im.width > W:
+            im = im.resize((W, round(im.height * W / im.width)))
+        im.save(path, quality=88)
+        return
     image_tools.cover(im, W, H).save(path, quality=88)
     return path
 
