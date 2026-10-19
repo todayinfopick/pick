@@ -98,7 +98,13 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
         if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
     if r.status_code == 429:
-        raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 다음 회차에 다시 시도해요.")
+        try:  # 구글이 알려 준 걸린 한도 이름 (예: ...PerMinute..., ...PerDay...)
+            why = ", ".join(v.get("quotaId", "") for d in r.json()["error"].get("details", [])
+                            for v in d.get("violations", []) if v.get("quotaId"))
+        except Exception:
+            why = ""
+        raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 다음 회차에 다시 시도해요."
+                           + (f" [{why[:200]}]" if why else ""))
     if r.status_code >= 400:
         raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
     try:

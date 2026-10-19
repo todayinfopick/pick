@@ -794,11 +794,15 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
             continue
         if stop and not scheduled:
             break
-        if scheduled and any(p["date"] == date and p["blogKey"] == blog["key"] for p in index["packages"]):
-            log(f"[{blog['name']}] 오늘 글이 이미 있어 건너뜁니다")
-            continue
         h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
         n_posts = count or int(env("BLOG_POSTS_PER_BLOG") or cfg.get("posts_per_blog", 2))
+        if scheduled:  # 쇼핑커넥트·영상 글은 세지 않음: 일반 글만 하루 몫을 채운다
+            have = sum(1 for p in index["packages"] if p["date"] == date and p["blogKey"] == blog["key"]
+                       and p.get("kind") not in ("쇼핑", "영상"))
+            n_posts -= have
+            if n_posts <= 0:
+                log(f"[{blog['name']}] 오늘 일반 글이 이미 있어 건너뜁니다")
+                continue
         if scheduled:  # 새벽 글이 빠진 날: 쌓아 둔 비상용 글이 있으면 그것부터 (제미나이 한도를 아낌)
             got = use_stock(site, blog, n_posts, cfg, index, hist, used_photos, now)
             made += got
