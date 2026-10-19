@@ -577,7 +577,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
 
 def product_image_urls(urls):
     """사진 주소 정리: 브랜드커넥트 썸네일(dthumb-phinf ?src="원본")은 원본 주소로 풀고, 크기 지정(?type=)은 떼고,
-    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)는 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
+    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)·다른 상품 추천 썸네일(shopping-phinf main_)·라이브 영상 썸네일(image.nmv)은 이 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
     out, seen = [], set()
     for u in urls:
         u = str(u or "").strip()
@@ -586,7 +586,7 @@ def product_image_urls(urls):
             u = requests.utils.unquote(m.group(1)).strip('"\'')
         if u.startswith("//"):
             u = "https:" + u
-        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/", u):
+        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/|shopping-phinf\.pstatic\.net/main_|image\.nmv", u):
             continue
         u = re.sub(r"\?type=[^&]*$", "", u)
         key = re.sub(r"^https?:", "", u).split("?")[0]
@@ -608,11 +608,31 @@ def product_photos(urls, limit=14):
         except Exception as e:
             log(f"    (상품 사진을 받지 못했습니다: {e})")
             continue
-        if min(im.size) >= 300:
-            out.append(im)
+        if min(im.size) < 300:
+            continue
+        out += split_tall(im) if im.height > im.width * 1.6 else [im]  # 긴 상세 이미지는 화면 한 장 크기로 잘라 여러 장
         if len(out) >= limit:
             break
-    return out
+    return out[:limit]
+
+
+def split_tall(im, max_pieces=6):
+    """세로로 긴 상세 이미지 → 가로:세로 3:4 조각들. 글씨·그림이 거의 없는 조각(여백·띠)은 뺀다."""
+    from PIL import ImageStat
+    w, h = im.size
+    step = int(w * 4 / 3)
+    pieces = []
+    for top in range(0, h, step):
+        bottom = min(top + step, h)
+        if bottom - top < w * 0.5:  # 끝에 남은 짧은 띠
+            break
+        piece = im.crop((0, top, w, bottom))
+        if ImageStat.Stat(piece.convert("L").resize((64, 64))).stddev[0] < 18:  # 거의 한 색 = 빈 조각
+            continue
+        pieces.append(piece)
+        if len(pieces) >= max_pieces:
+            break
+    return pieces or [im]
 
 
 def product_keyword_block(cands):
