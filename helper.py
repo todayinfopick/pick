@@ -629,6 +629,7 @@ class Helper:
             self.ai_done = False
         if data.get("details"):
             self.details = data["details"]
+            self.show_count()
         added = 0
         for im in data["images"]:
             if len(self.images) >= MAX_PHOTOS:
@@ -706,7 +707,12 @@ class Helper:
             num.pack()
             for w in (lb, num):
                 w.bind("<Button-1>", lambda e, idx=i: self.remove_image(idx))
-        self.count.config(text=f"{len(self.images)}/{MAX_PHOTOS}장")
+        self.show_count()
+
+    def show_count(self):
+        # 상세페이지 조각은 사진 칸에 안 보이므로 개수만 옆에 표시
+        detail = f" · 상세 {len(self.details)}장" if self.details else ""
+        self.count.config(text=f"{len(self.images)}/{MAX_PHOTOS}장{detail}")
 
     def remove_image(self, idx):
         if 0 <= idx < len(self.images):
