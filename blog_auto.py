@@ -577,7 +577,7 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
 
 def product_image_urls(urls):
     """사진 주소 정리: 브랜드커넥트 썸네일(dthumb-phinf ?src="원본")은 원본 주소로 풀고, 크기 지정(?type=)은 떼고,
-    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)는 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
+    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)·다른 상품 추천 썸네일(shopping-phinf main_)·라이브 영상 썸네일(image.nmv)은 이 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
     out, seen = [], set()
     for u in urls:
         u = str(u or "").strip()
@@ -586,7 +586,7 @@ def product_image_urls(urls):
             u = requests.utils.unquote(m.group(1)).strip('"\'')
         if u.startswith("//"):
             u = "https:" + u
-        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/", u):
+        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/|shopping-phinf\.pstatic\.net/main_|image\.nmv", u):
             continue
         u = re.sub(r"\?type=[^&]*$", "", u)
         key = re.sub(r"^https?:", "", u).split("?")[0]
