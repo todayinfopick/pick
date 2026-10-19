@@ -57,22 +57,23 @@ TOPIC_PROMPT = """오늘은 {today} 한국 날짜다. 너는 '{name}' {platform}
 - 최근에 쓴 글감과 겹치지 마라: {recent}
 - 여러 개면 서로 다른 카테고리로.
 - 특정 상품 광고·구매 권유 글감은 고르지 마라.
-{fixed}
+{keywords}{fixed}
 각 글감마다
   topic: 글감 한 줄
   category: {cats} 중 하나를 글자 그대로
   angle: 글에서 다룰 내용 한 줄 (독자가 얻는 것 위주)
   photo: 무료 사진 사이트에서 찾을 영어 검색어 2~3단어 (사람 얼굴보다 물건·장면, 상표 이름 금지)
+  keyword: 사람들이 네이버에서 실제로 검색할 핵심 키워드 하나 (2~4단어, 위 키워드 목록에 있으면 그대로)
   urgent: 빨리 올려야 의미 있는 글(신청 마감, 출시·행사 소식처럼 날짜가 지나면 쓸모가 줄어드는 글)이면 true, 언제 올려도 되는 글이면 false
   until: urgent가 true이고 날짜가 확인되면 그 글이 쓸모 있는 마지막 날 YYYY-MM-DD, 아니면 ""
 
-다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "...", "urgent": true, "until": ""}}]"""
+다른 말 없이 JSON 배열만 출력: [{{"topic": "...", "category": "...", "angle": "...", "photo": "...", "keyword": "...", "urgent": true, "until": ""}}]"""
 
 WRITE_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' {platform} 블로그에 올릴 글을 한국어로 써라.
 글감: {topic}
 다룰 내용: {angle}
 카테고리: {category}
-
+{keyword_rule}
 먼저 검색으로 이 글감의 최신 사실(날짜, 금액, 조건, 기능, 요금제)을 확인하고, 확인한 사실만 써라.
 확인하지 못한 숫자는 쓰지 마라. 이미 지난 일정은 지난 일로 써라.
 
@@ -111,7 +112,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 상품 페이지 글(판매자 설명이나 상품 정보, 일부):
 {page}
 함께 보낸 사진은 상품 페이지의 대표·상세 이미지다. 사진 속 글씨(성분, 용량, 사용법, 구성)도 읽어서 써라.
-
+{keywords}
 {facts} 의약품처럼 치료 효과를 단정하지 마라.
 직접 써 봤다는 경험담은 절대 지어내지 마라. "판매 페이지를 보면", "상세 설명에 따르면" 같은 표현은 괜찮다.
 누구에게 맞고 누구에게는 덜 맞는지, 고를 때 볼 점을 담백하게 정리해라. 과장 광고 말투는 쓰지 마라.
@@ -127,6 +128,7 @@ PRODUCT_PROMPT = """오늘은 {today} 한국 날짜다. '{name}' 네이버 블�
 형식: 아래 표시만 써라. 마크다운 제목(#), 코드 블록(```), 굵은 소제목은 쓰지 마라.
 @title: 제목 (상품 종류와 핵심 특징을 앞쪽에, 25~40자, 글자 수 표시 넣지 말 것)
 @tags: 태그 8~10개, 쉼표로 구분, # 없이
+@keyword: 이 글의 핵심 검색 키워드 하나 (사람들이 네이버에서 찾는 말, 제목 맨 앞쪽에 넣은 것)
 @video: 짧은 상품 영상 표지 문구 (상품이 무엇인지 한눈에, 8~16자)
 @clips: 영상 사진마다 넣을 자막 5개, 각각 15자 이내, ' / '로 구분 (구성·용량·특징·가격 같은 핵심만)
 (빈 줄 없이 바로 본문. 첫 문단은 소제목 없이 시작)
@@ -233,19 +235,31 @@ def mark_sheet(row, when):
         log(f"  (블로그글감 탭에 작성일을 적지 못했습니다: {e})")
 
 
-def pick_topics(blog, count, recent, today):
+def pick_topics(blog, count, recent, today, rep=None):
     fixed = sheet_topics(blog)[:count]
     lines = "\n".join(f"- 이 글감은 꼭 넣어라: {t}" for _, t in fixed)
     text = ask(TOPIC_PROMPT.format(today=today, name=blog["name"], platform=platform_k(blog), theme=blog["theme"],
                                    count=count, recent=", ".join(recent[-30:]) or "없음", fixed=lines,
-                                   cats=", ".join(blog["categories"])), temperature=0.9)
+                                   cats=", ".join(blog["categories"]), keywords=keyword_block(rep, blog)),
+               temperature=0.9)
     topics = json_array(text)[:count]
     for t, (row, _) in zip(topics, fixed):
         t["sheet_row"] = row
     for t in topics:
         if t.get("category") not in blog["categories"]:
             t["category"] = blog["categories"][0]
+        if t.get("keyword"):
+            t["kw"] = keyword_info(t["keyword"], rep)
     return topics
+
+
+def keyword_block(rep, blog):
+    """글감 고르기에 넣을 인기 검색어·검색량 키워드 (keywords.json, 없으면 빈 글자)."""
+    import blog_keywords
+    text = blog_keywords.prompt_block(rep or {}, blog["key"])
+    if text and "생활정보" in blog["categories"]:  # 주제 밖이어도 많이 찾는 생활 키워드는 생활정보로 씀
+        text += "블로그 주제와 조금 달라도 검색량이 많은 생활 키워드면 '생활정보' 카테고리로 1개쯤 골라도 된다.\n"
+    return text
 
 
 def platform_k(blog):
@@ -279,11 +293,37 @@ def body_chars(text):
     return n
 
 
+def keyword_rule(kw):
+    """검색 노출용 핵심 키워드 안내 (없으면 빈 글자)."""
+    if not kw:
+        return ""
+    return (f"핵심 검색 키워드: {kw}\n"
+            f"- 이 키워드를 제목 맨 앞쪽, 첫 문단, 소제목 1~2개, 태그 첫 자리에 자연스럽게 넣어라. 본문 전체에 3~5번이면 충분하다(억지 반복 금지).\n"
+            f"- 검색한 사람이 바로 답을 얻게 첫 문단에서 핵심을 먼저 말해라.\n")
+
+
+def keyword_info(kw, rep=None):
+    """키워드 → 검색량·경쟁도 (keywords.json에 있으면 그 값, 없으면 검색광고 API로 확인)."""
+    import blog_keywords
+    if not kw:
+        return {}
+    n = blog_keywords._norm(kw)
+    for c in (rep or {}).get("trending", []) + sum((rep or {}).get("blogs", {}).values(), []) + (rep or {}).get("products", []):
+        if blog_keywords._norm(c.get("keyword")) == n and c.get("volume"):
+            return {k: c[k] for k in ("keyword", "volume", "docs", "level") if c.get(k) is not None}
+    try:
+        return blog_keywords.describe(kw)
+    except Exception as e:
+        log(f"    (키워드 검색량을 확인하지 못했습니다: {e})")
+        return {"keyword": kw}
+
+
 def write_post(blog, topic, tone, cfg, today):
     lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
     text = clean(ask(WRITE_PROMPT.format(today=today, name=blog["name"], platform=platform_k(blog),
                                          topic=topic["topic"], angle=topic.get("angle", ""),
-                                         category=topic["category"], min=lo, max=hi, tone=tone)))
+                                         category=topic["category"], min=lo, max=hi, tone=tone,
+                                         keyword_rule=keyword_rule(topic.get("keyword")))))
     for _ in range(2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
@@ -496,6 +536,8 @@ def add_to_index(index, pid, date, blog, pkg, text, writer, now, topic=None):
                                  "urgent": urgent, "until": until,
                                  "files": ["content.json"] + [i["file"] for i in pkg["images"]],
                                  "createdAt": now.isoformat(timespec="seconds")})
+    if (topic or {}).get("kw"):
+        index["packages"][0]["keyword"] = topic["kw"]
     log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
 
 
@@ -515,6 +557,8 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     topic = {"topic": meta.get("topic") or meta.get("title", path.stem),
              "category": cat if cat in blog["categories"] else blog["categories"][0],
              "photo": meta.get("photo", ""), "urgent": meta.get("urgent", ""), "until": meta.get("until", "")}
+    if meta.get("keyword"):  # 초안 머리 @keyword: 검색 키워드 → 목록에 검색량 표시
+        topic["kw"] = keyword_info(meta["keyword"], KEYWORDS)
     pid = next_id(index, date, blog["key"])
     log(f"[{blog['name']}] 초안 정리: {path.parent.name}/{path.name}")
     try:
@@ -530,11 +574,32 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
     return True
 
 
+def product_image_urls(urls):
+    """사진 주소 정리: 브랜드커넥트 썸네일(dthumb-phinf ?src="원본")은 원본 주소로 풀고, 크기 지정(?type=)은 떼고,
+    구매자 리뷰 사진(checkout.phinf)·네이버 배너(ssl.pstatic.net)는 상품 사진이 아니라 뺀다. 같은 사진은 한 번만."""
+    out, seen = [], set()
+    for u in urls:
+        u = str(u or "").strip()
+        m = re.search(r"[?&]src=([^&]+)", u)
+        if "dthumb" in u and m:
+            u = requests.utils.unquote(m.group(1)).strip('"\'')
+        if u.startswith("//"):
+            u = "https:" + u
+        if not u.startswith("http") or re.search(r"checkout\.phinf|ssl\.pstatic\.net|/static/", u):
+            continue
+        u = re.sub(r"\?type=[^&]*$", "", u)
+        key = re.sub(r"^https?:", "", u).split("?")[0]
+        if key not in seen:
+            seen.add(key)
+            out.append(u)
+    return out
+
+
 def product_photos(urls, limit=14):
     """상품 페이지 사진 주소 → PIL 이미지 목록 (작은 아이콘·받지 못한 사진은 뺌)."""
     from PIL import Image
     out = []
-    for u in urls:
+    for u in product_image_urls(urls):
         try:
             r = requests.get(u, timeout=30, headers={"User-Agent": "Mozilla/5.0", "Referer": "https://smartstore.naver.com/"})
             r.raise_for_status()
@@ -547,6 +612,14 @@ def product_photos(urls, limit=14):
         if len(out) >= limit:
             break
     return out
+
+
+def product_keyword_block(cands):
+    if not cands:
+        return ""
+    return ("네이버에서 이 상품과 관련해 많이 찾는 검색어(월 검색량): " + ", ".join(f"{c['keyword']}({c['volume']:,})" for c in cands[:8])
+            + "\n이 가운데 상품에 맞는 것 하나를 핵심 키워드로 골라 제목 맨 앞쪽, 첫 문단, 소제목 하나, 태그에 자연스럽게 넣어라. "
+              "상품명만 쓰기보다 '종류 + 추천·비교' 같은 검색어가 노출에 유리하다.\n")
 
 
 def product_videos(folder, text, name, photos):
@@ -587,10 +660,16 @@ def product_package(path, site, cfg, index, hist, now):
     lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
     h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
     h["tone"] = (h["tone"] + 1) % len(TONES)
+    try:
+        import blog_keywords
+        cands = blog_keywords.product_keywords(d.get("name", ""))
+    except Exception as e:
+        log(f"    (상품 키워드를 찾지 못했습니다: {e})")
+        cands = []
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     prompt = PRODUCT_PROMPT.format(today=today, name=blog["name"], product=d.get("name", ""), price=d.get("price") or "-",
                                    url=d.get("url", ""), page=(d.get("text") or "")[:8000], min=lo, max=hi,
-                                   tone=TONES[h["tone"]],
+                                   tone=TONES[h["tone"]], keywords=product_keyword_block(cands),
                                    facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
@@ -607,6 +686,9 @@ def product_package(path, site, cfg, index, hist, now):
             text = fixed
     date = now.strftime("%Y-%m-%d")
     topic = {"topic": d.get("name", ""), "category": cat, "photo": "", "own_photos": True}
+    kw = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln).get("keyword", "").strip()
+    if kw:
+        topic["kw"] = keyword_info(kw, {"products": cands})
     pid = next_id(index, date, blog["key"])
     try:
         pkg = build_package(site / pid, blog, topic, text, [], photos)
@@ -640,6 +722,12 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
         except Exception as e:  # 제미나이 한도 등: 재료는 남겨 두고 다음 실행 때 다시
             log(f"  ! 상품 글을 만들지 못했습니다 (재료는 남겨 둠): {e}")
             ok = False
+            try:  # 왜 안 됐는지 재료에 적어 둠 (스튜디오·Claude가 확인)
+                d = json.loads(path.read_text(encoding="utf-8"))
+                d["error"] = f"{now:%m-%d %H:%M} {type(e).__name__}: {e}"[:500]
+                path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+            except Exception:
+                pass
         made, failed = (made + 1, failed) if ok else (made, failed + 1)
     for d in sorted((site / "drafts").glob("*"), reverse=True):
         if d.is_dir() and d.name != STOCK and not any(d.iterdir()):
@@ -656,6 +744,9 @@ def use_stock(site, blog, n, cfg, index, hist, used_photos, now):
     return made
 
 
+KEYWORDS = {}
+
+
 def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=False):
     cfg = json.loads(CONFIG.read_text(encoding="utf-8"))
     if env("BLOG_GEMINI_API_KEY"):  # 블로그 전용 제미나이 키(다른 구글 계정)가 있으면 쿠팡 자동화와 한도를 나눠 쓰지 않음
@@ -668,6 +759,9 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
     date = now.strftime("%Y-%m-%d")
     today = f"{now:%Y년 %m월 %d일} ({WEEKDAYS[now.weekday()]})"
     used_photos = hist.setdefault("_photos", [])
+    import blog_keywords
+    global KEYWORDS
+    KEYWORDS = blog_keywords.load(site)  # 새벽 3시 25분 예약(또는 이 실행 앞 단계)이 모아 둔 인기 검색어·검색량
     made, failed = process_drafts(site, cfg, index, hist, used_photos, now)
     stop = drafts_only
     for blog in cfg["blogs"]:
@@ -690,7 +784,7 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
             continue
         log(f"[{blog['name']}] 글감 고르는 중")
         try:
-            topics = pick_topics(blog, n_posts, h["topics"], today)
+            topics = pick_topics(blog, n_posts, h["topics"], today, KEYWORDS)
         except Exception as e:
             log(f"  ! 글감을 고르지 못했습니다: {e}")
             failed += 1

@@ -491,6 +491,16 @@ def blog_index():
     return r.json() if r.ok else {"packages": []}
 
 
+def kw_note(p):
+    """목록 제목 뒤에 붙일 검색량 표시: ' · 🔍월 1.2만 경쟁 낮음'."""
+    k = p.get("keyword") or {}
+    v = k.get("volume")
+    if not v:
+        return ""
+    vol = f"{v / 10000:.1f}만" if v >= 10000 else f"{v:,}"
+    return f" · 🔍월 {vol}" + (f" 경쟁 {k['level']}" if k.get("level") else "")
+
+
 class BlogTab:
     def __init__(self, app, frame):
         self.app, self.root = app, app.root
@@ -581,7 +591,7 @@ class BlogTab:
             kind = ("급함" + (" ~" + p["until"][5:].replace("-", "/") if p.get("until") else "")) if r == 0 else \
                 ("상시", "지남", "✅완료")[r - 1]
             iid = self.posts.insert("", "end", values=(kind, p.get("date", "")[5:].replace("-", "/"), p.get("blogName", ""),
-                                                      short + ("🎬 " if p.get("videos") else "") + p.get("title", "")))
+                                                      short + ("🎬 " if p.get("videos") else "") + p.get("title", "") + kw_note(p)))
             self.ids[iid] = p.get("id")
         last = ""
         if runs:
