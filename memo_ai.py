@@ -16,7 +16,6 @@ import requests
 
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest"]
-SEARCH_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"]
 MAX_PARTS = 16      # 한 번에 보내는 이미지 조각 수
 CHUNK_H = 1600      # 긴 상세페이지 캡처는 이 높이로 잘라서 보냄 (글씨가 읽히게)
 MAX_W = 1000
@@ -88,8 +87,6 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
     elif json_out:
         body["generationConfig"]["responseMimeType"] = "application/json"
     models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
-    if search:  # 무료 등급은 Gemini 3 이후 모델의 구글 검색 한도가 0이라 검색은 2.5 모델로
-        models = [env("GEMINI_SEARCH_MODEL") or SEARCH_MODELS[0]] + SEARCH_MODELS
     r = None
     for model in dict.fromkeys(models):
         for wait in (0, 5, 20, 40):  # 붐빌 때(503)·분당 한도(429)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
@@ -100,6 +97,9 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
                 break
         if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
+    if search and r.status_code == 429:  # 무료 등급은 Gemini 3 이후 모델의 구글 검색 한도가 0 → 검색 없이 다시
+        print("  ↪ 제미나이 구글 검색 한도가 없어 검색 없이 씁니다", flush=True)
+        return generate(parts, json_out=False, temperature=temperature, search=False)
     if r.status_code == 429:
         try:  # 구글이 알려 준 걸린 한도 이름 (예: ...PerMinute..., ...PerDay...)
             why = ", ".join(v.get("quotaId", "") for d in r.json()["error"].get("details", [])
