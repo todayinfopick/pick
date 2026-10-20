@@ -491,10 +491,12 @@ def load_json(path, default):
 
 def prune(site, index, keep_days):
     cutoff = (datetime.date.today() - datetime.timedelta(days=keep_days)).isoformat()
+    # 비상용 글은 꺼내 쓸 때까지 남겨 둠. 꺼내 쓴 글은 폴더 날짜가 옛날이어도 목록 날짜로 판단
+    index["packages"] = [p for p in index["packages"] if p.get("stock") or p["date"] >= cutoff]
+    keep = {p["id"].split("/")[0] for p in index["packages"]}
     for d in site.iterdir():
-        if d.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}", d.name) and d.name < cutoff:
+        if d.is_dir() and re.fullmatch(r"\d{4}-\d{2}-\d{2}", d.name) and d.name < cutoff and d.name not in keep:
             shutil.rmtree(d)
-    index["packages"] = [p for p in index["packages"] if p["date"] >= cutoff]
     index["packages"] = [p for p in index["packages"] if (site / p["id"]).is_dir()]  # 깃허브에서 직접 지운 글은 목록에서도 뺌
     done = load_json(site / "done.json", {})  # 발행 완료 표시(프로그램·스튜디오가 씀): 목록에서 빠진 글은 정리
     ids = {p["id"] for p in index["packages"]}
@@ -548,7 +550,7 @@ def add_to_index(index, pid, date, blog, pkg, text, writer, now, topic=None):
     log(f"  ✓ {pkg['title']} (공백 제외 {chars}자, 이미지 {len(pkg['images'])}장)")
 
 
-def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
+def draft_package(path, site, cfg, index, hist, used_photos, now, date=None, stock=False):
     """초안 파일 하나에 사진·카드를 붙여 패키지로 만들고 지운다. 성공하면 True.
     초안 머리: @blog(key 또는 이름) @category @topic @photo(대표 사진 영어 검색어) @title @tags, 그 아래는 본문 형식 그대로.
     @urgent: 급함(빨리 올릴 글)이면 급함, 아니면 상시(생략해도 상시). @until: 급한 글이 쓸모 있는 마지막 날 YYYY-MM-DD."""
@@ -575,6 +577,9 @@ def draft_package(path, site, cfg, index, hist, used_photos, now, date=None):
         shutil.rmtree(site / pid, ignore_errors=True)
         return False
     add_to_index(index, pid, date, blog, pkg, text, "채팅" if "-chat-" in path.name else "Claude", now, topic)
+    if stock:  # 비상용: 사진까지 붙여 목록에 보이고, 오늘 글이 빈 날 새벽에 오늘 글로 꺼내 씀
+        index["packages"][0]["stock"] = True
+        index["packages"][0]["urgent"] = ""
     h = hist.setdefault(blog["key"], {"topics": [], "tone": -1})
     h["topics"] = (h["topics"] + [topic["topic"]])[-60:]
     path.unlink()
@@ -741,12 +746,11 @@ def product_package(path, site, cfg, index, hist, now):
 
 
 def process_drafts(site, cfg, index, hist, used_photos, now):
-    """drafts/날짜/*.txt (Claude가 쓴 그날 글)를 패키지로 만든다. drafts/stock/은 비상용이라 여기서는 건드리지 않는다."""
+    """drafts/날짜/*.txt (그날 글)와 drafts/stock/*.txt (비상용)를 패키지로 만든다. 비상용은 stock 표시를 달아 둔다."""
     made = failed = 0
     for path in sorted((site / "drafts").glob("**/*.txt")):
-        if STOCK in path.parts:
-            continue
-        if draft_package(path, site, cfg, index, hist, used_photos, now):
+        stock = STOCK in path.parts
+        if draft_package(path, site, cfg, index, hist, used_photos, now, now.strftime("%Y-%m-%d") if stock else None, stock):
             made += 1
         else:
             failed += 1
@@ -771,9 +775,17 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
 
 
 def use_stock(site, blog, n, cfg, index, hist, used_photos, now):
-    """오늘 글이 빈 블로그에 비상용 글(drafts/stock/<key>-*.txt, 날짜와 상관없는 글)을 n편까지 꺼내 쓴다."""
+    """오늘 글이 빈 블로그에 비상용 글을 n편까지 꺼내 쓴다: 이미 패키지가 된 비상용(오래된 것부터)을 오늘 글로 바꾸고,
+    남은 drafts/stock/<key>-*.txt가 있으면 패키지로 만든다."""
     made = 0
-    for path in sorted((site / "drafts" / STOCK).glob(f"{blog['key']}-*.txt"))[:n]:
+    date = now.strftime("%Y-%m-%d")
+    for p in sorted((p for p in index["packages"] if p.get("stock") and p["blogKey"] == blog["key"]),
+                    key=lambda p: p.get("createdAt", ""))[:n]:
+        p["stock"], p["fromStock"], p["date"] = False, p["date"], date
+        log(f"  비상용 글을 오늘 글로 꺼냄: {p['title']}")
+        made += 1
+    n -= made
+    for path in sorted((site / "drafts" / STOCK).glob(f"{blog['key']}-*.txt"))[:max(n, 0)]:
         if draft_package(path, site, cfg, index, hist, used_photos, now, now.strftime("%Y-%m-%d")):
             made += 1
     return made
@@ -808,7 +820,7 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
         n_posts = count or int(env("BLOG_POSTS_PER_BLOG") or cfg.get("posts_per_blog", 2))
         if scheduled:  # 쇼핑커넥트·영상 글은 세지 않음: 일반 글만 하루 몫을 채운다
             have = sum(1 for p in index["packages"] if p["date"] == date and p["blogKey"] == blog["key"]
-                       and p.get("kind") not in ("쇼핑", "영상"))
+                       and p.get("kind") not in ("쇼핑", "영상") and not p.get("stock"))
             n_posts -= have
             if n_posts <= 0:
                 log(f"[{blog['name']}] 오늘 일반 글이 이미 있어 건너뜁니다")
