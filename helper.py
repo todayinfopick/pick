@@ -10,6 +10,7 @@ import io
 import json
 import os
 import queue
+import re
 import subprocess
 import threading
 import time
@@ -180,15 +181,20 @@ def append_product(name, link, memo, category=""):
     write_rows(header, rows)
 
 
+def category_groups():
+    """계정별 분류 선택지: [('1번 계정 이름', [분류…]), ('2번 …', […])]. 같은 말은 앞 계정에만."""
+    import os
+    seen, out = set(), []
+    for n, (key, dflt) in enumerate((("ACCOUNT_CATEGORY", "뷰티 건강"), ("ACCOUNT_CATEGORY_2", "생활 식품")), 1):
+        name = (os.getenv("ACCOUNT_NAME" + ("_2" if n == 2 else "")) or "").strip()
+        words = [w for w in (os.getenv(key) or dflt).replace(",", " ").split() if not (w in seen or seen.add(w))]
+        out.append((f"{n}번" + (f" {name}" if name else ""), words))
+    return out
+
+
 def category_choices():
     """분류 선택지: 1번 계정 분류(ACCOUNT_CATEGORY, 기본 '뷰티 건강') + 2번 계정 분류(ACCOUNT_CATEGORY_2, 기본 '생활 식품')."""
-    import os
-    out = []
-    for key, dflt in (("ACCOUNT_CATEGORY", "뷰티 건강"), ("ACCOUNT_CATEGORY_2", "생활 식품")):
-        for w in (os.getenv(key) or dflt).replace(",", " ").split():
-            if w not in out:
-                out.append(w)
-    return out
+    return [w for _, words in category_groups() for w in words]
 
 
 def photo_folder(name):
@@ -380,6 +386,7 @@ class Helper:
         self.target = tk.StringVar(value="auto")
         self.name_replace_next = False
         self.editing = None  # 수정 중인 등록 상품 {'name','memo','link'}
+        self.collecting = 0.0  # 자동 수집 기다리는 마감 시각 (그때까지 복사한 글은 무시)
         self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
         self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
         self.page_text = ""  # 확장프로그램이 보낸 상세페이지 글
@@ -424,9 +431,16 @@ class Helper:
         cat.pack(fill="x", padx=10, pady=(4, 0))
         tk.Label(cat, text="분류:").grid(row=0, column=0, sticky="w")
         self.category = tk.StringVar(value="")
-        for i, (val, txt) in enumerate([("", "AI")] + [(c, c) for c in category_choices()]):
-            tk.Radiobutton(cat, text=txt, value=val, variable=self.category) \
-                .grid(row=i // 3, column=1 + i % 3, sticky="w")  # 좁은 창이라 3개씩 줄바꿈
+        tk.Radiobutton(cat, text="AI가 골라요", value="", variable=self.category) \
+            .grid(row=0, column=1, columnspan=3, sticky="w")
+        row = 1
+        for label, words in category_groups():  # 계정별로 한 묶음 (좁은 창이라 3개씩 줄바꿈)
+            tk.Label(cat, text=label, fg="#2563EB", anchor="w").grid(row=row, column=0, columnspan=4, sticky="w")
+            row += 1
+            for i, c in enumerate(words):
+                tk.Radiobutton(cat, text=c, value=c, variable=self.category) \
+                    .grid(row=row + i // 3, column=1 + i % 3, sticky="w")
+            row += (len(words) + 2) // 3
 
         bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
@@ -536,8 +550,11 @@ class Helper:
             self.root.bell()
             return
         if is_link(text):
-            if self.link.get().strip() and text.strip() != self.link.get().strip():
-                # 다른 링크 = 새 상품: 이전 내용을 비운다 (저장 안 한 사진이 있으면 확인)
+            cur_link = self.link.get().strip()
+            # 링크 없이 먼저 받아 둔 확장프로그램 내용·캡처 사진은 이 링크의 것이라 남긴다
+            keep = not cur_link and (self.page_text or self.images)
+            if text.strip() != cur_link and not keep:
+                # 새 링크 = 새 상품: '새 상품' 버튼처럼 이전 내용을 비운다 (저장 안 한 사진이 있으면 확인)
                 if self.photos_dirty and self.images and not messagebox.askyesno(
                         "새 상품", f"저장하지 않은 사진 {len(self.images)}장이 있습니다.\n"
                                  "버리고 새 상품을 시작할까요?\n\n(아니오: 지금 상품을 계속 편집)"):
@@ -572,6 +589,7 @@ class Helper:
                 self.name_replace_next = False
                 if aff == "쿠팡파트너스" and self.auto_collect.get():
                     open_for_collect(text)
+                    self.collecting = time.time() + AUTO_WAIT + 30  # 수집이 끝날 때까지 복사한 글은 상품명·메모에 넣지 않음
                     self.say("✓ 링크 입력됨. 쿠팡 페이지를 열어 상품명·사진·상세 글을 자동으로 가져옵니다…\n"
                              "(확장프로그램이 끝까지 내려 수집한 뒤 창을 닫아요)")
                 else:
@@ -579,7 +597,18 @@ class Helper:
             return
         if text.startswith("http"):
             return
+        if not self.link.get().strip():
+            # 링크보다 먼저 복사한 글은 받지 않는다 (지난 상품 글이 섞이지 않게)
+            self.say("링크를 먼저 복사하세요. 링크가 들어가기 전에 복사한 글은 넣지 않아요.")
+            return
+        if time.time() < self.collecting:
+            self.say("자동 수집 중이라 복사한 글은 넣지 않았어요. 상품명은 쿠팡 페이지에서 가져와요.")
+            return
         one_line = " ".join(text.split())
+        if not re.search(r"[가-힣A-Za-z]{2}", one_line) or len(one_line) < 4:
+            # 상품번호·가격·코드처럼 숫자 위주의 짧은 글은 상품명·메모로 쓰지 않는다
+            self.say(f"'{one_line[:20]}'은(는) 번호 같아서 넣지 않았어요.")
+            return
         # 창 안에서 칸 내용을 복사한 경우(이미 들어 있는 글)는 무시
         if one_line == self.name.get().strip() or one_line in " ".join(self.memo.get("1.0", "end").split()):
             return
@@ -614,7 +643,10 @@ class Helper:
     def take_page(self, data):
         """확장프로그램에서 받은 상품 페이지 내용: 상품명·사진·상세페이지 글."""
         name, cur = data["name"], self.name.get().strip()
-        if cur and name and name_key(cur) != name_key(name) and not self.editing:
+        if time.time() < self.collecting:  # 자동 수집 결과: 그사이 복사로 들어간 상품명보다 페이지 상품명이 맞다
+            self.collecting = 0.0
+            self.name_replace_next = True
+        elif cur and name and name_key(cur) != name_key(name) and not self.editing:
             if not messagebox.askyesno("새 상품", f"지금 입력 중인 상품과 다른 상품입니다.\n\n"
                                                 f"지금: {cur[:40]}\n받은 것: {name[:40]}\n\n지우고 새로 시작할까요?"):
                 self.say("확장프로그램에서 받은 내용을 무시했습니다.")
@@ -784,6 +816,7 @@ class Helper:
 
     def reset_fields(self):
         self.editing = None
+        self.collecting = 0.0
         self.set_mode()
         self.target.set("auto")
         self.name_replace_next = False
