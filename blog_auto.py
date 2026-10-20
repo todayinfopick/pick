@@ -691,7 +691,7 @@ def video_only_package(d, blog, site, index, now, photos):
 
 def product_package(path, site, cfg, index, hist, now):
     """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
-    재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(사진 주소)."""
+    재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(글·영상에 쓸 사진 주소), ref_images(내용 참고용 사진 주소, 글에는 안 넣음)."""
     d = json.loads(path.read_text(encoding="utf-8"))
     blog = find_blog(cfg, d.get("blog", "")) or find_blog(cfg, "naver2")
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
@@ -723,7 +723,11 @@ def product_package(path, site, cfg, index, hist, now):
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
     written = (d.get("body") or "").strip()  # Claude가 미리 써서 넣은 본문이 있으면 제미나이를 부르지 않음
-    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
+    # 참고 사진(ref_images): 사용자가 '내용 참고용'으로 고른 사진. 글·영상에는 넣지 않고 제미나이가 내용을 읽는 데만 씀
+    refs = [] if written or not d.get("ref_images") else product_photos(d["ref_images"], limit=8)
+    if refs:
+        prompt += f"\n(사진 중 뒤쪽 {len(refs)}장은 상세 설명·성분표 같은 참고 자료다. 내용 확인에만 쓰고 '사진에 보이는' 식으로 소개하지 마라.)\n"
+    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8] + refs, search=bool(d.get("search"))))
     for _ in range(0 if written else 2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
