@@ -786,10 +786,7 @@ class BlogTab:
             path = f"drafts/{folder}/{key}-chat-{now:%H%M%S}.txt"
             msg.config(text="올리는 중…")
 
-            def work():
-                runs = gh_runs(1, BLOG_WORKFLOW)
-                if runs and runs[0].get("status") != "completed":  # 도는 중에 올리면 서버 저장 때 덮어써질 수 있음
-                    raise RuntimeError("지금 서버 블로그 작업이 도는 중이에요. 끝난 뒤(몇 분 뒤) 다시 올려 주세요.")
+            def work():  # 서버 작업이 도는 중에 올려도 서버가 저장할 때 옮겨 담음 → 연달아 올려도 됨
                 gh_put_file(path, text + "\n", f"초안 붙여넣기: {title[:40]}")
                 gh_dispatch("", BLOG_WORKFLOW, {"mode": "초안 정리", "blog": "", "count": "0"})  # 비상용도 바로 사진을 붙임
 
