@@ -514,11 +514,15 @@ def find_blog(cfg, name):
 
 
 def next_id(index, date, key):
-    existing = {p["id"] for p in index["packages"]}
+    """지운 글의 번호는 다시 쓰지 않는다 (스튜디오·프로그램의 발행 완료 표시가 번호로 남아 새 글이 완료로 보이므로)."""
+    used = set(index.setdefault("used", []))
+    existing = {p["id"] for p in index["packages"]} | used
     k = 1
     while f"{date}/{key}-{k}" in existing:
         k += 1
-    return f"{date}/{key}-{k}"
+    pid = f"{date}/{key}-{k}"
+    index["used"] = (index["used"] + [pid])[-500:]
+    return pid
 
 
 def urgency(topic):
