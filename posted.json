@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "image",
-    "last_slot": "2026-10-20 11:10",
+    "last_slot": "2026-10-20 18:00",
     "last_general_slot": "2026-10-20 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -462,6 +462,36 @@
     },
     "name": "리빙메이트 다용도 원형 컨테이너 박스 크림슨 레드",
     "link": "https://link.coupang.com/a/hZmuG2a5tI",
+    "account": 2
+  },
+  "상품:바세린립테라피스틱": {
+    "threads": {
+      "id": "18192183904410295",
+      "kind": "carousel",
+      "at": "2026-10-20T18:04:44",
+      "reply": "18049136603820023"
+    },
+    "instagram": {
+      "id": "18183778996425114",
+      "kind": "video",
+      "at": "2026-10-20T18:06:55"
+    },
+    "name": "바세린 립테라피 스틱",
+    "link": "https://link.coupang.com/a/hWNwCKqLi8",
+    "account": 1
+  },
+  "상품:바이탈플랜트인덕션롤팬뉴오리지널케요네즈": {
+    "threads": {
+      "id": "18082076027347766",
+      "kind": "carousel",
+      "at": "2026-10-20T18:08:54",
+      "reply": "18146117221585743"
+    },
+    "fails": {
+      "instagram": 1
+    },
+    "name": "바이탈플랜트 인덕션 롤팬 뉴오리지널 케요네즈",
+    "link": "https://link.coupang.com/a/hZIfAb9lpk",
     "account": 2
   }
 }
