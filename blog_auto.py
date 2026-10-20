@@ -764,7 +764,7 @@ def remake_video(path, site, index, now):
         log(f"  ! 사진이 {len(shots)}장뿐이라 영상을 다시 만들지 않습니다 (최소 4장)")
         path.unlink()
         return None
-    out = make_videos(folder, title, shots[:6], lines or [], cover=shots[0])  # 다시 만들 때는 처음 고른 사진이 표지
+    out = make_videos(folder, title, shots[:6], lines or [])
     if not out:
         return False
     if meta:
