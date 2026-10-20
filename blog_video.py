@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """블로그 상품 글에 넣을 짧은 사진 슬라이드 영상 (가로 16:9 블로그용 + 세로 9:16 클립·쇼츠·릴스용).
-장면: 표지(어두운 배경 + 노란 글씨 흰 테두리 + 빨간 밑줄) → 상품 사진 4~6장(천천히 확대 + 아래 자막 한 줄)
+장면: 표지(상품 사진을 살린 4가지 디자인 × 6가지 색 중 무작위) → 상품 사진 4~6장(천천히 확대 + 아래 자막 한 줄)
 → "자세한 내용은 본문에서" 카드. video_tools.py(쿠팡 릴스)와 같은 방식으로 프레임을 ffmpeg에 흘려 넣는다.
 배경음악은 저장소 bgm/ 폴더에 저작권 없는 음악(mp3 등)을 넣어 두면 작게 깔린다. 없으면 무음."""
 import pathlib
 import random
 import subprocess
 
-from PIL import Image, ImageDraw, ImageFilter, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps
 
 import image_tools as it
 from video_tools import _ffmpeg, AUDIO_EXT
@@ -58,8 +58,8 @@ def _title_card(w, h, text, sub=""):
     size = int(min(w, h) * (0.15 if w > h else 0.12))
     while size > 40:
         fnt = _heavy(size)
-        lines = _fit_lines(d, text, fnt, w * 0.86)
-        if len(lines) <= 2 and all(d.textlength(x, font=fnt) <= w * 0.86 for x in lines):
+        lines = _fit_lines(d, text, fnt, w * 0.86, 9)
+        if len(lines) <= (2 if w > h else 3) and all(d.textlength(x, font=fnt) <= w * 0.86 for x in lines):
             break
         size -= 6
     lh = int(size * 1.25)
@@ -75,6 +75,149 @@ def _title_card(w, h, text, sub=""):
         sf = it.font(int(size * 0.32))
         d.text((w // 2, y0 + lh * len(lines) + int(size * 0.35)), sub, font=sf, fill=(220, 224, 235), anchor="mt")
     return im
+
+
+PALETTES = [  # (바탕, 강조, 글씨, 작은 글씨)
+    ((14, 17, 30), (255, 214, 92), (255, 255, 255), (205, 212, 230)),
+    ((246, 241, 232), (232, 93, 63), (28, 28, 30), (95, 90, 84)),
+    ((18, 52, 45), (126, 224, 170), (255, 255, 255), (196, 228, 214)),
+    ((33, 30, 74), (255, 128, 171), (255, 255, 255), (214, 210, 244)),
+    ((255, 255, 255), (37, 99, 235), (17, 24, 39), (90, 98, 112)),
+    ((40, 24, 16), (255, 170, 72), (255, 248, 238), (230, 210, 190)),
+]
+STYLES = ("bleed", "split", "frame", "classic")
+BADGES = ("오늘의 추천", "꼼꼼 정리", "구매 전 체크", "핵심만 쏙", "살펴보기")
+
+
+def _fit_title(d, text, w_max, size, min_size, max_lines=3):
+    """제목이 max_lines 줄 안에 들어가는 가장 큰 글씨 크기와 줄들."""
+    while True:
+        fnt = _heavy(size)
+        lines = it.wrap(d, text, fnt, w_max)
+        if len(lines) <= max_lines or size <= min_size:
+            return fnt, size, lines[:max_lines]
+        size -= 4
+
+
+def _badge(d, x, y, text, size, fill, color):
+    fnt = it.font(size)
+    tw = d.textlength(text, font=fnt)
+    pad = size * 0.7
+    d.rounded_rectangle((x, y, x + tw + pad * 2, y + size * 1.8), radius=int(size * 0.9), fill=fill)
+    d.text((x + pad, y + size * 0.9), text, font=fnt, fill=color, anchor="lm")
+    return y + size * 1.8
+
+
+def _shadow_paste(im, photo, box, radius):
+    """둥근 모서리 사진 카드 + 은은한 그림자."""
+    x, y = box
+    pw, ph = photo.size
+    sh = Image.new("RGBA", im.size, (0, 0, 0, 0))
+    ImageDraw.Draw(sh).rounded_rectangle((x + 10, y + 18, x + pw + 10, y + ph + 18), radius=radius, fill=(0, 0, 0, 110))
+    sh = sh.filter(ImageFilter.GaussianBlur(18))
+    im.paste(sh, (0, 0), sh)
+    mask = Image.new("L", photo.size, 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, pw, ph), radius=radius, fill=255)
+    im.paste(photo, (x, y), mask)
+
+
+def _cover(w, h, title, photo=None, style=None, pal=None):
+    """표지: 상품 사진을 살린 여러 디자인 중 하나 (영상마다 디자인·색이 바뀜). 사진이 없으면 예전 글씨 표지."""
+    if photo is None:
+        return _title_card(w, h, title)
+    style = style or random.choice(STYLES)
+    bg, acc, fg, sub = pal or random.choice(PALETTES)
+    badge = random.choice(BADGES)
+    wide = w > h
+    u = min(w, h)
+    if style == "classic":
+        im = ImageOps.fit(photo, (w, h), Image.LANCZOS).filter(ImageFilter.GaussianBlur(24))
+        im = Image.blend(im, Image.new("RGB", (w, h), (0, 0, 0)), 0.55)
+        return _classic_on(im, w, h, title)
+    if style == "bleed":  # 사진 꽉 채우고 아래를 어둡게, 큰 흰 글씨
+        im = ImageOps.fit(photo, (w, h), Image.LANCZOS).convert("RGB")
+        grad = Image.linear_gradient("L").resize((w, h))
+        grad = grad.point(lambda v: int(max(0, v - 110) * 1.8))
+        im.paste(Image.new("RGB", (w, h), (0, 0, 0)), (0, 0), grad.point(lambda v: min(235, v)))
+        d = ImageDraw.Draw(im)
+        m = int(u * 0.07)
+        fnt, size, lines = _fit_title(d, title, w - m * 2, int(u * (0.12 if wide else 0.1)), int(u * 0.05))
+        lh = int(size * 1.22)
+        y = h - m - lh * len(lines) - (0 if wide else int(h * 0.08))
+        _badge(d, m, y - int(u * 0.075) - int(size * 0.2), badge, int(u * 0.042), acc, bg if sum(bg) < 300 else (255, 255, 255))
+        for i, ln in enumerate(lines):
+            d.text((m, y + i * lh), ln, font=fnt, fill=(255, 255, 255), stroke_width=max(2, size // 30), stroke_fill=(0, 0, 0))
+        d.rectangle((m, y + lh * len(lines) + int(size * 0.12), m + int(u * 0.12), y + lh * len(lines) + int(size * 0.12) + max(6, size // 12)), fill=acc)
+        return im
+    im = Image.new("RGB", (w, h), bg)
+    d = ImageDraw.Draw(im)
+    if style == "split":  # 한쪽은 색 면 + 글씨, 한쪽은 사진
+        if wide:
+            pw = int(w * 0.5)
+            im.paste(ImageOps.fit(photo, (pw, h), Image.LANCZOS), (w - pw, 0))
+            d.rectangle((w - pw - int(u * 0.015), 0, w - pw, h), fill=acc)
+            box_w, x0, top, bottom = w - pw - int(u * 0.16), int(u * 0.08), 0, h
+        else:
+            ph = int(h * 0.5)
+            im.paste(ImageOps.fit(photo, (w, ph), Image.LANCZOS), (0, 0))
+            d.rectangle((0, ph, w, ph + int(u * 0.015)), fill=acc)
+            box_w, x0, top, bottom = w - int(u * 0.16), int(u * 0.08), ph, h - int(h * 0.08)
+        fnt, size, lines = _fit_title(d, title, box_w, int(u * 0.1), int(u * 0.045), 4)
+        lh = int(size * 1.25)
+        bsz = int(u * 0.042)
+        block = bsz * 1.8 + u * 0.04 + lh * len(lines)
+        y = top + (bottom - top - block) / 2
+        y = _badge(d, x0, y, badge, bsz, acc, bg if sum(bg) < 300 else (255, 255, 255)) + u * 0.04
+        for i, ln in enumerate(lines):
+            d.text((x0, y + i * lh), ln, font=fnt, fill=fg, stroke_width=max(1, size // 45), stroke_fill=fg)
+        return im
+    # frame: 색 바탕에 사진 카드, 위아래로 제목
+    m = int(u * 0.07)
+    d.ellipse((w - u * 0.5, -u * 0.25, w + u * 0.2, u * 0.45), fill=tuple(int(a * 0.25 + b * 0.75) for a, b in zip(acc, bg)))
+    if wide:
+        card_w = int(w * 0.42)
+        ph_im = ImageOps.contain(photo, (card_w, h - m * 2), Image.LANCZOS)
+        _shadow_paste(im, ph_im, (w - m - ph_im.width, (h - ph_im.height) // 2), int(u * 0.03))
+        box_w = w - m * 3 - ph_im.width
+        fnt, size, lines = _fit_title(d, title, box_w, int(u * 0.1), int(u * 0.045), 4)
+        lh = int(size * 1.25)
+        y = (h - lh * len(lines)) / 2
+        d.text((m, y - u * 0.09), badge, font=it.font(int(u * 0.046)), fill=acc)
+        for i, ln in enumerate(lines):
+            d.text((m, y + i * lh), ln, font=fnt, fill=fg, stroke_width=max(1, size // 45), stroke_fill=fg)
+        d.rectangle((m, y + lh * len(lines) + u * 0.03, m + u * 0.1, y + lh * len(lines) + u * 0.03 + max(6, size // 12)), fill=acc)
+    else:
+        fnt, size, lines = _fit_title(d, title, w - m * 2, int(u * 0.1), int(u * 0.05), 3)
+        lh = int(size * 1.25)
+        y = int(h * 0.1)
+        d.text((m, y), badge, font=it.font(int(u * 0.05)), fill=acc)
+        y += int(u * 0.08)
+        for i, ln in enumerate(lines):
+            d.text((m, y + i * lh), ln, font=fnt, fill=fg, stroke_width=max(1, size // 45), stroke_fill=fg)
+        top = y + lh * len(lines) + int(u * 0.06)
+        ph_im = ImageOps.contain(photo, (w - m * 2, h - top - int(h * 0.1)), Image.LANCZOS)
+        _shadow_paste(im, ph_im, ((w - ph_im.width) // 2, top), int(u * 0.03))
+    return im
+
+
+def _cover_photo(shots):
+    """표지에 깔 사진: 앞쪽 사진 중 흰 바탕 로고·누끼보다 색과 명암이 풍부한 사진."""
+    from PIL import ImageStat
+
+    def score(im):
+        st = ImageStat.Stat(im.convert("RGB").resize((96, 96)))
+        bright = sum(st.mean) / 3
+        return sum(st.stddev) / 3 - max(0, bright - 200) * 0.8
+    return max(shots[:4], key=score)
+
+
+def _classic_on(base, w, h, title):
+    """예전 표지(노란 글씨 + 흰 테두리 + 빨간 밑줄)를 흐린 상품 사진 위에."""
+    card = _title_card(w, h, title)
+    plain = _backdrop(w, h)
+    diff = ImageChops.difference(card, plain).convert("L").point(lambda v: 255 if v > 8 else 0)
+    base.paste(card, (0, 0), diff)
+    return base
 
 
 class Photo:
@@ -144,14 +287,15 @@ def _footer(w, h, text):
 
 
 def make(out, title, photos, lines, w=1920, h=1080, end=("자세한 내용은 본문에서", "아래 글에서 구성·가격을 확인하세요"),
-         footer=""):
+         footer="", cover=None, style=None, pal=None):
     """영상 하나를 out(mp4)에 만든다. photos: PIL 이미지(4~6장 씀), lines: 자막(사진마다 한 줄).
-    end: 마무리 카드 (제목, 작은 글), footer: 모든 장면 아래에 까는 한 줄 (비우면 없음)."""
+    end: 마무리 카드 (제목, 작은 글), footer: 모든 장면 아래에 까는 한 줄 (비우면 없음).
+    cover: 표지 사진 (없으면 첫 사진), style·pal: 표지 디자인·색 (없으면 무작위)."""
     shots = photos[:6]
     if len(shots) < 4:
         raise RuntimeError("영상에 쓸 상품 사진이 4장보다 적습니다.")
     caps = [x for x in lines if x][:len(shots)]
-    scenes = [(COVER_SEC, Still(_title_card(w, h, title)))]
+    scenes = [(COVER_SEC, Still(_cover(w, h, title, cover or _cover_photo(shots), style, pal)))]
     for k, ph in enumerate(shots):
         scenes.append((PHOTO_SEC, Photo(w, h, ph, caps[k] if k < len(caps) else "", k)))
     scenes.append((END_SEC, Still(_title_card(w, h, *end))))

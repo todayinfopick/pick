@@ -20,6 +20,7 @@ import io
 import json
 import os
 import pathlib
+import random
 import re
 import shutil
 import sys
@@ -652,11 +653,20 @@ def video_shots(photos, need=6):
     return shots
 
 
+def short_title(text, limit=26):
+    """영상 표지 문구: 단어 중간에서 잘리지 않게 limit 글자 안쪽 띄어쓰기에서 자른다."""
+    text = re.sub(r"\s+", " ", str(text)).strip()
+    if len(text) > limit:
+        cut = text[:limit + 1].rsplit(" ", 1)[0]
+        text = cut if len(cut) >= limit // 2 else text[:limit]
+    return text or "오늘의 상품"
+
+
 def product_videos(folder, text, name, photos):
     """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
     표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
     meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
-    title = (meta.get("video") or re.sub(r"\[.*?\]|\(.*?\)", "", name)).strip()[:24] or "오늘의 상품"
+    title = short_title(meta.get("video") or re.sub(r"\[.*?\]|\(.*?\)", "", name))
     lines = [x.strip() for x in re.split(r"\s*/\s*", meta.get("clips", "")) if x.strip()]
     if len(lines) < 4:  # 자막이 없으면 소제목으로
         lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
@@ -686,9 +696,10 @@ def make_videos(folder, title, shots, lines):
     """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록."""
     import blog_video
     out = []
+    look = {"style": random.choice(blog_video.STYLES), "pal": random.choice(blog_video.PALETTES)}  # 가로·세로 같은 표지
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:
-            blog_video.make(folder / fname, title, shots, lines, *size)
+            blog_video.make(folder / fname, title, shots, lines, *size, **look)
             out.append(fname)
         except Exception as e:
             log(f"    (영상 {fname}을 만들지 못했습니다: {e})")
@@ -712,7 +723,7 @@ def remake_video(path, site, index, now):
     meta = {}
     if (folder / "video.json").exists():
         meta = json.loads((folder / "video.json").read_text(encoding="utf-8"))
-    title = meta.get("title") or re.sub(r"\[.*?\]|\(.*?\)", "", pkg.get("title", "")).strip()[:24] or "오늘의 상품"
+    title = meta.get("title") or short_title(re.sub(r"\[.*?\]|\(.*?\)", "", pkg.get("title", "")))
     lines = meta.get("lines")
     if not lines and (folder / "content.json").exists():  # 예전 패키지: 소제목을 자막으로
         blocks = json.loads((folder / "content.json").read_text(encoding="utf-8")).get("blocks", [])
