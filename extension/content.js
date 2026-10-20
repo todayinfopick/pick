@@ -187,7 +187,8 @@
     btn.textContent = "보내는 중…";
     const collected = { name: productName(), images: productImages(), details: detailImages(), text: detailText(), url: location.href };
     btn.textContent = "📷 사진 확인 중…";
-    review(collected, (data) => {
+    // 자동 수집은 확인 창 없이 바로 보낸다 (관계없는 사진은 서버에서 AI가 뺌). 직접 누른 보내기만 확인 창.
+    (auto ? (d, done) => done(d) : review)(collected, (data) => {
     if (!data) { show("보내기를 취소했어요", "#64748B"); return; }
     btn.textContent = "보내는 중…";
     chrome.runtime.sendMessage({ type: "send", data, close: auto }, (res) => {

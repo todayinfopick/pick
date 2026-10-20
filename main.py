@@ -651,7 +651,7 @@ def local_media(item, kind, text):
     photos = image_tools.load_photos(item["source"], item["name"])
     details = image_tools.detail_photos(item["name"])  # 확장프로그램이 모은 상세페이지 조각 (사진 폴더/상세)
     # 자막을 위에 얹으므로 글자 없는 대표 사진 먼저, 모자라면 글자 없는 상세 조각 (카드 1장 / 캐러셀 5장 / 영상 6장)
-    photos = image_tools.pick_photos(photos, details, {"video": 6, "carousel": 5}.get(kind, 1))
+    photos = image_tools.pick_photos(photos, details, {"video": 6, "carousel": 5}.get(kind, 1), name=item["name"])
     if kind == "video":
         if details and len(photos) >= 4:  # 확장프로그램으로 모은 상품: 원본 이미지 영상: 표지 → 사진 + 장점 자막 → 구매 안내
             import blog_video
@@ -686,7 +686,8 @@ def threads_raw_media(item):
         return [video_tools.mute_video(own, f"{key}_threads")], "video"
     photos = image_tools.load_photos(item["source"], item["name"])
     # 쓰레드는 글자가 전혀 없는 사진만: 글자 없는 대표 사진 → 모자라면 글자 없는 상세 조각
-    photos = image_tools.pick_photos(photos, image_tools.detail_photos(item["name"]), 10, strict=True)
+    photos = image_tools.pick_photos(photos, image_tools.detail_photos(item["name"]), 10, strict=True,
+                                       name=item["name"])
     if not photos:
         return [], "text"
     image_tools.OUT_DIR.mkdir(exist_ok=True)

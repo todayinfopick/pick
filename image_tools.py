@@ -210,6 +210,11 @@ def same_photo(a, b):
     return sum(abs(x - y) for x, y in zip(pa, pb)) / len(pa) < 6
 
 
+def photo_hash(im):
+    """같은 파일에서 읽은 사진이면 같은 값 (한 번 게시하는 동안 사진 구분용)."""
+    return hashlib.md5(im.convert("RGB").resize((32, 32)).tobytes()).hexdigest()
+
+
 def is_duplicate(im, others):
     fp = _fingerprint(im)
     return any(same_photo(fp, _fingerprint(o)) for o in others)
@@ -398,12 +403,52 @@ def detail_pieces(images, limit=DETAIL_MAX):
     return out[:limit]
 
 
+# 상세페이지에 섞여 있는 상품과 관계없는 조각(배송·교환·반품 안내, 쿠폰·이벤트, 판매자 공지)을 알아보는 말.
+# 시트 '_설정'의 DETAIL_SKIP_WORDS(띄어쓰기로 구분)로 더 넣을 수 있다.
+NOTICE_WORDS = ("배송안내 배송정보 배송기간 택배 출고 영업일 교환안내 교환반품 교환/반품 교환및반품 반품 환불 고객센터 상담시간 A/S AS안내 "
+                "주의사항 유의사항 공지 쿠폰 이벤트 적립금 리뷰이벤트 포토리뷰 상품정보제공고시 판매자정보 "
+                "함께구매 추천상품 다른상품 브랜드관")
+_notice_cache = {}
+
+
+def is_notice(im, key=None):
+    """상품 설명이 아닌 안내·광고 조각인지 (OCR). 확인할 수 없으면 False(그대로 씀)."""
+    if key in _notice_cache:
+        return _notice_cache[key]
+    found = False
+    if _ocr_ready():
+        import pytesseract
+        g = im.convert("L")
+        if max(g.size) > 1400:
+            g = ImageOps.contain(g, (1400, 1400))
+        try:
+            text = re.sub(r"\s+", "", pytesseract.image_to_string(g, lang="kor+eng", config="--psm 11", timeout=30)).upper()
+        except Exception:
+            text = ""
+        words = (NOTICE_WORDS + " " + (os.getenv("DETAIL_SKIP_WORDS") or "")).replace(",", " ").split()
+        found = next((w for w in words if w.upper() in text), False)
+        if found:
+            print(f"  (상세 조각 1장은 상품과 관계없는 안내라 뺐습니다: '{found}')")
+            found = True
+    if key is not None:
+        _notice_cache[key] = found
+    return found
+
+
 def detail_photos(name):
-    """사진 폴더/상세 의 조각들 (없으면 빈 목록)."""
+    """사진 폴더/상세 의 조각들 (없으면 빈 목록). 배송·교환 안내, 쿠폰 같은 조각은 뺀다."""
     folder = photo_root() / folder_name(name) / DETAIL_DIR
     if not folder.is_dir():
         return []
-    return [im for im in (load_photo(str(f)) for f in images_in(folder)) if im is not None][:DETAIL_MAX]
+    out = []
+    for f in images_in(folder):
+        im = load_photo(str(f))
+        if im is None or is_notice(im, key=(str(f), f.stat().st_mtime)):
+            continue
+        out.append(im)
+        if len(out) >= DETAIL_MAX:
+            break
+    return out
 
 
 # ---------------------------------------------------------------- 글자 없는 사진 고르기
@@ -450,10 +495,41 @@ def has_text(im):
     return words >= max_words or area >= g.width * g.height * max_area
 
 
-def pick_photos(photos, details, need, strict=False):
+_ai_drop = {}  # 상품명 → 관계없다고 나온 사진의 지문 (한 번 게시하는 동안 다시 묻지 않음)
+
+
+def drop_unrelated(name, photos, details):
+    """제미나이(무료)가 상품과 관계없다고 고른 사진(다른 상품, 홍보 배너, 안내문 등)을 뺀다.
+    키가 없거나 실패하면 그대로. 전부 빼라고 하면 무시."""
+    import memo_ai
+    if not name or not memo_ai.enabled() or os.getenv("AI_PHOTO_CHECK", "1") == "0":
+        return photos, details
+    allp = list(photos) + list(details)
+    if not allp:
+        return photos, details
+    marks = [photo_hash(im) for im in allp]
+    if name not in _ai_drop:
+        try:
+            drop = memo_ai.unrelated_photos(name, allp)
+        except Exception as e:
+            print(f"  (AI 사진 확인을 못 해서 그대로 씁니다: {str(e)[:120]})")
+            drop = set()
+        if len(allp) - len(drop) < 2:
+            drop = set()  # 거의 다 빼라고 하면 잘못 본 것
+        _ai_drop[name] = {marks[i] for i in drop}
+        if drop:
+            print(f"  (AI가 상품과 관계없는 사진 {len(drop)}장을 뺐습니다)")
+    bad = _ai_drop[name]
+    keep = [im for im, m in zip(allp, marks) if m not in bad]
+    n = len(photos) - sum(1 for m in marks[:len(photos)] if m in bad)
+    return keep[:n], keep[n:]
+
+
+def pick_photos(photos, details, need, strict=False, name=""):
     """게시에 쓸 사진: 글자 없는 대표·썸네일 → (모자라면) 글자 없는 상세 조각.
     strict=False(인스타): 그래도 모자라면 글자 있는 대표 사진으로 채움. strict=True(쓰레드): 글자 없는 것만.
-    상세 조각은 글자가 있으면 절대 쓰지 않는다."""
+    상세 조각은 글자가 있으면 절대 쓰지 않는다. name을 주면 상품과 관계없는 사진을 먼저 AI로 뺀다."""
+    photos, details = drop_unrelated(name, photos, details)
     flags = [has_text(im) for im in photos]
     clean = [im for im, f in zip(photos, flags) if not f]
     texty = [im for im, f in zip(photos, flags) if f]

@@ -117,6 +117,38 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
         raise RuntimeError(f"제미나이 답을 읽지 못했습니다: {e}")
 
 
+UNRELATED_PROMPT = """쇼핑 홍보 글에 쓸 사진을 고르고 있다. 상품명: {name}
+아래 '사진 1'부터 '사진 {n}'까지 중에서 이 상품과 관계없는 사진의 번호만 골라라.
+관계없음: 다른 상품 사진, 함께 사면 좋은 상품·추천 상품, 브랜드·쇼핑몰 홍보 배너, 배송·교환·반품·고객센터 안내,
+쿠폰·이벤트·리뷰 이벤트, 판매자 공지, 빈 화면이나 장식만 있는 사진.
+관계있음(빼지 말 것): 이 상품 사진, 사용하는 모습, 상품 특징·성분·사이즈·구성 설명.
+헷갈리면 관계있는 것으로 둬라.
+JSON으로만 답하라: {{"drop": [번호, ...]}}"""
+
+
+def unrelated_photos(name, images):
+    """상품과 관계없는 사진 번호(0부터)를 제미나이가 고른다. 한 번에 모든 사진을 보냄. 실패하면 RuntimeError."""
+    parts = [{"text": UNRELATED_PROMPT.format(name=name, n=len(images))}]
+    for n, im in enumerate(images, start=1):
+        im = im.convert("RGB")
+        im.thumbnail((512, 512))
+        parts += [{"text": f"사진 {n}"}, {"inline_data": {"mime_type": "image/jpeg", "data": _jpeg(im, 80)}}]
+    text = generate(parts)
+    try:
+        data = json.loads(text[text.find("{"):text.rfind("}") + 1])
+    except ValueError as e:
+        raise RuntimeError(f"제미나이 답을 읽지 못했습니다: {e}")
+    out = set()
+    for v in data.get("drop") or []:
+        try:
+            i = int(v) - 1
+        except (TypeError, ValueError):
+            continue
+        if 0 <= i < len(images):
+            out.add(i)
+    return out
+
+
 PAGE_TEXT_MAX = 20000  # 상품 페이지 글자는 앞에서 이만큼만 보냄 (전체는 사진 폴더 페이지글.txt에 저장)
 
 

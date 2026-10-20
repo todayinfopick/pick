@@ -285,7 +285,8 @@ def daily():
         times = [rec[ch]["at"] for ch in ("threads", "instagram") if isinstance(rec.get(ch), dict)]
         if not times or "shorts" in rec or max(times)[:10] != today:  # 오늘 게시한 상품만, 한 번만
             continue
-        photos = it.pick_photos(it.load_photos(item["source"], item["name"]), it.detail_photos(item["name"]), 6)
+        photos = it.pick_photos(it.load_photos(item["source"], item["name"]), it.detail_photos(item["name"]), 6,
+                                name=item["name"])
         if len(photos) < 3:
             print(f"  쇼츠: 사진이 모자라 건너뜀 ({item['short']})")
             continue
@@ -365,7 +366,7 @@ def main():
     items = sorted(items, key=lambda i: want not in i["name"].replace(" ", ""))  # 고른 상품 먼저, 없으면 아무 상품
     for item in items:
         photos = it.load_photos(item["source"], item["name"])
-        photos = it.pick_photos(photos, it.detail_photos(item["name"]), 6)
+        photos = it.pick_photos(photos, it.detail_photos(item["name"]), 6, name=item["name"])
         if len(photos) < 3:
             print(f"  사진이 모자라 건너뜀: {item['short']}")
             continue
