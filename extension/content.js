@@ -134,13 +134,67 @@
     drag = null;
   });
 
+  // 보내기 전에 모은 사진(대표·썸네일 / 상세)을 보여 주고, 상관없는 사진을 눌러 뺄 수 있게 한다.
+  function review(data, done) {
+    document.getElementById("pick-review")?.remove();
+    const off = new Set();
+    const all = [...data.images.map((u) => ["images", u]), ...data.details.map((u) => ["details", u])];
+    const ov = document.createElement("div");
+    ov.id = "pick-review";
+    ov.style.cssText = "position:fixed;inset:0;z-index:2147483647;background:rgba(15,23,42,.6);display:flex;align-items:center;justify-content:center;font:14px/1.4 sans-serif";
+    ov.innerHTML = `<div style="background:#fff;border-radius:14px;width:min(900px,94vw);max-height:90vh;display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.3)">
+      <div style="padding:14px 16px;border-bottom:1px solid #e5e7eb"><b>모은 사진 확인</b><div style="font-size:12px;color:#64748b;margin-top:2px">상품과 상관없는 사진을 누르면 빠져요 (다시 누르면 돌아옴). 두 번 누르면 크게 봐요.</div></div>
+      <div id="pr-body" style="padding:12px 16px;overflow:auto"></div>
+      <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;align-items:center"><span id="pr-count" style="flex:1;font-size:13px"></span>
+      <button id="pr-cancel" style="padding:8px 14px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;cursor:pointer">취소</button>
+      <button id="pr-ok" style="padding:8px 14px;border:0;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer">이 사진으로 보내기</button></div></div>`;
+    document.body.appendChild(ov);
+    const body = ov.querySelector("#pr-body"), count = ov.querySelector("#pr-count");
+    const cells = [];
+    for (const [kind, title] of [["images", "대표·썸네일 사진"], ["details", "상세페이지 사진"]]) {
+      const items = all.map((x, i) => [x, i]).filter(([x]) => x[0] === kind);
+      if (!items.length) continue;
+      body.insertAdjacentHTML("beforeend", `<div style="font-weight:bold;margin:6px 0">${title}</div>`);
+      const grid = document.createElement("div");
+      grid.style.cssText = "display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:10px";
+      for (const [[, u], i] of items) {
+        const c = document.createElement("div");
+        c.style.cssText = "position:relative;cursor:pointer;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;aspect-ratio:1;background:#f8fafc";
+        const im = document.createElement("img");
+        im.src = u;
+        im.style.cssText = "width:100%;height:100%;object-fit:contain";
+        c.appendChild(im);
+        c.insertAdjacentHTML("beforeend", '<span class="pr-x" style="position:absolute;inset:0;display:none;align-items:center;justify-content:center;color:#dc2626;font-size:40px;font-weight:bold">✕</span>');
+        let t = null;
+        c.onclick = () => { clearTimeout(t); t = setTimeout(() => { off.has(i) ? off.delete(i) : off.add(i); upd(); }, 220); };
+        c.ondblclick = () => { clearTimeout(t); window.open(u, "_blank"); };
+        grid.appendChild(c);
+        cells[i] = c;
+      }
+      body.appendChild(grid);
+    }
+    const keep = (kind) => all.filter((x, i) => x[0] === kind && !off.has(i)).map((x) => x[1]);
+    const upd = () => {
+      cells.forEach((c, i) => { if (!c) return; c.style.opacity = off.has(i) ? ".3" : "1"; c.querySelector(".pr-x").style.display = off.has(i) ? "flex" : "none"; });
+      count.textContent = `대표·썸네일 ${keep("images").length}장, 상세 ${keep("details").length}장 보냄`;
+    };
+    upd();
+    ov.querySelector("#pr-cancel").onclick = () => { ov.remove(); done(null); };
+    ov.querySelector("#pr-ok").onclick = () => { ov.remove(); done({ ...data, images: keep("images"), details: keep("details") }); };
+  }
+
   function send(auto) {
     btn.textContent = "보내는 중…";
-    const data = { name: productName(), images: productImages(), details: detailImages(), text: detailText(), url: location.href };
+    const collected = { name: productName(), images: productImages(), details: detailImages(), text: detailText(), url: location.href };
+    btn.textContent = "📷 사진 확인 중…";
+    review(collected, (data) => {
+    if (!data) { show("보내기를 취소했어요", "#64748B"); return; }
+    btn.textContent = "보내는 중…";
     chrome.runtime.sendMessage({ type: "send", data, close: auto }, (res) => {
       if (res && res.ok) show(`✓ 보냄 (사진 ${res.photos}장, 상세 ${res.details || 0}장, 글 ${data.text.length.toLocaleString()}자)`, "#16A34A");
       else if (res && res.error === "offline") show("⚠ PC 프로그램을 먼저 켜 주세요", "#DC2626");
       else show("⚠ 보내지 못했어요", "#DC2626");
+    });
     });
   }
 
