@@ -2,7 +2,7 @@
 """유튜브 쇼츠용 상품 영상 (세로 1080x1920, 20~35초).
 장면: 표지 → 상품 사진(천천히 확대·이동) 위에 AI 목소리 설명 + 큰 자막 → 구매 안내 카드.
 - 대본: 제미나이(무료)가 상품명·특징메모로 짧은 말 5~6줄을 쓴다. 실패하면 게시 글의 제목·장점으로 대신.
-- 목소리: edge-tts (무료, 마이크로소프트 한국어 음성). SHORTS_VOICE로 바꿀 수 있음 (기본 ko-KR-SunHiNeural, 남자 ko-KR-InJoonNeural).
+- 목소리: edge-tts (무료, 마이크로소프트 한국어 음성). SHORTS_VOICE로 바꿀 수 있음 (기본 ko-KR-SunHiNeural, 남자 ko-KR-InJoonNeural), 빠르기 SHORTS_RATE (기본 +20% = 1.2배).
 - 장면 길이는 그 줄을 읽는 시간에 맞춘다. 배경음악(bgm/)은 목소리 밑에 아주 작게.
 python shorts.py "상품명 일부"  → out/쇼츠_*.mp4 (시험용)"""
 import asyncio
@@ -21,8 +21,9 @@ import image_tools as it
 from video_tools import _ffmpeg
 
 W, H = 1080, 1920
-COVER_SEC, END_SEC, GAP = 1.6, 2.4, 0.25
+COVER_SEC, END_SEC, GAP = 1.4, 2.2, 0.15
 VOICE = os.environ.get("SHORTS_VOICE", "ko-KR-SunHiNeural")
+RATE = os.environ.get("SHORTS_RATE", "+20%")  # 쇼핑 쇼츠는 보통 1.2배 정도로 빠르게
 
 SCRIPT_PROMPT = """너는 쿠팡 상품을 소개하는 유튜브 쇼츠 대본 작가다.
 상품: {name}
@@ -56,7 +57,7 @@ def write_script(item, text=None):
 
 async def _speak(line, path):
     import edge_tts
-    await edge_tts.Communicate(line, VOICE, rate="+8%").save(str(path))
+    await edge_tts.Communicate(line, VOICE, rate=RATE).save(str(path))
 
 
 def _duration(path):
