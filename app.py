@@ -801,8 +801,60 @@ class BlogTab:
 
             in_thread(self.root, work, done)
 
-        tk.Button(win, text="⬆ 서버로 올리기", bg="#2563EB", fg="white", height=2, command=send) \
-            .pack(fill="x", padx=10, pady=(4, 10))
+        def send_files():
+            """초안 파일(.txt/.md)을 여러 개 골라 하나씩 올린다. 한 파일에 @blog 줄로 시작하는 글이 여러 편이어도 나눠 올림.
+            오늘 글/비상용은 각 글의 @use 줄을 따르고, 없으면 위에서 고른 쪽."""
+            names = filedialog.askopenfilenames(parent=win, title="초안 파일 고르기 (여러 개 가능)",
+                                                filetypes=[("초안", "*.txt *.md"), ("모든 파일", "*.*")])
+            if not names:
+                return
+            drafts, bad = [], []
+            for name in names:
+                try:
+                    raw = open(name, encoding="utf-8-sig").read().replace("```", "")
+                except UnicodeDecodeError:
+                    raw = open(name, encoding="cp949").read().replace("```", "")
+                parts = [p.strip() for p in re.split(r"(?m)^(?=@blog:)", raw) if p.strip().startswith("@blog:")]
+                for text in parts or [raw.strip()]:
+                    key, title, n, problems = draft_check(text)
+                    if key and title:
+                        use = re.search(r"^@use:\s*(\S+)", text, re.M)
+                        stock = ("비상" in use.group(1)) if use else kind.get() == "stock"
+                        drafts.append((key, title, text, stock))
+                    else:
+                        bad.append(f"{os.path.basename(name)}: {problems[0] if problems else '형식 확인'}")
+            if not drafts:
+                messagebox.showwarning(APP_TITLE, "올릴 수 있는 초안이 없어요.\n" + "\n".join(bad[:8]), parent=win)
+                return
+            n_stock = sum(d[3] for d in drafts)
+            if not messagebox.askyesno(APP_TITLE, f"초안 {len(drafts)}편을 올릴까요? (오늘 글 {len(drafts) - n_stock} · 비상용 {n_stock})"
+                                       + ("\n\n못 올리는 것:\n" + "\n".join(bad[:8]) if bad else ""), parent=win):
+                return
+            msg.config(text=f"올리는 중… 0/{len(drafts)}", fg="#555")
+
+            def work():
+                now = datetime.datetime.now()
+                for i, (key, title, text, stock) in enumerate(drafts, 1):
+                    folder = "stock" if stock else now.strftime("%Y-%m-%d")
+                    gh_put_file(f"drafts/{folder}/{key}-chat-{now:%H%M%S}-{i:02d}.txt", text + "\n", f"초안 파일 올리기: {title[:40]}")
+                    self.root.after(0, lambda i=i: msg.config(text=f"올리는 중… {i}/{len(drafts)}"))
+                gh_dispatch("", BLOG_WORKFLOW, {"mode": "초안 정리", "blog": "", "count": "0"})
+
+            def done(_r, err):
+                if err:
+                    msg.config(text=f"⚠ 올리다 멈췄어요: {err}", fg="#c0392b")
+                    return
+                msg.config(fg="#1e7e34", text=f"✓ {len(drafts)}편 올리고 서버 작업을 시작했어요. 몇 분 뒤 목록에 나와요."
+                                              + (f" (못 올린 것 {len(bad)}개)" if bad else ""))
+                self.root.after(20000, self.refresh)
+
+            in_thread(self.root, work, done)
+
+        btns = tk.Frame(win)
+        btns.pack(fill="x", padx=10, pady=(4, 10))
+        tk.Button(btns, text="⬆ 서버로 올리기", bg="#2563EB", fg="white", height=2, command=send) \
+            .pack(side="left", fill="x", expand=True)
+        tk.Button(btns, text="📂 파일로 올리기 (여러 개)", height=2, command=send_files).pack(side="left", padx=(6, 0))
 
     def run(self):
         if not (os.getenv("GITHUB_TOKEN") or "").strip():
