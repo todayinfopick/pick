@@ -28,7 +28,7 @@ jobs:
       - run: python shorts.py "리빙메이트" | tee sample.log
       - name: 샘플 올리기
         run: |
-          mkdir -p sample && cp out/쇼츠_*.mp4 sample/ && cp sample.log sample/
+          mkdir -p sample && cp media/쇼츠_*.mp4 sample/ && cp sample.log sample/
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f sample && git commit -qm "쇼츠 샘플 [sample]" && git push
