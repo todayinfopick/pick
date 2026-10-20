@@ -72,6 +72,11 @@ SPEC = [
      "choices": ["제미나이", "Claude"], "default": "제미나이",
      "help": "제미나이: 무료 키, 구글 검색 / Claude: Claude 키, 웹 검색 (글마다 요금이 조금 나와요)"},
 
+    # ---------------------------------------------------------------- 유튜브 쇼츠
+    {"group": "유튜브 쇼츠", "key": "SHORTS_ON", "label": "쇼츠 영상 만들기", "kind": "bool", "default": "0",
+     "help": "게시한 상품으로 AI 목소리 쇼츠를 만들어 todayinfopick.github.io/pick/shorts/ 에 올려 둬요. 휴대폰으로 열어 유튜브 앱으로 올리세요"},
+    {"group": "유튜브 쇼츠", "key": "SHORTS_PER_DAY", "label": "하루 몇 개", "kind": "int", "default": "2"},
+
     # ---------------------------------------------------------------- 쓰레드
     {"group": "쓰레드", "key": "THREADS_MEDIA", "label": "원본 사진·영상 붙이기", "kind": "bool", "default": "1",
      "help": "자막·[광고] 표시·소리 없이 원본 그대로. 끄면 글만"},
