@@ -298,15 +298,17 @@ def _footer(w, h, text):
 
 
 def make(out, title, photos, lines, w=1920, h=1080, end=("자세한 내용은 본문에서", "아래 글에서 구성·가격을 확인하세요"),
-         footer="", cover=None, style=None, pal=None):
+         footer="", cover=None, style=None, pal=None, cover_img=None):
     """영상 하나를 out(mp4)에 만든다. photos: PIL 이미지(4~6장 씀), lines: 자막(사진마다 한 줄).
     end: 마무리 카드 (제목, 작은 글), footer: 모든 장면 아래에 까는 한 줄 (비우면 없음).
-    cover: 표지 사진 (없으면 첫 사진), style·pal: 표지 디자인·색 (없으면 무작위)."""
+    cover: 표지 사진 (없으면 자동으로 고름), style·pal: 표지 디자인·색 (없으면 무작위), cover_img: 다 만든 표지 화면(있으면 그대로 씀)."""
     shots = photos[:6]
     if len(shots) < 4:
         raise RuntimeError("영상에 쓸 상품 사진이 4장보다 적습니다.")
     caps = [x for x in lines if x][:len(shots)]
-    scenes = [(COVER_SEC, Still(_cover(w, h, title, cover or _cover_photo(shots), style, pal)))]
+    if cover_img is None:
+        cover_img = _cover(w, h, title, cover or _cover_photo(shots), style, pal)
+    scenes = [(COVER_SEC, Still(ImageOps.fit(cover_img.convert("RGB"), (w, h))))]
     for k, ph in enumerate(shots):
         scenes.append((PHOTO_SEC, Photo(w, h, ph, caps[k] if k < len(caps) else "", k)))
     scenes.append((END_SEC, Still(_title_card(w, h, *end))))
