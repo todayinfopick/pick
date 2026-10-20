@@ -638,13 +638,24 @@ def product_keyword_block(cands):
               "상품명만 쓰기보다 '종류 + 추천·비교' 같은 검색어가 노출에 유리하다.\n")
 
 
+def _blank_strip(im):
+    """빈 조각(여백·띠)인지. 흰 바탕의 연한 색 상품 사진은 명암 차이가 작아 image_tools.is_blank에 걸리므로,
+    바탕색과 다른 점이 8% 넘게 있으면 빈 조각으로 보지 않는다."""
+    import image_tools
+    if not image_tools.is_blank(im):
+        return False
+    hist = im.convert("L").resize((64, 64)).histogram()
+    base = max(range(256), key=lambda v: sum(hist[max(0, v - 4):v + 5]))
+    return sum(hist[:max(0, base - 25)]) + sum(hist[base + 26:]) < 64 * 64 * 0.08
+
+
 def video_shots(photos, need=6):
     """영상에 넣을 사진 검수: 같은 사진·빈 조각은 빼고, 글자가 박힌 사진(상세페이지 설명·표·광고 문구)은
     영상 자막과 겹쳐 지저분하므로 글자 없는 사진을 먼저 고른다. 모자랄 때만 글자 있는 사진으로 채운다.
     첫 장은 대표(표지) 사진이라 뒤로 미룬다."""
     import image_tools
     pool = image_tools.unique_photos(photos[1:] + photos[:1])
-    pool = [im for im in pool if not image_tools.is_blank(im) and max(im.size) <= min(im.size) * 2.2]  # 길쭉한 띠·배너 제외
+    pool = [im for im in pool if not _blank_strip(im) and max(im.size) <= min(im.size) * 2.2]  # 길쭉한 띠·배너 제외
     flags = [image_tools.has_text(im) for im in pool]
     clean = [im for im, f in zip(pool, flags) if f is False or f is None]
     texty = [im for im, f in zip(pool, flags) if f]
