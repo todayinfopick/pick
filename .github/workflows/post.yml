@@ -129,7 +129,7 @@ jobs:
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
           for f in posted.json research.json ai_drop.json docs; do [ -e "$f" ] && git add -f "$f"; done
-          git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase && git push -q)
+          git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase -X theirs && git push -q)
 
       - name: 미리보기 이미지
         if: inputs.mode == '미리보기'

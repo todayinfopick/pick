@@ -440,9 +440,8 @@ class Helper:
         tk.Radiobutton(cat, text="AI가 골라요", value="", variable=self.category) \
             .grid(row=0, column=1, columnspan=3, sticky="w")
         row = 1
-        for label, words in category_groups():  # 계정별로 한 묶음 (좁은 창이라 3개씩 줄바꿈)
-            tk.Label(cat, text=label, fg="#2563EB", anchor="w").grid(row=row, column=0, columnspan=4, sticky="w")
-            row += 1
+        for label, words in category_groups():  # 계정별로 한 묶음 (좁은 창이라 3개씩 줄바꿈, 계정 번호는 왼쪽 칸)
+            tk.Label(cat, text=label.split()[0], fg="#2563EB", anchor="w").grid(row=row, column=0, sticky="nw")
             for i, c in enumerate(words):
                 tk.Radiobutton(cat, text=c, value=c, variable=self.category) \
                     .grid(row=row + i // 3, column=1 + i % 3, sticky="w")
@@ -454,6 +453,10 @@ class Helper:
         tk.Button(bar, text="↩ 취소", command=self.undo_image).pack(side="left", padx=3)
         tk.Button(bar, text="✨ 메모", command=lambda: self.run_ai(None)).pack(side="left")
 
+        # 저장 버튼은 사진 위에 둔다: 사진이 많아도 창 밖으로 밀리지 않게
+        self.save_btn = tk.Button(box, text="저장 → 다음 상품", command=self.save, height=2,
+                                  bg="#2563EB", fg="white", activebackground="#1D4ED8")
+        self.save_btn.pack(fill="x", padx=10, pady=(0, 6))
         # 캡처한 사진 미리보기 (클릭하면 삭제)
         self.thumbs = tk.Frame(box, bg="#F1F5F9")
         self.thumbs.pack(fill="x", padx=10)
@@ -467,9 +470,6 @@ class Helper:
         self.count = tk.Label(hint, text=f"0/{MAX_PHOTOS}장")
         self.count.pack(side="right")
 
-        self.save_btn = tk.Button(box, text="저장 → 다음 상품", command=self.save, height=2,
-                                  bg="#2563EB", fg="white", activebackground="#1D4ED8")
-        self.save_btn.pack(fill="x", padx=10, pady=4)
 
         bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
