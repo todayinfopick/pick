@@ -719,14 +719,23 @@ def product_videos(folder, text, name, photos):
     return out
 
 
-def make_videos(folder, title, shots, lines, cover=None):
-    """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록. cover: 표지 사진 (없으면 자동으로 고름)."""
+def make_videos(folder, title, shots, lines, keep_cover=False):
+    """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록.
+    표지 화면은 vsrc/cover-가로x세로.jpg로 남겨 두고, keep_cover면 남겨 둔 표지를 그대로 다시 씀 (영상 다시 만들기)."""
     import blog_video
+    from PIL import Image
     out = []
-    look = {"style": random.choice(blog_video.STYLES), "pal": random.choice(blog_video.PALETTES)}  # 가로·세로 같은 표지
+    style, pal = random.choice(blog_video.STYLES), random.choice(blog_video.PALETTES)  # 가로·세로 같은 표지
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:
-            blog_video.make(folder / fname, title, shots, lines, *size, cover=cover, **look)
+            saved = folder / VSRC / f"cover-{size[0]}x{size[1]}.jpg"
+            if keep_cover and saved.is_file():
+                img = Image.open(saved).convert("RGB")
+            else:
+                img = blog_video._cover(*size, title, blog_video._cover_photo(shots), style, pal)
+                saved.parent.mkdir(exist_ok=True)
+                img.save(saved, quality=90)
+            blog_video.make(folder / fname, title, shots, lines, *size, cover_img=img)
             out.append(fname)
         except Exception as e:
             log(f"    (영상 {fname}을 만들지 못했습니다: {e})")
@@ -764,7 +773,7 @@ def remake_video(path, site, index, now):
         log(f"  ! 사진이 {len(shots)}장뿐이라 영상을 다시 만들지 않습니다 (최소 4장)")
         path.unlink()
         return None
-    out = make_videos(folder, title, shots[:6], lines or [], cover=shots[0])  # 다시 만들 때는 처음 고른 사진이 표지
+    out = make_videos(folder, title, shots[:6], lines or [], keep_cover=True)  # 표지는 원래 영상 그대로 (남겨 둔 게 없으면 새로)
     if not out:
         return False
     if meta:
