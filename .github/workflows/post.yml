@@ -80,6 +80,14 @@ jobs:
         if: inputs.mode == '지금 게시'
         run: python main.py
 
+      # 유튜브 쇼츠: 오늘 게시한 상품으로 하루 몇 개 만들어 쇼츠 받기 페이지에 올림 (설정 SHORTS_ON이 켜져 있을 때만)
+      - name: 쇼츠 만들기
+        if: "!cancelled() && (steps.check.outputs.due == '1' || inputs.mode == '지금 게시')"
+        continue-on-error: true
+        env:
+          SHORTS_GH_TOKEN: ${{ github.token }}
+        run: python shorts.py --daily
+
       - name: 일반 글
         if: "!cancelled() && steps.check.outputs.gdue == '1'"
         run: python general.py --slot "${{ steps.check.outputs.gslot }}"
