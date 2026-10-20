@@ -761,6 +761,14 @@ class BlogTab:
         msg = tk.Label(win, text="", anchor="w", justify="left", fg="#555", wraplength=520)
         msg.pack(fill="x", padx=10)
 
+        def pick_use(_e=None):
+            """초안 머리 '@use: 오늘/비상용'(GPT·제미나이 지시문)을 보고 오늘 글/비상용을 알아서 고른다."""
+            use = re.search(r"^@use:\s*(\S+)", box.get("1.0", "end"), re.M)
+            if use:
+                kind.set("stock" if "비상" in use.group(1) else "today")
+        box.bind("<KeyRelease>", lambda e: win.after(50, pick_use))
+        box.bind("<<Paste>>", lambda e: win.after(50, pick_use))
+
         def send():
             text = box.get("1.0", "end").strip().replace("```", "").strip()
             key, title, n, problems = draft_check(text)
@@ -770,6 +778,7 @@ class BlogTab:
             if problems and not messagebox.askyesno(APP_TITLE, "\n".join(problems) + "\n\n그래도 올릴까요?", parent=win):
                 return
             now = datetime.datetime.now()
+            pick_use()
             stock = kind.get() == "stock"
             folder = "stock" if stock else now.strftime("%Y-%m-%d")
             path = f"drafts/{folder}/{key}-chat-{now:%H%M%S}.txt"
