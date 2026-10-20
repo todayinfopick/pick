@@ -719,14 +719,14 @@ def product_videos(folder, text, name, photos):
     return out
 
 
-def make_videos(folder, title, shots, lines):
-    """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록."""
+def make_videos(folder, title, shots, lines, cover=None):
+    """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록. cover: 표지 사진 (없으면 자동으로 고름)."""
     import blog_video
     out = []
     look = {"style": random.choice(blog_video.STYLES), "pal": random.choice(blog_video.PALETTES)}  # 가로·세로 같은 표지
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:
-            blog_video.make(folder / fname, title, shots, lines, *size, **look)
+            blog_video.make(folder / fname, title, shots, lines, *size, cover=cover, **look)
             out.append(fname)
         except Exception as e:
             log(f"    (영상 {fname}을 만들지 못했습니다: {e})")
@@ -764,7 +764,7 @@ def remake_video(path, site, index, now):
         log(f"  ! 사진이 {len(shots)}장뿐이라 영상을 다시 만들지 않습니다 (최소 4장)")
         path.unlink()
         return None
-    out = make_videos(folder, title, shots[:6], lines or [])
+    out = make_videos(folder, title, shots[:6], lines or [], cover=shots[0])  # 다시 만들 때는 처음 고른 사진이 표지
     if not out:
         return False
     if meta:
