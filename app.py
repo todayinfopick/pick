@@ -526,7 +526,16 @@ class PostTab:
 
 # ---------------------------------------------------------------- 블로그 탭
 def blog_index():
-    """서버가 만든 블로그 글 목록 (blog-packages 브랜치의 index.json). 아직 없으면 빈 목록."""
+    """서버가 만든 블로그 글 목록 (blog-packages 브랜치의 index.json). 아직 없으면 빈 목록.
+    raw 주소는 몇 분씩 옛 목록을 주므로(지운 글이 남아 보임) 깃허브 API로 먼저 읽는다."""
+    try:
+        r = requests.get(f"https://api.github.com/repos/{repo()}/contents/index.json", headers=gh_headers(),
+                         params={"ref": "blog-packages"}, timeout=30)
+        if r.ok:
+            import base64
+            return json.loads(base64.b64decode(r.json()["content"]).decode("utf-8"))
+    except Exception:
+        pass
     r = requests.get(f"https://raw.githubusercontent.com/{repo()}/blog-packages/index.json",
                      params={"t": datetime.datetime.now().timestamp()}, timeout=30)
     return r.json() if r.ok else {"packages": []}
