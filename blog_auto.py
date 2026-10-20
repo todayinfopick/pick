@@ -635,6 +635,21 @@ def product_keyword_block(cands):
               "상품명만 쓰기보다 '종류 + 추천·비교' 같은 검색어가 노출에 유리하다.\n")
 
 
+def video_shots(photos, need=6):
+    """영상에 넣을 사진 검수: 같은 사진·빈 조각은 빼고, 글자가 박힌 사진(상세페이지 설명·표·광고 문구)은
+    영상 자막과 겹쳐 지저분하므로 글자 없는 사진을 먼저 고른다. 모자랄 때만 글자 있는 사진으로 채운다.
+    첫 장은 대표(표지) 사진이라 뒤로 미룬다."""
+    import image_tools
+    pool = image_tools.unique_photos(photos[1:] + photos[:1])
+    pool = [im for im in pool if not image_tools.is_blank(im) and max(im.size) <= min(im.size) * 2.2]  # 길쭉한 띠·배너 제외
+    flags = [image_tools.has_text(im) for im in pool]
+    clean = [im for im, f in zip(pool, flags) if f is False or f is None]
+    texty = [im for im, f in zip(pool, flags) if f]
+    shots = clean[:need] + texty[:max(0, 4 - len(clean))]  # 영상은 최소 4장
+    log(f"    영상 사진 검수: 후보 {len(pool)}장 중 글자 없는 {len(clean)}장, 글자 있는 {len(texty)}장 → {len(shots)}장 사용")
+    return shots
+
+
 def product_videos(folder, text, name, photos):
     """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
     표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
@@ -645,7 +660,7 @@ def product_videos(folder, text, name, photos):
     if len(lines) < 4:  # 자막이 없으면 소제목으로
         lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
     lines = [x if len(x) <= 18 else x[:17] + "…" for x in lines]
-    shots = photos[1:7] if len(photos) >= 7 else photos[:6]  # 첫 장은 대표(표지) 사진이라 그다음부터
+    shots = video_shots(photos)
     out = []
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:

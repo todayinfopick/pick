@@ -55,7 +55,7 @@ jobs:
       - name: 파이썬·글꼴 준비
         run: |
           pip install -q -r requirements.txt
-          sudo apt-get install -y -qq fonts-nanum > /dev/null
+          sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
 
       - name: 설정 준비
         run: python cloud_sync.py env
