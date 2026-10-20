@@ -306,6 +306,43 @@ def daily():
     build_page(posted)
 
 
+def remake(want):
+    """쇼츠 하나를 다시 만든다 (PC 프로그램 목록 탭 🎬). want = 파트너스 링크 또는 상품명 일부.
+    사진 폴더에서 잘못된 사진을 지운 뒤 부르면 남은 사진으로 대본·영상을 새로 만들어 받기 페이지의 것을 바꾼다."""
+    import datetime
+    import main as m
+    global VOICE, RATE, MARK
+    VOICE = os.environ.get("SHORTS_VOICE", VOICE)
+    RATE = os.environ.get("SHORTS_RATE", RATE)
+    MARK = os.environ.get("SHORTS_MARK", MARK)
+    want = (want or "").strip()
+    items = m.load_products()
+    item = next((i for i in items if want and i["link"].strip() == want), None) or next(
+        (i for i in items if want and want.replace(" ", "") in i["name"].replace(" ", "")), None)
+    if item is None:
+        raise SystemExit(f"상품을 찾지 못했습니다: {want}")
+    photos = it.pick_photos(it.load_photos(item["source"], item["name"]), it.detail_photos(item["name"]), 6,
+                            name=item["name"])
+    if len(photos) < 3:
+        raise SystemExit(f"사진이 3장보다 적어 쇼츠를 만들 수 없습니다 ({item['short']}).")
+    now = datetime.datetime.now()
+    key = it.slug(item["link"].rstrip("/").rsplit("/", 1)[-1])
+    name = f"shorts_{now:%Y-%m-%d}_{key}_{now:%H%M}.mp4"  # 새 이름이라 휴대폰에 예전 영상이 남아 있어도 헷갈리지 않음
+    it.OUT_DIR.mkdir(exist_ok=True)
+    out = it.OUT_DIR / name
+    script = write_script(item)
+    make(out, item, photos, script, footer="광고 · " + item["aff"]["short"])
+    url = upload(out, name)
+    title, desc = yt_text(item, script)
+    posted = m.load_posted()
+    rec = m.get_rec(posted, item)
+    rec["shorts"] = {"at": now.isoformat(timespec="seconds"), "file": name, "url": url,
+                     "title": title, "desc": desc, "sec": round(_duration(out), 1), "remade": True}
+    m.save_posted(posted)
+    print(f"✓ 쇼츠 다시 만듦: {item['short']} → {url}")
+    build_page(posted)
+
+
 def build_page(posted=None):
     """휴대폰에서 여는 쇼츠 받기 페이지 (docs/shorts/index.html)."""
     import datetime
@@ -383,6 +420,8 @@ def main():
 if __name__ == "__main__":
     if sys.argv[1:2] == ["--daily"]:
         daily()
+    elif sys.argv[1:2] == ["--remake"]:
+        remake(" ".join(sys.argv[2:]))
     elif sys.argv[1:2] == ["--page"]:
         build_page()
     else:
