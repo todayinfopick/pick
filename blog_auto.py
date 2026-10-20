@@ -35,6 +35,8 @@ STOCK = "stock"
 MIN_VIDEO_PHOTOS = 3  # 영상만 만들 때 최소 사진 수
 MIN_PRODUCT_PHOTOS = 10  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 9장 (+카드 = 11장, 네이버 홈판은 보통 10장 이상)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
+VIDEO_REQ = "video"  # drafts/video/*.json: 스튜디오 '영상 다시 만들기' 요청 (패키지 id + 고른 사진)
+VSRC = "vsrc"  # 패키지 안 영상 후보 사진 폴더
 CONFIG = BASE / "blog_config.json"
 SHEET_TAB = "블로그글감"
 WEEKDAYS = "월화수목금토일"
@@ -653,7 +655,6 @@ def video_shots(photos, need=6):
 def product_videos(folder, text, name, photos):
     """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
     표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
-    import blog_video
     meta = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln)
     title = (meta.get("video") or re.sub(r"\[.*?\]|\(.*?\)", "", name)).strip()[:24] or "오늘의 상품"
     lines = [x.strip() for x in re.split(r"\s*/\s*", meta.get("clips", "")) if x.strip()]
@@ -661,6 +662,29 @@ def product_videos(folder, text, name, photos):
         lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
     lines = [x if len(x) <= 18 else x[:17] + "…" for x in lines]
     shots = video_shots(photos)
+    out = make_videos(folder, title, shots, lines)
+    if out:  # 스튜디오 '영상 다시 만들기'용: 후보 사진(vsrc/)과 표지 문구·자막을 남겨 둠
+        try:
+            import image_tools
+            src = folder / VSRC
+            src.mkdir(exist_ok=True)
+            names, used = [], []
+            for k, im in enumerate(image_tools.unique_photos(photos[1:] + photos[:1])[:16], 1):
+                name = f"{VSRC}/{k:02d}.jpg"
+                im.convert("RGB").save(folder / name, quality=85)
+                names.append(name)
+                if any(im is x for x in shots):
+                    used.append(name)
+            (folder / "video.json").write_text(json.dumps({"title": title, "lines": lines, "photos": names, "used": used},
+                                                          ensure_ascii=False, indent=1), encoding="utf-8")
+        except Exception as e:
+            log(f"    (영상 후보 사진을 남기지 못했습니다: {e})")
+    return out
+
+
+def make_videos(folder, title, shots, lines):
+    """가로 video.mp4, 세로 video_vertical.mp4를 만든다. 만든 파일 이름 목록."""
+    import blog_video
     out = []
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:
@@ -671,6 +695,47 @@ def product_videos(folder, text, name, photos):
     if out:
         log(f"    영상 {len(out)}개 만듦: {', '.join(out)}")
     return out
+
+
+def remake_video(path, site, index, now):
+    """drafts/video/*.json (스튜디오 '영상 다시 만들기'): {"id": 패키지, "photos": [패키지 안 사진 파일, 순서대로]}
+    고른 사진으로 영상을 새로 만들어 같은 이름으로 덮어쓰고, 목록에 videoVer(새 영상 표시)를 적는다. 성공하면 True."""
+    from PIL import Image
+    req = json.loads(path.read_text(encoding="utf-8"))
+    pkg = next((p for p in index.get("packages", []) if p.get("id") == req.get("id")), None)
+    folder = site / str(req.get("id", ""))
+    if not pkg or not folder.is_dir():
+        log(f"  ! 영상 다시 만들기: 패키지 {req.get('id')}를 찾지 못해 요청을 지웁니다")
+        path.unlink()
+        return None
+    log(f"[영상 다시 만들기] {pkg.get('title', '')[:40]}")
+    meta = {}
+    if (folder / "video.json").exists():
+        meta = json.loads((folder / "video.json").read_text(encoding="utf-8"))
+    title = meta.get("title") or re.sub(r"\[.*?\]|\(.*?\)", "", pkg.get("title", "")).strip()[:24] or "오늘의 상품"
+    lines = meta.get("lines")
+    if not lines and (folder / "content.json").exists():  # 예전 패키지: 소제목을 자막으로
+        blocks = json.loads((folder / "content.json").read_text(encoding="utf-8")).get("blocks", [])
+        lines = [b.get("text", "")[:17] for b in blocks if b.get("type") == "H2"]
+    shots = []
+    for name in req.get("photos") or []:
+        f = (folder / name).resolve()
+        if folder.resolve() in f.parents and f.is_file():
+            shots.append(Image.open(f).convert("RGB"))
+    if len(shots) < 4:
+        log(f"  ! 사진이 {len(shots)}장뿐이라 영상을 다시 만들지 않습니다 (최소 4장)")
+        path.unlink()
+        return None
+    out = make_videos(folder, title, shots[:6], lines or [])
+    if not out:
+        return False
+    if meta:
+        meta["used"] = list(req["photos"])[:6]
+        (folder / "video.json").write_text(json.dumps(meta, ensure_ascii=False, indent=1), encoding="utf-8")
+    pkg["videos"] = out
+    pkg["videoVer"] = now.strftime("%Y%m%d%H%M%S")
+    path.unlink()
+    return True
 
 
 def video_only_package(d, blog, site, index, now, photos):
@@ -815,6 +880,14 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
                 path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
             except Exception:
                 pass
+        if ok is not None:
+            made, failed = (made + 1, failed) if ok else (made, failed + 1)
+    for path in sorted((site / "drafts" / VIDEO_REQ).glob("*.json")):
+        try:
+            ok = remake_video(path, site, index, now)
+        except Exception as e:
+            log(f"  ! 영상을 다시 만들지 못했습니다 (요청은 남겨 둠): {e}")
+            ok = False
         if ok is not None:
             made, failed = (made + 1, failed) if ok else (made, failed + 1)
     for d in sorted((site / "drafts").glob("*"), reverse=True):
