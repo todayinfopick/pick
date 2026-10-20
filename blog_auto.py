@@ -635,6 +635,21 @@ def product_keyword_block(cands):
               "상품명만 쓰기보다 '종류 + 추천·비교' 같은 검색어가 노출에 유리하다.\n")
 
 
+def video_shots(photos, need=6):
+    """영상에 넣을 사진 검수: 같은 사진·빈 조각은 빼고, 글자가 박힌 사진(상세페이지 설명·표·광고 문구)은
+    영상 자막과 겹쳐 지저분하므로 글자 없는 사진을 먼저 고른다. 모자랄 때만 글자 있는 사진으로 채운다.
+    첫 장은 대표(표지) 사진이라 뒤로 미룬다."""
+    import image_tools
+    pool = image_tools.unique_photos(photos[1:] + photos[:1])
+    pool = [im for im in pool if not image_tools.is_blank(im) and max(im.size) <= min(im.size) * 2.2]  # 길쭉한 띠·배너 제외
+    flags = [image_tools.has_text(im) for im in pool]
+    clean = [im for im, f in zip(pool, flags) if f is False or f is None]
+    texty = [im for im, f in zip(pool, flags) if f]
+    shots = clean[:need] + texty[:max(0, 4 - len(clean))]  # 영상은 최소 4장
+    log(f"    영상 사진 검수: 후보 {len(pool)}장 중 글자 없는 {len(clean)}장, 글자 있는 {len(texty)}장 → {len(shots)}장 사용")
+    return shots
+
+
 def product_videos(folder, text, name, photos):
     """상품 사진으로 짧은 영상 두 개(가로 video.mp4, 세로 video_vertical.mp4)를 패키지 폴더에 만든다.
     표지 문구·자막은 글 머리의 @video, @clips (없으면 상품명과 소제목). 실패해도 글은 그대로 둔다."""
@@ -645,7 +660,7 @@ def product_videos(folder, text, name, photos):
     if len(lines) < 4:  # 자막이 없으면 소제목으로
         lines = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
     lines = [x if len(x) <= 18 else x[:17] + "…" for x in lines]
-    shots = photos[1:7] if len(photos) >= 7 else photos[:6]  # 첫 장은 대표(표지) 사진이라 그다음부터
+    shots = video_shots(photos)
     out = []
     for fname, size in (("video.mp4", (1920, 1080)), ("video_vertical.mp4", (1080, 1920))):
         try:
@@ -676,7 +691,7 @@ def video_only_package(d, blog, site, index, now, photos):
 
 def product_package(path, site, cfg, index, hist, now):
     """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
-    재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(사진 주소)."""
+    재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(글·영상에 쓸 사진 주소), ref_images(내용 참고용 사진 주소, 글에는 안 넣음)."""
     d = json.loads(path.read_text(encoding="utf-8"))
     blog = find_blog(cfg, d.get("blog", "")) or find_blog(cfg, "naver2")
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
@@ -708,7 +723,11 @@ def product_package(path, site, cfg, index, hist, now):
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
     written = (d.get("body") or "").strip()  # Claude가 미리 써서 넣은 본문이 있으면 제미나이를 부르지 않음
-    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
+    # 참고 사진(ref_images): 사용자가 '내용 참고용'으로 고른 사진. 글·영상에는 넣지 않고 제미나이가 내용을 읽는 데만 씀
+    refs = [] if written or not d.get("ref_images") else product_photos(d["ref_images"], limit=8)
+    if refs:
+        prompt += f"\n(사진 중 뒤쪽 {len(refs)}장은 상세 설명·성분표 같은 참고 자료다. 내용 확인에만 쓰고 '사진에 보이는' 식으로 소개하지 마라.)\n"
+    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8] + refs, search=bool(d.get("search"))))
     for _ in range(0 if written else 2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
