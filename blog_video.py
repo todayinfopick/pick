@@ -7,7 +7,7 @@ import pathlib
 import random
 import subprocess
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageOps
+from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 import image_tools as it
 from video_tools import _ffmpeg, AUDIO_EXT
@@ -51,9 +51,18 @@ def _fit_lines(d, text, fnt, max_w, max_lines=2):
     return lines[:max_lines]
 
 
-def _title_card(w, h, text, sub=""):
-    """노란 글씨 + 흰 테두리 + 검은 그림자 + 빨간 밑줄 (보내 준 썸네일 모양)."""
-    im = _backdrop(w, h)
+CLASSIC_LOOKS = [  # 글씨 색(줄마다 번갈아), 테두리, 밑줄/띠 색, 띠 방식
+    {"fill": [(255, 255, 255), (255, 214, 0)], "stroke": (0, 0, 0), "bar": (230, 30, 60), "box": False},
+    {"fill": [(255, 214, 0)], "stroke": (0, 0, 0), "bar": (230, 30, 60), "box": False},
+    {"fill": [(255, 255, 255)], "stroke": (0, 0, 0), "bar": (232, 36, 52), "box": True},
+    {"fill": [(255, 255, 255), (120, 230, 255)], "stroke": (10, 20, 60), "bar": (0, 120, 255), "box": False},
+]
+
+
+def _title_card(w, h, text, sub="", look=None, bg=None):
+    """굵은 글씨 + 검은 테두리·그림자 + 밑줄(또는 띠). look이 없으면 흰·노랑 번갈아 쓰는 기본."""
+    look = look or CLASSIC_LOOKS[0]
+    im = bg.copy() if bg is not None else _backdrop(w, h)
     d = ImageDraw.Draw(im)
     size = int(min(w, h) * (0.15 if w > h else 0.12))
     while size > 40:
@@ -62,15 +71,21 @@ def _title_card(w, h, text, sub=""):
         if len(lines) <= (2 if w > h else 3) and all(d.textlength(x, font=fnt) <= w * 0.86 for x in lines):
             break
         size -= 6
-    lh = int(size * 1.25)
+    lh = int(size * (1.38 if look["box"] else 1.25))
     y0 = h // 2 - lh * len(lines) // 2
+    sw = max(6, size // 10)
     for i, line in enumerate(lines):
         y = y0 + i * lh
-        bar_y = y + int(size * 0.8)  # 글씨 아랫부분에 걸치는 밑줄 (썸네일처럼)
-        d.rounded_rectangle((int(w * 0.05), bar_y, int(w * 0.95), bar_y + max(8, size // 6)), radius=size // 10, fill=RED)
-        sw = max(6, size // 11)
-        d.text((w // 2 + sw, y + sw), line, font=fnt, fill=(0, 0, 0), anchor="mt", stroke_width=sw, stroke_fill=(0, 0, 0))
-        d.text((w // 2, y), line, font=fnt, fill=YELLOW, anchor="mt", stroke_width=sw, stroke_fill=(255, 255, 255))
+        if look["box"]:  # 줄마다 빨간 띠 위에 흰 글씨
+            tw = d.textlength(line, font=fnt)
+            pad = size * 0.3
+            d.rectangle((w / 2 - tw / 2 - pad, y - size * 0.12, w / 2 + tw / 2 + pad, y + size * 1.12), fill=look["bar"])
+        else:
+            bar_y = y + int(size * 0.8)  # 글씨 아랫부분에 걸치는 밑줄 (썸네일처럼)
+            d.rounded_rectangle((int(w * 0.05), bar_y, int(w * 0.95), bar_y + max(8, size // 6)), radius=size // 10, fill=look["bar"])
+        fill = look["fill"][i % len(look["fill"])]
+        d.text((w // 2 + sw // 2 + 4, y + sw // 2 + 6), line, font=fnt, fill=(0, 0, 0), anchor="mt", stroke_width=sw, stroke_fill=(0, 0, 0))
+        d.text((w // 2, y), line, font=fnt, fill=fill, anchor="mt", stroke_width=sw, stroke_fill=look["stroke"])
     if sub:
         sf = it.font(int(size * 0.32))
         d.text((w // 2, y0 + lh * len(lines) + int(size * 0.35)), sub, font=sf, fill=(220, 224, 235), anchor="mt")
@@ -212,12 +227,8 @@ def _cover_photo(shots):
 
 
 def _classic_on(base, w, h, title):
-    """예전 표지(노란 글씨 + 흰 테두리 + 빨간 밑줄)를 흐린 상품 사진 위에."""
-    card = _title_card(w, h, title)
-    plain = _backdrop(w, h)
-    diff = ImageChops.difference(card, plain).convert("L").point(lambda v: 255 if v > 8 else 0)
-    base.paste(card, (0, 0), diff)
-    return base
+    """굵은 글씨 표지(흰·노랑 글씨 + 검은 테두리 + 밑줄/띠)를 흐린 상품 사진 위에."""
+    return _title_card(w, h, title, look=random.choice(CLASSIC_LOOKS), bg=base)
 
 
 class Photo:
