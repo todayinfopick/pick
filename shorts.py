@@ -24,6 +24,7 @@ W, H = 1080, 1920
 COVER_SEC, END_SEC, GAP = 1.4, 2.2, 0.15
 VOICE = os.environ.get("SHORTS_VOICE", "ko-KR-SunHiNeural")
 RATE = os.environ.get("SHORTS_RATE", "+20%")  # 쇼핑 쇼츠는 보통 1.2배 정도로 빠르게
+MARK = os.environ.get("SHORTS_MARK", "@오늘의픽쇼핑")  # 영상 위쪽에 옅게 넣는 채널 이름 (퍼가기 방지). 비우면 없음
 
 SCRIPT_PROMPT = """너는 쿠팡 상품을 소개하는 유튜브 쇼츠 대본 작가다.
 상품: {name}
@@ -113,6 +114,18 @@ class Talk(bv.Photo):
         return ov
 
 
+def _mark(text):
+    """왼쪽 위 옅은 채널 이름. 쇼츠 화면의 버튼(오른쪽·아래)과 안 겹치는 자리."""
+    size = int(W * 0.034)
+    fnt = bv._heavy(size)
+    d = ImageDraw.Draw(Image.new("RGBA", (1, 1)))
+    tw = int(d.textlength(text, font=fnt))
+    ov = Image.new("RGBA", (tw + size, int(size * 1.6)), (0, 0, 0, 0))
+    ImageDraw.Draw(ov).text((size // 2, ov.height // 2), text, font=fnt, fill=(255, 255, 255, 150), anchor="lm",
+                            stroke_width=2, stroke_fill=(0, 0, 0, 90))
+    return ov
+
+
 def make(out, item, photos, script=None, footer=""):
     """쇼츠 영상 하나를 out(mp4)에 만든다. photos: PIL 이미지 3장 이상 (모자라면 돌려 씀)."""
     if len(photos) < 3:
@@ -151,6 +164,7 @@ def make(out, item, photos, script=None, footer=""):
         filt += ";[voice]anull[a]"
 
     foot = bv._footer(W, H, footer) if footer else None
+    mark = _mark(MARK) if MARK else None
     cmd = [_ffmpeg(), "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
            "-r", str(bv.FPS), "-i", "-"] + inputs
     cmd += ["-filter_complex", filt, "-map", "0:v", "-map", "[a]", "-t", f"{total:.2f}",
@@ -170,9 +184,12 @@ def make(out, item, photos, script=None, footer=""):
                 if k + 1 not in nxt:
                     nxt[k + 1] = scenes[k + 1][1].render(0)
                 frame = Image.blend(frame, nxt[k + 1], (t - start - (dur - bv.FADE)) / bv.FADE)
-            if foot is not None:
+            if foot is not None or mark is not None:
                 frame = frame.copy()
+            if foot is not None:
                 frame.paste(foot, (0, H - foot.height), foot)
+            if mark is not None and 0 < k < len(scenes) - 1:  # 표지·마무리 카드엔 안 넣음
+                frame.paste(mark, (int(W * 0.04), int(H * 0.055)), mark)
             proc.stdin.write(frame.tobytes())
     finally:
         proc.stdin.close()
