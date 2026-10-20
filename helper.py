@@ -268,6 +268,12 @@ def is_link(text):
     return affiliates.looks_like_link(text) and affiliates.detect(text)["ok"]
 
 
+def is_known_link(text):
+    """복사 감지용: 제휴처.csv에 주소가 적힌 제휴 링크만 (다른 사이트 주소를 복사해도 링크 칸에 안 들어가게)."""
+    return affiliates.looks_like_link(text) and affiliates.detect(text).get("links") != ["*"] \
+        and affiliates.detect(text)["ok"]
+
+
 def is_plain_store(text):
     """제휴 링크가 아닌 일반 쇼핑몰 주소인지 (수익이 안 잡힘)."""
     return affiliates.looks_like_link(text) and affiliates.detect(text)["plain"]
@@ -540,7 +546,7 @@ class Helper:
             return
         if not affiliates.looks_like_link(text):
             # 제휴 링크 복사 기능이 '상품명 + 링크'처럼 여러 줄로 복사하는 경우: 링크만 꺼내 쓴다
-            found = [w for w in text.split() if w.startswith("http") and is_link(w)]
+            found = [w for w in text.split() if w.startswith("http") and is_known_link(w)]
             if found:
                 text = found[0]
         if is_plain_store(text):
@@ -549,7 +555,7 @@ class Helper:
                      "제휴 프로그램에서 만든 링크를 복사하세요.")
             self.root.bell()
             return
-        if is_link(text):
+        if is_known_link(text):
             cur_link = self.link.get().strip()
             # 링크 없이 먼저 받아 둔 확장프로그램 내용·캡처 사진은 이 링크의 것이라 남긴다
             keep = not cur_link and (self.page_text or self.images)
