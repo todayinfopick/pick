@@ -541,20 +541,97 @@ class PostTab:
 
 
 # ---------------------------------------------------------------- 블로그 탭
-def blog_index():
+def blog_index(name="index.json", empty=None):
     """서버가 만든 블로그 글 목록 (blog-packages 브랜치의 index.json). 아직 없으면 빈 목록.
     raw 주소는 몇 분씩 옛 목록을 주므로(지운 글이 남아 보임) 깃허브 API로 먼저 읽는다."""
+    empty = {"packages": []} if empty is None else empty
     try:
-        r = requests.get(f"https://api.github.com/repos/{repo()}/contents/index.json", headers=gh_headers(),
+        r = requests.get(f"https://api.github.com/repos/{repo()}/contents/{name}", headers=gh_headers(),
                          params={"ref": "blog-packages"}, timeout=30)
         if r.ok:
             import base64
             return json.loads(base64.b64decode(r.json()["content"]).decode("utf-8"))
     except Exception:
         pass
-    r = requests.get(f"https://raw.githubusercontent.com/{repo()}/blog-packages/index.json",
+    r = requests.get(f"https://raw.githubusercontent.com/{repo()}/blog-packages/{name}",
                      params={"t": datetime.datetime.now().timestamp()}, timeout=30)
-    return r.json() if r.ok else {"packages": []}
+    return r.json() if r.ok else empty
+
+
+def fmt_vol(v):
+    return f"{v / 10000:.1f}만".replace(".0만", "만") if v >= 10000 else f"{v:,}"
+
+
+class KeywordWindow:
+    """🛍 상품 키워드: 서버가 새벽마다 모으는 상품 추천 키워드(keywords.json의 products)를 보고
+    복사하거나 쿠팡·네이버쇼핑 검색으로 바로 열어 올릴 상품을 고른다. 쿠팡 등록·블로그 쇼핑커넥트 둘 다에 씀."""
+
+    def __init__(self, root):
+        old = getattr(root, "_kw_win", None)
+        if old is not None and old.winfo_exists():
+            old.lift()
+            return
+        self.win = win = tk.Toplevel(root)
+        root._kw_win = win
+        win.title("🛍 오늘의 상품 키워드")
+        win.geometry("460x520")
+        self.note = tk.Label(win, text="불러오는 중…", anchor="w", justify="left", wraplength=430)
+        self.note.pack(fill="x", padx=8, pady=(8, 2))
+        cols = ("kw", "vol", "lv")
+        self.tree = ttk.Treeview(win, columns=cols, show="headings", height=16)
+        for c, t, w in zip(cols, ("키워드", "월 검색량", "경쟁"), (220, 100, 70)):
+            self.tree.heading(c, text=t)
+            self.tree.column(c, width=w, anchor="w" if c == "kw" else "center")
+        self.tree.pack(fill="both", expand=True, padx=8)
+        self.tree.bind("<Double-1>", lambda _e: self.open("coupang"))
+        btns = tk.Frame(win)
+        btns.pack(fill="x", padx=8, pady=8)
+        tk.Button(btns, text="복사", command=self.copy).pack(side="left")
+        tk.Button(btns, text="쿠팡에서 보기", command=lambda: self.open("coupang")).pack(side="left", padx=4)
+        tk.Button(btns, text="네이버쇼핑에서 보기", command=lambda: self.open("naver")).pack(side="left")
+        tk.Button(btns, text="새로고침", command=self.load).pack(side="right")
+        tk.Label(win, text="더블클릭하면 쿠팡 검색이 열려요. 경쟁 낮은 것부터 위에 있어요.", fg="#666").pack(anchor="w", padx=8, pady=(0, 8))
+        self.load()
+
+    def load(self):
+        self.note.config(text="불러오는 중…")
+        in_thread(self.win, lambda: blog_index("keywords.json", {}), self.fill)
+
+    def fill(self, rep, err):
+        if not self.win.winfo_exists():
+            return
+        self.tree.delete(*self.tree.get_children())
+        items = (rep or {}).get("products") or []
+        if err or not items:
+            self.note.config(text="상품 키워드가 아직 없어요. 키 탭에 네이버 검색광고 키가 있어야 새벽에 모아요." if not err else f"불러오지 못했어요: {err}")
+            return
+        for x in items:
+            self.tree.insert("", "end", values=(x.get("keyword", ""), fmt_vol(x.get("volume") or 0), x.get("level") or "-"))
+        when = str(rep.get("updated", "")).replace("T", " ")
+        self.note.config(text=f"{when} 갱신 · 검색량 많고 경쟁 낮은 상품 키워드 {len(items)}개 (설정의 상품 분야 기준)")
+
+    def keyword(self):
+        sel = self.tree.selection()
+        if not sel:
+            messagebox.showinfo("상품 키워드", "키워드를 먼저 고르세요.", parent=self.win)
+            return ""
+        return self.tree.item(sel[0], "values")[0]
+
+    def copy(self):
+        kw = self.keyword()
+        if kw:
+            self.win.clipboard_clear()
+            self.win.clipboard_append(kw)
+            self.note.config(text=f"'{kw}' 복사했어요.")
+
+    def open(self, where):
+        kw = self.keyword()
+        if not kw:
+            return
+        from urllib.parse import quote
+        url = (f"https://www.coupang.com/np/search?q={quote(kw)}" if where == "coupang"
+               else f"https://search.shopping.naver.com/search/all?query={quote(kw)}")
+        webbrowser.open(url)
 
 
 def kw_note(p):
@@ -563,8 +640,7 @@ def kw_note(p):
     v = k.get("volume")
     if not v:
         return ""
-    vol = f"{v / 10000:.1f}만" if v >= 10000 else f"{v:,}"
-    return f" · 🔍월 {vol}" + (f" 경쟁 {k['level']}" if k.get("level") else "")
+    return f" · 🔍월 {fmt_vol(v)}" + (f" 경쟁 {k['level']}" if k.get("level") else "")
 
 
 class BlogTab:
@@ -1058,6 +1134,7 @@ class App:
         self.topmost = tk.BooleanVar(value=False)
         tk.Checkbutton(head, text="항상 위", variable=self.topmost,
                        command=lambda: root.attributes("-topmost", self.topmost.get())).pack(side="right")
+        tk.Button(head, text="🛍 상품 키워드", command=lambda: KeywordWindow(root)).pack(side="right", padx=6)
 
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
