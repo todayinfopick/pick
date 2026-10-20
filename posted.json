@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "image",
-    "last_slot": "2026-10-20 18:00",
+    "last_kind": "video",
+    "last_slot": "2026-10-20 21:00",
     "last_general_slot": "2026-10-20 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -488,10 +488,26 @@
       "reply": "18146117221585743"
     },
     "fails": {
-      "instagram": 1
+      "instagram": 2
     },
     "name": "바이탈플랜트 인덕션 롤팬 뉴오리지널 케요네즈",
     "link": "https://link.coupang.com/a/hZIfAb9lpk",
     "account": 2
+  },
+  "상품:포렌코즈타투끌레르벨벳틴트": {
+    "threads": {
+      "id": "18118489513794029",
+      "kind": "carousel",
+      "at": "2026-10-20T21:07:06",
+      "reply": "17937543396392538"
+    },
+    "instagram": {
+      "id": "18029576066877893",
+      "kind": "video",
+      "at": "2026-10-20T21:08:51"
+    },
+    "name": "포렌코즈 타투 끌레르 벨벳 틴트, 19모스, 1개",
+    "link": "https://link.coupang.com/a/hWOgkDW0tg",
+    "account": 1
   }
 }
