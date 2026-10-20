@@ -112,6 +112,12 @@ jobs:
         if: inputs.mode == '일반 글 미리보기'
         run: python general.py --dry-run
 
+      # 다음에 올라갈 상품의 사진 미리보기 (docs/preview/): 원할 때만 열어 사진을 빼거나 살림
+      - name: 사진 미리보기 페이지
+        if: "!cancelled() && (env.CHECK != 'true' || steps.check.outputs.any == '1')"
+        continue-on-error: true
+        run: python preview.py
+
       - name: 링크 페이지 만들기
         if: always() && (env.CHECK != 'true' || steps.check.outputs.any == '1')
         run: python build_page.py
@@ -122,7 +128,7 @@ jobs:
           python cloud_sync.py push || true
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
-          for f in posted.json research.json docs; do [ -e "$f" ] && git add -f "$f"; done
+          for f in posted.json research.json ai_drop.json docs; do [ -e "$f" ] && git add -f "$f"; done
           git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase && git push -q)
 
       - name: 미리보기 이미지

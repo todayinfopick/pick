@@ -6,6 +6,7 @@
 import base64
 import hashlib
 import io
+import json
 import os
 import pathlib
 import sys
@@ -495,34 +496,73 @@ def has_text(im):
     return words >= max_words or area >= g.width * g.height * max_area
 
 
-_ai_drop = {}  # 상품명 → 관계없다고 나온 사진의 지문 (한 번 게시하는 동안 다시 묻지 않음)
+AI_DROP_FILE = BASE / "ai_drop.json"        # 상품 폴더 이름 → {"seen": [지문], "drop": [지문]} (AI 판정 저장, 다시 안 물음)
+EXCLUDE_FILE = BASE / "photo_exclude.json"  # 미리보기 페이지에서 사람이 고친 것: 상품 폴더 이름 → {"off": [...], "on": [...]}
+
+
+def _load_json(path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def ai_dropped(name, allp, marks):
+    """제미나이가 관계없다고 고른 사진의 지문. 같은 사진들로 이미 물어봤으면 저장된 답을 쓴다."""
+    import memo_ai
+    if os.getenv("AI_PHOTO_CHECK", "1") == "0":
+        return set()
+    key = folder_name(name)
+    data = _load_json(AI_DROP_FILE)
+    entry = data.get(key) or {}
+    if set(marks) <= set(entry.get("seen") or []):
+        return set(entry.get("drop") or [])
+    if not memo_ai.enabled():
+        return set()
+    try:
+        drop = memo_ai.unrelated_photos(name, allp)
+    except Exception as e:
+        print(f"  (AI 사진 확인을 못 해서 그대로 씁니다: {str(e)[:120]})")
+        return set()
+    if len(allp) - len(drop) < 2:
+        drop = set()  # 거의 다 빼라고 하면 잘못 본 것
+    if drop:
+        print(f"  (AI가 상품과 관계없는 사진 {len(drop)}장을 뺐습니다)")
+    data[key] = {"seen": marks, "drop": [marks[i] for i in sorted(drop)]}
+    try:
+        AI_DROP_FILE.write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
+    except OSError:
+        pass
+    return set(data[key]["drop"])
+
+
+def photo_marks(name, allp):
+    """사진마다 (지문, 쓸지 여부, 이유). 이유: '' / 'AI' / '직접 뺌' / '직접 살림'."""
+    marks = [photo_hash(im) for im in allp]
+    ai = ai_dropped(name, allp, marks) if name and allp else set()
+    mine = _load_json(EXCLUDE_FILE).get(folder_name(name)) or {} if name else {}
+    off, on = set(mine.get("off") or []), set(mine.get("on") or [])
+    out = []
+    for m in marks:
+        if m in off:
+            out.append((m, False, "직접 뺌"))
+        elif m in ai and m not in on:
+            out.append((m, False, "AI"))
+        else:
+            out.append((m, True, "직접 살림" if m in ai else ""))
+    return out
 
 
 def drop_unrelated(name, photos, details):
-    """제미나이(무료)가 상품과 관계없다고 고른 사진(다른 상품, 홍보 배너, 안내문 등)을 뺀다.
-    키가 없거나 실패하면 그대로. 전부 빼라고 하면 무시."""
-    import memo_ai
-    if not name or not memo_ai.enabled() or os.getenv("AI_PHOTO_CHECK", "1") == "0":
-        return photos, details
+    """상품과 관계없는 사진(다른 상품, 홍보 배너, 안내문 등)을 뺀다: 제미나이(무료) 판정 + 미리보기 페이지에서 직접 고친 것.
+    키가 없거나 실패하면 그대로."""
     allp = list(photos) + list(details)
-    if not allp:
+    if not name or not allp:
         return photos, details
-    marks = [photo_hash(im) for im in allp]
-    if name not in _ai_drop:
-        try:
-            drop = memo_ai.unrelated_photos(name, allp)
-        except Exception as e:
-            print(f"  (AI 사진 확인을 못 해서 그대로 씁니다: {str(e)[:120]})")
-            drop = set()
-        if len(allp) - len(drop) < 2:
-            drop = set()  # 거의 다 빼라고 하면 잘못 본 것
-        _ai_drop[name] = {marks[i] for i in drop}
-        if drop:
-            print(f"  (AI가 상품과 관계없는 사진 {len(drop)}장을 뺐습니다)")
-    bad = _ai_drop[name]
-    keep = [im for im, m in zip(allp, marks) if m not in bad]
-    n = len(photos) - sum(1 for m in marks[:len(photos)] if m in bad)
-    return keep[:n], keep[n:]
+    use = [ok for _, ok, _ in photo_marks(name, allp)]
+    keep_p = [im for im, ok in zip(photos, use) if ok]
+    keep_d = [im for im, ok in zip(details, use[len(photos):]) if ok]
+    return keep_p, keep_d
 
 
 def pick_photos(photos, details, need, strict=False, name=""):
