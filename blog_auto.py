@@ -630,6 +630,22 @@ def product_photos(urls, limit=14):
     return out[:limit]
 
 
+def drop_other_products(name, photos):
+    """상세페이지 안에 섞인 판매자의 다른 상품·홍보 배너·안내문 사진을 제미나이(무료)가 골라 뺀다.
+    쿠팡 쪽(memo_ai.unrelated_photos)과 같은 판정. 키가 없거나 실패하면 그대로 둔다."""
+    import memo_ai
+    if not name or not photos or not memo_ai.env("GEMINI_API_KEY"):
+        return photos
+    try:
+        drop = memo_ai.unrelated_photos(name, photos)
+    except Exception as e:
+        log(f"    (관계없는 사진 거르기를 건너뜁니다: {e})")
+        return photos
+    if drop:
+        log(f"    상품과 관계없는 사진 {len(drop)}장 뺌 (제미나이 판정)")
+    return [im for k, im in enumerate(photos) if k not in drop]
+
+
 def product_keyword_block(cands):
     if not cands:
         return ""
@@ -783,7 +799,7 @@ def product_package(path, site, cfg, index, hist, now):
     blog = find_blog(cfg, d.get("blog", "")) or find_blog(cfg, "naver2")
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
     log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
-    photos = product_photos(d.get("images") or [])
+    photos = drop_other_products(d.get("name", ""), product_photos(d.get("images") or []))
     if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 9장이 안 되면 글은 쓰지 않음 (사용자 기준)
         if len(photos) >= MIN_VIDEO_PHOTOS and d.get("video", True):  # 사진이 적어도 영상은 만들어 둠 (보내기 화면에서 끌 수 있음)
             log(f"  상품 사진이 {len(photos)}장이라 글은 쓰지 않고 영상만 만듭니다 (글은 최소 {MIN_PRODUCT_PHOTOS}장)")
