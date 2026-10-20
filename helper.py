@@ -611,6 +611,10 @@ class Helper:
             self.say("자동 수집 중이라 복사한 글은 넣지 않았어요. 상품명은 쿠팡 페이지에서 가져와요.")
             return
         one_line = " ".join(text.split())
+        if len(one_line) > 500:
+            # 블로그 글처럼 긴 글은 다른 작업에서 복사한 것으로 본다
+            self.say("긴 글(500자 넘음)은 상품명·메모에 넣지 않았어요.")
+            return
         if not re.search(r"[가-힣A-Za-z]{2}", one_line) or len(one_line) < 4:
             # 상품번호·가격·코드처럼 숫자 위주의 짧은 글은 상품명·메모로 쓰지 않는다
             self.say(f"'{one_line[:20]}'은(는) 번호 같아서 넣지 않았어요.")
