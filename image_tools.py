@@ -398,12 +398,52 @@ def detail_pieces(images, limit=DETAIL_MAX):
     return out[:limit]
 
 
+# 상세페이지에 섞여 있는 상품과 관계없는 조각(배송·교환·반품 안내, 쿠폰·이벤트, 판매자 공지)을 알아보는 말.
+# 시트 '_설정'의 DETAIL_SKIP_WORDS(띄어쓰기로 구분)로 더 넣을 수 있다.
+NOTICE_WORDS = ("배송안내 배송정보 배송기간 택배 출고 영업일 교환안내 교환반품 교환/반품 교환및반품 반품 환불 고객센터 상담시간 A/S AS안내 "
+                "주의사항 유의사항 공지 쿠폰 이벤트 적립금 리뷰이벤트 포토리뷰 상품정보제공고시 판매자정보 "
+                "함께구매 추천상품 다른상품 브랜드관")
+_notice_cache = {}
+
+
+def is_notice(im, key=None):
+    """상품 설명이 아닌 안내·광고 조각인지 (OCR). 확인할 수 없으면 False(그대로 씀)."""
+    if key in _notice_cache:
+        return _notice_cache[key]
+    found = False
+    if _ocr_ready():
+        import pytesseract
+        g = im.convert("L")
+        if max(g.size) > 1400:
+            g = ImageOps.contain(g, (1400, 1400))
+        try:
+            text = re.sub(r"\s+", "", pytesseract.image_to_string(g, lang="kor+eng", config="--psm 11", timeout=30)).upper()
+        except Exception:
+            text = ""
+        words = (NOTICE_WORDS + " " + (os.getenv("DETAIL_SKIP_WORDS") or "")).replace(",", " ").split()
+        found = next((w for w in words if w.upper() in text), False)
+        if found:
+            print(f"  (상세 조각 1장은 상품과 관계없는 안내라 뺐습니다: '{found}')")
+            found = True
+    if key is not None:
+        _notice_cache[key] = found
+    return found
+
+
 def detail_photos(name):
-    """사진 폴더/상세 의 조각들 (없으면 빈 목록)."""
+    """사진 폴더/상세 의 조각들 (없으면 빈 목록). 배송·교환 안내, 쿠폰 같은 조각은 뺀다."""
     folder = photo_root() / folder_name(name) / DETAIL_DIR
     if not folder.is_dir():
         return []
-    return [im for im in (load_photo(str(f)) for f in images_in(folder)) if im is not None][:DETAIL_MAX]
+    out = []
+    for f in images_in(folder):
+        im = load_photo(str(f))
+        if im is None or is_notice(im, key=(str(f), f.stat().st_mtime)):
+            continue
+        out.append(im)
+        if len(out) >= DETAIL_MAX:
+            break
+    return out
 
 
 # ---------------------------------------------------------------- 글자 없는 사진 고르기
