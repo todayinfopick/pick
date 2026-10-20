@@ -210,6 +210,11 @@ def same_photo(a, b):
     return sum(abs(x - y) for x, y in zip(pa, pb)) / len(pa) < 6
 
 
+def photo_hash(im):
+    """같은 파일에서 읽은 사진이면 같은 값 (한 번 게시하는 동안 사진 구분용)."""
+    return hashlib.md5(im.convert("RGB").resize((32, 32)).tobytes()).hexdigest()
+
+
 def is_duplicate(im, others):
     fp = _fingerprint(im)
     return any(same_photo(fp, _fingerprint(o)) for o in others)
@@ -490,10 +495,41 @@ def has_text(im):
     return words >= max_words or area >= g.width * g.height * max_area
 
 
-def pick_photos(photos, details, need, strict=False):
+_ai_drop = {}  # 상품명 → 관계없다고 나온 사진의 지문 (한 번 게시하는 동안 다시 묻지 않음)
+
+
+def drop_unrelated(name, photos, details):
+    """제미나이(무료)가 상품과 관계없다고 고른 사진(다른 상품, 홍보 배너, 안내문 등)을 뺀다.
+    키가 없거나 실패하면 그대로. 전부 빼라고 하면 무시."""
+    import memo_ai
+    if not name or not memo_ai.enabled() or os.getenv("AI_PHOTO_CHECK", "1") == "0":
+        return photos, details
+    allp = list(photos) + list(details)
+    if not allp:
+        return photos, details
+    marks = [photo_hash(im) for im in allp]
+    if name not in _ai_drop:
+        try:
+            drop = memo_ai.unrelated_photos(name, allp)
+        except Exception as e:
+            print(f"  (AI 사진 확인을 못 해서 그대로 씁니다: {str(e)[:120]})")
+            drop = set()
+        if len(allp) - len(drop) < 2:
+            drop = set()  # 거의 다 빼라고 하면 잘못 본 것
+        _ai_drop[name] = {marks[i] for i in drop}
+        if drop:
+            print(f"  (AI가 상품과 관계없는 사진 {len(drop)}장을 뺐습니다)")
+    bad = _ai_drop[name]
+    keep = [im for im, m in zip(allp, marks) if m not in bad]
+    n = len(photos) - sum(1 for m in marks[:len(photos)] if m in bad)
+    return keep[:n], keep[n:]
+
+
+def pick_photos(photos, details, need, strict=False, name=""):
     """게시에 쓸 사진: 글자 없는 대표·썸네일 → (모자라면) 글자 없는 상세 조각.
     strict=False(인스타): 그래도 모자라면 글자 있는 대표 사진으로 채움. strict=True(쓰레드): 글자 없는 것만.
-    상세 조각은 글자가 있으면 절대 쓰지 않는다."""
+    상세 조각은 글자가 있으면 절대 쓰지 않는다. name을 주면 상품과 관계없는 사진을 먼저 AI로 뺀다."""
+    photos, details = drop_unrelated(name, photos, details)
     flags = [has_text(im) for im in photos]
     clean = [im for im, f in zip(photos, flags) if not f]
     texty = [im for im, f in zip(photos, flags) if f]
