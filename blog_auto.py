@@ -746,10 +746,39 @@ def product_package(path, site, cfg, index, hist, now):
     return True
 
 
+def split_drafts(path):
+    """한 파일에 글이 여러 편이면(@title 줄이 2개 이상) 글마다 파일로 나눈다. 뒤 글에 없는 머리 줄(@blog·@category·@use 등)은
+    첫 글 것을 이어 받는다. 나눈 파일 경로 목록을 돌려준다 (한 편이면 그대로)."""
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+    starts = []  # 글마다 머리(@ 줄 묶음)가 시작하는 줄
+    for i, ln in enumerate(lines):
+        if ln.startswith("@title:"):
+            j = i
+            while j > 0 and lines[j - 1].startswith("@"):
+                j -= 1
+            starts.append(j)
+    if len(starts) < 2:
+        return [path]
+    parts = [lines[a:b] for a, b in zip(starts, starts[1:] + [len(lines)])]
+    first = {ln.split(":", 1)[0] for ln in parts[0] if ln.startswith("@")}
+    base = [ln for ln in parts[0] if ln.startswith("@") and ln.split(":", 1)[0] not in ("@title", "@tags", "@topic", "@keyword", "@photo")]
+    out = []
+    for k, part in enumerate(parts):
+        own = {ln.split(":", 1)[0] for ln in part if ln.startswith("@")}
+        head = [ln for ln in base if ln.split(":", 1)[0] not in own] if k else []
+        q = path.with_name(f"{path.stem}-{k + 1:02d}{path.suffix}")
+        q.write_text("\n".join(head + part).strip() + "\n", encoding="utf-8")
+        out.append(q)
+    path.unlink()
+    log(f"  초안 한 파일에 글이 {len(parts)}편이라 나눔: {path.name}")
+    return out
+
+
 def process_drafts(site, cfg, index, hist, used_photos, now):
     """drafts/날짜/*.txt (그날 글)와 drafts/stock/*.txt (비상용)를 패키지로 만든다. 비상용은 stock 표시를 달아 둔다."""
     made = failed = 0
-    for path in sorted((site / "drafts").glob("**/*.txt")):
+    for path in [q for p in sorted((site / "drafts").glob("**/*.txt")) for q in split_drafts(p)]:
         stock = STOCK in path.parts
         if draft_package(path, site, cfg, index, hist, used_photos, now, now.strftime("%Y-%m-%d") if stock else None, stock):
             made += 1
