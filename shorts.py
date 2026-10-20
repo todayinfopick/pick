@@ -32,7 +32,7 @@ SCRIPT_PROMPT = """너는 쿠팡 상품을 소개하는 유튜브 쇼츠 대본 
 - 소리 내어 읽을 문장 5~6개. 한 문장은 25자 안팎, 친구에게 말하듯 자연스러운 존댓말(~요).
 - 첫 문장은 시청자의 고민이나 질문으로 시작하는 훅 (예: "김장 통, 아직도 작은 거 여러 개 쓰세요?").
 - 가운데는 실제로 쓸 때 좋은 점을 하나씩. 과장·최저가·효과 보장 표현 금지, 메모에 없는 수치 지어내지 않기.
-- 마지막 문장은 "자세한 정보는 설명란 링크에서 확인하세요" 같은 안내.
+- 마지막 문장은 "구매 링크는 프로필 링크에서 확인하세요" 같은 안내 (쇼츠 설명란 링크는 눌리지 않음).
 - 이모지·해시태그·따옴표 없이.
 JSON 하나만 출력: {{"title": "표지에 크게 넣을 12자 이내 문구", "lines": ["문장1", "문장2", ...]}}"""
 
@@ -50,7 +50,7 @@ def write_script(item, text=None):
     except Exception as e:
         print(f"  (쇼츠 대본을 제미나이로 못 써서 게시 글로 대신: {e})")
     text = text or {"headline": item["short"][:16], "points": []}
-    lines = [text["headline"]] + [p for p in text["points"] if p] + ["자세한 정보는 설명란 링크에서 확인하세요"]
+    lines = [text["headline"]] + [p for p in text["points"] if p] + ["구매 링크는 프로필 링크에서 확인하세요"]
     return {"title": text["headline"][:16], "lines": lines}
 
 
@@ -128,7 +128,7 @@ def make(out, item, photos, script=None, footer=""):
     scenes = [(COVER_SEC, bv.Still(bv._title_card(W, H, script["title"])))]
     for k, (line, (_, sec)) in enumerate(zip(lines, voices)):
         scenes.append((sec + GAP, Talk(W, H, photos[k % len(photos)], line, k)))
-    scenes.append((END_SEC, bv.Still(bv._title_card(W, H, "구매 링크는 설명란에", "쿠팡 파트너스 · 수수료를 받을 수 있어요"))))
+    scenes.append((END_SEC, bv.Still(bv._title_card(W, H, "구매 링크는 프로필에", "쿠팡 파트너스 · 수수료를 받을 수 있어요"))))
     total = sum(s for s, _ in scenes)
 
     # 목소리: 각 장면이 시작하는 시각에 그 줄을 놓는다
