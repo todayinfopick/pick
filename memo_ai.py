@@ -72,12 +72,12 @@ def _pieces(images):
     return out
 
 
-def _call(model, body):
+def _call(model, body, timeout=120):
     return requests.post(API.format(model=model), params={"key": env("GEMINI_API_KEY")},
-                         json=body, timeout=120)
+                         json=body, timeout=timeout)
 
 
-def generate(parts, json_out=True, temperature=0.2, search=False):
+def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
     """제미나이에 요청해 답 글자를 돌려준다 (모델 이름이 없어졌으면 다음 이름으로).
     search=True면 구글 검색으로 최신 정보를 찾아 보고 답한다 (이때는 JSON 형식 지정을 못 씀)."""
     body = {"contents": [{"role": "user", "parts": parts}],
@@ -92,7 +92,7 @@ def generate(parts, json_out=True, temperature=0.2, search=False):
         for wait in (0, 5, 20, 40):  # 붐빌 때(503)·분당 한도(429)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
             if wait:
                 time.sleep(wait)
-            r = _call(model, body)
+            r = _call(model, body, timeout)
             if r.status_code not in (429, 500, 502, 503, 504):
                 break
         if r.status_code not in (404, 429, 500, 502, 503, 504):
@@ -131,9 +131,9 @@ def unrelated_photos(name, images):
     parts = [{"text": UNRELATED_PROMPT.format(name=name, n=len(images))}]
     for n, im in enumerate(images, start=1):
         im = im.convert("RGB")
-        im.thumbnail((512, 512))
-        parts += [{"text": f"사진 {n}"}, {"inline_data": {"mime_type": "image/jpeg", "data": _jpeg(im, 80)}}]
-    text = generate(parts)
+        im.thumbnail((320, 320))  # 작게: 사진이 많으면 제미나이 답이 늦어 시간 초과가 남
+        parts += [{"text": f"사진 {n}"}, {"inline_data": {"mime_type": "image/jpeg", "data": _jpeg(im, 70)}}]
+    text = generate(parts, timeout=60)
     try:
         data = json.loads(text[text.find("{"):text.rfind("}") + 1])
     except ValueError as e:

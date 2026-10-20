@@ -500,6 +500,9 @@ AI_DROP_FILE = BASE / "ai_drop.json"        # 상품 폴더 이름 → {"seen": 
 EXCLUDE_FILE = BASE / "photo_exclude.json"  # 미리보기 페이지에서 사람이 고친 것: 상품 폴더 이름 → {"off": [...], "on": [...]}
 
 
+AI_CHECK_MAX = 18  # 제미나이에 한 번에 보내는 사진 수 (대표 + 상세 앞부분)
+
+
 def _load_json(path):
     try:
         return json.loads(path.read_text(encoding="utf-8"))
@@ -520,7 +523,7 @@ def ai_dropped(name, allp, marks):
     if not memo_ai.enabled():
         return set()
     try:
-        drop = memo_ai.unrelated_photos(name, allp)
+        drop = memo_ai.unrelated_photos(name, allp[:AI_CHECK_MAX])
     except Exception as e:
         print(f"  (AI 사진 확인을 못 해서 그대로 씁니다: {str(e)[:120]})")
         return set()
