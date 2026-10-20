@@ -181,6 +181,7 @@ class ListTab:
         tk.Button(bar, text="✨ 메모", command=self.rememo).pack(side="left")
         tk.Button(bar, text="🗑", command=self.delete).pack(side="left", padx=2)
         tk.Button(bar, text="게시됨", command=self.select_done).pack(side="left")
+        tk.Button(bar, text="🎬", command=self.remake_shorts).pack(side="left", padx=2)
         tk.Button(bar, text="📁", command=self.open_folder).pack(side="right")
 
         box = tk.Frame(frame)
@@ -316,6 +317,21 @@ class ListTab:
             with Image.open(f) as im:
                 out.append(im.copy())
         return out
+
+    def remake_shorts(self):
+        """고른 상품의 쇼츠를 서버에서 다시 만든다 (잘못된 사진은 먼저 사진 폴더에서 지움)."""
+        item = self.selected()
+        if not item or not messagebox.askyesno(
+                "쇼츠 다시 만들기", f"'{item['name'][:30]}' 쇼츠를 다시 만들까요?\n\n"
+                                 "잘못 들어간 사진이 있으면 먼저 📁 사진 폴더(상세 폴더 포함)에서 지우고,\n"
+                                 "구글 드라이브에 올라간 뒤(1~2분) 눌러 주세요.\n\n"
+                                 "5분쯤 뒤 휴대폰 쇼츠 받기 페이지에 새 영상이 올라와요."):
+            return
+
+        def done(_, err):
+            self.status.config(text=f"⚠ {err}" if err else "✓ 쇼츠 다시 만들기를 요청했어요. 5분쯤 뒤 받기 페이지를 새로고침하세요.")
+
+        in_thread(self.root, lambda: gh_dispatch(None, inputs={"mode": "쇼츠 다시 만들기", "product": item["link"]}), done)
 
     def select_done(self):
         """게시된 상품을 모두 선택 (한 번에 지울 때)."""
