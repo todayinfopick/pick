@@ -109,6 +109,8 @@ def enrich(info):
     """검색량 정보에 블로그 글 수와 경쟁도를 붙인다."""
     info["docs"] = blog_docs(info["keyword"])
     info["level"] = grade(info.get("volume"), info["docs"])
+    if not info["level"]:  # 검색 API를 못 쓰면(네이버가 새 신청을 막음) 검색광고의 경쟁 정도로 대신함
+        info["level"] = {"낮음": "낮음", "중간": "보통", "높음": "높음"}.get(info.get("comp", ""), "")
     return info
 
 
@@ -207,7 +209,7 @@ def prompt_block(rep, blog_key):
             lines.append(f"- {t['keyword']} (검색 {t.get('traffic') or '?'}{v}){news}")
     cands = rep.get("blogs", {}).get(blog_key) or []
     if cands:
-        lines.append("이 블로그 주제에서 네이버 월 검색량이 많은 키워드 (경쟁 = 블로그 글 수÷검색량, 낮을수록 노출되기 쉬움):")
+        lines.append("이 블로그 주제에서 네이버 월 검색량이 많은 키워드 (경쟁 = 블로그 글 수÷검색량, 없으면 검색광고 경쟁 정도. 낮을수록 노출되기 쉬움):")
         for c in cands[:20]:
             lv = f", 경쟁 {c['level']}" if c.get("level") else ""
             lines.append(f"- {c['keyword']} (월 {c['volume']:,}회{lv})")
