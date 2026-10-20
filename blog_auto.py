@@ -707,8 +707,9 @@ def product_package(path, site, cfg, index, hist, now):
                                    facts=("재료에 상세 설명이 거의 없다. 상품명으로 검색해 판매처·제조사의 공식 정보(구성, 용량, 성분, 사용법)를 확인하고, "
                                           "확인한 사실과 재료만 써라. 확인하지 못한 숫자·효능·인증은 지어내지 마라." if d.get("search") else
                                           "이 재료에 있는 사실만 써라. 재료에 없는 숫자·효능·인증은 지어내지 마라."))
-    text = clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
-    for _ in range(2):
+    written = (d.get("body") or "").strip()  # Claude가 미리 써서 넣은 본문이 있으면 제미나이를 부르지 않음
+    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8], search=bool(d.get("search"))))
+    for _ in range(0 if written else 2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
             break
@@ -729,7 +730,7 @@ def product_package(path, site, cfg, index, hist, now):
     except Exception:
         shutil.rmtree(site / pid, ignore_errors=True)
         raise
-    add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude",
+    add_to_index(index, pid, date, blog, pkg, text, "Claude" if written or "claude" in env("BLOG_WRITER").lower() else "제미나이",
                  now, topic)
     index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
     videos = product_videos(site / pid, text, d.get("name", ""), photos) if d.get("video", True) else []
@@ -857,7 +858,7 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
                     stop = True
                     break
                 continue
-            add_to_index(index, pid, date, blog, pkg, text, "제미나이" if "claude" not in env("BLOG_WRITER").lower() else "Claude", now, t)
+            add_to_index(index, pid, date, blog, pkg, text, "Claude" if written or "claude" in env("BLOG_WRITER").lower() else "제미나이", now, t)
             made += 1
             if not dry:
                 h["topics"].append(t["topic"])
