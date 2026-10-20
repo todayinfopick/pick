@@ -173,6 +173,7 @@ def build(cfg):
 
 
 SHOPPY = re.compile(r"추천|비교|순위|가격|후기|브랜드|세트|용품|선물|기|기기|크림|세럼|패딩|이불|매트|청소기|가습기|영양제|텀블러|신발|가방")
+NOT_PRODUCT = re.compile(r"계산기|날씨|뜻|로그인|사이트|홈페이지|고객센터|번호|시간|일정|조회|신청|다운로드|게임|영화|드라마|주가|환율")  # 상품이 아닌 검색어
 
 
 def product_ideas(seeds, limit=20):
@@ -182,7 +183,8 @@ def product_ideas(seeds, limit=20):
     found, rel = lookup(seeds)
     pool = {}
     for info in list(found.values()) + rel:
-        if info["volume"] >= MIN_VOLUME and (SHOPPY.search(info["keyword"]) or _norm(info["keyword"]) in found):
+        if info["volume"] >= MIN_VOLUME and not NOT_PRODUCT.search(info["keyword"]) \
+                and (SHOPPY.search(info["keyword"]) or _norm(info["keyword"]) in found):
             pool.setdefault(_norm(info["keyword"]), info)
     top = sorted(pool.values(), key=lambda x: -x["volume"])[:30]
     for info in top:
