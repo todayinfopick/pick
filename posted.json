@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-10-20 21:00",
+    "last_slot": "2026-10-21 11:10",
     "last_general_slot": "2026-10-21 06:40"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -508,7 +508,12 @@
     },
     "name": "바이탈플랜트 인덕션 롤팬 뉴오리지널 케요네즈",
     "link": "https://link.coupang.com/a/hZIfAb9lpk",
-    "account": 2
+    "account": 2,
+    "instagram": {
+      "id": "18001837268814033",
+      "kind": "video",
+      "at": "2026-10-21T11:21:51"
+    }
   },
   "상품:포렌코즈타투끌레르벨벳틴트": {
     "threads": {
@@ -524,6 +529,22 @@
     },
     "name": "포렌코즈 타투 끌레르 벨벳 틴트, 19모스, 1개",
     "link": "https://link.coupang.com/a/hWOgkDW0tg",
+    "account": 1
+  },
+  "상품:타고가요캐리어전용핑구쿠션인형+담요세트": {
+    "threads": {
+      "id": "18067966088786049",
+      "kind": "carousel",
+      "at": "2026-10-21T11:18:51",
+      "reply": "18104186849572433"
+    },
+    "instagram": {
+      "id": "18137701546710961",
+      "kind": "carousel",
+      "at": "2026-10-21T11:20:27"
+    },
+    "name": "타고가요 캐리어 전용 핑구 쿠션 인형 + 담요 세트",
+    "link": "https://link.coupang.com/a/hZIIYvSYDc",
     "account": 1
   }
 }

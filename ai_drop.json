@@ -63,5 +63,66 @@
    "aa482c462fae688b814dfa99c2438bf8",
    "86159587fca64402a5e83ca3342b5164"
   ]
+ },
+ "바이탈플랜트 인덕션 롤팬 뉴오리지널 케요네즈": {
+  "seen": [
+   "3eeca842d6ab04ae2cd57636def51b20",
+   "a21a46a994d11ce2112596c51c9de290",
+   "c45f77da3cf0d8788c6ec4f5cb26a378",
+   "e9e4e6579aa53112a500fec4ad90d882",
+   "7677339cbe6252001d260fa128bdcdfa",
+   "0e41fb3ee52eb726b49b91e2fe263cc3",
+   "96c86a50a0e91f630fdb4f0fade0a672",
+   "9198bcb181e13c6e8f9f920c5573b22a",
+   "d8a88316c502f55a49a9efc5c241add3",
+   "2ad0b595b007d43a443009d169cb0b8c",
+   "69480294cde91fc90f8c9f1d4874f873",
+   "dcf763f62b3aae6fd534e139a1f84abe",
+   "1b3aa3df6c7c41fc3acd605cce624aa3",
+   "9d6aea53b5ce67411f70620044e4874b",
+   "a2b795265027b7e02449845730b2968b",
+   "218ea39ba52bec82b859b6a748aee524",
+   "db3a1a7b58543487c3fc9e894e9ee7a4"
+  ],
+  "drop": [
+   "2ad0b595b007d43a443009d169cb0b8c",
+   "69480294cde91fc90f8c9f1d4874f873",
+   "dcf763f62b3aae6fd534e139a1f84abe"
+  ]
+ },
+ "뉴트로지나 딥클린 아크네 포밍 클렌저": {
+  "seen": [
+   "990628548a7ccf764fee3f84989d85fa",
+   "1a5d3e803d819ec84f94782f2e3d256d",
+   "686b72e5442dc8c91558363aba6d8762",
+   "5b7b288b78ff5bdeb747978419f4c7f7",
+   "fc5081d241183a0ef74d450ccc3cf045",
+   "aa482c462fae688b814dfa99c2438bf8",
+   "46448448e03d5b9604f1f4af1ea77e47",
+   "e517469c26af7bd44ec7d9fd3cf6bd8c",
+   "8cb93bdab4e4bb604892f5aa65218ca1",
+   "fc724d3858680bee6d2ddd45ce0bd5c4",
+   "dfc4c9f60bdfa8436102fe97ecfe1ce5",
+   "cf18b1073fd536b5ee6c2296aedd68b8"
+  ],
+  "drop": [
+   "fc5081d241183a0ef74d450ccc3cf045",
+   "aa482c462fae688b814dfa99c2438bf8"
+  ]
+ },
+ "락앤락 산리오 피규어 텀블러 LHC4470MIT_SR": {
+  "seen": [
+   "a3ccd6f2ed76d9b9d73a506a063211cf",
+   "c496cc2f25eea266987ab6c695999a9b",
+   "59849fe0d6149d1eefa695af627ada7e",
+   "d47b361739727e48d686cf29b0544388",
+   "b8893e684451c30600879365ed1cb91f",
+   "89e9922a6e4a1a45ae78c30a4f4cf566",
+   "2c9e73a1199094728f70eb635fb922c8",
+   "65d5e9f15e61278d871fe658c4f02725",
+   "b475d9924412ef528a6719b3a9769124",
+   "b2fcf4006ae471d510cf60565e9bf5b1"
+  ],
+  "drop": []
  }
 }
