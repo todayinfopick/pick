@@ -901,6 +901,8 @@ def product_package(path, site, cfg, index, hist, now):
     if videos:
         index["packages"][0]["videos"] = videos
     h["topics"] = (h["topics"] + [d.get("name", "")[:60]])[-60:]
+    nm = re.sub(r"\s+", " ", d.get("name", "")).strip()[:60]  # 같은 상품 글이 만들어졌으니 예전 '못 만든 상품' 안내는 지움
+    index["notices"] = [n for n in index.get("notices", []) if not (isinstance(n, dict) and n.get("blog") == d.get("blog", "") and n.get("name") == nm)]
     path.unlink()
     return True
 
