@@ -805,6 +805,19 @@ def video_only_package(d, blog, site, index, now, photos):
     return True
 
 
+def writer_photos(d, photos, n_gal_keep=2, n_detail=10):
+    """글을 쓸 때 보여 줄 사진: 대표·썸네일은 앞 2장만, 나머지는 상세페이지 사진(구성·사양·설명)에서 고르게 10장.
+    썸네일이 13장처럼 많으면 앞 8장이 다 썸네일이라 상세 정보를 못 읽었음 (2026-10-21)."""
+    kinds = d.get("img_kinds") or {}
+    n_gal = sum(1 for u in d.get("images") or [] if kinds.get(u) == "gallery")
+    if not n_gal or len(photos) <= n_gal_keep + n_detail:
+        return photos[:n_gal_keep + n_detail]
+    detail = photos[n_gal:] or photos[n_gal_keep:]
+    if len(detail) > n_detail:
+        detail = [detail[k * len(detail) // n_detail] for k in range(n_detail)]
+    return photos[:n_gal_keep] + detail
+
+
 def shop_notice(index, now, d, reason):
     """상품 글을 못 만든 까닭을 index.json 'notices'에 남긴다 (스튜디오 목록 맨 위에 빨간 줄로 보임, 최근 20건)."""
     index["notices"] = ([{"at": now.isoformat(timespec="seconds"), "blog": d.get("blog", ""), "name": re.sub(r"\s+", " ", d.get("name", "")).strip()[:60],
@@ -854,7 +867,7 @@ def product_package(path, site, cfg, index, hist, now):
     refs = [] if written or not d.get("ref_images") else product_photos(d["ref_images"], limit=8)
     if refs:
         prompt += f"\n(사진 중 뒤쪽 {len(refs)}장은 상세 설명·성분표 같은 참고 자료다. 내용 확인에만 쓰고 '사진에 보이는' 식으로 소개하지 마라.)\n"
-    text = clean(written) if written else clean(ask_with_photos(prompt, photos[:8] + refs, search=bool(d.get("search"))))
+    text = clean(written) if written else clean(ask_with_photos(prompt, writer_photos(d, photos) + refs, search=bool(d.get("search"))))
     for _ in range(0 if written else 2):
         n = body_chars(text)
         if lo <= n <= hi + 300:
