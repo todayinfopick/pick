@@ -801,6 +801,12 @@ def video_only_package(d, blog, site, index, now, photos):
     return True
 
 
+def shop_notice(index, now, d, reason):
+    """상품 글을 못 만든 까닭을 index.json 'notices'에 남긴다 (스튜디오 목록 맨 위에 빨간 줄로 보임, 최근 20건)."""
+    index["notices"] = ([{"at": now.isoformat(timespec="seconds"), "blog": d.get("blog", ""), "name": re.sub(r"\s+", " ", d.get("name", "")).strip()[:60],
+                          "reason": reason}] + [n for n in index.get("notices", []) if isinstance(n, dict)])[:20]
+
+
 def product_package(path, site, cfg, index, hist, now):
     """상품 재료(json) 하나로 상품 소개 글을 써서 패키지를 만들고 재료를 지운다. 성공하면 True.
     재료: blog(key), name, price, url, link(쇼핑커넥트 링크), text(페이지 글), images(글·영상에 쓸 사진 주소), ref_images(내용 참고용 사진 주소, 글에는 안 넣음)."""
@@ -813,9 +819,12 @@ def product_package(path, site, cfg, index, hist, now):
         if len(photos) >= MIN_VIDEO_PHOTOS and d.get("video", True):  # 사진이 적어도 영상은 만들어 둠 (보내기 화면에서 끌 수 있음)
             log(f"  상품 사진이 {len(photos)}장이라 글은 쓰지 않고 영상만 만듭니다 (글은 최소 {MIN_PRODUCT_PHOTOS}장)")
             ok = video_only_package(d, blog, site, index, now, photos)
+            if not ok:
+                shop_notice(index, now, d, f"사진 {len(photos)}장으로 영상을 만들지 못했어요.")
         else:
             log(f"  ! 쓸 만한 상품 사진이 {len(photos)}장뿐이라 글도 영상도 만들지 않고 재료를 지웁니다")
             ok = None  # 실패가 아니라 건너뜀 (서버 작업을 빨간불로 만들지 않음)
+            shop_notice(index, now, d, f"쓸 만한 상품 사진이 {len(photos)}장뿐이라 글·영상을 만들지 않았어요. 사진이 다 뜬 뒤 다시 보내 주세요.")
         path.unlink()
         return ok
     lo, hi = cfg.get("min_chars", 1500), cfg.get("max_chars", 2000)
@@ -925,6 +934,7 @@ def process_drafts(site, cfg, index, hist, used_photos, now):
                 d = json.loads(path.read_text(encoding="utf-8"))
                 d["error"] = f"{now:%m-%d %H:%M} {type(e).__name__}: {e}"[:500]
                 path.write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+                shop_notice(index, now, d, f"이번엔 못 만들었어요 ({type(e).__name__}). 재료는 남아 있어 다음 서버 작업 때 다시 시도해요.")
             except Exception:
                 pass
         if ok is not None:
