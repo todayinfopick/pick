@@ -164,5 +164,31 @@
    "54e69acb2427c689ce5802dae2c48cfa"
   ],
   "drop": []
+ },
+ "MIGA 초음파 무드등 가습기 4L 저소음 타이머 대용량 가정용 사무실 가습기": {
+  "seen": [
+   "d663cf6daed86a45c1c9574c7da21563",
+   "603295b02e4be1dd649e4bb04e86a629",
+   "ddec35d7c34e6012ce7c2f24950e621a",
+   "c5cc24d7e5c31108c9db3736e5d3e718",
+   "2d7a7ec24bd7b6c457e8607aee6f5bcd",
+   "b0938e6a2cba6d5acbabac23c1890691",
+   "56bc283397e70f7e7a33d36bb0a3b540",
+   "61dc4cd9478c25355f8b958115f1d3e2",
+   "8c347e1b4a8f21f7b3225c6d148af0d2",
+   "90ea13e4701f3a30f7e07a4af7326cf4",
+   "bf3a862e91d3f64f4b27a9fb26008120",
+   "0e0da4297a82c8425d08aa2989a48d53",
+   "15eb7c2bf5e04a50ede0b32b2e4662b2",
+   "ed75f5314d98f750b4a353dac5e134e1",
+   "a00b0fd87eab0fa26d39b940a7207132",
+   "18ab839d700552379a8775f5bc5d157e",
+   "8bc8ea972a1b8f270629173a72ceb800",
+   "8f8167159902e76fbeac19877ff5509a"
+  ],
+  "drop": [
+   "bf3a862e91d3f64f4b27a9fb26008120",
+   "8bc8ea972a1b8f270629173a72ceb800"
+  ]
  }
 }
