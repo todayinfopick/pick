@@ -36,7 +36,7 @@ STOCK = "stock"
 MIN_VIDEO_PHOTOS = 3  # 영상만 만들 때 최소 사진 수
 MIN_PRODUCT_PHOTOS = 1  # 서버는 1장만 남아도 글을 씀 (5장 이하는 확장에서 보내기를 막음, 사용자 결정 2026-10-21)
 PRODUCT_PHOTOS_MAX = 40  # 상품 사진은 이만큼까지 받아서 관계없는 사진을 거름 (확장이 보내는 최대치)
-PRODUCT_PHOTOS_USE = 20  # 상품 글에 넣는 사진은 최대 20장 (사용자 결정 2026-10-21)
+PRODUCT_PHOTOS_USE = 40  # 상품 글에 넣는 사진: 모은 사진 모두 (확장이 보내는 최대 40장, 20장 제한은 상세 사진이 잘려서 없앰 2026-10-21)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 VIDEO_REQ = "video"  # drafts/video/*.json: 스튜디오 '영상 다시 만들기' 요청 (패키지 id + 고른 사진)
 VSRC = "vsrc"  # 패키지 안 영상 후보 사진 폴더
@@ -465,7 +465,7 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
                        "position": "after_block"})
         if n >= (14 if topic.get("own_photos") else 3):
             break
-    if topic.get("own_photos"):  # 상품 글: 모은 상품 사진을 모두(최대 20장) 넣음: 빈 문단 뒤에 고르게, 문단이 모자라면 같은 문단 뒤에 이어서
+    if topic.get("own_photos"):  # 상품 글: 모은 상품 사진을 모두 넣음: 빈 문단 뒤에 고르게, 문단이 모자라면 같은 문단 뒤에 이어서
         used = {i.get("anchorBlockId") for i in images}
         spots = [b["id"] for b in blocks if b["type"] == "PARAGRAPH" and b["id"] not in used]
         want = len(photos)
