@@ -34,7 +34,7 @@ from main import env, log
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
 MIN_VIDEO_PHOTOS = 3  # 영상만 만들 때 최소 사진 수
-MIN_PRODUCT_PHOTOS = 6  # 상품 글은 사진 6장부터 씀 (5장 이하는 확장에서 보내기를 막음, 사용자 결정 2026-10-21)
+MIN_PRODUCT_PHOTOS = 1  # 서버는 1장만 남아도 글을 씀 (5장 이하는 확장에서 보내기를 막음, 사용자 결정 2026-10-21)
 PRODUCT_PHOTOS_MAX = 40  # 상품 사진은 이만큼까지 받아서 관계없는 사진을 거름 (확장이 보내는 최대치)
 PRODUCT_PHOTOS_USE = 20  # 상품 글에 넣는 사진은 최대 20장 (사용자 결정 2026-10-21)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
