@@ -610,6 +610,11 @@ class Helper:
         if time.time() < self.collecting:
             self.say("자동 수집 중이라 복사한 글은 넣지 않았어요. 상품명은 쿠팡 페이지에서 가져와요.")
             return
+        if self.page_text and self.target.get() == "auto":
+            # 쿠팡 페이지에서 이미 다 가져온 상품: 그다음 복사는 대개 다음 상품 것이라 메모에 붙이지 않는다
+            self.say("이 상품은 쿠팡 페이지에서 다 가져왔어요. 복사한 글은 넣지 않았어요.\n"
+                     "(직접 넣으려면 맨 위 '복사→'에서 상품명·메모를 고르고 복사하세요)")
+            return
         one_line = " ".join(text.split())
         if len(one_line) > 500:
             # 블로그 글처럼 긴 글은 다른 작업에서 복사한 것으로 본다
