@@ -34,7 +34,9 @@ from main import env, log
 BASE = pathlib.Path(__file__).resolve().parent
 STOCK = "stock"
 MIN_VIDEO_PHOTOS = 3  # 영상만 만들 때 최소 사진 수
-MIN_PRODUCT_PHOTOS = 10  # 상품 글: 대표 이미지 1장 + 본문 상품 사진 9장 (+카드 = 11장, 네이버 홈판은 보통 10장 이상)
+MIN_PRODUCT_PHOTOS = 1  # 서버는 1장만 남아도 글을 씀 (5장 이하는 확장에서 보내기를 막음, 사용자 결정 2026-10-21)
+PRODUCT_PHOTOS_MAX = 40  # 상품 사진은 이만큼까지 받아서 관계없는 사진을 거름 (확장이 보내는 최대치)
+PRODUCT_PHOTOS_USE = 20  # 상품 글에 넣는 사진은 최대 20장 (사용자 결정 2026-10-21)
 PRODUCT = "product"  # drafts/product/*.json: 스튜디오 확장이 스마트스토어 상품 페이지에서 모아 올린 재료
 VIDEO_REQ = "video"  # drafts/video/*.json: 스튜디오 '영상 다시 만들기' 요청 (패키지 id + 고른 사진)
 VSRC = "vsrc"  # 패키지 안 영상 후보 사진 폴더
@@ -463,15 +465,17 @@ def build_package(folder, blog, topic, text, used_photos, photos=None):
                        "position": "after_block"})
         if n >= (14 if topic.get("own_photos") else 3):
             break
-    if topic.get("own_photos"):  # 상품 글: 상품 사진이 본문에 최소 9장 들어가게, 남은 사진을 빈 문단 뒤에 고르게 넣음
+    if topic.get("own_photos"):  # 상품 글: 모은 상품 사진을 모두(최대 20장) 넣음: 빈 문단 뒤에 고르게, 문단이 모자라면 같은 문단 뒤에 이어서
         used = {i.get("anchorBlockId") for i in images}
         spots = [b["id"] for b in blocks if b["type"] == "PARAGRAPH" and b["id"] not in used]
-        want = min(len(photos), max(0, MIN_PRODUCT_PHOTOS - 1 - sum(1 for i in images if i["file"].endswith("-photo.jpg"))))
+        want = len(photos)
+        free = spots[:] or [b["id"] for b in blocks if b["type"] == "PARAGRAPH"]
         for k in range(want):
-            if not spots:
+            if not free:
                 break
-            at = spots[min(len(spots) - 1, (k + 1) * len(spots) // (want + 1))]
-            spots.remove(at)
+            at = spots[min(len(spots) - 1, (k + 1) * len(spots) // (want + 1))] if spots else free[k % len(free)]
+            if at in spots:
+                spots.remove(at)
             n += 1
             name = f"{n:02d}-photo.jpg"
             blog_images.photo(folder / name, photos.pop(0))
@@ -814,8 +818,10 @@ def product_package(path, site, cfg, index, hist, now):
     blog = find_blog(cfg, d.get("blog", "")) or find_blog(cfg, "naver2")
     cat = blog.get("shop_category") or blog["categories"][0]  # 쇼핑 카테고리는 일반 글감에서 고르지 않게 따로 둠
     log(f"[{blog['name']}] 상품 글: {d.get('name', '')[:40]}")
-    photos = drop_other_products(d.get("name", ""), product_photos(d.get("images") or []))
-    if len(photos) < MIN_PRODUCT_PHOTOS:  # 대표 1장 + 본문 9장이 안 되면 글은 쓰지 않음 (사용자 기준)
+    photos = drop_other_products(d.get("name", ""), product_photos(d.get("images") or [], limit=PRODUCT_PHOTOS_MAX))
+    photos = photos[:PRODUCT_PHOTOS_USE]
+    n_photos = len(photos)
+    if n_photos < MIN_PRODUCT_PHOTOS:  # 쓸 만한 사진이 하나도 없을 때만 건너뜀
         if len(photos) >= MIN_VIDEO_PHOTOS and d.get("video", True):  # 사진이 적어도 영상은 만들어 둠 (보내기 화면에서 끌 수 있음)
             log(f"  상품 사진이 {len(photos)}장이라 글은 쓰지 않고 영상만 만듭니다 (글은 최소 {MIN_PRODUCT_PHOTOS}장)")
             ok = video_only_package(d, blog, site, index, now, photos)
@@ -873,7 +879,7 @@ def product_package(path, site, cfg, index, hist, now):
     add_to_index(index, pid, date, blog, pkg, text, "Claude" if written or "claude" in env("BLOG_WRITER").lower() else "제미나이",
                  now, topic)
     index["packages"][0].update({"kind": "쇼핑", "link": d.get("link", ""), "source": d.get("url", "")})
-    videos = product_videos(site / pid, text, d.get("name", ""), photos) if d.get("video", True) else []
+    videos = product_videos(site / pid, text, d.get("name", ""), photos) if d.get("video", True) and n_photos >= MIN_VIDEO_PHOTOS else []
     spot = dict(ln[1:].split(": ", 1) for ln in text.splitlines() if ln.startswith("@") and ": " in ln).get("videospot", "")
     heads = [ln[3:].replace("**", "").strip() for ln in text.splitlines() if ln.startswith("## ")]
     spot = next((h for h in heads if spot.strip() and (h == spot.strip() or spot.strip() in h)), "")
