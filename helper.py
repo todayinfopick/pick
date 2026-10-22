@@ -393,6 +393,7 @@ class Helper:
         self.name_replace_next = False
         self.editing = None  # 수정 중인 등록 상품 {'name','memo','link'}
         self.collecting = 0.0  # 자동 수집 기다리는 마감 시각 (그때까지 복사한 글은 무시)
+        self.capture_until = 0.0  # 📷 캡처 버튼을 누른 뒤 이 시각까지는 잘라낸 사진을 받음
         self.photos_loaded = False  # 수정 모드에서 저장된 사진을 불러왔는지 (저장 시 폴더를 통째로 교체)
         self.photos_dirty = False  # 저장하지 않은 사진 변경이 있는지
         self.page_text = ""  # 확장프로그램이 보낸 상세페이지 글
@@ -531,7 +532,8 @@ class Helper:
                 h = self.hash_image(img)
                 if h != self.last_img_hash:
                     self.last_img_hash = h
-                    self.add_image(img)
+                    if self.want_image():
+                        self.add_image(img)
             else:
                 try:
                     text = self.root.clipboard_get()
@@ -540,6 +542,20 @@ class Helper:
                 if text is not None and text != self.last_text:
                     self.last_text = text
                     self.take_text(text.strip())
+
+    def want_image(self):
+        """복사한 사진을 상품 사진으로 받을지. 다른 일로 찍은 화면 캡처가 섞이지 않게 한다."""
+        if time.time() < self.capture_until:
+            return True  # 📷 캡처 버튼으로 찍은 사진
+        if not self.link.get().strip():
+            self.say("링크를 먼저 복사하세요. 링크 전에 캡처한 사진은 넣지 않아요.")
+            return False
+        if self.page_text or time.time() < self.collecting:
+            # 쿠팡 페이지에서 사진을 자동으로 가져온 상품: 화면 캡처는 대개 다른 일로 찍은 것
+            self.say("사진은 쿠팡 페이지에서 자동으로 가져왔어요. 캡처한 사진은 넣지 않았어요.\n"
+                     "(사진을 더 넣으려면 📷 캡처 버튼을 누르고 찍으세요)")
+            return False
+        return True
 
     def take_text(self, text):
         if not text:
@@ -777,6 +793,7 @@ class Helper:
 
     # ------------------------------------------------ 버튼
     def capture(self):
+        self.capture_until = time.time() + 120
         try:
             subprocess.Popen(["explorer", "ms-screenclip:"])  # 윈도우 캡처 도구 (Win+Shift+S와 같음)
             self.say("상품 사진 부분을 드래그하세요. 잘라낸 사진은 자동으로 추가됩니다.")
