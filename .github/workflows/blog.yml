@@ -98,9 +98,10 @@ jobs:
               git diff --binary "$(cat ../base_sha.txt)" FETCH_HEAD -- . ':(exclude)index.json' ':(exclude)done.json' > ../others.patch || true
               [ -s ../others.patch ] && { git apply --reject ../others.patch || echo "일부 변경은 옮기지 못함"; }
               git show FETCH_HEAD:done.json > done.json 2>/dev/null || true
-              python3 -c "import json,os;p='index.json';d=json.load(open(p,encoding='utf-8'));d['packages']=[x for x in d['packages'] if os.path.isdir(x['id'])];json.dump(d,open(p,'w',encoding='utf-8'),ensure_ascii=False,indent=1)"
               find . -name '*.rej' -delete
             fi
+            # 지운 글(content.json 없음)은 목록에서 빼고, 목록에 없는 글 폴더(지우고 남은 사진·영상)도 정리 (지운 글이 목록에 다시 뜨지 않게)
+            python3 -c "import json,os,glob,shutil;p='index.json';d=json.load(open(p,encoding='utf-8'));d['packages']=[x for x in d['packages'] if os.path.isfile(x['id']+'/content.json')];json.dump(d,open(p,'w',encoding='utf-8'),ensure_ascii=False,indent=1);k={x['id'] for x in d['packages']};[shutil.rmtree(f) for f in glob.glob('20??-??-??/*/') if f.rstrip('/') not in k]"
             lease=$(git rev-parse FETCH_HEAD 2>/dev/null || echo "")
             git checkout -q --orphan "snapshot-${GITHUB_RUN_ID:-local}-$try"
             git add -A
