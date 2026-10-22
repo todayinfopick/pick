@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "쿠팡 등록 도우미",
-  "version": "1.6",
+  "version": "1.7",
   "description": "보고 있는 쿠팡 상품 페이지의 상품명·대표 사진·상세 이미지·상세 글을 PC 쿠팡 자동게시 프로그램(등록 탭)으로 보냅니다.",
   "permissions": [],
   "host_permissions": ["http://127.0.0.1:27183/*"],
