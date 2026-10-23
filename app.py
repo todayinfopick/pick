@@ -300,6 +300,7 @@ class ListTab:
             return res
 
         def done(res, err):
+            self.app.show_ai_usage()
             if err:
                 self.status.config(text=f"⚠ {err}")
             elif not res["memo"]:
@@ -1162,6 +1163,11 @@ class App:
                        command=lambda: root.attributes("-topmost", self.topmost.get())).pack(side="right")
         tk.Button(head, text="🛍 상품 키워드", command=lambda: KeywordWindow(root)).pack(side="right", padx=6)
 
+        # Last actual local AI request; no inference from configured keys.
+        self.ai_status_var = tk.StringVar(value="AI 사용: 대기 (호출 전)")
+        tk.Label(root, textvariable=self.ai_status_var, anchor="w", fg="#185ABC",
+                 font=("", 9, "bold")).pack(fill="x", padx=10, pady=(3, 0))
+
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
         self.reg_frame = tk.Frame(self.notebook)
@@ -1183,6 +1189,17 @@ class App:
         self.notebook.bind("<<NotebookTabChanged>>", self.on_tab)
         self.loaded = set()
         self.load_settings()
+
+    def show_ai_usage(self):
+        """Refresh last actual AI call status on Tk main thread."""
+        try:
+            import memo_ai
+            usage = memo_ai.ai_usage()
+            if usage["provider"]:
+                self.ai_status_var.set(
+                    f'AI 사용: {usage["provider"]} · {usage["tier"]} · {usage["model"]} · {usage["result"]}')
+        except Exception:
+            pass
 
     def load_settings(self, then=None):
         def done(vals, err):
