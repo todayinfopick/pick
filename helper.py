@@ -463,10 +463,12 @@ class Helper:
         tk.Checkbutton(controls, text="자동 수집", variable=self.auto_collect).pack(side="left")
 
         bar = tk.Frame(box)
-        bar.pack(fill="x", padx=10, pady=8)
-        tk.Button(bar, text="📷 캡처", command=self.capture).pack(side="left")
-        tk.Button(bar, text="↩ 취소", command=self.undo_image).pack(side="left", padx=3)
-        tk.Button(bar, text="✨ 메모", command=lambda: self.run_ai(None)).pack(side="left")
+        bar.pack(fill="x", padx=6, pady=8)
+        tk.Button(bar, text="새 상품", command=self.new_product).pack(side="left", padx=1)
+        tk.Button(bar, text="✨ 메모", command=lambda: self.run_ai(None)).pack(side="left", padx=1)
+        tk.Button(bar, text="📷 캡처", command=self.capture).pack(side="left", padx=1)
+        tk.Button(bar, text="↩ 취소", command=self.undo_image).pack(side="left", padx=1)
+        tk.Button(bar, text="📁 폴더", command=self.open_folder).pack(side="left", padx=1)
 
         # 저장 버튼은 사진 위에 둔다: 사진이 많아도 창 밖으로 밀리지 않게
         self.save_btn = tk.Button(box, text="저장 → 다음 상품", command=self.save, height=2,
@@ -485,11 +487,6 @@ class Helper:
         self.count = tk.Label(hint, text=f"0/{MAX_PHOTOS}장")
         self.count.pack(side="right")
 
-
-        bottom = tk.Frame(box)
-        bottom.pack(fill="x", padx=10)
-        tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="left", padx=4)
-        tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
 
         self.status = tk.Label(box, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.\n"
                                          "상세 설명 부분도 캡처해 두면 AI가 읽고 메모를 씁니다(게시엔 안 씀).", fg="#555",
