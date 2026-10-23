@@ -594,8 +594,6 @@ class KeywordWindow:
         tk.Button(btns, text="복사", command=self.copy).pack(side="left")
         tk.Button(btns, text="쿠팡에서 보기", command=lambda: self.open("coupang")).pack(side="left", padx=4)
         tk.Button(btns, text="네이버쇼핑에서 보기", command=lambda: self.open("naver")).pack(side="left")
-        tk.Button(btns, text="등록 연결", command=self.connect_registration).pack(side="left", padx=4)
-        tk.Button(btns, text="새로고침", command=self.load).pack(side="right")
         self.collect_btn = tk.Button(btns, text="지금 새 수집", command=self.collect_now)
         self.collect_btn.pack(side="right", padx=(0, 6))
         tk.Label(win, text="더블클릭하면 쿠팡 검색이 열려요. 경쟁 낮은 것부터 위에 있어요.", fg="#666").pack(anchor="w", padx=8, pady=(0, 8))
@@ -653,19 +651,6 @@ class KeywordWindow:
             self.win.clipboard_clear()
             self.win.clipboard_append(kw)
             self.note.config(text=f"'{kw}' 복사했어요.")
-
-    def connect_registration(self):
-        """Copy keyword and open existing affiliate registration; never treat search URL as affiliate."""
-        kw = self.keyword()
-        if not kw or self.app is None:
-            return
-        # Do not put a bare search keyword on the clipboard: the registration
-        # helper monitors clipboard and could mistake it for a product name/memo.
-        self.app.notebook.select(self.app.reg_frame)
-        self.app.helper.say(
-            f"🛍 선택 키워드: {kw}\n쿠팡파트너스·쇼핑커넥트에서 제휴 상품을 선택한 뒤 실제 제휴 링크를 복사하세요.")
-        self.win.withdraw()
-        self.app.root.lift()
 
     def open(self, where):
         kw = self.keyword()
