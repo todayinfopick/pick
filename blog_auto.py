@@ -1057,7 +1057,7 @@ def run(site, only=None, count=None, dry=False, scheduled=False, drafts_only=Fal
                     stop = True
                     break
                 continue
-            add_to_index(index, pid, date, blog, pkg, text, "Claude" if written or "claude" in env("BLOG_WRITER").lower() else "제미나이", now, t)
+            add_to_index(index, pid, date, blog, pkg, text, "Claude" if "claude" in env("BLOG_WRITER").lower() else "제미나이", now, t)
             made += 1
             if not dry:
                 h["topics"].append(t["topic"])
