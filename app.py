@@ -572,6 +572,7 @@ class KeywordWindow:
     def __init__(self, root, app=None):
         old = getattr(root, "_kw_win", None)
         if old is not None and old.winfo_exists():
+            old.deiconify()
             old.lift()
             return
         self.app = app
@@ -658,11 +659,13 @@ class KeywordWindow:
         kw = self.keyword()
         if not kw or self.app is None:
             return
-        self.win.clipboard_clear()
-        self.win.clipboard_append(kw)
+        # Do not put a bare search keyword on the clipboard: the registration
+        # helper monitors clipboard and could mistake it for a product name/memo.
         self.app.notebook.select(self.app.reg_frame)
-        self.win.lift()
-        self.note.config(text=f"✓ '{kw}' 복사 · 등록 탭 연결 완료. 제휴 서비스에서 실제 상품을 선택하고 제휴 링크를 복사하세요. 일반 검색 주소는 등록하지 않습니다.")
+        self.app.helper.say(
+            f"🛍 선택 키워드: {kw}\n쿠팡파트너스·쇼핑커넥트에서 제휴 상품을 선택한 뒤 실제 제휴 링크를 복사하세요.")
+        self.win.withdraw()
+        self.app.root.lift()
 
     def open(self, where):
         kw = self.keyword()
