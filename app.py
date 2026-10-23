@@ -569,11 +569,12 @@ class KeywordWindow:
     """🛍 상품 키워드: 서버가 주기적으로 모으는 상품 추천 키워드(keywords.json의 products)를 보고
     복사하거나 쿠팡·네이버쇼핑 검색으로 바로 열어 올릴 상품을 고른다. 쿠팡 등록·블로그 쇼핑커넥트 둘 다에 씀."""
 
-    def __init__(self, root):
+    def __init__(self, root, app=None):
         old = getattr(root, "_kw_win", None)
         if old is not None and old.winfo_exists():
             old.lift()
             return
+        self.app = app
         self.win = win = tk.Toplevel(root)
         root._kw_win = win
         win.title("🛍 오늘의 상품 키워드")
@@ -592,6 +593,7 @@ class KeywordWindow:
         tk.Button(btns, text="복사", command=self.copy).pack(side="left")
         tk.Button(btns, text="쿠팡에서 보기", command=lambda: self.open("coupang")).pack(side="left", padx=4)
         tk.Button(btns, text="네이버쇼핑에서 보기", command=lambda: self.open("naver")).pack(side="left")
+        tk.Button(btns, text="등록 연결", command=self.connect_registration).pack(side="left", padx=4)
         tk.Button(btns, text="새로고침", command=self.load).pack(side="right")
         self.collect_btn = tk.Button(btns, text="지금 새 수집", command=self.collect_now)
         self.collect_btn.pack(side="right", padx=(0, 6))
@@ -650,6 +652,17 @@ class KeywordWindow:
             self.win.clipboard_clear()
             self.win.clipboard_append(kw)
             self.note.config(text=f"'{kw}' 복사했어요.")
+
+    def connect_registration(self):
+        """Copy keyword and open existing affiliate registration; never treat search URL as affiliate."""
+        kw = self.keyword()
+        if not kw or self.app is None:
+            return
+        self.win.clipboard_clear()
+        self.win.clipboard_append(kw)
+        self.app.notebook.select(self.app.reg_frame)
+        self.win.lift()
+        self.note.config(text=f"✓ '{kw}' 복사 · 등록 탭 연결 완료. 제휴 서비스에서 실제 상품을 선택하고 제휴 링크를 복사하세요. 일반 검색 주소는 등록하지 않습니다.")
 
     def open(self, where):
         kw = self.keyword()
@@ -1161,7 +1174,7 @@ class App:
         self.topmost = tk.BooleanVar(value=False)
         tk.Checkbutton(head, text="항상 위", variable=self.topmost,
                        command=lambda: root.attributes("-topmost", self.topmost.get())).pack(side="right")
-        tk.Button(head, text="🛍 상품 키워드", command=lambda: KeywordWindow(root)).pack(side="right", padx=6)
+        tk.Button(head, text="🛍 상품 키워드", command=lambda: KeywordWindow(root, self)).pack(side="right", padx=6)
 
         # Last actual local AI request; no inference from configured keys.
         self.ai_status_var = tk.StringVar(value="AI 사용: 대기 (호출 전)")
