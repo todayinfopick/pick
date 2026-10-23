@@ -135,7 +135,7 @@
   });
 
   // 보내기 전에 모은 사진(대표·썸네일 / 상세)을 보여 주고, 상관없는 사진을 눌러 뺄 수 있게 한다.
-  function review(data, done) {
+  function review(data, done, offUrls = new Set()) {
     document.getElementById("pick-review")?.remove();
     const off = new Set();
     const all = [...data.images.map((u) => ["images", u]), ...data.details.map((u) => ["details", u])];
@@ -146,6 +146,7 @@
       <div style="padding:14px 16px;border-bottom:1px solid #e5e7eb"><b>모은 사진 확인</b><div style="font-size:12px;color:#64748b;margin-top:2px">상품과 상관없는 사진을 누르면 빠져요 (다시 누르면 돌아옴). 두 번 누르면 크게 봐요.</div></div>
       <div id="pr-body" style="padding:12px 16px;overflow:auto"></div>
       <div style="padding:12px 16px;border-top:1px solid #e5e7eb;display:flex;gap:8px;align-items:center"><span id="pr-count" style="flex:1;font-size:13px"></span>
+      <button id="pr-again" title="페이지를 다시 끝까지 내려서 빠진 사진을 더 모아요" style="padding:8px 14px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;cursor:pointer">↻ 다시 모으기</button>
       <button id="pr-cancel" style="padding:8px 14px;border:1px solid #cbd5e1;border-radius:8px;background:#fff;cursor:pointer">취소</button>
       <button id="pr-ok" style="padding:8px 14px;border:0;border-radius:8px;background:#2563eb;color:#fff;cursor:pointer">이 사진으로 보내기</button></div></div>`;
     document.body.appendChild(ov);
@@ -170,6 +171,7 @@
         c.ondblclick = () => { clearTimeout(t); window.open(u, "_blank"); };
         grid.appendChild(c);
         cells[i] = c;
+        if (offUrls.has(u)) off.add(i);
       }
       body.appendChild(grid);
     }
@@ -180,6 +182,21 @@
     };
     upd();
     ov.querySelector("#pr-cancel").onclick = () => { ov.remove(); done(null); };
+    ov.querySelector("#pr-again").onclick = async () => {
+      // 새로고침 없이 그 자리에서 다시 모은다: 뺀 사진은 그대로 빼 두고, 새로 찾은 사진만 더한다
+      const offNow = new Set(all.filter((x, i) => off.has(i)).map((x) => x[1]));
+      ov.remove();
+      btn.textContent = "⏳ 다시 모으는 중…";
+      window.scrollTo(0, 0);
+      await sleep(500);
+      await scrollToEnd(25);
+      if (clickExpand()) await sleep(1500);
+      await scrollToEnd(80);
+      const more = (a, b) => [...a, ...b.filter((u) => !a.includes(u))];
+      const name = productName() || data.name, text = detailText();
+      review({ ...data, name, text: text.length > data.text.length ? text : data.text,
+               images: more(data.images, productImages()), details: more(data.details, detailImages()) }, done, offNow);
+    };
     ov.querySelector("#pr-ok").onclick = () => { ov.remove(); done({ ...data, images: keep("images"), details: keep("details") }); };
   }
 

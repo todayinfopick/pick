@@ -1192,8 +1192,21 @@ def main():
         messagebox.showerror(APP_TITLE, f"프로그램을 시작하지 못했습니다.\n{e}\n\n"
                                         "이 프로그램이 .env, google-key.json과 같은 폴더에 있는지 확인해 주세요.")
         raise SystemExit(1)
-    root.report_callback_exception = lambda *a: messagebox.showerror(APP_TITLE, str(a[1]))
+    root.report_callback_exception = lambda *a: messagebox.showerror(APP_TITLE, explain_error(a[1]))
     root.mainloop()
+
+
+def explain_error(e):
+    """자주 나는 오류를 알아듣기 쉬운 말로."""
+    import image_tools
+    root = image_tools.photo_root()
+    drive = root.anchor
+    if isinstance(e, OSError) and drive and not os.path.exists(drive):
+        return (f"사진 폴더가 있는 {drive.rstrip(chr(92))} 드라이브가 보이지 않아요.\n\n"
+                "구글 드라이브 앱(Google Drive)이 꺼져 있거나 로그인이 풀린 것 같아요.\n"
+                "구글 드라이브 앱을 켜고, 탐색기에 G 드라이브가 보이면 다시 해 주세요.\n\n"
+                f"(사진 폴더: {root})")
+    return str(e)
 
 
 if __name__ == "__main__":
