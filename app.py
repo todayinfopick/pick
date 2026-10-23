@@ -600,7 +600,7 @@ class KeywordWindow:
         self.load()
 
     def collect_now(self):
-        """GitHub Actions 키워드 전용 실행 요청. 글 생성·발행은 하지 않는다."""
+        """Run existing keyword workflow and refresh when keywords.json is updated."""
         if not (os.getenv("GITHUB_TOKEN") or "").strip():
             if messagebox.askyesno("새 키워드 수집", "깃허브 키가 없어 자동 실행할 수 없습니다.\nGitHub Actions 화면을 열어 'Run workflow' → '키워드'로 실행할까요?", parent=self.win):
                 webbrowser.open(f"https://github.com/{repo()}/actions/workflows/{BLOG_WORKFLOW}")
@@ -610,16 +610,49 @@ class KeywordWindow:
         self.collect_btn.config(state="disabled")
         self.note.config(text="새 수집을 GitHub 서버에 요청하는 중…")
 
-        def finished(_result, err):
+        def before_dispatch(rep, err):
             if not self.win.winfo_exists():
                 return
-            self.collect_btn.config(state="normal")
             if err:
-                self.note.config(text=f"새 수집 요청 실패: {err}")
-            else:
-                self.note.config(text="✓ 새 수집 실행을 요청했습니다. GitHub Actions 완료 후 '새로고침'을 누르면 최신 결과가 표시됩니다.")
+                self.collect_btn.config(state="normal")
+                self.note.config(text=f"기존 키워드 확인 실패: {err}")
+                return
+            baseline = (rep or {}).get("updated")
 
-        in_thread(self.win, lambda: gh_dispatch("", BLOG_WORKFLOW, {"mode": "키워드", "blog": "", "count": "0"}), finished)
+            def dispatched(_result, dispatch_err):
+                if not self.win.winfo_exists():
+                    return
+                if dispatch_err:
+                    self.collect_btn.config(state="normal")
+                    self.note.config(text=f"새 수집 요청 실패: {dispatch_err}")
+                    return
+                self.note.config(text="새 수집 진행 중… 완료되면 자동 반영합니다.")
+                self._wait_for_keywords(baseline, 0)
+
+            in_thread(self.win, lambda: gh_dispatch("", BLOG_WORKFLOW, {"mode": "키워드", "blog": "", "count": "0"}), dispatched)
+
+        in_thread(self.win, lambda: blog_index("keywords.json", {}), before_dispatch)
+
+    def _wait_for_keywords(self, baseline, attempts):
+        """Poll the saved result, not the workflow dispatch acknowledgement."""
+        if not self.win.winfo_exists():
+            return
+        if attempts >= 80:
+            self.collect_btn.config(state="normal")
+            self.note.config(text="20분 동안 새 수집 결과를 확인하지 못했습니다. GitHub Actions 상태를 확인하세요.")
+            return
+
+        def checked(rep, err):
+            if not self.win.winfo_exists():
+                return
+            if not err and (rep or {}).get("updated") and (rep or {}).get("updated") != baseline:
+                self.collect_btn.config(state="normal")
+                self.fill(rep, None)
+                return
+            self.note.config(text="새 수집 진행 중… 완료되면 자동 반영합니다." if not err else f"서버 확인 재시도 중: {err}")
+            self.win.after(15000, lambda: self._wait_for_keywords(baseline, attempts + 1))
+
+        in_thread(self.win, lambda: blog_index("keywords.json", {}), checked)
 
     def load(self):
         self.note.config(text="불러오는 중…")
