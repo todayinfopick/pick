@@ -16,7 +16,7 @@ import threading
 import time
 import tkinter as tk
 import webbrowser
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 
 from PIL import Image, ImageGrab, ImageTk
 
