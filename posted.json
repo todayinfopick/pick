@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-10-23 11:10",
+    "last_slot": "2026-10-23 18:00",
     "last_general_slot": "2026-10-23 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -826,6 +826,38 @@
     },
     "name": "라보토리 스탠드 부착형 전신거울",
     "link": "https://link.coupang.com/a/h1YMvZpenY",
+    "account": 2
+  },
+  "상품:센카퍼펙트휩페이셜워시": {
+    "threads": {
+      "id": "18450341527120860",
+      "kind": "text",
+      "at": "2026-10-23T18:06:03",
+      "reply": "18113644318864037"
+    },
+    "instagram": {
+      "id": "18438862174179075",
+      "kind": "carousel",
+      "at": "2026-10-23T18:07:36"
+    },
+    "name": "센카 퍼펙트 휩 페이셜 워시, 120g, 1개",
+    "link": "https://link.coupang.com/a/h3KvdvpxK0",
+    "account": 1
+  },
+  "상품:아크이지그립스트로우빨대대용량텀블러": {
+    "threads": {
+      "id": "18057869876574100",
+      "kind": "carousel",
+      "at": "2026-10-23T18:09:36",
+      "reply": "18185196541422003"
+    },
+    "instagram": {
+      "id": "18139673974627697",
+      "kind": "video",
+      "at": "2026-10-23T18:10:47"
+    },
+    "name": "아크 이지그립 스트로우 빨대 대용량 텀블러",
+    "link": "https://link.coupang.com/a/h1ZHm2ri44",
     "account": 2
   }
 }
