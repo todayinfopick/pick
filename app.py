@@ -1202,9 +1202,8 @@ class App:
         tk.Label(root, textvariable=self.ai_status_var, anchor="w", fg="#185ABC",
                  font=("", 9, "bold")).pack(fill="x", padx=10, pady=(3, 0))
 
-        self.ai_routes_var = tk.StringVar(value="서버 AI: 설정 불러오는 중…")
-        tk.Label(root, textvariable=self.ai_routes_var, anchor="w", fg="#555",
-                 justify="left", wraplength=265).pack(fill="x", padx=10)
+        # Server AI routing remains available in settings; keep the narrow main window compact.
+        self.ai_routes_var = tk.StringVar(value="")
 
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
@@ -1247,7 +1246,7 @@ class App:
             usage = memo_ai.ai_usage()
             if usage["provider"]:
                 self.ai_status_var.set(
-                    f'AI 사용: {usage["provider"]} · {usage["tier"]} · {usage["model"]} · {usage["result"]}')
+                    f'AI: {usage["provider"]} · {usage["result"]}')
         except Exception:
             pass
 
