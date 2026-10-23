@@ -14,6 +14,13 @@ import time
 
 import requests
 
+# Local PC process only; no API key or request content is retained.
+LAST_AI_USAGE = {"provider": "", "tier": "", "model": "", "result": "대기"}
+
+
+def ai_usage():
+    return dict(LAST_AI_USAGE)
+
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 FALLBACK_MODELS = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.8-flash"]
 MAX_PARTS = 16      # 한 번에 보내는 이미지 조각 수
@@ -88,6 +95,7 @@ def _paid_fallback(models, body, timeout):
     for model in models:
         response = _call(model, body, timeout, api_key=paid_key)
         if response.ok:
+            LAST_AI_USAGE.update(provider="Gemini", tier="유료", model=model, result="성공")
             print("  ↪ 무료 Gemini 한도 초과 → 선불 유료 키로 작성 완료", flush=True)
             return response
         if response.status_code not in (404, 429):
@@ -119,6 +127,8 @@ def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
                 break
         if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
+    if r.ok:
+        LAST_AI_USAGE.update(provider="Gemini", tier="무료 키", model=model, result="성공")
     if r.status_code == 429:
         paid_response = _paid_fallback(list(dict.fromkeys(models)), body, timeout)
         if paid_response is not None:
@@ -135,6 +145,7 @@ def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
         raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 유료 키가 없거나 동일한 키입니다."
                            + (f" [{why[:200]}]" if why else ""))
     if r.status_code >= 400:
+        LAST_AI_USAGE.update(provider="Gemini", tier="무료 키", model=model, result=f"실패 ({r.status_code})")
         raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
     try:
         cand = r.json()["candidates"][0]

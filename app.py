@@ -300,6 +300,7 @@ class ListTab:
             return res
 
         def done(res, err):
+            self.app.show_ai_usage()
             if err:
                 self.status.config(text=f"⚠ {err}")
             elif not res["memo"]:
@@ -1162,6 +1163,15 @@ class App:
                        command=lambda: root.attributes("-topmost", self.topmost.get())).pack(side="right")
         tk.Button(head, text="🛍 상품 키워드", command=lambda: KeywordWindow(root)).pack(side="right", padx=6)
 
+        # Last actual local AI request; no inference from configured keys.
+        self.ai_status_var = tk.StringVar(value="AI 사용: 대기 (호출 전)")
+        tk.Label(root, textvariable=self.ai_status_var, anchor="w", fg="#185ABC",
+                 font=("", 9, "bold")).pack(fill="x", padx=10, pady=(3, 0))
+
+        self.ai_routes_var = tk.StringVar(value="서버 AI: 설정 불러오는 중…")
+        tk.Label(root, textvariable=self.ai_routes_var, anchor="w", fg="#555",
+                 justify="left", wraplength=265).pack(fill="x", padx=10)
+
         self.notebook = ttk.Notebook(root)
         self.notebook.pack(fill="both", expand=True, padx=6, pady=6)
         self.reg_frame = tk.Frame(self.notebook)
@@ -1183,6 +1193,29 @@ class App:
         self.notebook.bind("<<NotebookTabChanged>>", self.on_tab)
         self.loaded = set()
         self.load_settings()
+        self.root.after(1500, self.poll_ai_usage)
+
+    def poll_ai_usage(self):
+        self.show_ai_usage()
+        self.root.after(1500, self.poll_ai_usage)
+
+    def show_ai_routes(self):
+        """Configured server routes, not evidence of a completed remote API call."""
+        writer = self.values.get("BLOG_WRITER", "제미나이")
+        blog = "Claude API" if writer == "Claude" else "Gemini API"
+        self.ai_routes_var.set(
+            f"서버 설정: 쇼핑 글 Claude API → Gemini 대체 | 블로그 {blog} | 일반 글 Gemini → Claude API 대체")
+
+    def show_ai_usage(self):
+        """Refresh last actual AI call status on Tk main thread."""
+        try:
+            import memo_ai
+            usage = memo_ai.ai_usage()
+            if usage["provider"]:
+                self.ai_status_var.set(
+                    f'AI 사용: {usage["provider"]} · {usage["tier"]} · {usage["model"]} · {usage["result"]}')
+        except Exception:
+            pass
 
     def load_settings(self, then=None):
         def done(vals, err):
@@ -1192,6 +1225,7 @@ class App:
             self.keys.fill()
             self.post.show_info()
             self.blog.show_info()
+            self.show_ai_routes()
             if then:
                 then()
         in_thread(self.root, settings.load, done)
