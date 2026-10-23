@@ -436,17 +436,31 @@ class Helper:
 
         cat = tk.Frame(box)
         cat.pack(fill="x", padx=10, pady=(4, 0))
-        tk.Label(cat, text="분류:").grid(row=0, column=0, sticky="w")
         self.category = tk.StringVar(value="")
-        tk.Radiobutton(cat, text="AI가 골라요", value="", variable=self.category) \
-            .grid(row=0, column=1, columnspan=3, sticky="w")
-        row = 1
-        for label, words in category_groups():  # 계정별로 한 묶음 (좁은 창이라 3개씩 줄바꿈, 계정 번호는 왼쪽 칸)
-            tk.Label(cat, text=label.split()[0], fg="#2563EB", anchor="w").grid(row=row, column=0, sticky="nw")
-            for i, c in enumerate(words):
-                tk.Radiobutton(cat, text=c, value=c, variable=self.category) \
-                    .grid(row=row + i // 3, column=1 + i % 3, sticky="w")
-            row += (len(words) + 2) // 3
+        tk.Radiobutton(cat, text="AI 자동 분류", value="", variable=self.category).grid(
+            row=0, column=0, columnspan=2, sticky="w")
+        self.category_boxes = []
+        for row, (label, words) in enumerate(category_groups(), start=1):
+            tk.Label(cat, text=label.split()[0], fg="#2563EB").grid(row=row, column=0, sticky="w")
+            choice = ttk.Combobox(cat, values=list(words), state="readonly", width=23)
+            choice.grid(row=row, column=1, sticky="ew", padx=(4, 0), pady=1)
+            choice.set("분류 선택")
+            choice.bind("<<ComboboxSelected>>",
+                        lambda _event, widget=choice: self.category.set(widget.get()))
+            self.category_boxes.append(choice)
+        cat.grid_columnconfigure(1, weight=1)
+
+        def sync_category(*_args):
+            selected = self.category.get()
+            for choice in self.category_boxes:
+                if choice.get() != selected:
+                    choice.set("분류 선택")
+        self.category.trace_add("write", sync_category)
+
+        controls = tk.Frame(box)
+        controls.pack(fill="x", padx=10, pady=(2, 0))
+        tk.Checkbutton(controls, text="복사 감지", variable=self.watch).pack(side="left")
+        tk.Checkbutton(controls, text="자동 수집", variable=self.auto_collect).pack(side="left")
 
         bar = tk.Frame(box)
         bar.pack(fill="x", padx=10, pady=8)
@@ -474,8 +488,6 @@ class Helper:
 
         bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
-        tk.Checkbutton(bottom, text="복사 감지", variable=self.watch).pack(side="left")
-        tk.Checkbutton(bottom, text="자동 수집", variable=self.auto_collect).pack(side="left")
         tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="left", padx=4)
         tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
 
