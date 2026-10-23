@@ -708,6 +708,10 @@ class Helper:
         need_link = "" if self.link.get().strip() else "\n이제 파트너스 링크를 복사하세요."
         self.say(f"✓ 확장프로그램: 상품명, 사진 {added}장, 상세 이미지 {len(data.get('details') or [])}장, "
                  f"상세 글 {len(data['text']):,}자를 받았습니다.{need_link}")
+        import memo_ai
+        if not self.memo.get("1.0", "end").strip() and memo_ai.enabled():
+            # 받은 사진·상세 글로 바로 메모를 쓴다 (마음에 안 들면 ✨ 메모로 다시 쓰기)
+            self.run_ai(None)
 
     def on_target(self):
         msg = {"auto": "자동: 상품명이 비어 있으면 상품명, 아니면 특징메모에 넣습니다.",
