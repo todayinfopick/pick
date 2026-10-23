@@ -488,8 +488,8 @@ class Helper:
 
         bottom = tk.Frame(box)
         bottom.pack(fill="x", padx=10)
-        tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="left", padx=4)
         tk.Button(bottom, text="📁 폴더", command=self.open_folder).pack(side="right")
+        tk.Button(bottom, text="새 상품", command=self.new_product).pack(side="right", padx=4)
 
         self.status = tk.Label(box, text="제휴 링크(쿠팡 파트너스 등)를 복사해 보세요.\n"
                                          "상세 설명 부분도 캡처해 두면 AI가 읽고 메모를 씁니다(게시엔 안 씀).", fg="#555",
