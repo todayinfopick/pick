@@ -131,7 +131,7 @@ SPEC = [
     {"tab": "키", "group": "AI 키", "key": "GEMINI_API_KEY", "label": "제미나이 키 (메모·일반 글)", "kind": "secret",
      "default": "", "help": "aistudio.google.com → Get API key (무료)"},
     {"tab": "키", "group": "AI 키", "key": "GEMINI_MODEL", "label": "제미나이 모델", "kind": "text",
-     "default": "gemini-flash-latest"},
+     "default": "gemini-flash-lite-latest"},
     {"tab": "키", "group": "AI 키", "key": "BLOG_GEMINI_API_KEY", "label": "블로그 전용 제미나이 키 (선택)",
      "kind": "secret", "default": "",
      "help": "비우면 위 제미나이 키를 블로그도 같이 써요. 다른 구글 계정 키를 넣으면 쿠팡 쪽과 무료 한도를 나눠 쓰지 않아요"},

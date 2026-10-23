@@ -563,7 +563,7 @@ def fmt_vol(v):
 
 
 class KeywordWindow:
-    """🛍 상품 키워드: 서버가 새벽마다 모으는 상품 추천 키워드(keywords.json의 products)를 보고
+    """🛍 상품 키워드: 서버가 주기적으로 모으는 상품 추천 키워드(keywords.json의 products)를 보고
     복사하거나 쿠팡·네이버쇼핑 검색으로 바로 열어 올릴 상품을 고른다. 쿠팡 등록·블로그 쇼핑커넥트 둘 다에 씀."""
 
     def __init__(self, root):
@@ -574,12 +574,12 @@ class KeywordWindow:
         self.win = win = tk.Toplevel(root)
         root._kw_win = win
         win.title("🛍 오늘의 상품 키워드")
-        win.geometry("460x520")
-        self.note = tk.Label(win, text="불러오는 중…", anchor="w", justify="left", wraplength=430)
+        win.geometry("570x520")
+        self.note = tk.Label(win, text="불러오는 중…", anchor="w", justify="left", wraplength=540)
         self.note.pack(fill="x", padx=8, pady=(8, 2))
-        cols = ("kw", "vol", "lv")
+        cols = ("kw", "vol", "lv", "reason")
         self.tree = ttk.Treeview(win, columns=cols, show="headings", height=16)
-        for c, t, w in zip(cols, ("키워드", "월 검색량", "경쟁"), (220, 100, 70)):
+        for c, t, w in zip(cols, ("키워드", "월 검색량", "경쟁", "추천 이유"), (190, 90, 65, 175)):
             self.tree.heading(c, text=t)
             self.tree.column(c, width=w, anchor="w" if c == "kw" else "center")
         self.tree.pack(fill="both", expand=True, padx=8)
@@ -590,8 +590,32 @@ class KeywordWindow:
         tk.Button(btns, text="쿠팡에서 보기", command=lambda: self.open("coupang")).pack(side="left", padx=4)
         tk.Button(btns, text="네이버쇼핑에서 보기", command=lambda: self.open("naver")).pack(side="left")
         tk.Button(btns, text="새로고침", command=self.load).pack(side="right")
+        self.collect_btn = tk.Button(btns, text="지금 새 수집", command=self.collect_now)
+        self.collect_btn.pack(side="right", padx=(0, 6))
         tk.Label(win, text="더블클릭하면 쿠팡 검색이 열려요. 경쟁 낮은 것부터 위에 있어요.", fg="#666").pack(anchor="w", padx=8, pady=(0, 8))
         self.load()
+
+    def collect_now(self):
+        """GitHub Actions 키워드 전용 실행 요청. 글 생성·발행은 하지 않는다."""
+        if not (os.getenv("GITHUB_TOKEN") or "").strip():
+            if messagebox.askyesno("새 키워드 수집", "깃허브 키가 없어 자동 실행할 수 없습니다.\nGitHub Actions 화면을 열어 'Run workflow' → '키워드'로 실행할까요?", parent=self.win):
+                webbrowser.open(f"https://github.com/{repo()}/actions/workflows/{BLOG_WORKFLOW}")
+            return
+        if not messagebox.askyesno("새 키워드 수집", "키워드·인기 이슈·상품 추천을 지금 다시 수집할까요?\n글쓰기와 발행은 실행하지 않습니다.", parent=self.win):
+            return
+        self.collect_btn.config(state="disabled")
+        self.note.config(text="새 수집을 GitHub 서버에 요청하는 중…")
+
+        def finished(_result, err):
+            if not self.win.winfo_exists():
+                return
+            self.collect_btn.config(state="normal")
+            if err:
+                self.note.config(text=f"새 수집 요청 실패: {err}")
+            else:
+                self.note.config(text="✓ 새 수집 실행을 요청했습니다. GitHub Actions 완료 후 '새로고침'을 누르면 최신 결과가 표시됩니다.")
+
+        in_thread(self.win, lambda: gh_dispatch("", BLOG_WORKFLOW, {"mode": "키워드", "blog": "", "count": "0"}), finished)
 
     def load(self):
         self.note.config(text="불러오는 중…")
@@ -603,12 +627,12 @@ class KeywordWindow:
         self.tree.delete(*self.tree.get_children())
         items = (rep or {}).get("products") or []
         if err or not items:
-            self.note.config(text="상품 키워드가 아직 없어요. 키 탭에 네이버 검색광고 키가 있어야 새벽에 모아요." if not err else f"불러오지 못했어요: {err}")
+            self.note.config(text="상품 키워드가 아직 없어요. 키 탭에 네이버 검색광고 키가 있어야 주기적으로 모아요." if not err else f"불러오지 못했어요: {err}")
             return
         for x in items:
-            self.tree.insert("", "end", values=(x.get("keyword", ""), fmt_vol(x.get("volume") or 0), x.get("level") or "-"))
+            self.tree.insert("", "end", values=(x.get("keyword", ""), fmt_vol(x.get("volume") or 0), x.get("level") or "-", x.get("recommend_reason") or "-"))
         when = str(rep.get("updated", "")).replace("T", " ")
-        self.note.config(text=f"{when} 갱신 · 검색량 많고 경쟁 낮은 상품 키워드 {len(items)}개 (설정의 상품 분야 기준)")
+        self.note.config(text=f"{when} 갱신 · 검색량 많고 경쟁 낮은 상품 키워드 {len(items)}개 (신규 우선·강력한 상품만 조건부 재추천)")
 
     def keyword(self):
         sel = self.tree.selection()

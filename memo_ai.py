@@ -3,7 +3,7 @@
 
 .env / 시트 '_설정'
   GEMINI_API_KEY=...            : aistudio.google.com에서 받은 키 (무료)
-  GEMINI_MODEL=gemini-flash-latest
+  GEMINI_MODEL=gemini-flash-lite-latest
   AUTO_MEMO=1                   : 0이면 끔
 """
 import base64
@@ -15,7 +15,7 @@ import time
 import requests
 
 API = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-FALLBACK_MODELS = ["gemini-flash-latest", "gemini-3.8-flash", "gemini-flash-lite-latest"]
+FALLBACK_MODELS = ["gemini-flash-lite-latest", "gemini-flash-latest", "gemini-3.8-flash"]
 MAX_PARTS = 16      # 한 번에 보내는 이미지 조각 수
 CHUNK_H = 1600      # 긴 상세페이지 캡처는 이 높이로 잘라서 보냄 (글씨가 읽히게)
 MAX_W = 1000
@@ -72,9 +72,29 @@ def _pieces(images):
     return out
 
 
-def _call(model, body, timeout=120):
-    return requests.post(API.format(model=model), params={"key": env("GEMINI_API_KEY")},
+def _call(model, body, timeout=120, api_key=None):
+    """API key is provided per request; never overwrite the free key in the environment."""
+    return requests.post(API.format(model=model), params={"key": api_key or env("GEMINI_API_KEY")},
                          json=body, timeout=timeout)
+
+
+def _paid_fallback(models, body, timeout):
+    """Only called after free-tier quota exhaustion; paid usage is explicitly opt-in via secret."""
+    paid_key = env("GEMINI_PAID_API_KEY")
+    if not paid_key or paid_key == env("GEMINI_API_KEY"):
+        return None
+    # Keep the same prompt, image parts, model preference and output format.
+    # Do not retry paid 429 repeatedly (prepaid balance or paid quota may be exhausted).
+    for model in models:
+        response = _call(model, body, timeout, api_key=paid_key)
+        if response.ok:
+            print("  ↪ 무료 Gemini 한도 초과 → 선불 유료 키로 작성 완료", flush=True)
+            return response
+        if response.status_code not in (404, 429):
+            raise RuntimeError(f"선불 Gemini 요청 실패 ({response.status_code}): {response.text[:250]}")
+        if response.status_code == 429:
+            raise RuntimeError("선불 Gemini도 사용량/잔액 한도(429)에 도달했습니다. 추가 과금 재시도 없이 중단합니다.")
+    raise RuntimeError("선불 Gemini에서 사용 가능한 모델을 찾지 못했습니다.")
 
 
 def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
@@ -89,14 +109,20 @@ def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
     models = [env("GEMINI_MODEL") or FALLBACK_MODELS[0]] + FALLBACK_MODELS
     r = None
     for model in dict.fromkeys(models):
-        for wait in (0, 5, 20, 40):  # 붐빌 때(503)·분당 한도(429)는 잠시 뒤 다시, 그래도 안 되면 다음 모델
+        for wait in (0, 5, 20):  # 서버 일시 장애만 재시도; 429는 유료 대체 경로로 빠르게 전환
             if wait:
                 time.sleep(wait)
             r = _call(model, body, timeout)
-            if r.status_code not in (429, 500, 502, 503, 504):
+            if r.status_code == 429:
+                break  # 일일/분당 한도는 재시도 폭주 없이 다른 모델·유료 키로 넘김
+            if r.status_code not in (500, 502, 503, 504):
                 break
         if r.status_code not in (404, 429, 500, 502, 503, 504):
             break
+    if r.status_code == 429:
+        paid_response = _paid_fallback(list(dict.fromkeys(models)), body, timeout)
+        if paid_response is not None:
+            r = paid_response
     if search and r.status_code == 429:  # 무료 등급은 Gemini 3 이후 모델의 구글 검색 한도가 0 → 검색 없이 다시
         print("  ↪ 제미나이 구글 검색 한도가 없어 검색 없이 씁니다", flush=True)
         return generate(parts, json_out=False, temperature=temperature, search=False)
@@ -106,7 +132,7 @@ def generate(parts, json_out=True, temperature=0.2, search=False, timeout=120):
                             for v in d.get("violations", []) if v.get("quotaId"))
         except Exception:
             why = ""
-        raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 다음 회차에 다시 시도해요."
+        raise RuntimeError("제미나이 무료 사용량 한도에 걸렸습니다 (분당 또는 하루 한도). 유료 키가 없거나 동일한 키입니다."
                            + (f" [{why[:200]}]" if why else ""))
     if r.status_code >= 400:
         raise RuntimeError(f"제미나이 요청 실패 ({r.status_code}): {r.text[:300]}")
