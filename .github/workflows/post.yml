@@ -40,6 +40,8 @@ jobs:
       # 비밀값은 두 개뿐: 구글 키 파일 내용(GOOGLE_SA_JSON), PC .env 내용 통째(ENV_FILE)
       GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
       ENV_FILE: ${{ secrets.ENV_FILE }}
+      # 선불 Gemini 키는 ENV_FILE/Google Sheets와 분리하여 Actions Secret에서만 읽음
+      GEMINI_PAID_API_KEY: ${{ secrets.GEMINI_PAID_API_KEY }}
       GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
       GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
     steps:

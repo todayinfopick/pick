@@ -6,8 +6,9 @@ on:
     # 글은 새벽 4시에 Claude가 써서 drafts/에 올리고, 이 예약은 남은 초안을 정리한 뒤
     # 오늘 글이 없는 블로그만 비상용 글(drafts/stock/)이나 제미나이로 채우는 예비
     - cron: "30 20 * * *"
-    # 새벽 3시 25분쯤: 인기 검색어·검색량만 모아 keywords.json으로 (3시 52분 Claude 글쓰기가 읽음)
-    - cron: "25 18 * * *"
+    # 키워드 수집: 매일 한국 시간 새벽 3시 30분에 1회 (UTC 18:30)
+    - cron: "30 18 * * *"
+    # 필요할 때 workflow_dispatch mode=키워드로 추가 1회 실행
   workflow_dispatch:
     inputs:
       mode:
@@ -43,6 +44,8 @@ jobs:
       # 비밀값은 자동 게시와 같은 것을 씀 (제미나이·Claude·Pixabay 키가 ENV_FILE 안에 있음)
       GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
       ENV_FILE: ${{ secrets.ENV_FILE }}
+      # 선불 Gemini 키는 ENV_FILE/Google Sheets와 분리하여 Actions Secret에서만 읽음
+      GEMINI_PAID_API_KEY: ${{ secrets.GEMINI_PAID_API_KEY }}
       GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
     steps:
       - uses: actions/checkout@v4
@@ -73,12 +76,12 @@ jobs:
           fi
 
       - name: 키워드 모으기 (인기 검색어·검색량·경쟁도)
-        if: inputs.mode != '초안 정리'
+        if: (github.event_name == 'workflow_dispatch' && inputs.mode == '키워드') || (github.event_name == 'schedule' && github.event.schedule == '30 18 * * *')
         continue-on-error: true
         run: python blog_keywords.py --site site
 
       - name: 글 쓰기
-        if: inputs.mode != '키워드' && github.event.schedule != '25 18 * * *'
+        if: (github.event_name == 'schedule' && github.event.schedule == '30 20 * * *') || (github.event_name == 'workflow_dispatch' && inputs.mode != '키워드')
         run: >-
           python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
           ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
