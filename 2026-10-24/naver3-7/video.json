@@ -1,0 +1,30 @@
+{
+ "title": "국산 방한내피 세트 정보",
+ "lines": [
+  "국산 방한내피 세트",
+  "블랙 및 네이버 색상",
+  "L부터 5XL까지",
+  "겉감 폴리에스테르",
+  "세트 가격 33000원"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg",
+  "vsrc/11.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/07.jpg",
+  "vsrc/11.jpg"
+ ]
+}
