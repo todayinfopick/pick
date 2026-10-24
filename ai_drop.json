@@ -465,5 +465,48 @@
    "90b4f7a6d71b826401d0727c818b7b9f",
    "3b0f95ab8b69da1f950c125c3e3fb896"
   ]
+ },
+ "캐럿 남여공용 경량 범버 자켓": {
+  "seen": [
+   "ed59a6de512b96fd8cb8938031c1e684",
+   "ede3892dcc9fe43ff2917dc5878e3533",
+   "a0c471ad467c6a67fe9559651c551bd6",
+   "07e36f34ef3f0635110d9f59291757a1",
+   "3f11caa91a43582920f12106bf798dc0",
+   "5cedb87984c46311ff91fd61ab4d3291",
+   "b253d022416f7bd89508457145428c39",
+   "e0edd49574db1e098cb001fa39c143a0",
+   "595e487148f2781e7ac1f8bb88d5619c",
+   "a0cc5b87057e98d445e85e549d5cd1a0",
+   "d3f75ef30274a985fe0147581893a7d3",
+   "721c9cbe3ed89da92e84fe248925f472",
+   "f284c3aa599f0826e0685e73f82621d3",
+   "9d45dd038fcd0ce0ef1b52f79cff7c6b",
+   "7f8d289892de9b4f92fcabc434f6d867"
+  ],
+  "drop": [
+   "e0edd49574db1e098cb001fa39c143a0"
+  ]
+ },
+ "OYEAH 저소음 에어프라이어 5.0L 시각화 대용량": {
+  "seen": [
+   "c81e21cdfa24dc44c9281316d98a523b",
+   "d3bf71beddb2dfb92df848054780bde2",
+   "f016427b4f2691126cccc1981bf4ef87",
+   "4bf0d1084ad7d8c83151ad4196c8cfdc",
+   "812ca53a8ef66cb70b72519b2cfa0e0c",
+   "7822d10f3d1b13e78cc388e98d1e1a75",
+   "9876ea21d157777b3c0f0257460dd0fc",
+   "bc0f91e68bb325178718cdb935c28972",
+   "b52af9ee52bd3c679bb2c9ca56d556a2",
+   "8eab860fce3a01b36fe2a5f39309c98b",
+   "8cf6465b60426944ee1c7f4fa916f8ac",
+   "3a7a8080b0ed46ce305b75dc630700cb",
+   "f01b9aedfe65efe7df84046e0c4df6f9",
+   "65db8ddb2850e3a11a68da928ac42c88"
+  ],
+  "drop": [
+   "b52af9ee52bd3c679bb2c9ca56d556a2"
+  ]
  }
 }
