@@ -1,0 +1,13 @@
+# 실행 중에 비공개 저장소에서 꺼내 온 코드는 이 저장소에 올라가지 않게
+*
+!.gitignore
+!README.md
+!.github/
+!.github/**
+!posted.json
+!research.json
+!ai_drop.json
+!photo_exclude.json
+!추가상품.csv
+!docs/
+!docs/**

@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#fff4ee">
+<title>오늘의 추천 상품</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root { --bg:#fbf8f5; --card:#ffffff; --text:#1d1b1a; --muted:#8a817b; --accent:#ff6b4a; --accent2:#ff9a5a;
+          --line:#efe8e2; --soft:#fff1ea; --shadow:0 6px 20px rgba(80,40,20,.07); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#121110; --card:#1c1a19; --text:#f4efeb; --muted:#a39a94; --accent:#ff7d5c; --accent2:#ffaa6b;
+            --line:#2c2826; --soft:#2a1f1b; --shadow:none; }
+  }
+  * { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font-family:Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; }
+  .hero { background:linear-gradient(160deg,var(--soft),var(--bg) 70%); padding:36px 16px 20px; text-align:center; }
+  .avatar { width:76px; height:76px; border-radius:50%; margin:0 auto 12px; display:grid; place-items:center;
+            background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:30px; font-weight:800;
+            box-shadow:0 8px 24px rgba(255,107,74,.35); }
+  h1 { font-size:22px; font-weight:800; margin:0; letter-spacing:-.02em; }
+  .handle { display:inline-block; margin-top:6px; color:var(--muted); font-size:14px; text-decoration:none; }
+  .count { display:inline-block; margin-top:12px; font-size:13px; font-weight:600; color:var(--accent);
+           background:var(--card); border:1px solid var(--line); border-radius:999px; padding:6px 12px; }
+  main { max-width:620px; margin:0 auto; padding:0 16px 40px; }
+  .search { position:sticky; top:0; z-index:5; padding:12px 0; background:var(--bg); }
+  .search label { display:flex; align-items:center; gap:8px; background:var(--card); border:1px solid var(--line);
+                  border-radius:14px; padding:0 14px; box-shadow:var(--shadow); }
+  .search svg { flex:none; color:var(--muted); }
+  input { flex:1; min-width:0; border:0; outline:0; background:transparent; color:var(--text);
+          font:inherit; font-size:16px; padding:13px 0; }
+  .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+  a.item { display:flex; flex-direction:column; text-decoration:none; color:var(--text); background:var(--card);
+           border:1px solid var(--line); border-radius:18px; overflow:hidden; box-shadow:var(--shadow);
+           transition:transform .15s ease; }
+  a.item:active { transform:scale(.98); }
+  .pic { position:relative; aspect-ratio:1/1; background:var(--soft); }
+  .pic img { width:100%; height:100%; object-fit:cover; display:block; }
+  .pic .ph { width:100%; height:100%; display:grid; place-items:center; font-size:34px; font-weight:800;
+             color:var(--accent); }
+  .new { position:absolute; top:10px; left:10px; background:var(--accent); color:#fff; font-size:11px; font-weight:800;
+         letter-spacing:.04em; border-radius:999px; padding:4px 9px; }
+  .body { display:flex; flex-direction:column; gap:6px; padding:12px 12px 14px; flex:1; }
+  .name { font-size:14px; font-weight:700; line-height:1.4; word-break:keep-all; overflow-wrap:anywhere;
+          display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; min-height:2.8em; }
+  .date { font-size:12px; color:var(--muted); }
+  .go { margin-top:auto; text-align:center; font-size:13px; font-weight:700; color:#fff; border-radius:12px; padding:10px 0;
+        background:linear-gradient(135deg,var(--accent),var(--accent2)); }
+  .empty { color:var(--muted); text-align:center; padding:32px 0; display:none; }
+  .disc { max-width:460px; margin:14px auto 0; color:var(--muted); font-size:12px; line-height:1.6; }
+  @media (min-width:560px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  @media (min-width:860px) { main { max-width:860px; } .grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; } }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="avatar">오</div>
+  <h1>오늘의 추천 상품</h1>
+  <a class="handle" href="https://www.instagram.com/beautyzip_kr/" target="_blank" rel="noopener">@beautyzip_kr</a>
+  <div><span class="count">추천 상품 33개</span></div>
+  <p class="disc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
+</header>
+<main>
+  <div class="search"><label>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+         stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="게시물에서 본 상품 이름으로 찾기" autocomplete="off">
+  </label></div>
+  <div class="grid" id="list">
+    <a class="item" href="https://link.coupang.com/a/h9f7WASorQ" target="_blank" rel="sponsored noopener" data-name="NUNUHANA 후드 니트 퀼팅 집업 스트링 숏패딩">
+      <div class="pic"><img src="thumbs/h9f7WASorQ.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">NUNUHANA 후드 니트 퀼팅 집업 스트링 숏패딩</div>
+        <div class="date">2026.10.26</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h6zgWOlC3w" target="_blank" rel="sponsored noopener" data-name="닥터지 레드 블레미쉬 시카 수딩 크림">
+      <div class="pic"><img src="thumbs/h6zgWOlC3w.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">닥터지 레드 블레미쉬 시카 수딩 크림</div>
+        <div class="date">2026.10.26</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h6y2JqfHVI" target="_blank" rel="sponsored noopener" data-name="푸름새 초경량 블루라이트차단안경 독서안경 고화질 안경 40대/50대/60대/70대">
+      <div class="pic"><img src="thumbs/h6y2JqfHVI.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">푸름새 초경량 블루라이트차단안경 독서안경 고화질 안경 40대/50대/60대/70대</div>
+        <div class="date">2026.10.26</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h6yBHRJLUq" target="_blank" rel="sponsored noopener" data-name="캐럿 남여공용 경량 범버 자켓">
+      <div class="pic"><img src="thumbs/h6yBHRJLUq.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">캐럿 남여공용 경량 범버 자켓</div>
+        <div class="date">2026.10.25</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h6vEpJ0Bl6" target="_blank" rel="sponsored noopener" data-name="김영주스포츠 남성 웰론 경량 패딩 점퍼 MJ100">
+      <div class="pic"><img src="thumbs/h6vEpJ0Bl6.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">김영주스포츠 남성 웰론 경량 패딩 점퍼 MJ100</div>
+        <div class="date">2026.10.25</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h4y2W8ZenI" target="_blank" rel="sponsored noopener" data-name="[한정기획]바이브랩 액티브 비오틴 펩타이드 솔루션 샴푸">
+      <div class="pic"><img src="thumbs/h4y2W8ZenI.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">[한정기획]바이브랩 액티브 비오틴 펩타이드 솔루션 샴푸</div>
+        <div class="date">2026.10.25</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h4vXhJUx1U" target="_blank" rel="sponsored noopener" data-name="다이나믹뷰티 로즈 시크릿블라썸 오드퍼퓸 (대용량) 후르티 플로럴향 / 부향률 15%에서 20%로 UP">
+      <div class="pic"><img src="thumbs/h4vXhJUx1U.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">다이나믹뷰티 로즈 시크릿블라썸 오드퍼퓸 (대용량) 후르티 플로럴향 / 부향률 15%에서 20%로 UP</div>
+        <div class="date">2026.10.24</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h4umgghjNc" target="_blank" rel="sponsored noopener" data-name="방수방한 3색 아이섀도우 스틱 귀차니스트 초보용 한번 바르면 완성 3색 그라데이션 롱라스팅 고정 눈메이크업 검색 아이템">
+      <div class="pic"><img src="thumbs/h4umgghjNc.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">방수방한 3색 아이섀도우 스틱 귀차니스트 초보용 한번 바르면 완성 3색 그라데이션 롱라스팅 고정 눈메이크업 검색 아이템</div>
+        <div class="date">2026.10.24</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h4r9ks3z0D" target="_blank" rel="sponsored noopener" data-name="롬앤 한올 아이브로우 카라 9g">
+      <div class="pic"><div class="ph">롬</div><span class="new">NEW</span></div>
+      <div class="body">
+        <div class="name">롬앤 한올 아이브로우 카라 9g</div>
+        <div class="date">2026.10.24</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h3KYdkZrNI" target="_blank" rel="sponsored noopener" data-name="슈퍼카미트 아동용 소프트 쿠션 실내화 S100">
+      <div class="pic"><img src="thumbs/h3KYdkZrNI.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">슈퍼카미트 아동용 소프트 쿠션 실내화 S100</div>
+        <div class="date">2026.10.23</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h3KvdvpxK0" target="_blank" rel="sponsored noopener" data-name="센카 퍼펙트 휩 페이셜 워시">
+      <div class="pic"><img src="thumbs/h3KvdvpxK0.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">센카 퍼펙트 휩 페이셜 워시</div>
+        <div class="date">2026.10.23</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h1HaPl19cP" target="_blank" rel="sponsored noopener" data-name="일리윤 히알루론 모이스춰 수분크림">
+      <div class="pic"><img src="thumbs/h1HaPl19cP.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">일리윤 히알루론 모이스춰 수분크림</div>
+        <div class="date">2026.10.23</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h0rZTQ3RWS" target="_blank" rel="sponsored noopener" data-name="썬리즈 자외선차단 쿨 스포츠 골프 마스크 1+1">
+      <div class="pic"><img src="thumbs/h0rZTQ3RWS.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">썬리즈 자외선차단 쿨 스포츠 골프 마스크 1+1</div>
+        <div class="date">2026.10.22</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/h0ruvXNDOK" target="_blank" rel="sponsored noopener" data-name="뉴트로지나 딥클린 아크네 포밍 클렌저">
+      <div class="pic"><img src="thumbs/h0ruvXNDOK.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">뉴트로지나 딥클린 아크네 포밍 클렌저</div>
+        <div class="date">2026.10.22</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hZJNVObqCG" target="_blank" rel="sponsored noopener" data-name="뉴트로지나 딥 클린 포밍 클렌저">
+      <div class="pic"><img src="thumbs/hZJNVObqCG.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">뉴트로지나 딥 클린 포밍 클렌저</div>
+        <div class="date">2026.10.22</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hZJdCfDdpQ" target="_blank" rel="sponsored noopener" data-name="락앤락 향균 마블 도마">
+      <div class="pic"><img src="thumbs/hZJdCfDdpQ.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">락앤락 향균 마블 도마</div>
+        <div class="date">2026.10.21</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hZIuJFHFim" target="_blank" rel="sponsored noopener" data-name="락앤락 산리오 피규어 텀블러 LHC4470MIT_SR">
+      <div class="pic"><img src="thumbs/hZIuJFHFim.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">락앤락 산리오 피규어 텀블러 LHC4470MIT_SR</div>
+        <div class="date">2026.10.21</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hZIIYvSYDc" target="_blank" rel="sponsored noopener" data-name="타고가요 캐리어 전용 핑구 쿠션 인형 + 담요 세트">
+      <div class="pic"><img src="thumbs/hZIIYvSYDc.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">타고가요 캐리어 전용 핑구 쿠션 인형 + 담요 세트</div>
+        <div class="date">2026.10.21</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWOgkDW0tg" target="_blank" rel="sponsored noopener" data-name="포렌코즈 타투 끌레르 벨벳 틴트">
+      <div class="pic"><img src="thumbs/hWOgkDW0tg.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">포렌코즈 타투 끌레르 벨벳 틴트</div>
+        <div class="date">2026.10.20</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWNwCKqLi8" target="_blank" rel="sponsored noopener" data-name="바세린 립테라피 스틱">
+      <div class="pic"><img src="thumbs/hWNwCKqLi8.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">바세린 립테라피 스틱</div>
+        <div class="date">2026.10.20</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWNm9kOgcS" target="_blank" rel="sponsored noopener" data-name="앳플리 T8 스마트 체성분 체중계">
+      <div class="pic"><img src="thumbs/hWNm9kOgcS.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">앳플리 T8 스마트 체성분 체중계</div>
+        <div class="date">2026.10.20</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWL5UfLIUS" target="_blank" rel="sponsored noopener" data-name="롬앤 한올 브로우 카라 9g">
+      <div class="pic"><img src="thumbs/hWL5UfLIUS.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">롬앤 한올 브로우 카라 9g</div>
+        <div class="date">2026.10.19</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWHNMqxJ8K" target="_blank" rel="sponsored noopener" data-name="이니스프리 화산송이 모공 바하 클렌징 폼">
+      <div class="pic"><img src="thumbs/hWHNMqxJ8K.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">이니스프리 화산송이 모공 바하 클렌징 폼</div>
+        <div class="date">2026.10.19</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWgjogASzY" target="_blank" rel="sponsored noopener" data-name="미와비 검버섯 색소침착 기미 미백 크림">
+      <div class="pic"><img src="thumbs/hWgjogASzY.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">미와비 검버섯 색소침착 기미 미백 크림</div>
+        <div class="date">2026.10.19</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hWfsOt0I9I" target="_blank" rel="sponsored noopener" data-name="이니스프리 퍼펙트 9 인텐시브 크림">
+      <div class="pic"><img src="thumbs/hWfsOt0I9I.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">이니스프리 퍼펙트 9 인텐시브 크림</div>
+        <div class="date">2026.10.18</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hV61lWq5Om" target="_blank" rel="sponsored noopener" data-name="잘풀리는집 3겹 클래식 화장지">
+      <div class="pic"><img src="thumbs/hV61lWq5Om.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">잘풀리는집 3겹 클래식 화장지</div>
+        <div class="date">2026.10.18</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hV6L26zfJA" target="_blank" rel="sponsored noopener" data-name="씨널스 씨어터 데일리 바디워시">
+      <div class="pic"><img src="thumbs/hV6L26zfJA.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">씨널스 씨어터 데일리 바디워시</div>
+        <div class="date">2026.10.18</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hVXqxhX5JA" target="_blank" rel="sponsored noopener" data-name="솔루시안 PDRN + EGF 리바이탈라이징 크림">
+      <div class="pic"><img src="thumbs/hVXqxhX5JA.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">솔루시안 PDRN + EGF 리바이탈라이징 크림</div>
+        <div class="date">2026.10.18</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hUrOxXDoiq" target="_blank" rel="sponsored noopener" data-name="닥터에이지 시카 히알루로닉 카밍 수분 앰플">
+      <div class="pic"><img src="thumbs/hUrOxXDoiq.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">닥터에이지 시카 히알루로닉 카밍 수분 앰플</div>
+        <div class="date">2026.10.17</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hQyiFbHipw" target="_blank" rel="sponsored noopener" data-name="에뛰드 베이킹파우더 모공 클렌징 대용량 폼">
+      <div class="pic"><img src="thumbs/hQyiFbHipw.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">에뛰드 베이킹파우더 모공 클렌징 대용량 폼</div>
+        <div class="date">2026.10.16</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hQvBzTcGxo" target="_blank" rel="sponsored noopener" data-name="에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트">
+      <div class="pic"><img src="thumbs/hQvBzTcGxo.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트</div>
+        <div class="date">2026.10.16</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hQvb5ZRTlQ" target="_blank" rel="sponsored noopener" data-name="에이지투웨니스 클라우드 컴포트 파우더 팩트">
+      <div class="pic"><img src="thumbs/hQvb5ZRTlQ.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">에이지투웨니스 클라우드 컴포트 파우더 팩트</div>
+        <div class="date">2026.10.15</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+    <a class="item" href="https://link.coupang.com/a/hPVFYDCNZA" target="_blank" rel="sponsored noopener" data-name="맥 글로우 플레이 텐더토크 립 밤">
+      <div class="pic"><img src="thumbs/hPVFYDCNZA.jpg" alt="" loading="lazy"></div>
+      <div class="body">
+        <div class="name">맥 글로우 플레이 텐더토크 립 밤</div>
+        <div class="date">2026.10.14</div>
+        <span class="go">쿠팡에서 보기</span>
+      </div>
+    </a>
+  </div>
+  <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
+</main>
+<script>
+  const q = document.getElementById('q'), list = document.querySelectorAll('a.item'),
+        empty = document.getElementById('empty');
+  const norm = s => s.toLowerCase().replace(/\s+/g, '');
+  q.addEventListener('input', () => {
+    const k = norm(q.value); let shown = 0;
+    list.forEach(a => { const ok = norm(a.dataset.name).includes(k); a.style.display = ok ? '' : 'none'; shown += ok; });
+    empty.style.display = shown ? 'none' : 'block';
+  });
+</script>
+</body>
+</html>

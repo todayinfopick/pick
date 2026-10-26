@@ -1,0 +1,80 @@
+name: 프로그램(exe) 만들기
+
+# 프로그램 코드는 비공개 저장소(pick-app)에 있다. 한 시간마다 PC 프로그램 파일이 바뀌었는지 보고,
+# 바뀌었으면 윈도우용 CoupangAutopost.exe와 크롬 확장 묶음을 새로 만들어 이 저장소 릴리스 'app'에 올린다:
+#   https://github.com/<계정>/<저장소>/releases/download/app/CoupangAutopost.exe
+# 바로 만들려면 Actions → 이 작업 → Run workflow.
+on:
+  schedule:
+    - cron: "41 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  APP_FILES: app.py helper.py settings.py memo_ai.py general.py main.py gcloud.py image_tools.py affiliates.py icon.ico requirements-app.txt extension
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.sha.outputs.sha }}
+      build: ${{ steps.sha.outputs.build }}
+    steps:
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          fetch-depth: 0
+
+      - name: 바뀌었는지 확인
+        id: sha
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(git log -1 --format=%H -- $APP_FILES)
+          last=$(gh release view app --repo "$GITHUB_REPOSITORY" --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          if [ "$sha" != "$last" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "build=1" >> "$GITHUB_OUTPUT"; fi
+
+  build:
+    needs: check
+    if: needs.check.outputs.build == '1'
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          ref: ${{ needs.check.outputs.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 준비
+        run: pip install -q -r requirements-app.txt pyinstaller
+
+      - name: exe 만들기
+        run: pyinstaller --noconfirm --onefile --windowed --name CoupangAutopost --icon icon.ico --add-data "icon.ico;." --exclude-module imageio_ffmpeg app.py
+
+      - name: 실행 확인 (가져오기만)
+        run: python -c "import app, helper, settings, memo_ai, main, gcloud; print('ok')"
+
+      - name: 크롬 확장프로그램 묶기
+        shell: pwsh
+        run: Compress-Archive -Path extension/* -DestinationPath dist/CoupangHelper-extension.zip
+
+      - name: 릴리스에 올리기
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release delete app --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create app dist/CoupangAutopost.exe dist/CoupangHelper-extension.zip --repo "$GITHUB_REPOSITORY" \
+            --target main --title "쿠팡 자동게시 프로그램" --latest \
+            --notes "CoupangAutopost.exe를 받아 .env·google-key.json이 있는 프로그램 폴더에 넣고 실행하세요. (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ), sha:${{ needs.check.outputs.sha }})"

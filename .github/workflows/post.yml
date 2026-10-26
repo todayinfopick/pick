@@ -1,0 +1,157 @@
+name: 자동 게시
+
+on:
+  schedule:
+    # 15분마다 확인만 하고, 프로그램 설정의 '게시 시각'(시트 '_설정' 탭 POST_TIMES)이 지난 회차만 게시.
+    # 무료 예약은 몇 시간씩 늦거나 빠지기도 해서(실제로 하루 몇 번만 돌기도 함) 자주 확인하면 놓친 회차를 다음 확인 때 올림
+    - cron: "7,22,37,52 * * * *"
+    # 토큰 연장: 매주 일요일 한국 시간 08:00
+    - cron: "0 23 * * 6"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "할 일"
+        type: choice
+        default: 지금 게시
+        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 토큰 연장, 예약 확인, 쇼츠 다시 만들기]
+      product:
+        description: "쇼츠 다시 만들기: 파트너스 링크 또는 상품명 일부"
+        type: string
+        default: ""
+
+concurrency:
+  group: autopost
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    # 예약 실행을 잠시 멈추려면 저장소 변수 AUTO_POST=off
+    # '예약 확인'은 외부 알람(cron-job.org)이 15분마다 부르는 것 — GitHub 예약과 똑같이 동작
+    if: (github.event_name != 'schedule' && inputs.mode != '예약 확인') || vars.AUTO_POST != 'off'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Asia/Seoul
+      CHECK: ${{ github.event.schedule == '7,22,37,52 * * * *' || inputs.mode == '예약 확인' }}
+      PYTHONUTF8: "1"
+      # 비밀값은 두 개뿐: 구글 키 파일 내용(GOOGLE_SA_JSON), PC .env 내용 통째(ENV_FILE)
+      GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+      ENV_FILE: ${{ secrets.ENV_FILE }}
+      # 선불 Gemini 키는 ENV_FILE/Google Sheets와 분리하여 Actions Secret에서만 읽음
+      GEMINI_PAID_API_KEY: ${{ secrets.GEMINI_PAID_API_KEY }}
+      GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
+      GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
+    steps:
+      # 앞 실행이 끝나길 기다렸다 시작하는 경우가 있어서, 실행을 만든 시점이 아닌 지금의 최신 기록(posted.json)을 받는다.
+      # (예전 기록을 받으면 방금 올린 회차를 다시 올려 글이 두 번 올라감)
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      # 프로그램 코드는 비공개 저장소(pick-app)에 있음: 실행할 때만 꺼내 와서 이 폴더에 놓는다
+      # (이 저장소의 기록 파일 posted.json·docs 등은 덮어쓰지 않음)
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          path: _app
+
+      - name: 프로그램 놓기
+        run: tar -C _app --exclude=./.git --exclude=./.github -cf - . | tar -xf - --skip-old-files && rm -rf _app
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 파이썬 준비
+        run: pip install -q -r requirements.txt
+
+      # 15분마다 예약 실행: 게시할 회차가 됐는지만 먼저 확인 (안 됐으면 여기서 끝)
+      - name: 예약 회차 확인
+        id: check
+        if: env.CHECK == 'true'
+        run: python cloud_sync.py due
+
+      # 글꼴 + 사진 속 글자 확인(OCR, 한국어): 글자 박힌 사진은 인스타·쓰레드에 안 쓰려고
+      - name: 글꼴·글자 인식 준비
+        if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
+
+      - name: 시트·사진 받기
+        if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        run: python cloud_sync.py pull
+
+      - name: 토큰 연장
+        if: github.event.schedule == '0 23 * * 6' || inputs.mode == '토큰 연장'
+        run: python refresh_tokens.py
+
+      - name: 미리보기
+        if: inputs.mode == '미리보기'
+        run: python main.py --dry-run
+
+      - name: 게시
+        if: steps.check.outputs.due == '1'
+        run: python main.py --slot "${{ steps.check.outputs.slot }}"
+
+      - name: 지금 게시
+        if: inputs.mode == '지금 게시'
+        run: python main.py
+
+      # 유튜브 쇼츠: 오늘 게시한 상품으로 하루 몇 개 만들어 쇼츠 받기 페이지에 올림 (설정 SHORTS_ON이 켜져 있을 때만)
+      - name: 쇼츠 만들기
+        if: "!cancelled() && (steps.check.outputs.due == '1' || inputs.mode == '지금 게시')"
+        continue-on-error: true
+        env:
+          SHORTS_GH_TOKEN: ${{ github.token }}
+        run: python shorts.py --daily
+
+      # PC 프로그램 목록 탭 🎬: 사진을 고친 뒤 그 상품 쇼츠만 다시 만들어 받기 페이지의 것을 바꿈
+      - name: 쇼츠 다시 만들기
+        if: inputs.mode == '쇼츠 다시 만들기'
+        env:
+          SHORTS_GH_TOKEN: ${{ github.token }}
+          PRODUCT: ${{ inputs.product }}
+        run: python shorts.py --remake "$PRODUCT"
+
+      - name: 일반 글
+        if: "!cancelled() && steps.check.outputs.gdue == '1'"
+        run: python general.py --slot "${{ steps.check.outputs.gslot }}"
+
+      - name: 일반 글 지금 게시
+        if: inputs.mode == '일반 글 게시'
+        run: python general.py
+
+      - name: 일반 글 미리보기
+        if: inputs.mode == '일반 글 미리보기'
+        run: python general.py --dry-run
+
+      # 다음에 올라갈 상품의 사진 미리보기 (docs/preview/): 원할 때만 열어 사진을 빼거나 살림
+      - name: 사진 미리보기 페이지
+        if: "!cancelled() && (env.CHECK != 'true' || steps.check.outputs.any == '1')"
+        continue-on-error: true
+        run: python preview.py
+
+      - name: 링크 페이지 만들기
+        if: always() && (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        run: python build_page.py
+
+      - name: 결과 저장
+        if: always() && (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        run: |
+          python cloud_sync.py push || true
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          for f in posted.json research.json ai_drop.json docs; do [ -e "$f" ] && git add -f "$f"; done
+          git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase -X theirs && git push -q)
+
+      - name: 미리보기 이미지
+        if: inputs.mode == '미리보기'
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: media/
