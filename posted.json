@@ -1290,7 +1290,33 @@
     },
     "name": "루메나 듀얼 무선 가습기",
     "link": "https://link.coupang.com/a/h9e5ULfSto",
-    "account": 2
+    "account": 2,
+    "shorts": {
+      "at": "2026-10-27T11:30:19",
+      "file": "shorts_2026-10-27_h9e5ULfSto_1130.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-27_h9e5ULfSto_1130.mp4",
+      "title": "선 없이 강력한 루메나 무선 듀얼 가습기 직접 써봤어요 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n건조한 방마다 가습기 따로 놓기 귀찮으셨죠?\n이 제품은 듀얼 분사라 정말 시원하게 나와요.\n선이 없어서 집 안 어디든 편하게 옮겨 쓰고요.\n물통이 투명해서 잔여량을 쉽게 확인할 수 있어요.\n입구가 넓어서 세척하기도 참 편하더라고요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#루메나가습기 #무선가습기 #듀얼가습기 #책상가습기 #내돈내산 #쿠팡추천 #살림템",
+      "sec": 25.7,
+      "remade": true,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-27_h9e5ULfSto_1130_ai1.jpg",
+          "file": "shorts_2026-10-27_h9e5ULfSto_1130_ai1.jpg",
+          "prompt": "A photorealistic 9:16 vertical video of the Lumena Dual Wireless Humidifier sitting on a light oak bedside table in a bright, modern Korean apartment, with fine, steady double streams of mist gently rising upward against soft morning sunlight. The camera slowly pushes in on the transparent water tank, maintaining the exact product shape, color, and logo without any morphing or text."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-27_h9e5ULfSto_1130_ai2.jpg",
+          "file": "shorts_2026-10-27_h9e5ULfSto_1130_ai2.jpg",
+          "prompt": "A close-up vertical shot of the Lumena Dual Wireless Humidifier placed on a clean marble kitchen counter in a sunlit home, showing dual vapor jets softly operating in the background. A clean-manicured hand reaches in to gently lift the device to demonstrate its wireless portability, keeping the product's design, text, and structure completely unchanged."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-27_h9e5ULfSto_1130_ai3.jpg",
+          "file": "shorts_2026-10-27_h9e5ULfSto_1130_ai3.jpg",
+          "prompt": "A cozy vertical lifestyle video of the Lumena Dual Wireless Humidifier operating on a minimalist desk with warm ambient lighting, releasing gentle, continuous dual mists into the air. The camera pans very slowly around the transparent water tank and clean casing, capturing realistic water ripples inside, with zero morphing and no on-screen text."
+        }
+      ]
+    }
   },
   "상품:투니스여성오버핏후드롱패딩": {
     "threads": {
