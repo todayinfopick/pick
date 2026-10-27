@@ -18,6 +18,10 @@ on:
         description: "쇼츠 다시 만들기: 파트너스 링크 또는 상품명 일부"
         type: string
         default: ""
+      script:
+        description: "쇼츠 다시 만들기: 고친 대본 (한 줄에 한 문장, 비우면 AI가 씀)"
+        type: string
+        default: ""
 
 concurrency:
   group: autopost
@@ -130,6 +134,7 @@ jobs:
         env:
           SHORTS_GH_TOKEN: ${{ github.token }}
           PRODUCT: ${{ inputs.product }}
+          SHORTS_SCRIPT: ${{ inputs.script }}
         run: python shorts.py --remake "$PRODUCT"
 
       - name: 일반 글
