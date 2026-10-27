@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#fff4ee">
-<title>오늘의 추천 상품</title>
+<title>오늘의 뷰티템</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
   :root { --bg:#fbf8f5; --card:#ffffff; --text:#1d1b1a; --muted:#8a817b; --accent:#ff6b4a; --accent2:#ff9a5a;
@@ -50,6 +50,9 @@
   .go { margin-top:auto; text-align:center; font-size:13px; font-weight:700; color:#fff; border-radius:12px; padding:10px 0;
         background:linear-gradient(135deg,var(--accent),var(--accent2)); }
   .empty { color:var(--muted); text-align:center; padding:32px 0; display:none; }
+  .other { display:block; max-width:460px; margin:28px auto 0; text-align:center; text-decoration:none;
+            color:var(--accent); font-size:14px; font-weight:700; background:var(--card); border:1px solid var(--line);
+            border-radius:14px; padding:14px; }
   .disc { max-width:460px; margin:14px auto 0; color:var(--muted); font-size:12px; line-height:1.6; }
   @media (min-width:560px) { .grid { grid-template-columns:repeat(3,minmax(0,1fr)); } }
   @media (min-width:860px) { main { max-width:860px; } .grid { grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; } }
@@ -58,7 +61,7 @@
 <body>
 <header class="hero">
   <div class="avatar">오</div>
-  <h1>오늘의 추천 상품</h1>
+  <h1>오늘의 뷰티템</h1>
   <a class="handle" href="https://www.instagram.com/beautyzip_kr/" target="_blank" rel="noopener">@beautyzip_kr</a>
   <div><span class="count">추천 상품 34개</span></div>
   <p class="disc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
@@ -344,6 +347,7 @@
     </a>
   </div>
   <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
+  <a class="other" href="2/">🏠 생활·주방템도 보러 가기 →</a>
 </main>
 <script>
   const q = document.getElementById('q'), list = document.querySelectorAll('a.item'),
