@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "video",
-    "last_slot": "2026-10-27 18:00",
+    "last_kind": "image",
+    "last_slot": "2026-10-27 21:00",
     "last_general_slot": "2026-10-27 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -1422,7 +1422,19 @@
         "file": "shorts_2026-10-27_h9fPopu5Ce_1449_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-27_h9fPopu5Ce_1449_dub.mp4"
       }
-    }
+    },
+    "threads": {
+      "id": "17869846863659841",
+      "kind": "carousel",
+      "at": "2026-10-27T21:05:17",
+      "reply": "18121151425960704"
+    },
+    "instagram": {
+      "id": "17908689621578428",
+      "kind": "carousel",
+      "at": "2026-10-27T21:06:44"
+    },
+    "account": 2
   },
   "상품:macci남여공용최고급형전체기모안감깔깔이세트(패딩점퍼+패딩바지상하의세트구성)": {
     "threads": {
