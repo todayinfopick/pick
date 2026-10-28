@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "image",
-    "last_slot": "2026-10-28 18:00",
+    "last_slot": "2026-10-28 21:00",
     "last_general_slot": "2026-10-28 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -1647,6 +1647,38 @@
     },
     "name": "스텐 인덕션 범용 찜기 샤브샤브, 2개, 27.5cm",
     "link": "https://link.coupang.com/a/ibmLU4WsMe",
+    "account": 2
+  },
+  "상품:아토팜판테놀크림": {
+    "threads": {
+      "id": "18178221226446843",
+      "kind": "carousel",
+      "at": "2026-10-28T21:08:13",
+      "reply": "18128572411793295"
+    },
+    "instagram": {
+      "id": "18082393316341875",
+      "kind": "video",
+      "at": "2026-10-28T21:09:22"
+    },
+    "name": "아토팜 판테놀 크림, 100ml, 1개",
+    "link": "https://link.coupang.com/a/ibmxFZy2OO",
+    "account": 1
+  },
+  "상품:마음담은집1000일화프리저브드led안개꽃다발": {
+    "threads": {
+      "id": "17881734537546480",
+      "kind": "carousel",
+      "at": "2026-10-28T21:10:50",
+      "reply": "18176584459454535"
+    },
+    "instagram": {
+      "id": "18505188847102196",
+      "kind": "carousel",
+      "at": "2026-10-28T21:12:24"
+    },
+    "name": "마음담은집 1000일화 프리저브드 LED 안개꽃다발",
+    "link": "https://link.coupang.com/a/ibmUazf3D2",
     "account": 2
   }
 }
