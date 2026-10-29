@@ -15,8 +15,31 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-10-29 18:00",
-    "last_general_slot": "2026-10-29 14:30"
+    "last_slot": "2026-10-29 21:00",
+    "last_general_slot": "2026-10-29 14:30",
+    "naver_ig": {
+      "posted": {
+        "https://naver.me/5MvFemlz": {
+          "name": "설화수 탄력 3종 기획세트 구성 용량 및 사용법 정리",
+          "no": 21,
+          "id": "18079722194720586",
+          "day": "2026-10-29",
+          "at": "2026-10-29T21:13:03",
+          "yt": {
+            "title": "설화수 탄력 3종 기획세트 구성 용량 및 사용법 정리 #shorts",
+            "desc": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.\n\n요즘 아침마다 피부가 푸석하다고 느껴지시나요? 🤔\n자음수와 자음유액으로 촉촉한 수분감을 채워보세요.\n마지막에 탄력크림으로 영양을 탄탄하게 잡아주면 든든해요. ✨\n피부 결을 정돈하는 차분한 루틴으로 건강하게 가꿔봐요.\n\n구매 링크 → https://naver.me/5MvFemlz\n(프로필 링크 21번에서도 볼 수 있어요 → todayinfopick.github.io/pick/naver/)\n\n#설화수 #탄력3종세트 #설화수탄력세트 #자음수 #자음유액 #탄력크림 #윤조에센스 #기초화장품세트",
+            "comment": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.\n\n🛒 설화수 탄력 3종 기획세트 구성 용량 및 사용법 정리\n구매 링크 → https://naver.me/5MvFemlz\n(프로필 링크 21번에서도 볼 수 있어요 → todayinfopick.github.io/pick/naver/)",
+            "file": "naver-5MvFemlz.mp4",
+            "src": "https://raw.githubusercontent.com/todayinfopick/pick/blog-packages/2026-10-28/naver2-10/video_vertical.mp4",
+            "at": "2026-10-29T21:13:03",
+            "url": "https://github.com/todayinfopick/pick/releases/download/shorts/naver-5MvFemlz.mp4"
+          }
+        }
+      },
+      "fit": {
+        "설화수 탄력 3종 기획세트 구성 용량 및 사용법 정리": true
+      }
+    }
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
     "fails": {
@@ -1833,5 +1856,63 @@
     "name": "에코벨 알루미늄 접이식 쓰레기 집게, 블루, 1개",
     "link": "https://link.coupang.com/a/ida8snlhxA",
     "account": 2
+  },
+  "상품:샤인루트v라인얼굴페이스탄력밴드": {
+    "threads": {
+      "id": "18109534685250247",
+      "kind": "carousel",
+      "at": "2026-10-29T21:06:20",
+      "reply": "17973223305171913"
+    },
+    "instagram": {
+      "id": "17876304516593208",
+      "kind": "carousel",
+      "at": "2026-10-29T21:07:57"
+    },
+    "name": "샤인루트 V라인 얼굴 페이스 탄력 밴드, 1개입",
+    "link": "https://link.coupang.com/a/ibniB7J8jQ",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:코멧욕실퍼즐매트30x30cm": {
+    "threads": {
+      "id": "18110318156186660",
+      "kind": "carousel",
+      "at": "2026-10-29T21:11:09",
+      "reply": "17974700202168586"
+    },
+    "instagram": {
+      "id": "18128326405806350",
+      "kind": "video",
+      "at": "2026-10-29T21:12:20"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/idbm5TdYT6_voice.mp4",
+      "script": {
+        "title": "욕실 미끄럼 방지 끝",
+        "lines": [
+          "욕실에서 미끄러진 적 있으신가요?",
+          "퍼즐매트 하나면 미끄럼 걱정 끝이에요.",
+          "십일 자 크기라 어디든 딱 맞아요.",
+          "조립식이라 척척 끼우기만 하면 돼요.",
+          "물빠짐 구멍이 있어서 물도 잘 빠져요.",
+          "근데 진짜는 이거 청소하기가 너무 편해요.",
+          "아이 있는 집에 정말 필요해요.",
+          "구매는 프로필 링크에서 하실 수 있어요."
+        ],
+        "yt_title": "미끄러운 욕실 바닥, 삼십초 만에 안전하게 바꾸는 법",
+        "tags": [
+          "코멧퍼즐매트",
+          "욕실매트",
+          "미끄럼방지매트",
+          "욕실인테리어",
+          "내돈내산"
+        ]
+      }
+    },
+    "name": "코멧 욕실 퍼즐매트 30 x 30 cm",
+    "link": "https://link.coupang.com/a/idbm5TdYT6",
+    "account": 2,
+    "writer": "Claude"
   }
 }
