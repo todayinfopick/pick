@@ -1012,5 +1012,54 @@
    "121e69a70e73840b1545309df0f4c1e6"
   ],
   "drop": []
+ },
+ "라세르 스마트폰 터치 기모 스포츠 방한 장갑": {
+  "seen": [
+   "cfed832813136cd3c2f9b8b040649e4d",
+   "fd7abb6746b90ed31b614c09de2aff27",
+   "26cb3014163291db881ced8451ab86d0",
+   "80c296c4fc67b7fa9d209c82b0206c24",
+   "3adcbd7ae79c78d12cadd924a65d88b5",
+   "aa1fc0b872f90f1c851c64f91eab7dc6",
+   "cb6a8c9b25d628d381d7027604b7ea15",
+   "56318edd8c45c21c579ae6fbd3a2af87",
+   "a17131bbf20b9447a348ee1cab3bed88",
+   "a461a8db5d10c6acc78054af2eb8f012",
+   "e733bf754c5ce62f7d57e61dcae5cecc",
+   "c41c1599c58f88b0a15cde4b6ede1dc9",
+   "77937e6661a824a47a4ac49949f142d0",
+   "5dc56f9e4eea36c388691328d1f1d1f2",
+   "a73c36b384753945135f9c5488a17d9e"
+  ],
+  "drop": [
+   "a17131bbf20b9447a348ee1cab3bed88",
+   "77937e6661a824a47a4ac49949f142d0",
+   "5dc56f9e4eea36c388691328d1f1d1f2",
+   "a73c36b384753945135f9c5488a17d9e"
+  ]
+ },
+ "한일의료기 거실용 온돌마루 전기매트 난초": {
+  "seen": [
+   "3f2340e6cefda2c66ad636fb91fc93a7",
+   "23ecf10361ddd8841575e86703f3b88c",
+   "9fac5ae091ba8f973c05cc39bd0d6054",
+   "0dd28095aea31cb9bd6b408d435ad269",
+   "35eb907938bf1732d4fdb39bdcd73724",
+   "e32a7b9195781e4cf0d93d57c8d098a4",
+   "d60b53a10f2e09f4428ff8278a1dfe80",
+   "56d80e1d9088315de2aab3a3d5f0dfa8",
+   "21ab7ffdb423208e9d92aae754d59f6e",
+   "6f04267e81819a4d3b3e385f5fd4ac74",
+   "6d511c215986575cace8766bcb3fd633",
+   "9e41e6abe056f4e90b9818e2b37ca736",
+   "b425c3f289ea9d633588eed68799de42",
+   "64169f5a1033e2fa4f80cc6d2082f437",
+   "eb3a47934c68130e5138db77bbc1f3eb",
+   "b09d033a6db6a8be9e04aa710bc64aa3",
+   "ef98e007b6ec4beebb250c384cec4cd5"
+  ],
+  "drop": [
+   "ef98e007b6ec4beebb250c384cec4cd5"
+  ]
  }
 }

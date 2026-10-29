@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-10-29 11:10",
+    "last_slot": "2026-10-29 18:00",
     "last_general_slot": "2026-10-29 14:30"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -1770,6 +1770,68 @@
       "kind": "video",
       "at": "2026-10-29T11:23:26"
     },
+    "account": 2
+  },
+  "상품:익스트림올인원포맨멀티비타민": {
+    "threads": {
+      "id": "18094900733165134",
+      "kind": "image",
+      "at": "2026-10-29T18:06:20",
+      "reply": "18194525923402612"
+    },
+    "instagram": {
+      "id": "17973845943154888",
+      "kind": "carousel",
+      "at": "2026-10-29T18:07:55"
+    },
+    "name": "익스트림 올인원 포 맨 멀티비타민, 30회분, 1개",
+    "link": "https://link.coupang.com/a/ibm3NxqEtE",
+    "account": 1,
+    "shorts": {
+      "at": "2026-10-29T18:12:35",
+      "file": "shorts_2026-10-29_ibm3NxqEtE.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-29_ibm3NxqEtE.mp4",
+      "title": "귀찮은 남성분들을 위한 올인원 멀티비타민 추천 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n영양제 아직도 따로따로 챙겨 드시나요?\n하루 한 포로 남성 필수 영양 끝이에요.\n아침에 출근하면서 툭 뜯어 먹으면 끝이죠.\n알약 크기도 부담 없어서 목넘김이 편해요.\n근데 진짜는 이거예요, 가방에 쏙 들어가요.\n지치기 쉬운 직장인 남성분들께 딱이에요.\n매일 챙기기 귀찮았던 분들 꼭 써보세요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#멀티비타민 #맨즈비타민 #남성영양제 #올인원비타민 #쿠팡추천 #쿠팡추천 #살림템",
+      "sec": 28.2,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-29_ibm3NxqEtE_ai1.jpg",
+          "file": "shorts_2026-10-29_ibm3NxqEtE_ai1.jpg",
+          "view": "비스듬히",
+          "prompt": "A close-up vertical shot of a man's hands in a bright, modern Korean kitchen opening a single daily pouch of the Extreme All-in-One For Men multivitamin. The exact box and single pouch shown in the photo remain completely unchanged in shape, color, logo, and printed text without any morphing or extra copies. The man easily tears open the top edge of the individual packet to take his daily vitamins with a glass of water. Natural lighting illuminates the scene, with a slow, steady push-in camera movement capturing the simple routine."
+        }
+      ],
+      "lines": [
+        "영양제 아직도 따로따로 챙겨 드시나요?",
+        "하루 한 포로 남성 필수 영양 끝이에요.",
+        "아침에 출근하면서 툭 뜯어 먹으면 끝이죠.",
+        "알약 크기도 부담 없어서 목넘김이 편해요.",
+        "근데 진짜는 이거예요, 가방에 쏙 들어가요.",
+        "지치기 쉬운 직장인 남성분들께 딱이에요.",
+        "매일 챙기기 귀찮았던 분들 꼭 써보세요.",
+        "자세한 정보는 아래 설명란에서 확인해 보세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-10-29_ibm3NxqEtE_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-29_ibm3NxqEtE_dub.mp4"
+      }
+    }
+  },
+  "상품:에코벨알루미늄접이식쓰레기집게": {
+    "threads": {
+      "id": "18101712623071204",
+      "kind": "carousel",
+      "at": "2026-10-29T18:10:14",
+      "reply": "17909391012590464"
+    },
+    "instagram": {
+      "id": "18147774388575617",
+      "kind": "video",
+      "at": "2026-10-29T18:11:22"
+    },
+    "name": "에코벨 알루미늄 접이식 쓰레기 집게, 블루, 1개",
+    "link": "https://link.coupang.com/a/ida8snlhxA",
     "account": 2
   }
 }
