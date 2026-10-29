@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "image",
-    "last_slot": "2026-10-28 21:00",
+    "last_kind": "video",
+    "last_slot": "2026-10-29 11:10",
     "last_general_slot": "2026-10-29 06:40"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
@@ -1742,6 +1742,18 @@
         "file": "shorts_2026-10-29_ibnxvpLtQG_0054_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-29_ibnxvpLtQG_0054_dub.mp4"
       }
-    }
+    },
+    "threads": {
+      "id": "17998145376017441",
+      "kind": "carousel",
+      "at": "2026-10-29T11:22:14",
+      "reply": "18120277474784567"
+    },
+    "instagram": {
+      "id": "18014717762988322",
+      "kind": "video",
+      "at": "2026-10-29T11:23:26"
+    },
+    "account": 2
   }
 }
