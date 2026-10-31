@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-10-31 18:00",
+    "last_slot": "2026-10-31 21:00",
     "last_general_slot": "2026-10-31 14:30",
     "naver_ig": {
       "posted": {
@@ -2394,6 +2394,64 @@
     },
     "name": "아가드 유아용 아이쿵 머리보호대, 꿀벌, 1개",
     "link": "https://link.coupang.com/a/iidfGSXZQs",
+    "account": 2,
+    "writer": "Claude"
+  },
+  "상품:제로투히어로미니멀짐더플백": {
+    "threads": {
+      "id": "18122793262904171",
+      "kind": "carousel",
+      "at": "2026-10-31T21:06:36",
+      "reply": "17976857705940655"
+    },
+    "instagram": {
+      "id": "18184584652427727",
+      "kind": "carousel",
+      "at": "2026-10-31T21:08:15"
+    },
+    "name": "제로투히어로 미니멀 짐 더플 백",
+    "link": "https://link.coupang.com/a/iiee4cNQwC",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:<27년신형>아기안심전기요워셔블캠핑1인용전기장판카본탄소매트": {
+    "threads": {
+      "id": "18092332352227545",
+      "kind": "carousel",
+      "at": "2026-10-31T21:11:01",
+      "reply": "18126247000930466"
+    },
+    "instagram": {
+      "id": "18179344162401366",
+      "kind": "video",
+      "at": "2026-10-31T21:12:11"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iid4APcwXk_voice.mp4",
+      "script": {
+        "title": "이거 모르면 손해예요",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "전자파 걱정 없는 카본 탄소매트랍니다.",
+          "국내 생산에 KC 인증까지 받았어요.",
+          "캠핑 갈 때 1인용으로 딱 좋아요.",
+          "세탁할 수 있는 워셔블이라 편해요.",
+          "근데 진짜는 이거예요, 누우면 진짜 포근해요.",
+          "전자파 없는 안전한 전기요 찾는 분께 추천해요.",
+          "구매는 프로필 링크에서 하실 수 있어요."
+        ],
+        "yt_title": "전자파 걱정 없는 27년 신형 카본 탄소매트 추천",
+        "tags": [
+          "전기장판",
+          "탄소매트",
+          "카본매트",
+          "전기요",
+          "캠핑매트"
+        ]
+      }
+    },
+    "name": "<27년 신형> 아기 안심 전기요 워셔블 캠핑 1인용 전기장판 카본 탄소매트",
+    "link": "https://link.coupang.com/a/iid4APcwXk",
     "account": 2,
     "writer": "Claude"
   }
