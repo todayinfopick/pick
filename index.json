@@ -906,31 +906,6 @@
    "createdAt": "2026-10-29T21:11:26"
   },
   {
-   "id": "2026-10-29/naver1-2",
-   "date": "2026-10-29",
-   "blogKey": "naver1",
-   "blogName": "남다른 오늘",
-   "platform": "naver",
-   "category": "생활정보",
-   "title": "생계급여기준 2030년까지 중위소득 35%로 확대 및 지원 대상 정리",
-   "chars": 1510,
-   "writer": "제미나이",
-   "urgent": false,
-   "until": "",
-   "files": [
-    "content.json",
-    "01-cover.jpg",
-    "02-card.png"
-   ],
-   "createdAt": "2026-10-29T09:14:53",
-   "keyword": {
-    "keyword": "생계급여기준",
-    "volume": 580,
-    "level": "보통"
-   },
-   "photoVer": "20261030145028"
-  },
-  {
    "id": "2026-10-28/naver1-16",
    "date": "2026-10-28",
    "blogKey": "naver1",
