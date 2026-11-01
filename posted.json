@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-11-01 11:10",
+    "last_slot": "2026-11-01 18:00",
     "last_general_slot": "2026-11-01 14:30",
     "naver_ig": {
       "posted": {
@@ -2613,5 +2613,63 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-01_iieC5TbaIC_dub.mp4"
       }
     }
+  },
+  "상품:앨빈클로오버핏무지후드티avh-8551+1": {
+    "threads": {
+      "id": "18095378174690816",
+      "kind": "carousel",
+      "at": "2026-11-01T18:05:53",
+      "reply": "18129419636504204"
+    },
+    "instagram": {
+      "id": "17911128660565422",
+      "kind": "carousel",
+      "at": "2026-11-01T18:07:30"
+    },
+    "name": "앨빈클로 오버핏 무지 후드티 AVH-855 1+1",
+    "link": "https://link.coupang.com/a/iiinbz6SRg",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:꼬모쎔쁘레합격기원초콜릿15입": {
+    "threads": {
+      "id": "17992747275115739",
+      "kind": "carousel",
+      "at": "2026-11-01T18:09:38",
+      "reply": "18592340767068700"
+    },
+    "instagram": {
+      "id": "18077449502753551",
+      "kind": "video",
+      "at": "2026-11-01T18:10:44"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iifwiO8JpY_voice.mp4",
+      "script": {
+        "title": "시험 합격 기원 초콜릿",
+        "lines": [
+          "결과 먼저 말씀드릴게요.",
+          "네잎클로버 초콜릿으로 행운을 전할 수 있어요.",
+          "수험생 응원할 때 하나씩 건네기 딱 좋아요.",
+          "예쁜 메시지까지 적혀 있어서 감동 두 배예요.",
+          "근데 진짜는 이거예요.",
+          "15입 세트라 넉넉하게 나눠주기 좋더라고요.",
+          "중요한 시험 앞둔 친구나 지인에게 선물해 보세요.",
+          "자세한 정보는 프로필과 설명란을 확인해 주세요."
+        ],
+        "yt_title": "시험 합격 기원 초콜릿 선물세트 추천",
+        "tags": [
+          "합격기원초콜릿",
+          "수능선물",
+          "응원선물",
+          "초콜릿세트",
+          "꼬모쎔쁘레"
+        ]
+      }
+    },
+    "name": "꼬모쎔쁘레 합격기원초콜릿 15입, 144g, 1세트",
+    "link": "https://link.coupang.com/a/iifwiO8JpY",
+    "account": 2,
+    "writer": "Claude"
   }
 }

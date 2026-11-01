@@ -1389,5 +1389,44 @@
    "3291bed6f75141ac720140325f1ef8a9",
    "eb676da88f363823c76635ec4eb096b4"
   ]
+ },
+ "세타필 모이스춰라이징 크림": {
+  "seen": [
+   "ede998dce449f9747b5a888b39c30f75",
+   "e234952e9e2e17ae3e65da59402c51ee",
+   "a77994a25a05031dffddf4cb295254db",
+   "bfef1784b5ef93423c03894a9de9b35a",
+   "a95e616ebbf4d789fb9ad854622e8258",
+   "7c9597ade411e228ceb869508b16f129",
+   "c9f2e951fc0a54e19f61e8f341f93944",
+   "c37ab15b880e42fefb4495b5c4e93b36",
+   "d25803c6fe6ca4a811f719caeea7eefe",
+   "51a11d724a50933ff26c46bc7aa681d0",
+   "65acc8c5c4b1db6c0649f5cd3aec94a8",
+   "105e27189885f6ccba26d8aea3a8216a",
+   "463274d3120a978978b6f2f96d111948",
+   "de83d994025ef531aac92bf253a65a14",
+   "28cf84f49c177b367ccfe22ef5a6524b",
+   "bd1ef0a8cc094efb3df542b58738b650",
+   "4d0dfa8cd48a0938162c1ba9235e34ed"
+  ],
+  "drop": []
+ },
+ "더미식 백미밥": {
+  "seen": [
+   "c00df34962db976c3eb81276a407aa9f",
+   "c8ecbc6166ee096dadeadded81835135",
+   "fa123b05ad71c5d78e0e4b7c8a7a9c2e",
+   "5f010e24024e9bbeaee48fbb16c2bd49",
+   "ebc81ce622a79569f44b985857244a27",
+   "cba929b4e6bf5936019e768918582984",
+   "5494b734f39801ac598db180683cf369",
+   "38f63e009e43dc4d47c72dcf3f84c61c",
+   "f52e5aa273acbae6c70faecf767eae3a",
+   "b7899861bd76c2e74f570d4baf5de50d"
+  ],
+  "drop": [
+   "fa123b05ad71c5d78e0e4b7c8a7a9c2e"
+  ]
  }
 }
