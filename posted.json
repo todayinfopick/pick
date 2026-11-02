@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "video",
-    "last_slot": "2026-11-02 11:00",
+    "last_kind": "image",
+    "last_slot": "2026-11-02 18:00",
     "last_general_slot": "2026-11-02 14:30",
     "naver_ig": {
       "posted": {
@@ -2820,6 +2820,22 @@
     },
     "name": "유리아쥬 스틱레브르 컬러립밤",
     "link": "https://link.coupang.com/a/iiiXeCMhs4",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:세타필모이스춰라이징크림": {
+    "threads": {
+      "id": "17961950571257100",
+      "kind": "carousel",
+      "at": "2026-11-02T18:05:36"
+    },
+    "instagram": {
+      "id": "18455685850124413",
+      "kind": "carousel",
+      "at": "2026-11-02T18:06:32"
+    },
+    "name": "세타필 모이스춰라이징 크림, 550g, 1개",
+    "link": "https://link.coupang.com/a/iijjE6O7xI",
     "account": 1,
     "writer": "Claude"
   }
