@@ -14,7 +14,7 @@
     }
   },
   "_meta": {
-    "last_kind": "video",
+    "last_kind": "image",
     "last_slot": "2026-11-01 21:00",
     "last_general_slot": "2026-11-02 11:00",
     "naver_ig": {
@@ -2777,6 +2777,22 @@
     "name": "뷰센 여행 휴대용 양치키트 C 충치케어 치약 40g + 칫솔 세트, 1세트",
     "link": "https://link.coupang.com/a/iigE8rN3rU",
     "account": 2,
+    "writer": "Claude"
+  },
+  "상품:메종오브제라이닝면기": {
+    "threads": {
+      "id": "18158478682519709",
+      "kind": "carousel",
+      "at": "2026-11-02T13:59:24"
+    },
+    "instagram": {
+      "id": "18137409796711496",
+      "kind": "carousel",
+      "at": "2026-11-02T14:00:25"
+    },
+    "name": "메종오브제 라이닝 면기, 크림그레이, 2개",
+    "link": "https://link.coupang.com/a/iih7H0sKFE",
+    "account": 1,
     "writer": "Claude"
   }
 }
