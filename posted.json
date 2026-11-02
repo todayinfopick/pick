@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "image",
-    "last_slot": "2026-11-02 18:00",
+    "last_kind": "video",
+    "last_slot": "2026-11-02 21:00",
     "last_general_slot": "2026-11-02 14:30",
     "naver_ig": {
       "posted": {
@@ -2836,6 +2836,34 @@
     },
     "name": "세타필 모이스춰라이징 크림, 550g, 1개",
     "link": "https://link.coupang.com/a/iijjE6O7xI",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:더미식백미밥": {
+    "threads": {
+      "id": "17909393289575045",
+      "kind": "image",
+      "at": "2026-11-02T21:05:07"
+    },
+    "instagram": {
+      "id": "17886704853690446",
+      "kind": "video",
+      "at": "2026-11-02T21:05:38"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iikEpktsqW_voice.mp4",
+      "script": {
+        "title": "더미식 백미밥",
+        "lines": [
+          "더미식 백미밥",
+          "구매 링크는 프로필 링크에서 확인하세요"
+        ],
+        "yt_title": "",
+        "tags": []
+      }
+    },
+    "name": "더미식 백미밥, 210g, 24개",
+    "link": "https://link.coupang.com/a/iikEpktsqW",
     "account": 1,
     "writer": "Claude"
   }
