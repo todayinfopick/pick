@@ -14,8 +14,8 @@
     }
   },
   "_meta": {
-    "last_kind": "image",
-    "last_slot": "2026-11-01 21:00",
+    "last_kind": "video",
+    "last_slot": "2026-11-02 11:00",
     "last_general_slot": "2026-11-02 11:00",
     "naver_ig": {
       "posted": {
@@ -2792,6 +2792,34 @@
     },
     "name": "메종오브제 라이닝 면기, 크림그레이, 2개",
     "link": "https://link.coupang.com/a/iih7H0sKFE",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:유리아쥬스틱레브르컬러립밤": {
+    "threads": {
+      "id": "18160940137548128",
+      "kind": "carousel",
+      "at": "2026-11-02T14:05:22"
+    },
+    "instagram": {
+      "id": "18181623535441216",
+      "kind": "video",
+      "at": "2026-11-02T14:06:41"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iiiXeCMhs4_voice.mp4",
+      "script": {
+        "title": "유리아쥬 스틱레브르 컬러립밤",
+        "lines": [
+          "유리아쥬 스틱레브르 컬러립밤",
+          "구매 링크는 프로필 링크에서 확인하세요"
+        ],
+        "yt_title": "",
+        "tags": []
+      }
+    },
+    "name": "유리아쥬 스틱레브르 컬러립밤",
+    "link": "https://link.coupang.com/a/iiiXeCMhs4",
     "account": 1,
     "writer": "Claude"
   }
