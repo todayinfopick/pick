@@ -1585,5 +1585,50 @@
    "dbde479da75d4d69d34d109921d4b976"
   ],
   "drop": []
+ },
+ "홀리카홀리카 마이 페이브 피스 아이섀도 1.8g": {
+  "seen": [
+   "5e409bdc9783ad788a73308b4ae8a826",
+   "e660d362f5a3c060f1e0011230c1d840",
+   "520bd6f791f9279d3da5fe273b66f39a",
+   "a68450cb5fa0fc0b38d9a3e47a4f01fc",
+   "bba837d99943f1aaca39d0142734a52c",
+   "fc3804674629ba84c330aa69840ce4fb",
+   "2924b1a10bf3f74f23bb1ff364b8897d",
+   "97338c41046873fe1f9786abbf54ff0f",
+   "f709d57f2844ab3833dfe709ff2c4e88",
+   "1b90e5fee9386be748450cf1bf2ebd9a",
+   "4b15c2ccbff9b6a0bd4edeae1067484f",
+   "07ee049622dd680d24bd9280ad24117a"
+  ],
+  "drop": [
+   "520bd6f791f9279d3da5fe273b66f39a",
+   "1b90e5fee9386be748450cf1bf2ebd9a",
+   "4b15c2ccbff9b6a0bd4edeae1067484f"
+  ]
+ },
+ "에어룸 자가발열 히팅솜 극세사 스테이 침대패드": {
+  "seen": [
+   "2358aa82d1de76f6c1fa966ea73d209b",
+   "5d909cce84887e4f85cd9a6b00587b47",
+   "2290fe9900e28ba11a892d33d7b1aabf",
+   "e1f128fb0db5894c78045589f1786d02",
+   "07198091afce29a7eb8d3129505ad9c3",
+   "f24cadf55a9bc5bb982b126a229c051e",
+   "13acc6f5ad1fc3342aa148045e49a9fd",
+   "5247ca5d7afa0340ec0888d3d027299e",
+   "c3d7e3a637f368f701417caafafdec37",
+   "61a3c33b1999c8d82c45f749981052eb",
+   "7623fb06d3f8ed67685e1322879f8fb0",
+   "68102106d40beec59c891c86cd4c823e",
+   "e8128fb5da9f5f0cf63cf87493feb81d",
+   "102e1dfea3bc2f655dd4a0f9c6a71d51",
+   "fa24aca9879718d42ea65ee3aad62602",
+   "70506c659b5b58e6ea0c27b0953bd547",
+   "92adc5a282d7e21d227b5d1bd2f3057b"
+  ],
+  "drop": [
+   "61a3c33b1999c8d82c45f749981052eb"
+  ]
  }
 }

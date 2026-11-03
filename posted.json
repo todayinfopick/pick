@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-11-03 18:00",
+    "last_slot": "2026-11-03 21:00",
     "last_general_slot": "2026-11-03 14:30",
     "naver_ig": {
       "posted": {
@@ -65,6 +65,22 @@
             "src": "https://raw.githubusercontent.com/todayinfopick/pick/blog-packages/2026-10-31/naver1-9/video_vertical.mp4",
             "at": "2026-11-01T21:10:20",
             "url": "https://github.com/todayinfopick/pick/releases/download/shorts/naver-F5slkQ1e.mp4"
+          }
+        },
+        "https://naver.me/GP2Cds41": {
+          "name": "니베아 맨 센서티브 쉐이빙 폼 면도크림 250ml",
+          "no": 49,
+          "id": "18134614364499978",
+          "day": "2026-11-03",
+          "at": "2026-11-03T21:12:44",
+          "yt": {
+            "title": "니베아 맨 센서티브 쉐이빙 폼 면도크림 250ml 3개 민감 피부 저자극 추천 #shorts",
+            "desc": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.\n\n매일 면도할 때마다 피부가 따가워서 고민이신가요?\n순한 성분과 풍성한 거품으로 자극을 줄여줘요.\n넉넉한 구성이라 욕실에 쟁여두고 쓰기 편하답니다. 🪒\n민감한 피부라면 이번 기회에 한 번 둘러보세요! ✨\n\n구매 링크 → https://naver.me/GP2Cds41\n(프로필 링크 49번에서도 볼 수 있어요 → todayinfopick.github.io/pick/naver/)\n\n#니베아맨센서티브쉐이빙폼 #면도크림추천 #남성쉐이빙폼 #니베아면도크림 #민감성면도크림 #저자극쉐이빙폼 #니베아맨 #남성화장품",
+            "comment": "이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.\n\n🛒 니베아 맨 센서티브 쉐이빙 폼 면도크림 250ml\n구매 링크 → https://naver.me/GP2Cds41\n(프로필 링크 49번에서도 볼 수 있어요 → todayinfopick.github.io/pick/naver/)",
+            "file": "naver-GP2Cds41.mp4",
+            "src": "https://raw.githubusercontent.com/todayinfopick/pick/blog-packages/2026-11-03/naver3-5/video_vertical.mp4",
+            "at": "2026-11-03T21:12:44",
+            "url": "https://github.com/todayinfopick/pick/releases/download/shorts/naver-GP2Cds41.mp4"
           }
         }
       },
@@ -3026,5 +3042,65 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-03_iikVINq0B2_dub.mp4"
       }
     }
+  },
+  "상품:ts프리미엄샴푸": {
+    "threads": {
+      "id": "17924495088222037",
+      "kind": "carousel",
+      "at": "2026-11-03T21:06:11",
+      "reply": "18049753634818889"
+    },
+    "instagram": {
+      "id": "18081468587738037",
+      "kind": "carousel",
+      "at": "2026-11-03T21:07:46"
+    },
+    "name": "TS 프리미엄 샴푸",
+    "link": "https://link.coupang.com/a/iilJp9yx6O",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:주문진어시장건어물맛진미오징어채(냉동)": {
+    "threads": {
+      "id": "18098299871397802",
+      "kind": "carousel",
+      "at": "2026-11-03T21:10:50",
+      "reply": "18118323749085624"
+    },
+    "instagram": {
+      "id": "18106753865565209",
+      "kind": "video",
+      "at": "2026-11-03T21:12:07"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iik5bGN1Mr_voice.mp4",
+      "script": {
+        "title": "씹을수록 감칠맛 폭발",
+        "lines": [
+          "이거 모르면 간식 타임 손해예요.",
+          "부드럽고 쫄깃해서 멈출 수가 없거든요.",
+          "주문진어시장건어물 맛진미 오징어채예요.",
+          "냉동으로 와서 신선함이 그대로 살아있어요.",
+          "HACCP 인증을 받아 믿고 먹을 수 있어요.",
+          "근데 진짜는 이거예요.",
+          "씹을수록 은은한 감칠맛이 입안에 퍼져요.",
+          "고소한 간식으로 먹기 딱 좋아요.",
+          "오늘 저녁엔 맛있는 밥반찬으로도 즐겨보세요.",
+          "구매는 프로필 링크에서 하실 수 있어요."
+        ],
+        "yt_title": "영화 볼 때 필수! 멈출 수 없는 주문진 오징어채",
+        "tags": [
+          "오징어채",
+          "진미채",
+          "주문진어시장",
+          "간식추천",
+          "밥반찬"
+        ]
+      }
+    },
+    "name": "주문진어시장건어물 맛진미 오징어채 (냉동)",
+    "link": "https://link.coupang.com/a/iik5bGN1Mr",
+    "account": 2,
+    "writer": "Claude"
   }
 }
