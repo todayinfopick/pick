@@ -8,6 +8,9 @@ on:
     - cron: "30 20 * * *"
     # 키워드 수집: 매일 한국 시간 새벽 3시 30분에 1회 (UTC 18:30)
     - cron: "30 18 * * *"
+    # 따라잡기: 무료 예약은 몇 시간씩 늦거나 아예 빠짐 (2026-11-03·04 둘 다 빠짐).
+    # 한국 시간 04:17, 07:17~13:17 매시 확인해서 오늘 아직 안 한 것만 함 (했으면 1분 안에 끝남). 6시대는 쿠팡 자동화와 겹쳐 뺌
+    - cron: "17 19,22-23,0-4 * * *"
     # 필요할 때 workflow_dispatch mode=키워드로 추가 1회 실행
   workflow_dispatch:
     inputs:
@@ -33,9 +36,37 @@ permissions:
   contents: write
 
 jobs:
-  run:
-    # 예약 실행을 잠시 멈추려면 저장소 변수 AUTO_BLOG=off
+  # 예약 실행이면 오늘 키워드·글을 이미 했는지 먼저 봄 (blog-packages의 keywords.json 'updated', auto_day.txt)
+  when:
     if: github.event_name != 'schedule' || vars.AUTO_BLOG != 'off'
+    runs-on: ubuntu-latest
+    outputs:
+      kw: ${{ steps.w.outputs.kw }}
+      write: ${{ steps.w.outputs.write }}
+    steps:
+      - id: w
+        env:
+          TZ: Asia/Seoul
+          EV: ${{ github.event_name }}
+          SCHED: ${{ github.event.schedule }}
+          MODE: ${{ inputs.mode }}
+        run: |
+          if [ "$EV" != "schedule" ]; then
+            [ "$MODE" = "키워드" ] && echo "kw=1" >> "$GITHUB_OUTPUT" || echo "write=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          today=$(date +%F); hm=$(date +%H%M)
+          raw=https://raw.githubusercontent.com/${{ github.repository }}/blog-packages
+          kwday=$(curl -fsS "$raw/keywords.json?t=$(date +%s)" | python3 -c "import json,sys;print(json.load(sys.stdin).get('updated','')[:10])" 2>/dev/null || true)
+          autoday=$(curl -fsS "$raw/auto_day.txt?t=$(date +%s)" 2>/dev/null | head -c 10 || true)
+          echo "오늘 $today $hm / 키워드 $kwday / 예약 글 $autoday"
+          [ "$kwday" != "$today" ] && [ "$hm" -ge 0330 ] && echo "kw=1" >> "$GITHUB_OUTPUT"
+          [ "$autoday" != "$today" ] && [ "$hm" -ge 0530 ] && echo "write=1" >> "$GITHUB_OUTPUT"
+          true
+
+  run:
+    needs: when
+    if: needs.when.outputs.kw == '1' || needs.when.outputs.write == '1'
     runs-on: ubuntu-latest
     timeout-minutes: 40
     env:
@@ -88,16 +119,20 @@ jobs:
           fi
 
       - name: 키워드 모으기 (인기 검색어·검색량·경쟁도)
-        if: (github.event_name == 'workflow_dispatch' && inputs.mode == '키워드') || (github.event_name == 'schedule' && github.event.schedule == '30 18 * * *')
+        if: needs.when.outputs.kw == '1'
         continue-on-error: true
         run: python blog_keywords.py --site site
 
       - name: 글 쓰기
-        if: (github.event_name == 'schedule' && github.event.schedule == '30 20 * * *') || (github.event_name == 'workflow_dispatch' && inputs.mode != '키워드')
+        if: needs.when.outputs.write == '1'
         run: >-
           python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
           ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
           ${{ inputs.mode == '초안 정리' && '--drafts' || '' }}
+
+      - name: 예약 글 한 날 적기
+        if: github.event_name == 'schedule' && needs.when.outputs.write == '1'
+        run: date +%F > site/auto_day.txt
 
       - name: 결과 저장
         if: always()
