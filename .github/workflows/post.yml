@@ -31,6 +31,39 @@ permissions:
   contents: write
 
 jobs:
+  # 블로그 예약 따라잡기 (2026-11-05: GitHub 예약이 밤새 하나도 안 돌아 키워드·글이 없었음).
+  # 이 작업은 외부 알람이 15분마다 부르므로, 오늘 블로그 키워드·예약 글을 아직 안 했으면 blog.yml '예약 확인'을 대신 부름.
+  # 한국 시간 03:30~05:59, 07:00~13:59만 (6시대는 쿠팡 자동화와 겹치지 않게). 이미 했거나 돌고 있으면 아무것도 안 함.
+  blog_kick:
+    if: (github.event_name == 'schedule' || inputs.mode == '예약 확인') && vars.AUTO_BLOG != 'off'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - env:
+          TZ: Asia/Seoul
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          today=$(date +%F); hm=$((10#$(date +%H%M)))
+          if ! { [ $hm -ge 330 ] && [ $hm -lt 600 ]; } && ! { [ $hm -ge 700 ] && [ $hm -lt 1400 ]; }; then echo "블로그 확인 시간 아님 ($hm)"; exit 0; fi
+          raw=https://raw.githubusercontent.com/$GH_REPO/blog-packages
+          kwday=$(curl -fsS "$raw/keywords.json?t=$(date +%s)" | python3 -c "import json,sys;print(json.load(sys.stdin).get('updated','')[:10])" 2>/dev/null || true)
+          autoday=$(curl -fsS "$raw/auto_day.txt?t=$(date +%s)" 2>/dev/null | head -c 10 || true)
+          echo "오늘 $today $hm / 키워드 $kwday / 예약 글 $autoday"
+          need=0
+          [ "$kwday" != "$today" ] && need=1
+          [ "$autoday" != "$today" ] && [ $hm -ge 530 ] && need=1
+          [ $need = 0 ] && { echo "오늘 블로그 할 일은 다 했어요"; exit 0; }
+          busy=$(gh run list -w blog.yml -L 5 --json status -q '[.[]|select(.status!="completed")]|length' 2>/dev/null || echo 0)
+          [ "$busy" != "0" ] && { echo "블로그 작업이 이미 돌고 있어요"; exit 0; }
+          # 실패해도 15분마다 다시 부르지 않게: 마지막 블로그 작업이 시작된 지 55분이 안 됐으면 기다림 (예전 매시 따라잡기와 같은 간격)
+          last=$(gh run list -w blog.yml -L 1 --json createdAt -q '.[0].createdAt' 2>/dev/null || true)
+          if [ -n "$last" ] && [ $(( $(date +%s) - $(date -d "$last" +%s) )) -lt 3300 ]; then echo "최근 블로그 작업 $last → 다음에 확인"; exit 0; fi
+          gh workflow run blog.yml -f mode="예약 확인" && echo "블로그 '예약 확인'을 불렀어요"
+
   run:
     # 예약 실행을 잠시 멈추려면 저장소 변수 AUTO_POST=off
     # '예약 확인'은 외부 알람(cron-job.org)이 15분마다 부르는 것 — GitHub 예약과 똑같이 동작

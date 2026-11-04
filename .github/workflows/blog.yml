@@ -18,7 +18,7 @@ on:
         description: "할 일"
         type: choice
         default: 글쓰기
-        options: [글쓰기, 초안 정리, 키워드]
+        options: [글쓰기, 초안 정리, 키워드, 예약 확인]
       blog:
         description: "블로그 (비우면 전부, 예: naver1,tistory)"
         type: string
@@ -38,7 +38,7 @@ permissions:
 jobs:
   # 예약 실행이면 오늘 키워드·글을 이미 했는지 먼저 봄 (blog-packages의 keywords.json 'updated', auto_day.txt)
   when:
-    if: github.event_name != 'schedule' || vars.AUTO_BLOG != 'off'
+    if: (github.event_name != 'schedule' && inputs.mode != '예약 확인') || vars.AUTO_BLOG != 'off'
     runs-on: ubuntu-latest
     outputs:
       kw: ${{ steps.w.outputs.kw }}
@@ -54,7 +54,8 @@ jobs:
           today=$(date +%F); hm=$(date +%H%M)
           raw=https://raw.githubusercontent.com/${{ github.repository }}/blog-packages
           kwday=$(curl -fsS "$raw/keywords.json?t=$(date +%s)" | python3 -c "import json,sys;print(json.load(sys.stdin).get('updated','')[:10])" 2>/dev/null || true)
-          if [ "$EV" != "schedule" ]; then
+          # '예약 확인' = 자동 게시가 15분마다 부르는 따라잡기 (GitHub 예약이 밤새 하나도 안 돈 날이 있음, 2026-11-05) → 예약과 똑같이
+          if [ "$EV" != "schedule" ] && [ "$MODE" != "예약 확인" ]; then
             if [ "$MODE" = "키워드" ]; then echo "kw=1" >> "$GITHUB_OUTPUT"; exit 0; fi
             echo "write=1" >> "$GITHUB_OUTPUT"
             # 글 쓰기 전에 오늘 키워드가 아직 없으면 먼저 모음 (새벽 예약이 빠진 날 어제 검색어로 쓰지 않게, 2026-11-04)
@@ -130,11 +131,11 @@ jobs:
         if: needs.when.outputs.write == '1'
         run: >-
           python blog_auto.py --site site --blog "${{ inputs.blog }}" --count "${{ inputs.count || '0' }}"
-          ${{ github.event_name == 'schedule' && '--scheduled' || '' }}
+          ${{ (github.event_name == 'schedule' || inputs.mode == '예약 확인') && '--scheduled' || '' }}
           ${{ inputs.mode == '초안 정리' && '--drafts' || '' }}
 
       - name: 예약 글 한 날 적기
-        if: github.event_name == 'schedule' && needs.when.outputs.write == '1'
+        if: (github.event_name == 'schedule' || inputs.mode == '예약 확인') && needs.when.outputs.write == '1'
         run: date +%F > site/auto_day.txt
 
       - name: 결과 저장
