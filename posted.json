@@ -15,7 +15,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-11-04 18:00",
+    "last_slot": "2026-11-04 21:00",
     "last_general_slot": "2026-11-04 14:30",
     "naver_ig": {
       "posted": {
@@ -3250,5 +3250,64 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-04_il2bpDmHJY_dub.mp4"
       }
     }
+  },
+  "상품:남성패딩베이직빵빵한보온방풍스탠드칼라겨울아우터베이잉": {
+    "threads": {
+      "id": "18166444186495021",
+      "kind": "carousel",
+      "at": "2026-11-04T21:22:26",
+      "reply": "18089272355324896"
+    },
+    "instagram": {
+      "id": "18013438949985835",
+      "kind": "carousel",
+      "at": "2026-11-04T21:24:00"
+    },
+    "name": "남성 패딩 베이직 빵빵한 보온 방풍 스탠드칼라 겨울 아우터 베이잉",
+    "link": "https://link.coupang.com/a/imL0EPi992",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:파르페by알레르망국내제조알러지케어페이드다운필차렵이불": {
+    "threads": {
+      "id": "18076192940773992",
+      "kind": "carousel",
+      "at": "2026-11-04T21:27:14",
+      "reply": "17963108697212820"
+    },
+    "instagram": {
+      "id": "18150274333573027",
+      "kind": "video",
+      "at": "2026-11-04T21:28:30"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/imLtQlR2WW_voice.mp4",
+      "script": {
+        "title": "이불 먼지 이제 그만",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "알러지케어 원단이라 먼지가 아예 안 박혀요.",
+          "집먼지진드기 걱정이 없어서 피부가 정말 편안해요.",
+          "다운필 충전재 덕분에 몸에 착 감기듯 가벼워요.",
+          "근데 진짜는 이거예요, 사계절 내내 덮기 딱 좋아요.",
+          "세탁하고 나서도 털 뭉침 없이 보송보송해요.",
+          "자고 일어나도 목이랑 코가 간지럽지 않더라고요.",
+          "위생적인 이불 찾는 분들께 딱 알맞은 제품이에요.",
+          "구매는 프로필 링크에서 확인하실 수 있어요."
+        ],
+        "yt_title": "매일 덮는 이불, 먼지 걱정 끝내는 방법",
+        "tags": [
+          "알레르망차렵이불",
+          "알러지케어이불",
+          "간절기이불",
+          "사계절이불",
+          "침구추천"
+        ]
+      }
+    },
+    "name": "파르페by알레르망 국내 제조 알러지케어 페이드 다운필 차렵이불",
+    "link": "https://link.coupang.com/a/imLtQlR2WW",
+    "account": 2,
+    "writer": "Claude"
   }
 }
