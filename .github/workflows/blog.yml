@@ -51,13 +51,16 @@ jobs:
           SCHED: ${{ github.event.schedule }}
           MODE: ${{ inputs.mode }}
         run: |
-          if [ "$EV" != "schedule" ]; then
-            [ "$MODE" = "키워드" ] && echo "kw=1" >> "$GITHUB_OUTPUT" || echo "write=1" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
           today=$(date +%F); hm=$(date +%H%M)
           raw=https://raw.githubusercontent.com/${{ github.repository }}/blog-packages
           kwday=$(curl -fsS "$raw/keywords.json?t=$(date +%s)" | python3 -c "import json,sys;print(json.load(sys.stdin).get('updated','')[:10])" 2>/dev/null || true)
+          if [ "$EV" != "schedule" ]; then
+            if [ "$MODE" = "키워드" ]; then echo "kw=1" >> "$GITHUB_OUTPUT"; exit 0; fi
+            echo "write=1" >> "$GITHUB_OUTPUT"
+            # 글 쓰기 전에 오늘 키워드가 아직 없으면 먼저 모음 (새벽 예약이 빠진 날 어제 검색어로 쓰지 않게, 2026-11-04)
+            [ "$MODE" = "글쓰기" ] && [ "$kwday" != "$today" ] && echo "kw=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           autoday=$(curl -fsS "$raw/auto_day.txt?t=$(date +%s)" 2>/dev/null | head -c 10 || true)
           echo "오늘 $today $hm / 키워드 $kwday / 예약 글 $autoday"
           [ "$kwday" != "$today" ] && [ "$hm" -ge 0330 ] && echo "kw=1" >> "$GITHUB_OUTPUT"
