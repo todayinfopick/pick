@@ -82,6 +82,8 @@ jobs:
       # 선불 Gemini 키는 ENV_FILE/Google Sheets와 분리하여 Actions Secret에서만 읽음
       GEMINI_PAID_API_KEY: ${{ secrets.GEMINI_PAID_API_KEY }}
       GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
+      # 쿠팡 비교 쇼핑 글이 상품 사진 폴더(드라이브)를 받는 곳 (자동 게시와 같은 폴더. 2026-11-05 빠져 있어 상품이 전부 '사진이 없어' 빠짐)
+      GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
     steps:
       - uses: actions/checkout@v4
 
