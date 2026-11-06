@@ -11,11 +11,12 @@
       "id": "18026571254863277",
       "kind": "video",
       "at": "2026-10-14T22:33:50"
-    }
+    },
+    "no": 1
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-11-06 18:00",
+    "last_slot": "2026-11-06 21:00",
     "last_general_slot": "2026-11-06 14:30",
     "naver_ig": {
       "posted": {
@@ -146,7 +147,8 @@
       "id": "18112148816179380",
       "kind": "carousel",
       "at": "2026-10-15T23:36:20"
-    }
+    },
+    "no": 2
   },
   "상품:에이지투웨니스스킨퍼스트히든프렙파운데이션팩트세트": {
     "threads": {
@@ -160,7 +162,8 @@
       "at": "2026-10-16T09:02:23"
     },
     "name": "에이지투웨니스 스킨 퍼스트 히든 프렙 파운데이션 팩트 세트",
-    "link": "https://link.coupang.com/a/hQvBzTcGxo"
+    "link": "https://link.coupang.com/a/hQvBzTcGxo",
+    "no": 3
   },
   "상품:에뛰드베이킹파우더모공클렌징대용량폼": {
     "threads": {
@@ -174,7 +177,8 @@
       "at": "2026-10-16T13:02:40"
     },
     "name": "에뛰드 베이킹파우더 모공 클렌징 대용량 폼",
-    "link": "https://link.coupang.com/a/hQyiFbHipw"
+    "link": "https://link.coupang.com/a/hQyiFbHipw",
+    "no": 4
   },
   "상품:닥터에이지시카히알루로닉카밍수분앰플": {
     "threads": {
@@ -188,7 +192,8 @@
       "at": "2026-10-17T13:35:40"
     },
     "name": "닥터에이지 시카 히알루로닉 카밍 수분 앰플",
-    "link": "https://link.coupang.com/a/hUrOxXDoiq"
+    "link": "https://link.coupang.com/a/hUrOxXDoiq",
+    "no": 5
   },
   "상품:포모나바닐라시럽": {
     "name": "포모나 바닐라 시럽",
@@ -206,7 +211,8 @@
       "id": "18425424034145850",
       "kind": "carousel",
       "at": "2026-10-17T22:20:25"
-    }
+    },
+    "no": 1
   },
   "_general": [
     {
@@ -926,7 +932,8 @@
     },
     "name": "솔루시안 PDRN + EGF 리바이탈라이징 크림",
     "link": "https://link.coupang.com/a/hVXqxhX5JA",
-    "account": 1
+    "account": 1,
+    "no": 6
   },
   "상품:코멧사선컷팅테이프클리너리필16cmx12m": {
     "threads": {
@@ -942,7 +949,8 @@
     },
     "name": "코멧 사선컷팅 테이프 클리너 리필 16cm x 12m",
     "link": "https://link.coupang.com/a/hVX50JhOHQ",
-    "account": 2
+    "account": 2,
+    "no": 2
   },
   "상품:씨널스씨어터데일리바디워시": {
     "threads": {
@@ -958,7 +966,8 @@
     },
     "name": "씨널스 씨어터 데일리 바디워시, 1L, 1개",
     "link": "https://link.coupang.com/a/hV6L26zfJA",
-    "account": 1
+    "account": 1,
+    "no": 7
   },
   "상품:닥터노아미세플라스틱안심대나무유아아기칫솔1단계": {
     "threads": {
@@ -974,7 +983,8 @@
     },
     "name": "닥터노아 미세플라스틱 안심 대나무 유아 아기 칫솔 1단계, 1세트, 6개입, 혼합",
     "link": "https://link.coupang.com/a/hWfVz64VIi",
-    "account": 2
+    "account": 2,
+    "no": 3
   },
   "상품:잘풀리는집3겹클래식화장지": {
     "threads": {
@@ -990,7 +1000,8 @@
     },
     "name": "잘풀리는집 3겹 클래식 화장지, 27m, 12개입, 1개",
     "link": "https://link.coupang.com/a/hV61lWq5Om",
-    "account": 1
+    "account": 1,
+    "no": 8
   },
   "상품:맘스럽퍼퓸부케섬유유연제프랑스향수첨가에이프릴핑크로즈향실내건조형구연산첨가프리미엄": {
     "threads": {
@@ -1006,7 +1017,8 @@
     },
     "name": "맘스럽 퍼퓸부케 섬유유연제 프랑스 향수첨가 에이프릴 핑크로즈향 실내건조형 구연산첨가 프리미엄, 2.5L, 4개",
     "link": "https://link.coupang.com/a/hWgV8l5xgi",
-    "account": 2
+    "account": 2,
+    "no": 4
   },
   "상품:이니스프리퍼펙트9인텐시브크림": {
     "threads": {
@@ -1022,7 +1034,8 @@
     },
     "name": "이니스프리 퍼펙트 9 인텐시브 크림",
     "link": "https://link.coupang.com/a/hWfsOt0I9I",
-    "account": 1
+    "account": 1,
+    "no": 9
   },
   "상품:코멧전자레인지찜기세트그레이550ml+1200ml": {
     "threads": {
@@ -1038,7 +1051,8 @@
     },
     "name": "코멧 전자레인지 찜기 세트 그레이 550ml+1200ml, 1세트",
     "link": "https://link.coupang.com/a/hWKVIwvbhs",
-    "account": 2
+    "account": 2,
+    "no": 5
   },
   "상품:미와비검버섯색소침착기미미백크림": {
     "threads": {
@@ -1054,7 +1068,8 @@
     },
     "name": "미와비 검버섯 색소침착 기미 미백 크림, 3개, 75ml",
     "link": "https://link.coupang.com/a/hWgjogASzY",
-    "account": 1
+    "account": 1,
+    "no": 10
   },
   "상품:퓨어르국산전자레인지파스타쿠커bpafree": {
     "threads": {
@@ -1070,7 +1085,8 @@
     },
     "name": "퓨어르 국산 전자레인지 파스타 쿠커 BPA Free, 1개, 화이트",
     "link": "https://link.coupang.com/a/hWLkkEMrv2",
-    "account": 2
+    "account": 2,
+    "no": 6
   },
   "상품:이니스프리화산송이모공바하클렌징폼": {
     "threads": {
@@ -1086,7 +1102,8 @@
     },
     "name": "이니스프리 화산송이 모공 바하 클렌징 폼, 150g, 1개",
     "link": "https://link.coupang.com/a/hWHNMqxJ8K",
-    "account": 1
+    "account": 1,
+    "no": 11
   },
   "상품:리빙선데이스마트6종채칼세트": {
     "threads": {
@@ -1102,7 +1119,8 @@
     },
     "name": "리빙선데이 스마트 6종 채칼 세트",
     "link": "https://link.coupang.com/a/hWLN3j702e",
-    "account": 2
+    "account": 2,
+    "no": 7
   },
   "상품:롬앤한올브로우카라9g": {
     "threads": {
@@ -1118,7 +1136,8 @@
     },
     "name": "롬앤 한올 브로우 카라 9g, 12 소이 베이지, 1개",
     "link": "https://link.coupang.com/a/hWL5UfLIUS",
-    "account": 1
+    "account": 1,
+    "no": 12
   },
   "상품:마더케이영유아핀셋네일케어4종세트": {
     "threads": {
@@ -1134,7 +1153,8 @@
     },
     "name": "마더케이 영유아 핀셋 네일케어 4종 세트, 민트 + 화이트, 1세트",
     "link": "https://link.coupang.com/a/hWOGTa6cfY",
-    "account": 2
+    "account": 2,
+    "no": 8
   },
   "상품:앳플리t8스마트체성분체중계": {
     "threads": {
@@ -1150,7 +1170,8 @@
     },
     "name": "앳플리 T8 스마트 체성분 체중계, T8scale, 화이트, 1개",
     "link": "https://link.coupang.com/a/hWNm9kOgcS",
-    "account": 1
+    "account": 1,
+    "no": 13
   },
   "상품:리빙메이트다용도원형컨테이너박스크림슨레드": {
     "threads": {
@@ -1166,7 +1187,8 @@
     },
     "name": "리빙메이트 다용도 원형 컨테이너 박스 크림슨 레드",
     "link": "https://link.coupang.com/a/hZmuG2a5tI",
-    "account": 2
+    "account": 2,
+    "no": 9
   },
   "상품:바세린립테라피스틱": {
     "threads": {
@@ -1182,7 +1204,8 @@
     },
     "name": "바세린 립테라피 스틱",
     "link": "https://link.coupang.com/a/hWNwCKqLi8",
-    "account": 1
+    "account": 1,
+    "no": 14
   },
   "상품:바이탈플랜트인덕션롤팬뉴오리지널케요네즈": {
     "threads": {
@@ -1210,7 +1233,8 @@
       "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n고기 구울 때 계속 서서 젓기 너무 귀찮으셨죠?\n자동 회전 날개가 알아서 재료를 골고루 저어줘요.\n뚜껑이 있어서 기름이나 양념이 밖으로 튀지 않아요.\n기름 배출구가 조리 중 생기는 기름을 쏙 빼줘요.\n인덕션에서도 편하게 쓸 수 있는 롤팬이에요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#바이탈플랜트 #롤팬 #자동회전팬 #인덕션팬 #주방용품 #쿠팡추천 #살림템",
       "sec": 25.3,
       "remade": true
-    }
+    },
+    "no": 10
   },
   "상품:포렌코즈타투끌레르벨벳틴트": {
     "threads": {
@@ -1226,7 +1250,8 @@
     },
     "name": "포렌코즈 타투 끌레르 벨벳 틴트, 19모스, 1개",
     "link": "https://link.coupang.com/a/hWOgkDW0tg",
-    "account": 1
+    "account": 1,
+    "no": 15
   },
   "상품:타고가요캐리어전용핑구쿠션인형+담요세트": {
     "threads": {
@@ -1242,7 +1267,8 @@
     },
     "name": "타고가요 캐리어 전용 핑구 쿠션 인형 + 담요 세트",
     "link": "https://link.coupang.com/a/hZIIYvSYDc",
-    "account": 1
+    "account": 1,
+    "no": 16
   },
   "상품:락앤락산리오피규어텀블러lhc4470mit_sr": {
     "threads": {
@@ -1258,7 +1284,8 @@
     },
     "name": "락앤락 산리오 피규어 텀블러 LHC4470MIT_SR",
     "link": "https://link.coupang.com/a/hZIuJFHFim",
-    "account": 1
+    "account": 1,
+    "no": 17
   },
   "상품:oyeah저소음에어프라이어4.5l가정용af-4501즉시발열간편세척": {
     "threads": {
@@ -1274,7 +1301,8 @@
     },
     "name": "OYEAH 저소음 에어프라이어 4.5L 가정용 AF- 4501 즉시발열 간편세척",
     "link": "https://link.coupang.com/a/h1FZzSS0J2",
-    "account": 2
+    "account": 2,
+    "no": 11
   },
   "상품:락앤락향균마블도마": {
     "threads": {
@@ -1290,7 +1318,8 @@
     },
     "name": "락앤락 향균 마블 도마",
     "link": "https://link.coupang.com/a/hZJdCfDdpQ",
-    "account": 1
+    "account": 1,
+    "no": 18
   },
   "상품:디에스가추몰무선청소기건습식물걸레일체형강력진공핸디청소기": {
     "threads": {
@@ -1306,7 +1335,8 @@
     },
     "name": "디에스가추몰 무선 청소기 건습식 물걸레 일체형 강력 진공 핸디 청소기",
     "link": "https://link.coupang.com/a/h1GjWXz0Sa",
-    "account": 2
+    "account": 2,
+    "no": 12
   },
   "상품:뉴트로지나딥클린포밍클렌저": {
     "threads": {
@@ -1322,7 +1352,8 @@
     },
     "name": "뉴트로지나 딥 클린 포밍 클렌저, 100g, 2개",
     "link": "https://link.coupang.com/a/hZJNVObqCG",
-    "account": 1
+    "account": 1,
+    "no": 19
   },
   "상품:miga초음파무드등가습기4l저소음타이머대용량가정용사무실가습기": {
     "threads": {
@@ -1338,7 +1369,8 @@
     },
     "name": "MIGA 초음파 무드등 가습기 4L 저소음 타이머 대용량 가정용 사무실 가습기",
     "link": "https://link.coupang.com/a/h1GNngmUzA",
-    "account": 2
+    "account": 2,
+    "no": 13
   },
   "상품:뉴트로지나딥클린아크네포밍클렌저": {
     "threads": {
@@ -1354,7 +1386,8 @@
     },
     "name": "뉴트로지나 딥클린 아크네 포밍 클렌저, 150g, 1개",
     "link": "https://link.coupang.com/a/h0ruvXNDOK",
-    "account": 1
+    "account": 1,
+    "no": 20
   },
   "상품:리템우산꽂이자석형": {
     "threads": {
@@ -1370,7 +1403,8 @@
     },
     "name": "리템 우산꽂이 자석형",
     "link": "https://link.coupang.com/a/h1X61zAG7w",
-    "account": 2
+    "account": 2,
+    "no": 14
   },
   "상품:썬리즈자외선차단쿨스포츠골프마스크1+1": {
     "threads": {
@@ -1386,7 +1420,8 @@
     },
     "name": "썬리즈 자외선차단 쿨 스포츠 골프 마스크 1+1",
     "link": "https://link.coupang.com/a/h0rZTQ3RWS",
-    "account": 1
+    "account": 1,
+    "no": 21
   },
   "상품:홈싹프리미엄빨아쓰는규조토발매트": {
     "threads": {
@@ -1402,7 +1437,8 @@
     },
     "name": "홈싹 프리미엄 빨아쓰는 규조토 발매트",
     "link": "https://link.coupang.com/a/h1YmTWcZO0",
-    "account": 2
+    "account": 2,
+    "no": 15
   },
   "상품:일리윤히알루론모이스춰수분크림": {
     "threads": {
@@ -1418,7 +1454,8 @@
     },
     "name": "일리윤 히알루론 모이스춰 수분크림, 100ml, 2개",
     "link": "https://link.coupang.com/a/h1HaPl19cP",
-    "account": 1
+    "account": 1,
+    "no": 22
   },
   "상품:라보토리스탠드부착형전신거울": {
     "threads": {
@@ -1434,7 +1471,8 @@
     },
     "name": "라보토리 스탠드 부착형 전신거울",
     "link": "https://link.coupang.com/a/h1YMvZpenY",
-    "account": 2
+    "account": 2,
+    "no": 16
   },
   "상품:센카퍼펙트휩페이셜워시": {
     "threads": {
@@ -1450,7 +1488,8 @@
     },
     "name": "센카 퍼펙트 휩 페이셜 워시, 120g, 1개",
     "link": "https://link.coupang.com/a/h3KvdvpxK0",
-    "account": 1
+    "account": 1,
+    "no": 23
   },
   "상품:아크이지그립스트로우빨대대용량텀블러": {
     "threads": {
@@ -1466,7 +1505,8 @@
     },
     "name": "아크 이지그립 스트로우 빨대 대용량 텀블러",
     "link": "https://link.coupang.com/a/h1ZHm2ri44",
-    "account": 2
+    "account": 2,
+    "no": 17
   },
   "상품:슈퍼카미트아동용소프트쿠션실내화s100": {
     "threads": {
@@ -1482,7 +1522,8 @@
     },
     "name": "슈퍼카미트 아동용 소프트 쿠션 실내화 S100",
     "link": "https://link.coupang.com/a/h3KYdkZrNI",
-    "account": 1
+    "account": 1,
+    "no": 24
   },
   "상품:코멧홈프리미엄옥스퍼드리빙박스24l": {
     "threads": {
@@ -1498,7 +1539,8 @@
     },
     "name": "코멧 홈 프리미엄 옥스퍼드 리빙박스 24 L, 그레이, 1개",
     "link": "https://link.coupang.com/a/h4xwvssz0v",
-    "account": 2
+    "account": 2,
+    "no": 18
   },
   "상품:롬앤한올아이브로우카라9g": {
     "threads": {
@@ -1514,7 +1556,8 @@
     },
     "name": "롬앤 한올 아이브로우 카라 9g, 01 그레이스 토프, 1개",
     "link": "https://link.coupang.com/a/h4r9ks3z0D",
-    "account": 1
+    "account": 1,
+    "no": 25
   },
   "상품:스마티대용량자동변기세정제화장실청소변기클리너": {
     "threads": {
@@ -1530,7 +1573,8 @@
     },
     "name": "스마티 대용량 자동 변기세정제 화장실 청소 변기클리너, 4개, 320g",
     "link": "https://link.coupang.com/a/h4BPgv7VGm",
-    "account": 2
+    "account": 2,
+    "no": 19
   },
   "상품:방수방한3색아이섀도우스틱귀차니스트초보용한번바르면완성3색그라데이션롱라스팅고정눈메이크업검색아이템": {
     "threads": {
@@ -1546,7 +1590,8 @@
     },
     "name": "방수방한 3색 아이섀도우 스틱 귀차니스트 초보용 한번 바르면 완성 3색 그라데이션 롱라스팅 고정 눈메이크업 검색 아이템, 1개, 분홍색",
     "link": "https://link.coupang.com/a/h4umgghjNc",
-    "account": 1
+    "account": 1,
+    "no": 26
   },
   "상품:락앤락야채슬라이서l900ml": {
     "threads": {
@@ -1562,7 +1607,8 @@
     },
     "name": "락앤락 야채 슬라이서 L 900ml",
     "link": "https://link.coupang.com/a/h4Ci5DzLwW",
-    "account": 2
+    "account": 2,
+    "no": 20
   },
   "상품:다이나믹뷰티로즈시크릿블라썸오드퍼퓸(대용량)후르티플로럴향/부향률15%에서20%로up": {
     "threads": {
@@ -1578,7 +1624,8 @@
     },
     "name": "다이나믹뷰티 로즈 시크릿블라썸 오드퍼퓸 (대용량) 후르티 플로럴향 / 부향률 15%에서 20%로 UP, 1개, 100ml",
     "link": "https://link.coupang.com/a/h4vXhJUx1U",
-    "account": 1
+    "account": 1,
+    "no": 27
   },
   "상품:세탁조클리너발포정세탁기청소발포형세제강력한세탁조냄새제거곰팡이제거간편한사용": {
     "threads": {
@@ -1594,7 +1641,8 @@
     },
     "name": "세탁조 클리너 발포정 세탁기 청소 발포형 세제 강력한 세탁조 냄새 제거 곰팡이 제거 간편한 사용, 12개, 10g",
     "link": "https://link.coupang.com/a/h4GxF9Yf00",
-    "account": 2
+    "account": 2,
+    "no": 21
   },
   "상품:[한정기획]바이브랩액티브비오틴펩타이드솔루션샴푸": {
     "threads": {
@@ -1610,7 +1658,8 @@
     },
     "name": "[한정기획]바이브랩 액티브 비오틴 펩타이드 솔루션 샴푸, 1개, 120ml",
     "link": "https://link.coupang.com/a/h4y2W8ZenI",
-    "account": 1
+    "account": 1,
+    "no": 28
   },
   "상품:쓱싹마녀욕실타일줄눈보수제셀프시공": {
     "threads": {
@@ -1626,7 +1675,8 @@
     },
     "name": "쓱싹마녀 욕실 타일줄눈보수제 셀프시공",
     "link": "https://link.coupang.com/a/h4HKLQpJf2",
-    "account": 2
+    "account": 2,
+    "no": 22
   },
   "상품:김영주스포츠남성웰론경량패딩점퍼mj100": {
     "threads": {
@@ -1642,7 +1692,8 @@
     },
     "name": "김영주스포츠 남성 웰론 경량 패딩 점퍼 MJ100",
     "link": "https://link.coupang.com/a/h6vEpJ0Bl6",
-    "account": 1
+    "account": 1,
+    "no": 29
   },
   "상품:필립스토스터기데일리컬렉션시리즈화이트": {
     "threads": {
@@ -1658,7 +1709,8 @@
     },
     "name": "필립스 토스터기 데일리 컬렉션 시리즈 화이트",
     "link": "https://link.coupang.com/a/h6vevVgU0q",
-    "account": 2
+    "account": 2,
+    "no": 23
   },
   "상품:캐럿남여공용경량범버자켓": {
     "threads": {
@@ -1674,7 +1726,8 @@
     },
     "name": "캐럿 남여공용 경량 범버 자켓",
     "link": "https://link.coupang.com/a/h6yBHRJLUq",
-    "account": 1
+    "account": 1,
+    "no": 30
   },
   "상품:oyeah저소음에어프라이어5.0l시각화대용량": {
     "threads": {
@@ -1690,7 +1743,8 @@
     },
     "name": "OYEAH 저소음 에어프라이어 5.0L 시각화 대용량",
     "link": "https://link.coupang.com/a/h6vthrfReu",
-    "account": 2
+    "account": 2,
+    "no": 24
   },
   "상품:푸름새초경량블루라이트차단안경독서안경고화질안경40대/50대/60대/70대": {
     "threads": {
@@ -1706,7 +1760,8 @@
     },
     "name": "푸름새 초경량 블루라이트차단안경 독서안경 고화질 안경 40대/50대/60대/70대, 2개, 라이트그린",
     "link": "https://link.coupang.com/a/h6y2JqfHVI",
-    "account": 1
+    "account": 1,
+    "no": 31
   },
   "상품:미리내양변기부속측면내림겸용세트+조립공구": {
     "threads": {
@@ -1722,7 +1777,8 @@
     },
     "name": "미리내 양변기 부속 측면 내림 겸용 세트 + 조립공구",
     "link": "https://link.coupang.com/a/h6wHA9mcsS",
-    "account": 2
+    "account": 2,
+    "no": 25
   },
   "상품:닥터지레드블레미쉬시카수딩크림": {
     "threads": {
@@ -1738,7 +1794,8 @@
     },
     "name": "닥터지 레드 블레미쉬 시카 수딩 크림, 50ml, 2개",
     "link": "https://link.coupang.com/a/h6zgWOlC3w",
-    "account": 1
+    "account": 1,
+    "no": 32
   },
   "상품:일상포인트튼튼한틈새신발장신발정리대": {
     "threads": {
@@ -1754,7 +1811,8 @@
     },
     "name": "일상포인트 튼튼한 틈새 신발장 신발 정리대",
     "link": "https://link.coupang.com/a/h6x4GvTJLw",
-    "account": 2
+    "account": 2,
+    "no": 26
   },
   "상품:nunuhana후드니트퀼팅집업스트링숏패딩": {
     "threads": {
@@ -1770,7 +1828,8 @@
     },
     "name": "NUNUHANA 후드 니트 퀼팅 집업 스트링 숏패딩",
     "link": "https://link.coupang.com/a/h9f7WASorQ",
-    "account": 1
+    "account": 1,
+    "no": 33
   },
   "상품:루메나듀얼무선가습기": {
     "threads": {
@@ -1812,7 +1871,8 @@
           "prompt": "A cozy vertical lifestyle video of the Lumena Dual Wireless Humidifier operating on a minimalist desk with warm ambient lighting, releasing gentle, continuous dual mists into the air. The camera pans very slowly around the transparent water tank and clean casing, capturing realistic water ripples inside, with zero morphing and no on-screen text."
         }
       ]
-    }
+    },
+    "no": 27
   },
   "상품:투니스여성오버핏후드롱패딩": {
     "threads": {
@@ -1836,7 +1896,8 @@
       "title": "편하게 입기 좋은 오버핏 후드 롱패딩 추천 #shorts",
       "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n겨울에 편하게 입을 롱패딩 찾고 계셨나요?\n여유 있는 오버핏이라 정말 편하게 입어져요.\n모자까지 달려 있어서 찬바람 막기 좋아요.\n가볍고 편안한 착용감이라 손이 자주 가요.\n세탁하실 때는 꼭 단독으로 세탁해 주세요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#투니스 #여성패딩 #롱패딩 #오버핏후드패딩 #겨울패딩 #쿠팡추천 #살림템",
       "sec": 23.8
-    }
+    },
+    "no": 34
   },
   "상품:hanilmedical탄소열선고급전기요hl-d205(25)": {
     "threads": {
@@ -1860,7 +1921,8 @@
       "title": "올겨울 따뜻하게 보낼 북극곰 전기요 직접 써봤어요 #shorts",
       "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n올겨울 전기요 어떤 걸로 살지 고민이신가요?\n귀여운 북극곰 패턴이라 인테리어에도 잘 어울려요.\n보들보들한 촉감이라 누웠을 때 포근함이 남달라요.\n마감도 깔끔하고 사용 후에는 간편하게 접어서 보관할 수 있어요.\n세탁기로 편하게 세탁할 수 있어서 위생적이에요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#한일의료기 #전기요 #탄소매트 #겨울필수품 #내돈내산 #쿠팡추천 #살림템",
       "sec": 26.5
-    }
+    },
+    "no": 28
   },
   "상품:[최신형]틴도우다용도패브릭청소기가정용카페트침구쇼파습식청소기": {
     "name": "[최신형] 틴도우 다용도 패브릭 청소기 가정용 카페트 침구 쇼파 습식청소기",
@@ -1914,7 +1976,8 @@
       "kind": "carousel",
       "at": "2026-10-27T21:06:44"
     },
-    "account": 2
+    "account": 2,
+    "no": 30
   },
   "상품:macci남여공용최고급형전체기모안감깔깔이세트(패딩점퍼+패딩바지상하의세트구성)": {
     "threads": {
@@ -1930,7 +1993,8 @@
     },
     "name": "MACCI 남여공용 최고급형 전체 기모 안감 깔깔이 세트(패딩 점퍼+패딩 바지 상하의 세트 구성)",
     "link": "https://link.coupang.com/a/h9gHKV5Oou",
-    "account": 1
+    "account": 1,
+    "no": 35
   },
   "상품:스칸디앤홈먼지없는쉐브론사이잘룩러그워셔블거실카페트": {
     "threads": {
@@ -1946,7 +2010,8 @@
     },
     "name": "스칸디앤홈 먼지없는 쉐브론 사이잘룩 러그 워셔블 거실 카페트",
     "link": "https://link.coupang.com/a/h9fvUSYfOm",
-    "account": 2
+    "account": 2,
+    "no": 29
   },
   "상품:에뛰드블링블링아이스틱섀도우": {
     "threads": {
@@ -1993,7 +2058,8 @@
         "file": "shorts_2026-10-28_h9g1VPLExU_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-28_h9g1VPLExU_dub.mp4"
       }
-    }
+    },
+    "no": 36
   },
   "상품:크라운포드2인식기세트14p": {
     "threads": {
@@ -2063,7 +2129,8 @@
         "file": "shorts_2026-10-28_h9houpXUAu_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-28_h9houpXUAu_dub.mp4"
       }
-    }
+    },
+    "no": 31
   },
   "상품:온이스트리프팅밴드얼굴땡기미브이라인밴드v라인": {
     "threads": {
@@ -2079,7 +2146,8 @@
     },
     "name": "온이스트 리프팅밴드 얼굴 땡기미 브이라인밴드 V라인",
     "link": "https://link.coupang.com/a/h9g8lcJ4Ng",
-    "account": 1
+    "account": 1,
+    "no": 37
   },
   "상품:스텐인덕션범용찜기샤브샤브": {
     "threads": {
@@ -2095,7 +2163,8 @@
     },
     "name": "스텐 인덕션 범용 찜기 샤브샤브, 2개, 27.5cm",
     "link": "https://link.coupang.com/a/ibmLU4WsMe",
-    "account": 2
+    "account": 2,
+    "no": 32
   },
   "상품:아토팜판테놀크림": {
     "threads": {
@@ -2111,7 +2180,8 @@
     },
     "name": "아토팜 판테놀 크림, 100ml, 1개",
     "link": "https://link.coupang.com/a/ibmxFZy2OO",
-    "account": 1
+    "account": 1,
+    "no": 38
   },
   "상품:마음담은집1000일화프리저브드led안개꽃다발": {
     "threads": {
@@ -2127,7 +2197,8 @@
     },
     "name": "마음담은집 1000일화 프리저브드 LED 안개꽃다발",
     "link": "https://link.coupang.com/a/ibmUazf3D2",
-    "account": 2
+    "account": 2,
+    "no": 33
   },
   "상품:gunu양면스테인리스도마": {
     "name": "GUNU 양면 스테인리스 도마",
@@ -2186,7 +2257,8 @@
       "kind": "video",
       "at": "2026-10-29T11:23:26"
     },
-    "account": 2
+    "account": 2,
+    "no": 34
   },
   "상품:익스트림올인원포맨멀티비타민": {
     "threads": {
@@ -2232,7 +2304,8 @@
         "file": "shorts_2026-10-29_ibm3NxqEtE_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-29_ibm3NxqEtE_dub.mp4"
       }
-    }
+    },
+    "no": 39
   },
   "상품:에코벨알루미늄접이식쓰레기집게": {
     "threads": {
@@ -2248,7 +2321,8 @@
     },
     "name": "에코벨 알루미늄 접이식 쓰레기 집게, 블루, 1개",
     "link": "https://link.coupang.com/a/ida8snlhxA",
-    "account": 2
+    "account": 2,
+    "no": 35
   },
   "상품:샤인루트v라인얼굴페이스탄력밴드": {
     "threads": {
@@ -2265,7 +2339,8 @@
     "name": "샤인루트 V라인 얼굴 페이스 탄력 밴드, 1개입",
     "link": "https://link.coupang.com/a/ibniB7J8jQ",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 40
   },
   "상품:코멧욕실퍼즐매트30x30cm": {
     "threads": {
@@ -2306,7 +2381,8 @@
     "name": "코멧 욕실 퍼즐매트 30 x 30 cm",
     "link": "https://link.coupang.com/a/idbm5TdYT6",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 36
   },
   "상품:에스엔피골드콜라겐아이패치": {
     "threads": {
@@ -2365,7 +2441,8 @@
         "file": "shorts_2026-10-30_idb2hkvEom_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-30_idb2hkvEom_dub.mp4"
       }
-    }
+    },
+    "no": 41
   },
   "상품:러그장모사계절고급거실카페트층간소음방지북유럽풍카펫폭신한침실털러그미끄럼방지침대옆인테리어카페트": {
     "threads": {
@@ -2412,7 +2489,8 @@
         "file": "shorts_2026-10-30_idbyZ83jps_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-30_idbyZ83jps_dub.mp4"
       }
-    }
+    },
+    "no": 37
   },
   "상품:라세르스마트폰터치기모스포츠방한장갑": {
     "threads": {
@@ -2429,7 +2507,8 @@
     "name": "라세르 스마트폰 터치 기모 스포츠 방한 장갑",
     "link": "https://link.coupang.com/a/idcelV2fXU",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 42
   },
   "상품:한일의료기거실용온돌마루전기매트난초": {
     "threads": {
@@ -2470,7 +2549,8 @@
     "name": "한일의료기 거실용 온돌마루 전기매트 난초",
     "link": "https://link.coupang.com/a/iddZEv86Ue",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 38
   },
   "상품:헤어센틱짱짱한무매듭여성머리끈500개+파우치5개": {
     "threads": {
@@ -2487,7 +2567,8 @@
     "name": "헤어센틱 짱짱한 무매듭 여성 머리끈 500개+파우치 5개",
     "link": "https://link.coupang.com/a/idcyMxUuAK",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 43
   },
   "상품:면사랑스파게티5개입(냉동)": {
     "threads": {
@@ -2529,7 +2610,8 @@
     "name": "면사랑 스파게티 5개입 (냉동)",
     "link": "https://link.coupang.com/a/idegTvuXSe",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 39
   },
   "상품:돌체앤가바나뷰티로즈듀립바이트": {
     "threads": {
@@ -2576,7 +2658,8 @@
         "file": "shorts_2026-10-31_iddh6Cby9I_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-31_iddh6Cby9I_dub.mp4"
       }
-    }
+    },
+    "no": 44
   },
   "상품:반찬단지무말랭이무침": {
     "threads": {
@@ -2629,7 +2712,8 @@
         "file": "shorts_2026-10-31_idevXJiTzU_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-10-31_idevXJiTzU_dub.mp4"
       }
-    }
+    },
+    "no": 40
   },
   "상품:락피도프로바이오틱스키즈플러스60p": {
     "threads": {
@@ -2646,7 +2730,8 @@
     "name": "락피도 프로바이오틱스 키즈 플러스 60p, 120g, 1개",
     "link": "https://link.coupang.com/a/iddOx0aDts",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 45
   },
   "상품:아가드유아용아이쿵머리보호대": {
     "threads": {
@@ -2687,7 +2772,8 @@
     "name": "아가드 유아용 아이쿵 머리보호대, 꿀벌, 1개",
     "link": "https://link.coupang.com/a/iidfGSXZQs",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 41
   },
   "상품:제로투히어로미니멀짐더플백": {
     "threads": {
@@ -2704,7 +2790,8 @@
     "name": "제로투히어로 미니멀 짐 더플 백",
     "link": "https://link.coupang.com/a/iiee4cNQwC",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 46
   },
   "상품:<27년신형>아기안심전기요워셔블캠핑1인용전기장판카본탄소매트": {
     "threads": {
@@ -2745,7 +2832,8 @@
     "name": "<27년 신형> 아기 안심 전기요 워셔블 캠핑 1인용 전기장판 카본 탄소매트",
     "link": "https://link.coupang.com/a/iid4APcwXk",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 42
   },
   "상품:[당일출고]기모안감깔깔이방상내피퀼팅자켓기모안감방한누빔점퍼": {
     "threads": {
@@ -2816,7 +2904,8 @@
         "file": "shorts_2026-11-01_iifXvYjjGK_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-01_iifXvYjjGK_dub.mp4"
       }
-    }
+    },
+    "no": 47
   },
   "상품:hanil온열찜질기블랙레귤러hp-3560b": {
     "threads": {
@@ -2863,7 +2952,8 @@
         "file": "shorts_2026-11-01_iieC5TbaIC_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-01_iieC5TbaIC_dub.mp4"
       }
-    }
+    },
+    "no": 43
   },
   "상품:앨빈클로오버핏무지후드티avh-8551+1": {
     "threads": {
@@ -2880,7 +2970,8 @@
     "name": "앨빈클로 오버핏 무지 후드티 AVH-855 1+1",
     "link": "https://link.coupang.com/a/iiinbz6SRg",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 48
   },
   "상품:꼬모쎔쁘레합격기원초콜릿15입": {
     "threads": {
@@ -2921,7 +3012,8 @@
     "name": "꼬모쎔쁘레 합격기원초콜릿 15입, 144g, 1세트",
     "link": "https://link.coupang.com/a/iifwiO8JpY",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 44
   },
   "상품:디오디너리나이아신아마이드징크에센스": {
     "threads": {
@@ -2938,7 +3030,8 @@
     "name": "디오디너리 나이아신아마이드 징크 에센스, 30ml, 1개",
     "link": "https://link.coupang.com/a/iiiF5J5j08",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 49
   },
   "상품:뷰센여행휴대용양치키트c충치케어치약40g+칫솔세트": {
     "threads": {
@@ -2980,7 +3073,8 @@
     "name": "뷰센 여행 휴대용 양치키트 C 충치케어 치약 40g + 칫솔 세트, 1세트",
     "link": "https://link.coupang.com/a/iigE8rN3rU",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 45
   },
   "상품:메종오브제라이닝면기": {
     "threads": {
@@ -2996,7 +3090,8 @@
     "name": "메종오브제 라이닝 면기, 크림그레이, 2개",
     "link": "https://link.coupang.com/a/iih7H0sKFE",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 50
   },
   "상품:유리아쥬스틱레브르컬러립밤": {
     "threads": {
@@ -3024,7 +3119,8 @@
     "name": "유리아쥬 스틱레브르 컬러립밤",
     "link": "https://link.coupang.com/a/iiiXeCMhs4",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 51
   },
   "상품:세타필모이스춰라이징크림": {
     "threads": {
@@ -3040,7 +3136,8 @@
     "name": "세타필 모이스춰라이징 크림, 550g, 1개",
     "link": "https://link.coupang.com/a/iijjE6O7xI",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 52
   },
   "상품:더미식백미밥": {
     "threads": {
@@ -3068,7 +3165,8 @@
     "name": "더미식 백미밥, 210g, 24개",
     "link": "https://link.coupang.com/a/iikEpktsqW",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 53
   },
   "상품:토니모리루미너스여신광채비비크림spf37pa++": {
     "threads": {
@@ -3122,7 +3220,8 @@
         "file": "shorts_2026-11-03_iilu9gdXmS_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-03_iilu9gdXmS_dub.mp4"
       }
-    }
+    },
+    "no": 54
   },
   "상품:굿데이강아지오븐베이크간식": {
     "threads": {
@@ -3169,7 +3268,8 @@
         "file": "shorts_2026-11-03_iikVINq0B2_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-03_iikVINq0B2_dub.mp4"
       }
-    }
+    },
+    "no": 46
   },
   "상품:ts프리미엄샴푸": {
     "threads": {
@@ -3186,7 +3286,8 @@
     "name": "TS 프리미엄 샴푸",
     "link": "https://link.coupang.com/a/iilJp9yx6O",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 55
   },
   "상품:주문진어시장건어물맛진미오징어채(냉동)": {
     "threads": {
@@ -3229,7 +3330,8 @@
     "name": "주문진어시장건어물 맛진미 오징어채 (냉동)",
     "link": "https://link.coupang.com/a/iik5bGN1Mr",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 47
   },
   "상품:국내생산비접촉적외선온도측정기대경테크발열체크1초측정": {
     "threads": {
@@ -3276,7 +3378,8 @@
         "file": "shorts_2026-11-04_ilVr1DIZ7k_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-04_ilVr1DIZ7k_dub.mp4"
       }
-    }
+    },
+    "no": 56
   },
   "상품:주식회사아텍스실리콘외풍차단틈새차단문풍지테이프반투명45mmx5m,1개": {
     "threads": {
@@ -3329,7 +3432,8 @@
         "file": "shorts_2026-11-04_il2bpDmHJY_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-04_il2bpDmHJY_dub.mp4"
       }
-    }
+    },
+    "no": 48
   },
   "상품:남성패딩베이직빵빵한보온방풍스탠드칼라겨울아우터베이잉": {
     "threads": {
@@ -3346,7 +3450,8 @@
     "name": "남성 패딩 베이직 빵빵한 보온 방풍 스탠드칼라 겨울 아우터 베이잉",
     "link": "https://link.coupang.com/a/imL0EPi992",
     "account": 1,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 57
   },
   "상품:파르페by알레르망국내제조알러지케어페이드다운필차렵이불": {
     "threads": {
@@ -3388,7 +3493,8 @@
     "name": "파르페by알레르망 국내 제조 알러지케어 페이드 다운필 차렵이불",
     "link": "https://link.coupang.com/a/imLtQlR2WW",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "no": 49
   },
   "상품:홀리카홀리카마이페이브피스아이섀도1.8g,핑키드,1개": {
     "threads": {
@@ -3435,7 +3541,8 @@
         "file": "shorts_2026-11-05_imMnHzoyIK_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-05_imMnHzoyIK_dub.mp4"
       }
-    }
+    },
+    "no": 58
   },
   "상품:에어룸자가발열히팅솜극세사스테이침대패드": {
     "threads": {
@@ -3488,7 +3595,8 @@
         "file": "shorts_2026-11-05_imLG6aEHvw_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-05_imLG6aEHvw_dub.mp4"
       }
-    }
+    },
+    "no": 50
   },
   "상품:uppercut남녀공용세가지컬러키즈주니어스포츠롱패딩초등학생후드패딩겨울점퍼아우터": {
     "threads": {
@@ -3547,7 +3655,8 @@
         "file": "shorts_2026-11-06_iqRB6ovZee_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-06_iqRB6ovZee_dub.mp4"
       }
-    }
+    },
+    "no": 59
   },
   "상품:맘마밀안심이유식퓨레6개월부터": {
     "threads": {
@@ -3607,6 +3716,68 @@
         "file": "shorts_2026-11-06_iqOKJWcXSe_dub.mp4",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-06_iqOKJWcXSe_dub.mp4"
       }
-    }
+    },
+    "no": 51
+  },
+  "상품:닥터지브라이트닝필링젤,80g,1개": {
+    "threads": {
+      "id": "17924871459220782",
+      "kind": "carousel",
+      "at": "2026-11-06T21:07:47",
+      "reply": "18360142243169410"
+    },
+    "no": 60,
+    "instagram": {
+      "id": "17971226975963578",
+      "kind": "carousel",
+      "at": "2026-11-06T21:09:23"
+    },
+    "name": "닥터지 브라이트닝 필링 젤, 80g, 1개",
+    "link": "https://link.coupang.com/a/iqUaaEuzjU",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:매직브라이트바디샤워티슈물없이쓰는샤워티슈특대형여름여행용임산부환자용입원몸닦는바디티슈일회용샤워하는바디물티슈,20개,1개입": {
+    "threads": {
+      "id": "18121986104517156",
+      "kind": "carousel",
+      "at": "2026-11-06T21:11:49",
+      "reply": "17972659914193122"
+    },
+    "no": 52,
+    "instagram": {
+      "id": "18187146751419863",
+      "kind": "video",
+      "at": "2026-11-06T21:12:58"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iqPlK4BeA8_voice.mp4",
+      "script": {
+        "title": "물 없이 씻는 바디티슈",
+        "lines": [
+          "씻기 귀찮을 때 이거 써보세요",
+          "물 없이도 온몸이 개운해져요",
+          "무려 육백 삼백 사이즈예요",
+          "성인 남성도 한 장이면 충분해요",
+          "대나무랑 면 원단이라 부드러워요",
+          "근데 진짜는 이거예요",
+          "여행이나 캠핑 갈 때 필수예요",
+          "임산부나 환자분들도 편하게 써요",
+          "자세한 정보는 프로필을 확인해주세요"
+        ],
+        "yt_title": "물 없이 씻는 특대형 바디샤워티슈 솔직한 후기",
+        "tags": [
+          "바디티슈",
+          "샤워티슈",
+          "여행용티슈",
+          "일회용샤워",
+          "캠핑준비물"
+        ]
+      }
+    },
+    "name": "매직브라이트 바디샤워티슈 물없이쓰는 샤워티슈 특대형 여름 여행용 임산부 환자용 입원 몸닦는 바디티슈 일회용 샤워하는 바디물티슈, 20개, 1개입",
+    "link": "https://link.coupang.com/a/iqPlK4BeA8",
+    "account": 2,
+    "writer": "Claude"
   }
 }
