@@ -1,0 +1,3401 @@
+{
+ "packages": [
+  {
+   "id": "2026-11-07/naver3-2",
+   "date": "2026-11-07",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "여행·취미",
+   "title": "구룡포 과메기 축제 일정·시세 2026 확인하는 방법",
+   "chars": 1723,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-08",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "구룡포 과메기 축제",
+    "volume": 2050
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-07/naver3-1",
+   "date": "2026-11-07",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "화장실 리모델링 아이디어, 수상작에서 찾는 인테리어 팁 5가지",
+   "chars": 1526,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "화장실",
+    "volume": 34010,
+    "level": "높음"
+   },
+   "needImages": 1,
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-07/naver2-1",
+   "date": "2026-11-07",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "혜택·지원",
+   "title": "김해시 전통시장 장보기 지원, 5만 원 결제 시 1만 원 환급 받는 법",
+   "chars": 1577,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-15",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "김해시",
+    "volume": 14620,
+    "level": "낮음"
+   }
+  },
+  {
+   "id": "2026-11-07/naver1-2",
+   "date": "2026-11-07",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "삼성증권 바이오벤처 투자 가이드, 유망 기업 발굴 방법과 한미약품 협력 사례",
+   "chars": 1687,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "삼성증권",
+    "volume": 184300,
+    "level": "낮음"
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-07/naver1-1",
+   "date": "2026-11-07",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "오세훈 서울시장의 3조 원 소상공인 지원 대책과 민생 경제 활성화 방안",
+   "chars": 1573,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-15",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "오세훈",
+    "volume": 656600,
+    "level": "낮음"
+   }
+  },
+  {
+   "id": "2026-11-07/tistory_shop-2",
+   "date": "2026-11-07",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "육아·반려",
+   "title": "아기 머리보호대 추천 걸음마 시기 안전템 고르는 기준 비교",
+   "chars": 1965,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "02-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "아기 머리보호대 추천",
+    "volume": 35
+   },
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/iidfGSXZQs",
+   "links": [
+    {
+     "name": "아가드 유아용 아이쿵 머리보호대",
+     "link": "https://link.coupang.com/a/iidfGSXZQs"
+    }
+   ],
+   "product": "아가드 유아용 아이쿵 머리보호대"
+  },
+  {
+   "id": "2026-11-07/tistory_shop-1",
+   "date": "2026-11-07",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "뷰티·건강",
+   "title": "탈모샴푸 추천 기준 4가지와 두피 타입별 선택 팁",
+   "chars": 1761,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "02-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "탈모샴푸 추천",
+    "volume": 8090
+   },
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/iilJp9yx6O",
+   "links": [
+    {
+     "name": "TS 프리미엄 샴푸",
+     "link": "https://link.coupang.com/a/iilJp9yx6O"
+    }
+   ],
+   "product": "TS 프리미엄 샴푸"
+  },
+  {
+   "id": "2026-11-07/tistory2-2",
+   "date": "2026-11-07",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "청약·부동산 제도",
+   "title": "주택청약종합저축 소득공제 배우자 확대 요건과 환급액 계산법",
+   "chars": 1917,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "주택청약종합저축 소득공제",
+    "volume": 340
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-07/tistory2-1",
+   "date": "2026-11-07",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "바뀌는 제도",
+   "title": "내일배움카드 발급 자격 기준과 훈련비 본인부담금 계산하는 방법",
+   "chars": 1510,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "내일배움카드",
+    "volume": 132400
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-07/tistory-1",
+   "date": "2026-11-07",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "AI 도구",
+   "title": "DeepSeek 슈퍼 에이전트 오픈소스 공개 자율 코딩 구조 활용법",
+   "chars": 1753,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-07T05:31:46",
+   "keyword": {
+    "keyword": "DeepSeek 슈퍼 에이전트",
+    "volume": 10
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-06/tistory-5",
+   "date": "2026-11-06",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "AI 도구",
+   "title": "제미나이 오미 1.2 플래시로 15초 영상 생성하고 편집하는 방법",
+   "chars": 1763,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-30",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-06T16:25:11",
+   "keyword": {
+    "keyword": "제미나이 오미 1.2 플래시",
+    "volume": 10
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-06/naver3-7",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "맛집·푸드",
+   "title": "소고기 부위별 특징과 맛, 실패 없는 부위별 선택 기준 4가지",
+   "chars": 1522,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T16:22:22",
+   "keyword": {
+    "keyword": "소고기",
+    "volume": 63050,
+    "level": "보통"
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver1-9",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "마이크론 주가 급락 이유, 메모리 가격 상승 속 반도체 하락의 진실",
+   "chars": 1820,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-13",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-06T16:22:22",
+   "keyword": {
+    "keyword": "마이크론 주가",
+    "volume": 514500,
+    "level": "보통"
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-06/tistory-4",
+   "date": "2026-11-06",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "마이크로소프트 Ignite 2026 일정과 AI 클라우드 참여 방법",
+   "chars": 1619,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-20",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-06T16:19:55",
+   "keyword": {
+    "keyword": "마이크로소프트 Ignite 2026",
+    "volume": 10
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-06/naver3-6",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "맛집·푸드",
+   "title": "11월 제철음식 굴 과메기 효능 및 고르는 법 5가지",
+   "chars": 1691,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "11월 제철음식",
+    "volume": 41100
+   }
+  },
+  {
+   "id": "2026-11-06/naver2-6",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "생활경제",
+   "title": "정기예금 금리 비교 2026년 11월 은행별 추천 및 우대조건 없는 가입 팁",
+   "chars": 1691,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "정기예금 금리 비교",
+    "volume": 27410
+   },
+   "needImages": 2
+  },
+  {
+   "id": "2026-11-06/naver2-5",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "혜택·지원",
+   "title": "에너지바우처 신청 조건부터 복지로 접수 방법, 최대 70만 원 지원금",
+   "chars": 1825,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-12-31",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "에너지바우처 신청",
+    "volume": 5130
+   },
+   "needImages": 1
+  },
+  {
+   "id": "2026-11-06/naver1-7",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "AI·디지털",
+   "title": "제로트러스트 보안 도입 방법, 에이전틱 AI 시대의 실무 지침 3가지",
+   "chars": 1863,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "제로트러스트 보안",
+    "volume": 120
+   },
+   "needImages": 1,
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-06/tistory2-3",
+   "date": "2026-11-06",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "연금·보험",
+   "title": "실손보험 개편 1·2세대 선택형 할인특약과 5세대 전환 조건",
+   "chars": 1900,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-30",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "실손보험 개편",
+    "volume": 15
+   },
+   "needImages": 2
+  },
+  {
+   "id": "2026-11-06/tistory2-2",
+   "date": "2026-11-06",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "연금·보험",
+   "title": "본인부담상한제 환급금 조회 및 소득분위별 계산 구조",
+   "chars": 1684,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-12-31",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T15:25:41",
+   "keyword": {
+    "keyword": "본인부담상한제 환급금",
+    "volume": 120
+   }
+  },
+  {
+   "id": "2026-11-06/naver3-4",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "구운계란 추천 맥반석 구운란 한판 고르는 기준 3가지",
+   "chars": 1756,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T09:49:39",
+   "keyword": {
+    "keyword": "구운계란",
+    "volume": 36900
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FvTlvVzk",
+   "source": "",
+   "product": "맥반석 구운계란 구운란 훈제계란 30구 한판",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver3-3",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "부대찌개밀키트 추천 1인분 혼밥용 햄 폭탄 국물 요리 기준 4가지",
+   "chars": 1682,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T09:45:27",
+   "keyword": {
+    "keyword": "부대찌개밀키트",
+    "volume": 4190
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GlR18ygH",
+   "source": "",
+   "product": "극소수 햄 폭탄 부대찌개 밀키트 국내산 소세지 1인분 혼밥 야식 캠핑 택배 수제 간편식",
+   "videoSpot": "혼자서도 푸짐하게 즐기는 1인분 부대찌개",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver3-2",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "캠핑음식 닭꼬치 메뉴, 숯불구이용 야키토리 고르는 3가지 기준",
+   "chars": 1517,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-card.png",
+    "08-photo.jpg",
+    "09-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T09:40:39",
+   "keyword": {
+    "keyword": "캠핑음식",
+    "volume": 37220
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/xhPfjDij",
+   "source": "",
+   "product": "[야키토리 토리야] 닭꼬치 염통 파닭 츠쿠네 모듬 캠핑음식 요리 숯불 구이 메뉴",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver2-4",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "해남 꿀고구마 추천 실패 없는 베니하루카 한입 3kg 고르는 기준",
+   "chars": 1915,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-card.png"
+   ],
+   "createdAt": "2026-11-06T09:21:12",
+   "keyword": {
+    "keyword": "해남 꿀고구마 추천",
+    "volume": 10
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/IGsSIu5Q",
+   "source": "",
+   "product": "[김장대전] 해남 고구마 꿀고구마 한입3kg 베니하루카 황금 밤 호박고구마",
+   "videoSpot": "어떤 고구마를 골라야 실패가 없을까요?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver2-3",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "난각번호1번계란 유정란 인터넷 주문할 때 파손 걱정 없이 고르는 기준",
+   "chars": 1821,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "08-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "09-photo.jpg",
+    "06-photo.jpg",
+    "07-card.png"
+   ],
+   "createdAt": "2026-11-06T09:13:36",
+   "keyword": {
+    "keyword": "난각번호1번계란",
+    "volume": 2450
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GntPDVXk",
+   "source": "",
+   "product": "난각번호1번 계란 유정란 20구 무항생제 자연방사",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver2-2",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "떡볶이밀키트 추천 기준, 은영이떡볶이 생밀떡 식감과 특징 비교",
+   "chars": 1794,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-card.png"
+   ],
+   "createdAt": "2026-11-06T09:13:36",
+   "keyword": {
+    "keyword": "떡볶이밀키트",
+    "volume": 5570
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FyAwSWOI",
+   "source": "",
+   "product": "은영이떡볶이 떡볶이 떡볶이밀키트 청주떡볶이 즉석떡볶이 캠핑요리 간편요리 국물떡볶이 로제떡볶이 캠핑 밀키트 옛날떡볶이 청주",
+   "videoSpot": "시큼한 냄새 걱정 없는 생밀떡의 차이",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver1-6",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "저PBR 기업 명단 151곳 공개! 증권사 앱 확인 방법과 주가 영향 분석",
+   "chars": 1817,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T08:42:19",
+   "keyword": {
+    "keyword": "저PBR 기업 명단",
+    "volume": 890
+   }
+  },
+  {
+   "id": "2026-11-06/naver1-5",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "요철 결크림 고르는 기준 3가지, 율무 순율 크림 좁쌀 피부 추천",
+   "chars": 1823,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "09-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "10-photo.jpg",
+    "08-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T08:34:01",
+   "keyword": {
+    "keyword": "요철 결크림",
+    "volume": 10
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GT4REd7o",
+   "source": "",
+   "product": "[60만Pick 요철 결크림] 율무 나이아신아마이드 순율 크림 좁쌀 약국 50ml, 3개 : 잇퓨 it",
+   "videoSpot": "왜 율무와 나이아신아마이드 조합일까요?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver1-4",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "라보에이치샴푸 비교: 손상모를 위한 잇퓨 패스트 샴푸 고르는 기준 3가지",
+   "chars": 1708,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T08:34:01",
+   "keyword": {
+    "keyword": "라보에이치샴푸",
+    "volume": 31090
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/x0OAVCqI",
+   "source": "",
+   "product": "[모발활력 단백질 샴푸] 잇퓨 패스트 샴푸 머리빨리기르는법 머릿결 손상모 480ml, 1개 : 잇퓨 it",
+   "videoSpot": "기존 샴푸와 무엇이 다른지 궁금하다면",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-06/naver1-3",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "화장품추천 아하바하 메디크림 고르는 기준과 특징 3가지 비교",
+   "chars": 1749,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-card.png"
+   ],
+   "createdAt": "2026-11-06T08:30:06",
+   "keyword": {
+    "keyword": "화장품추천",
+    "volume": 1280
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/5suz6RkY",
+   "source": "",
+   "product": "[신라면세점 롯데백화점 입점]더마 코스메틱",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ],
+   "videoVer": "20261106234536"
+  },
+  {
+   "id": "2026-11-06/naver1-2",
+   "date": "2026-11-06",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "세계 청년 대회 장소 상암 확정, 50만 명 규모 안전 대책",
+   "chars": 1879,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T08:28:00",
+   "keyword": {
+    "keyword": "세계 청년 대회",
+    "volume": 2960,
+    "level": "보통"
+   }
+  },
+  {
+   "id": "2026-11-06/tistory-1",
+   "date": "2026-11-06",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "AI 도구",
+   "title": "갤럭시 보안 업데이트 160여 개 패치 내 기기 적용 확인 방법",
+   "chars": 1705,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-30",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T07:53:01",
+   "keyword": {
+    "keyword": "갤럭시 보안 업데이트",
+    "volume": 150
+   }
+  },
+  {
+   "id": "2026-11-06/naver3-1",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "여행·취미",
+   "title": "부산불꽃축제 일정부터 100만 인파 대비 안전 대책까지",
+   "chars": 1840,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-15",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T05:31:38",
+   "keyword": {
+    "keyword": "부산불꽃축제",
+    "volume": 90000
+   }
+  },
+  {
+   "id": "2026-11-06/naver2-1",
+   "date": "2026-11-06",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "생활경제",
+   "title": "우체국예금 신상품 최고 연 3.95% 금리 받는 조건과 가입 방법",
+   "chars": 1591,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-12-06",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png",
+    "03-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T05:31:38",
+   "keyword": {
+    "keyword": "우체국예금",
+    "volume": 10
+   }
+  },
+  {
+   "id": "2026-11-06/tistory_shop-2",
+   "date": "2026-11-06",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "계절용품",
+   "title": "겨울 방한용품 추천 문풍지 찜질기로 난방비 아끼는 법",
+   "chars": 2114,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "10-photo.jpg",
+    "04-photo.jpg",
+    "02-photo.jpg",
+    "09-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T05:31:38",
+   "keyword": {
+    "keyword": "겨울 방한용품 추천",
+    "volume": 40
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/il2bpDmHJY",
+   "links": [
+    {
+     "name": "주식회사아텍스 실리콘 외풍차단 틈새차단 문풍지 테이프 반투명 45mm x 5m",
+     "link": "https://link.coupang.com/a/il2bpDmHJY"
+    },
+    {
+     "name": "Hanil 온열 찜질기 블랙 레귤러 HP-3560B",
+     "link": "https://link.coupang.com/a/iieC5TbaIC"
+    }
+   ],
+   "product": "주식회사아텍스 실리콘 외풍차단 틈새차단 문풍지 테이프 반투명 45mm x / Hanil 온열 찜질기 블랙 레귤러 HP-3560B"
+  },
+  {
+   "id": "2026-11-06/tistory_shop-1",
+   "date": "2026-11-06",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "계절용품",
+   "title": "겨울 패딩 점퍼 추천 비교 5가지와 아우터 고르는 기준",
+   "chars": 1974,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "02-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "12-photo.jpg"
+   ],
+   "createdAt": "2026-11-06T05:31:38",
+   "keyword": {
+    "keyword": "겨울 패딩 점퍼 추천",
+    "volume": 25
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/iqRB6ovZee",
+   "links": [
+    {
+     "name": "UPPERCUT 남녀공용 세가지 컬러 키즈 주니어 스포츠 롱패딩 초등학생 후드패딩 겨울점퍼 아우터",
+     "link": "https://link.coupang.com/a/iqRB6ovZee"
+    },
+    {
+     "name": "남성 패딩 베이직 빵빵한 보온 방풍 스탠드칼라 겨울 아우터 베이잉",
+     "link": "https://link.coupang.com/a/imL0EPi992"
+    },
+    {
+     "name": "[당일출고] 기모안감 깔깔이 방상내피 퀼팅 자켓 기모안감 방한 누빔 점퍼",
+     "link": "https://link.coupang.com/a/iifXvYjjGK"
+    }
+   ],
+   "product": "UPPERCUT 남녀공용 세가지 컬러 키즈 주니어 스포츠 롱패딩 초등학생 / 남성 패딩 베이직 빵빵한 보온 방풍 스탠드칼라 겨울 아우터 베이잉 / [당일출고] 기모안감 깔깔이 방상내피 퀼팅 자켓 기모안감 방한 누빔 "
+  },
+  {
+   "id": "2026-11-06/tistory2-1",
+   "date": "2026-11-06",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "세금·연말정산",
+   "title": "의료비 세액공제 계산법, 총급여 3% 넘는 병원비 환급 기준",
+   "chars": 1764,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-06T05:31:38",
+   "keyword": {
+    "keyword": "의료비 세액공제",
+    "volume": 1330
+   }
+  },
+  {
+   "id": "2026-11-05/tistory-5",
+   "date": "2026-11-05",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "생산성 • 자동화",
+   "title": "크롬 메모리 절약 모드 켜는 법, 탭 30개 열어도 덜 버벅이는 설정 3가지",
+   "chars": 1937,
+   "writer": "Claude",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-05T20:37:09",
+   "keyword": {
+    "keyword": "크롬 메모리 절약",
+    "volume": 55
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "Claude"
+  },
+  {
+   "id": "2026-11-05/tistory-4",
+   "date": "2026-11-05",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "갤럭시 배터리 보호 3가지 모드, 80% 충전 제한이 수명에 주는 차이",
+   "chars": 2013,
+   "writer": "Claude",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-05T20:37:09",
+   "keyword": {
+    "keyword": "갤럭시 배터리 보호",
+    "volume": 380
+   },
+   "ai": "Claude"
+  },
+  {
+   "id": "2026-11-05/naver3-2",
+   "date": "2026-11-05",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "맛집·푸드",
+   "title": "절임배추 20kg 서울 강서도매시장 사전 예약 방법과 구매 조건",
+   "chars": 1487,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-30",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png",
+    "03-photo.jpg"
+   ],
+   "createdAt": "2026-11-05T20:08:10",
+   "keyword": {
+    "keyword": "절임배추",
+    "volume": 84800,
+    "level": "보통"
+   },
+   "warn": [
+    "글이 짧아요 (1487자)"
+   ]
+  },
+  {
+   "id": "2026-11-05/naver3-1",
+   "date": "2026-11-05",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "날씨 주말 초겨울 추위 대비 영하권 옷차림 준비하는 방법",
+   "chars": 1777,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-08",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-05T20:08:10",
+   "keyword": {
+    "keyword": "날씨",
+    "volume": 37871000,
+    "level": "낮음"
+   }
+  },
+  {
+   "id": "2026-11-05/naver2-1",
+   "date": "2026-11-05",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "생활경제",
+   "title": "연금저축 600만원 IRP 300만원 조합으로 최대 세액공제 받는 법",
+   "chars": 1795,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-05T20:08:10",
+   "keyword": {
+    "keyword": "연금저축",
+    "volume": 27520
+   }
+  },
+  {
+   "id": "2026-11-05/tistory_shop-2",
+   "date": "2026-11-05",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "뷰티·건강",
+   "title": "환절기 보습케어 크림과 립밤 비교 기준 2가지",
+   "chars": 1941,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "02-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "09-photo.jpg",
+    "08-photo.jpg",
+    "10-photo.jpg"
+   ],
+   "createdAt": "2026-11-05T09:29:02",
+   "keyword": {
+    "keyword": "환절기 보습케어",
+    "volume": 10
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/iijjE6O7xI",
+   "links": [
+    {
+     "name": "세타필 모이스춰라이징 크림",
+     "link": "https://link.coupang.com/a/iijjE6O7xI"
+    },
+    {
+     "name": "유리아쥬 스틱레브르 컬러립밤",
+     "link": "https://link.coupang.com/a/iiiXeCMhs4"
+    }
+   ],
+   "product": "세타필 모이스춰라이징 크림 / 유리아쥬 스틱레브르 컬러립밤"
+  },
+  {
+   "id": "2026-11-05/tistory_shop-1",
+   "date": "2026-11-05",
+   "blogKey": "tistory_shop",
+   "blogName": "오늘의 비교 쇼핑",
+   "platform": "tistory",
+   "category": "계절용품",
+   "title": "겨울 침구 추천 극세사 차렵이불 탄소매트 체질별 선택 가이드",
+   "chars": 1930,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "02-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "12-photo.jpg",
+    "13-photo.jpg",
+    "14-photo.jpg",
+    "15-photo.jpg"
+   ],
+   "createdAt": "2026-11-05T09:29:02",
+   "keyword": {
+    "keyword": "겨울 침구 추천",
+    "volume": 80
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "kind": "쇼핑",
+   "shop": "coupang",
+   "link": "https://link.coupang.com/a/imLG6aEHvw",
+   "links": [
+    {
+     "name": "에어룸 자가발열 히팅솜 극세사 스테이 침대패드",
+     "link": "https://link.coupang.com/a/imLG6aEHvw"
+    },
+    {
+     "name": "파르페by알레르망 국내 제조 알러지케어 페이드 다운필 차렵이불",
+     "link": "https://link.coupang.com/a/imLtQlR2WW"
+    },
+    {
+     "name": "<27년 신형> 아기 안심 전기요 워셔블 캠핑 1인용 전기장판 카본 탄소매트",
+     "link": "https://link.coupang.com/a/iid4APcwXk"
+    }
+   ],
+   "product": "에어룸 자가발열 히팅솜 극세사 스테이 침대패드 / 파르페by알레르망 국내 제조 알러지케어 페이드 다운필 차렵이불 / <27년 신형> 아기 안심 전기요 워셔블 캠핑 1인용 전기장판 카본 탄소"
+  },
+  {
+   "id": "2026-11-05/tistory2-2",
+   "date": "2026-11-05",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "연금·보험",
+   "title": "국민연금 임의가입과 추납 제도로 주부도 노후 연금액 늘리는 계산법",
+   "chars": 1597,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-05T08:37:42",
+   "keyword": {
+    "keyword": "국민연금",
+    "volume": 302900,
+    "level": "낮음"
+   }
+  },
+  {
+   "id": "2026-11-05/tistory2-1",
+   "date": "2026-11-05",
+   "blogKey": "tistory2",
+   "blogName": "오늘의 돈 공부",
+   "platform": "tistory",
+   "category": "세금·연말정산",
+   "title": "연말정산 부양가족 부모님 따로 살 때 인적공제 받는 요건 3가지",
+   "chars": 1529,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-05T08:37:42",
+   "keyword": {
+    "keyword": "연말정산",
+    "volume": 30700
+   }
+  },
+  {
+   "id": "2026-11-04/naver1-3",
+   "date": "2026-11-04",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "부산요트투어 예약, 광안리 위드요트 코스 및 가격 비교",
+   "chars": 1809,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T22:57:55",
+   "keyword": {
+    "keyword": "부산요트투어",
+    "volume": 24240
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GNJmNa4y",
+   "source": "",
+   "product": "부산요트투어 광안리 해변출발 해운대 더베이101 야경 폭죽 드론쇼 예약 소인 주간 위드요트",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver1-2",
+   "date": "2026-11-04",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "핸드폰맥세이프 차량용 충전기 거치대 고르는 법 4가지 기준",
+   "chars": 1565,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T22:57:55",
+   "keyword": {
+    "keyword": "핸드폰맥세이프",
+    "volume": 320
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/5YoORpV2",
+   "source": "",
+   "product": "벤딕트 차량용 핸드폰 맥세이프 거치대 휴대폰 충전기 무선 스마트폰 자석 Qi2 루나 에어로",
+   "videoSpot": "흔들림 없이 고정되는 비결이 뭘까요?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver1-1",
+   "date": "2026-11-04",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "총각김치 추천 전라도식 알타리김치 국내산 나래밥상 후기",
+   "chars": 1501,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T22:48:54",
+   "keyword": {
+    "keyword": "총각김치",
+    "volume": 40570
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/Fc6ekNwh",
+   "source": "",
+   "product": "나래밥상 전라도 총각김치 1kg 국내산 알타리김치",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver2-6",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "직장인 냉동 도시락 추천, 실패 없는 단백질 식단 고르는 기준 4가지",
+   "chars": 1937,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-04T21:46:04",
+   "keyword": {
+    "keyword": "직장인 냉동 도시락 추천",
+    "volume": 40
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FRo3e1Fv",
+   "source": "",
+   "product": "[메이크샐러드] 단백질 닭가슴살 직장인 식단 냉동 도시락 바베큐"
+  },
+  {
+   "id": "2026-11-04/naver3-8",
+   "date": "2026-11-04",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "일본이심 추천, 로컬망과 무제한 데이터 고르는 기준 4가지",
+   "chars": 1853,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T21:46:04",
+   "keyword": {
+    "keyword": "일본이심추천",
+    "volume": 6250
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GmpjmuTW",
+   "source": "",
+   "product": "일본이심"
+  },
+  {
+   "id": "2026-11-04/naver2-5",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "요거트토핑 추천! 바맘이만든 이유식 토핑 야채큐브 성분 가격 비교",
+   "chars": 1594,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T21:37:23",
+   "keyword": {
+    "keyword": "요거트토핑",
+    "volume": 390
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/F05nY05J",
+   "source": "",
+   "product": "바맘이만든 이유식 토핑",
+   "videoSpot": "매일 다듬기 번거로운 채소, 어떻게 해결할까?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver2-4",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "춘천감자빵 추천, 줄 서서 먹는 감자밭 원조 맛과 고르는 기준 3가지",
+   "chars": 1562,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-card.png"
+   ],
+   "createdAt": "2026-11-04T21:37:23",
+   "keyword": {
+    "keyword": "춘천감자빵",
+    "volume": 12920
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FnsDIL84",
+   "source": "",
+   "product": "맛있는 녀석들 춘천 감자빵",
+   "videoSpot": "왜 줄 서서 먹을까? 원조 맛의 비밀",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver3-4",
+   "date": "2026-11-04",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "아기양말 추천 흘러내리지 않는 골지 커플 양말 고르는 법 4가지",
+   "chars": 1526,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "07-photo.jpg",
+    "02-photo.jpg",
+    "08-photo.jpg",
+    "03-photo.jpg",
+    "09-photo.jpg",
+    "04-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "05-photo.jpg",
+    "12-photo.jpg",
+    "13-photo.jpg",
+    "14-photo.jpg",
+    "06-card.png"
+   ],
+   "createdAt": "2026-11-04T20:10:39",
+   "keyword": {
+    "keyword": "아기양말",
+    "volume": 24050
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/F5s70RN9",
+   "source": "",
+   "product": "아기 양말 유아 아동 신생아 초등학생 봄 여름 골지 엄마와 아이 커플양말 미끄럼방지",
+   "videoSpot": "우리 아이 발에 꼭 맞는 아기양말 고르는 기준",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-04/tistory-3",
+   "date": "2026-11-04",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "생산성 • 자동화",
+   "title": "리눅스 명령어 기초 15개와 서버 받자마자 할 보안 설정 4단계, 우분투 기준",
+   "chars": 2101,
+   "writer": "Claude",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-04T09:27:28",
+   "keyword": {
+    "keyword": "리눅스 명령어",
+    "volume": 250
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-04/naver3-2",
+   "date": "2026-11-04",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "베이비페어 일정 11~12월, 마곡 코엑스부터 부산 벡스코까지 무료입장 5곳",
+   "chars": 1803,
+   "writer": "Claude",
+   "urgent": true,
+   "until": "2026-12-27",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-04T09:27:28",
+   "keyword": {
+    "keyword": "베이비페어",
+    "volume": 74400
+   }
+  },
+  {
+   "id": "2026-11-04/naver2-2",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "혜택·지원",
+   "title": "아이돌봄서비스 신청 자격 2026, 중위소득 250%까지 넓어진 정부지원과 시간당 요금",
+   "chars": 1936,
+   "writer": "Claude",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-04T09:27:28",
+   "keyword": {
+    "keyword": "아이돌봄서비스",
+    "volume": 81500
+   }
+  },
+  {
+   "id": "2026-11-04/tistory-1",
+   "date": "2026-11-04",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "가상자산 해킹 대비 보안 설정, 2단계 인증·지갑 분리로 AI 피싱 막기",
+   "chars": 1570,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-30",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-04T08:34:00",
+   "keyword": {
+    "keyword": "해킹",
+    "volume": 49600,
+    "level": "높음"
+   },
+   "photoVer": "20261104085850"
+  },
+  {
+   "id": "2026-11-04/naver3-1",
+   "date": "2026-11-04",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "한본어 뜻과 유행어, 일본 10대가 쓰는 '켄차나·진짜' 한국어 열풍",
+   "chars": 1737,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-04T08:19:57",
+   "keyword": {
+    "keyword": "매일경제",
+    "volume": 99500,
+    "level": "낮음"
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "photoVer": "20261104085850"
+  },
+  {
+   "id": "2026-11-04/naver2-1",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "혜택·지원",
+   "title": "종신보험 생활자금 전환, 살아서 받는 페이백·치료비 보장 달라진 점",
+   "chars": 1540,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-04T08:19:57",
+   "keyword": {
+    "keyword": "종신보험",
+    "volume": 9290,
+    "level": "높음"
+   },
+   "photoVer": "20261104085850"
+  },
+  {
+   "id": "2026-11-03/naver3-5",
+   "date": "2026-11-03",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "니베아 맨 센서티브 쉐이빙 폼 면도크림 250ml 3개 민감 피부 저자극 추천",
+   "chars": 1856,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-card.png"
+   ],
+   "createdAt": "2026-11-03T10:38:42",
+   "keyword": {
+    "keyword": "니베아 맨 센서티브 쉐이빙 폼",
+    "volume": 160
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GP2Cds41",
+   "source": "",
+   "product": "니베아 맨 센서티브 쉐이빙 폼 면도크림 250ml, 3개",
+   "videoSpot": "어떤 성분과 특징을 가지고 있나요?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-03/naver3-4",
+   "date": "2026-11-03",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "극세사이불 추천 겨울철 필수품 노스베어 프리미엄 라셀 이불",
+   "chars": 1587,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "08-photo.jpg",
+    "02-photo.jpg",
+    "09-photo.jpg",
+    "03-photo.jpg",
+    "10-photo.jpg",
+    "04-photo.jpg",
+    "11-photo.jpg",
+    "05-photo.jpg",
+    "12-photo.jpg",
+    "06-photo.jpg",
+    "13-photo.jpg",
+    "14-photo.jpg",
+    "07-card.png"
+   ],
+   "createdAt": "2026-11-03T10:38:42",
+   "keyword": {
+    "keyword": "극세사이불",
+    "volume": 42220
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/5vJ5cXxM",
+   "source": "",
+   "product": "겨울 극세사이불 노스베어 프리미엄 라셀 10mm 장모 차렵이불 SS",
+   "videoSpot": "찬 바람 부는 날씨에 덮기 좋은 겨울 이불 고르는 법",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-03/naver3-3",
+   "date": "2026-11-03",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "브랜든압축파우치 추천 비교, 이불 정리가 편해지는 이유",
+   "chars": 1513,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "12-photo.jpg",
+    "02-photo.jpg",
+    "13-photo.jpg",
+    "03-photo.jpg",
+    "14-photo.jpg",
+    "04-photo.jpg",
+    "15-photo.jpg",
+    "05-photo.jpg",
+    "16-photo.jpg",
+    "06-photo.jpg",
+    "17-photo.jpg",
+    "18-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "19-photo.jpg",
+    "09-photo.jpg",
+    "20-photo.jpg",
+    "10-photo.jpg",
+    "11-card.png"
+   ],
+   "createdAt": "2026-11-03T10:32:53",
+   "keyword": {
+    "keyword": "브랜든압축파우치",
+    "volume": 19060
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/Ge7tUzJ6",
+   "source": "",
+   "product": "브랜든 부피순삭 압축파우치",
+   "videoSpot": "브랜든압축파우치 구성과 가격 비교",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-03/naver3-2",
+   "date": "2026-11-03",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "\"규모 줄이고 속도 낸다\" 고양경제자유구역 60만 평 재편 계획",
+   "chars": 1753,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-card.png"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "고양경제자유구역",
+    "volume": 1840,
+    "level": "낮음"
+   },
+   "photoVer": "20261103182656"
+  },
+  {
+   "id": "2026-11-03/naver3-1",
+   "date": "2026-11-03",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "요즘·트렌드",
+   "title": "배우 김민 '나혼자산다' 출연 후 시청률이 급등한 이유",
+   "chars": 1585,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-10",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "김민",
+    "volume": 908100,
+    "level": "낮음"
+   }
+  },
+  {
+   "id": "2026-11-03/naver2-1",
+   "date": "2026-11-03",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "생활경제",
+   "title": "단기채 투자 방법과 1300원대 환율 시대 달러 쪼개 사는 요령",
+   "chars": 1902,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "단기채",
+    "volume": 310,
+    "level": "보통"
+   },
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ]
+  },
+  {
+   "id": "2026-11-03/naver1-2",
+   "date": "2026-11-03",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "\"도지코인 5주 연속 하락?\" 대형 고래 물량 매도와 가상자산 시세 분석",
+   "chars": 1855,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-card.png"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "도지코인",
+    "volume": 109800,
+    "level": "보통"
+   }
+  },
+  {
+   "id": "2026-11-03/naver1-1",
+   "date": "2026-11-03",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "'래블업' 코스닥 상장 첫날 급등, AI 인프라 소프트웨어 주가 전망과 투자 체크포인트",
+   "chars": 1924,
+   "writer": "제미나이",
+   "urgent": true,
+   "until": "2026-11-10",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "래블업",
+    "volume": 42140,
+    "level": "보통"
+   }
+  },
+  {
+   "id": "2026-11-03/tistory-2",
+   "date": "2026-11-03",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "\"비야디 전기차 벌써 탔는데 어때서?\" 초기 차주들이 털어놓는 진짜 불만과 현황",
+   "chars": 1535,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-03T10:26:47",
+   "keyword": {
+    "keyword": "비야디",
+    "volume": 7970,
+    "level": "보통"
+   }
+  },
+  {
+   "id": "2026-11-02/naver3-7",
+   "date": "2026-11-05",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "여행·취미",
+   "title": "돈키호테 추천템 2026, 일본 쇼핑 목록과 11월 면세 환급 주의점",
+   "chars": 2413,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver3-6",
+   "date": "2026-11-05",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "여행·취미",
+   "title": "후쿠오카 여행 2박 3일 코스, 하카타·텐진·다자이후 동선 정리",
+   "chars": 2409,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver3-5",
+   "date": "2026-11-06",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "맛집·푸드",
+   "title": "무생채 레시피 무 500g 기준, 아삭하게 만드는 고춧가루·식초 양념",
+   "chars": 2402,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver2-8",
+   "date": "2026-11-04",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "절약·알뜰정보",
+   "title": "휴대폰 소액결제 차단 방법, 통신요금에 붙는 예상 밖 결제 막기",
+   "chars": 2434,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver2-7",
+   "date": "2026-11-05",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "혜택·지원",
+   "title": "케이뱅크 돈나무 키우기, 매일 물주기·영양제·현금 받는 순서",
+   "chars": 2367,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver1-8",
+   "date": "2026-11-05",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "콘텐츠·SNS",
+   "title": "인스타 릴스 조회수는 높은데 블로그 방문은 적은 이유, 연결 구조 만들기",
+   "chars": 2445,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver2-6",
+   "date": "2026-11-02",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "절약·알뜰정보",
+   "title": "이마트 세일 11월 8일까지, 쓱데이 반값 혜택과 행사카드 조건",
+   "chars": 2411,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-11-08",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-02/naver1-7",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "성시경 연말 콘서트 2026 예매 일정, 11월 6일 선예매·좌석 가격",
+   "chars": 2390,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-11-12",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-02/naver1-6",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "2026 악뮤 콘서트 남은 일정, 강릉·대구·부산 예매와 좌석 가격",
+   "chars": 2395,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-12-25",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:27:08",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-02/naver3-4",
+   "date": "2026-11-02",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "베이비페어 인기 품목 오르테 4in1 젖병세척기 추천 및 가격 비교",
+   "chars": 1692,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-card.png"
+   ],
+   "createdAt": "2026-11-02T08:19:58",
+   "keyword": {
+    "keyword": "베이비페어",
+    "volume": 75000
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FFqAoF9K",
+   "source": "",
+   "product": "오르테 4in1 젖병세척기 살균 건조 보관 신생아 출산 임산부선물 준비물",
+   "videoSpot": "베이비페어에서 주목받는 젖병세척기 기능",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver3-3",
+   "date": "2026-11-02",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "한강라면 '한라비' 전자레인지 종이냄비 용기 장단점과 사용법",
+   "chars": 2015,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "15-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "12-photo.jpg",
+    "13-photo.jpg",
+    "14-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:14:37",
+   "keyword": {
+    "keyword": "한강라면",
+    "volume": 24910
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/xsZS1cdR",
+   "source": "",
+   "product": "한강라면, '한라비'로 맛있게 끓여보세요!",
+   "videoSpot": "간편하게 완성하는 한강라면 조리법",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver2-5",
+   "date": "2026-11-02",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "1+1 스텐 고기집게 요리핀셋 세트 슬림 라운드로 주방 살림 편하게",
+   "chars": 1847,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "12-photo.jpg",
+    "13-card.png",
+    "15-photo.jpg",
+    "14-photo.jpg",
+    "16-photo.jpg",
+    "17-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:02:39",
+   "keyword": {
+    "keyword": "1+1 스텐 고기집게 요리핀셋 세트 슬림+라운드",
+    "volume": 10
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/GT4RYlEC",
+   "source": "",
+   "product": "1+1 스텐 고기집게 요리핀셋 세트 슬림+라운드",
+   "videoSpot": "요리마다 알맞게 고르는 슬림과 라운드 핀셋",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver1-5",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "벤딕트 폴리싱 광택기 무선 듀얼 폴리셔 유막제거 왁싱 12V 베이직 패키지",
+   "chars": 1662,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-card.png",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T08:02:39",
+   "keyword": {
+    "keyword": "벤딕트 폴리싱 광택기",
+    "volume": 15
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FQuqlH2C",
+   "source": "",
+   "product": "벤딕트 폴리싱 광택기 자동차 차량 무선 듀얼 폴리셔 유막제거 왁싱 12V 베이직 패키지",
+   "videoSpot": "벤딕트 폴리싱 광택기 구성과 특징",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver1-4",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "소베맘 아기욕조 디지털 온도계 컴포트 베이비 바스 추천",
+   "chars": 1590,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-card.png",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-photo.jpg",
+    "12-photo.jpg",
+    "13-photo.jpg",
+    "14-photo.jpg",
+    "15-photo.jpg",
+    "16-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T07:56:32",
+   "keyword": {
+    "keyword": "소베맘 아기욕조",
+    "volume": 220
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/5suzhq1I",
+   "source": "",
+   "product": "소베맘 신생아욕조 아기욕조 디지털 온도계 컴포트 베이비 바스",
+   "videoSpot": "편리한 기능과 세심한 구조 살펴보기",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver2-4",
+   "date": "2026-11-02",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "옆잠베개 추천 아이누오 아기베개 두상 짱구 신생아 출산 선물 비교",
+   "chars": 1546,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-card.png"
+   ],
+   "createdAt": "2026-11-02T07:56:32",
+   "keyword": {
+    "keyword": "옆잠베개",
+    "volume": 27720
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/551E8AZr",
+   "source": "",
+   "product": "100% 국내생산, 아빠가 만든 아이누오 아기베개",
+   "videoSpot": "아빠가 만든 특허받은 아기베개 특징",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver1-3",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "슬립스파 아기 두상 유아 어린이 키즈 신생아 돌 와이드베개 꼼꼼 비교",
+   "chars": 1480,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-card.png"
+   ],
+   "createdAt": "2026-11-02T07:53:58",
+   "keyword": {
+    "keyword": "슬립스파 아기 두상 유아 어린이 키즈 신생아 돌 와이드베개",
+    "volume": 10
+   },
+   "warn": [
+    "글이 짧아요 (1480자)"
+   ],
+   "kind": "쇼핑",
+   "link": "https://naver.me/xAfw4out",
+   "source": "",
+   "product": "슬립스파 아기 두상 유아 어린이 키즈 신생아 돌 와이드베개",
+   "videoSpot": "슬립스파 아기 베개, 어떤 소재와 구조로 이루어져 있나요?",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver2-3",
+   "date": "2026-11-02",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "쇼핑 추천",
+   "title": "콘드로이친 성분 비교할 때 보는 닥터바이 강아지 관절 영양제",
+   "chars": 1658,
+   "writer": "제미나이",
+   "urgent": false,
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg",
+    "03-photo.jpg",
+    "04-photo.jpg",
+    "05-photo.jpg",
+    "06-photo.jpg",
+    "07-photo.jpg",
+    "08-photo.jpg",
+    "09-photo.jpg",
+    "10-photo.jpg",
+    "11-card.png"
+   ],
+   "createdAt": "2026-11-02T07:50:37",
+   "keyword": {
+    "keyword": "콘드로이친",
+    "volume": 80900
+   },
+   "kind": "쇼핑",
+   "link": "https://naver.me/FtodXUt8",
+   "source": "",
+   "product": "닥터바이 강아지 관절 영양제 슬개골 탈구 무릎 고관절 케어 절뚝거림 조인트, 70정, 1개",
+   "videoSpot": "관절과 연골을 함께 챙기는 성분 구성",
+   "videos": [
+    "video.mp4",
+    "video_vertical.mp4"
+   ]
+  },
+  {
+   "id": "2026-11-02/naver3-2",
+   "date": "2026-11-04",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "축의금 봉투 이름 어디에 쓰나, 뒷면 왼쪽·회사명·두 사람 표기",
+   "chars": 2386,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-02T07:45:42",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver2-2",
+   "date": "2026-11-03",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "절약·알뜰정보",
+   "title": "코스트코 회원권 4만3000원·8만6000원, 이그제큐티브 이득 기준",
+   "chars": 2373,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T07:45:42",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver1-2",
+   "date": "2026-11-04",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "콘텐츠·SNS",
+   "title": "유튜브 프리미엄 가격 비교, 웹과 아이폰 결제 차이·라이트 선택법",
+   "chars": 2458,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T07:45:42",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-02"
+  },
+  {
+   "id": "2026-11-02/naver3-1",
+   "date": "2026-11-02",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "여행·취미",
+   "title": "일본 면세 11월부터 바뀐다, 출국 공항 세금 환급받는 방법",
+   "chars": 2692,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-11-15",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T07:25:49",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-02/naver1-1",
+   "date": "2026-11-02",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "오늘의 이슈",
+   "title": "고속도로 렌터카 핸들에서 뱀 출몰, 운전 중 발견하면 어떻게 할까",
+   "chars": 2430,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-11-04",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-02T07:13:57",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-02/naver2-1",
+   "date": "2026-11-02",
+   "blogKey": "naver2",
+   "blogName": "알뜰한 오늘",
+   "platform": "naver",
+   "category": "절약·알뜰정보",
+   "title": "올리브영 세일 11월 1~7일, 블랙프라이데이 쿠폰·특가 총정리",
+   "chars": 2497,
+   "writer": "채팅",
+   "urgent": true,
+   "until": "2026-11-07",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-02T07:10:26",
+   "ai": "GPT"
+  },
+  {
+   "id": "2026-11-01/tistory-3",
+   "date": "2026-11-02",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "제미나이 라이브 오프라인 개발, 인터넷 없이 되는 AI의 한계와 장점",
+   "chars": 2287,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-01T12:48:56",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-01"
+  },
+  {
+   "id": "2026-11-01/naver3-3",
+   "date": "2026-11-02",
+   "blogKey": "naver3",
+   "blogName": "쓸모있는 오늘",
+   "platform": "naver",
+   "category": "생활정보",
+   "title": "음식물처리기 구매 기준, 건조분쇄·미생물 방식 관리비와 냄새 비교",
+   "chars": 2308,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg"
+   ],
+   "createdAt": "2026-11-01T12:48:56",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-01"
+  },
+  {
+   "id": "2026-11-01/naver1-5",
+   "date": "2026-11-04",
+   "blogKey": "naver1",
+   "blogName": "남다른 오늘",
+   "platform": "naver",
+   "category": "AI·디지털",
+   "title": "AI로 블로그 주제 찾기, 검색량보다 조회수를 좌우하는 4가지 기준",
+   "chars": 2302,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-11-01T12:48:56",
+   "warn": [
+    "표에 숫자·날짜가 하나도 없어요 (빈 틀 표일 수 있음)"
+   ],
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-11-01"
+  },
+  {
+   "id": "2026-10-31/tistory-6",
+   "date": "2026-11-01",
+   "blogKey": "tistory",
+   "blogName": "티스토리",
+   "platform": "tistory",
+   "category": "글로벌 테크",
+   "title": "Cloudflare Workers 무료 요금제 2026, 요청 제한과 CPU 10ms의 의미",
+   "chars": 2437,
+   "writer": "채팅",
+   "urgent": "",
+   "until": "",
+   "files": [
+    "content.json",
+    "01-cover.jpg",
+    "02-photo.jpg"
+   ],
+   "createdAt": "2026-10-31T18:55:51",
+   "ai": "GPT",
+   "stock": false,
+   "fromStock": "2026-10-31"
+  }
+ ],
+ "updated": "2026-11-07T05:31:46",
+ "used": [
+  "2026-10-20/naver1-3",
+  "2026-10-20/naver1-4",
+  "2026-10-20/naver2-2",
+  "2026-10-20/naver3-4",
+  "2026-10-20/tistory-4",
+  "2026-10-20/naver1-5",
+  "2026-10-20/naver2-3",
+  "2026-10-20/naver2-4",
+  "2026-10-20/naver3-5",
+  "2026-10-20/tistory-5",
+  "2026-10-20/naver2-5",
+  "2026-10-20/naver2-6",
+  "2026-10-20/naver2-7",
+  "2026-10-20/naver2-8",
+  "2026-10-20/naver2-9",
+  "2026-10-20/naver2-10",
+  "2026-10-20/naver3-6",
+  "2026-10-20/naver3-7",
+  "2026-10-20/naver2-11",
+  "2026-10-21/naver1-1",
+  "2026-10-21/naver1-2",
+  "2026-10-21/naver2-1",
+  "2026-10-21/naver2-2",
+  "2026-10-21/naver3-1",
+  "2026-10-21/naver3-2",
+  "2026-10-21/tistory-1",
+  "2026-10-21/tistory-2",
+  "2026-10-21/naver2-3",
+  "2026-10-21/naver2-4",
+  "2026-10-21/naver3-3",
+  "2026-10-21/naver3-4",
+  "2026-10-21/naver1-3",
+  "2026-10-21/naver3-5",
+  "2026-10-21/naver1-4",
+  "2026-10-21/naver2-5",
+  "2026-10-21/naver3-6",
+  "2026-10-21/naver3-7",
+  "2026-10-21/naver3-8",
+  "2026-10-21/naver3-9",
+  "2026-10-21/naver1-5",
+  "2026-10-21/naver1-6",
+  "2026-10-21/naver2-6",
+  "2026-10-21/naver3-10",
+  "2026-10-21/naver3-11",
+  "2026-10-21/naver1-7",
+  "2026-10-21/naver2-7",
+  "2026-10-21/naver3-12",
+  "2026-10-22/naver1-1",
+  "2026-10-22/naver2-1",
+  "2026-10-22/naver3-1",
+  "2026-10-22/naver1-2",
+  "2026-10-22/naver1-3",
+  "2026-10-22/naver2-2",
+  "2026-10-22/naver2-3",
+  "2026-10-22/naver3-2",
+  "2026-10-22/naver3-3",
+  "2026-10-22/tistory-1",
+  "2026-10-22/tistory-2",
+  "2026-10-22/naver2-4",
+  "2026-10-22/naver2-5",
+  "2026-10-22/naver1-4",
+  "2026-10-22/naver1-5",
+  "2026-10-22/naver2-6",
+  "2026-10-22/naver2-7",
+  "2026-10-22/naver3-4",
+  "2026-10-22/naver3-5",
+  "2026-10-22/tistory-3",
+  "2026-10-22/tistory-4",
+  "2026-10-22/naver1-6",
+  "2026-10-22/naver1-7",
+  "2026-10-22/naver1-8",
+  "2026-10-22/naver1-9",
+  "2026-10-23/naver1-1",
+  "2026-10-23/naver1-2",
+  "2026-10-23/naver2-1",
+  "2026-10-23/naver2-2",
+  "2026-10-23/naver3-1",
+  "2026-10-23/naver3-2",
+  "2026-10-23/tistory-1",
+  "2026-10-23/tistory-2",
+  "2026-10-24/naver1-1",
+  "2026-10-24/naver2-1",
+  "2026-10-24/naver3-1",
+  "2026-10-24/tistory-1",
+  "2026-10-24/naver1-2",
+  "2026-10-24/naver1-3",
+  "2026-10-24/naver2-2",
+  "2026-10-24/naver2-3",
+  "2026-10-24/naver3-2",
+  "2026-10-24/naver3-3",
+  "2026-10-24/tistory-2",
+  "2026-10-24/tistory-3",
+  "2026-10-24/naver1-4",
+  "2026-10-24/naver1-5",
+  "2026-10-24/naver1-6",
+  "2026-10-24/naver2-4",
+  "2026-10-24/naver2-5",
+  "2026-10-24/naver2-6",
+  "2026-10-24/naver3-4",
+  "2026-10-24/naver3-5",
+  "2026-10-24/naver3-6",
+  "2026-10-24/tistory-4",
+  "2026-10-24/tistory-5",
+  "2026-10-24/tistory-6",
+  "2026-10-24/naver1-7",
+  "2026-10-24/naver2-7",
+  "2026-10-24/naver2-8",
+  "2026-10-24/naver2-9",
+  "2026-10-24/naver2-10",
+  "2026-10-24/naver2-11",
+  "2026-10-24/naver3-7",
+  "2026-10-24/naver3-8",
+  "2026-10-24/naver3-9",
+  "2026-10-24/naver3-10",
+  "2026-10-24/naver3-11",
+  "2026-10-24/naver1-8",
+  "2026-10-24/naver1-9",
+  "2026-10-24/naver1-10",
+  "2026-10-24/naver1-11",
+  "2026-10-24/naver1-12",
+  "2026-10-24/naver2-12",
+  "2026-10-24/naver3-12",
+  "2026-10-24/tistory-7",
+  "2026-10-24/naver1-13",
+  "2026-10-24/naver1-14",
+  "2026-10-24/naver2-13",
+  "2026-10-24/naver3-13",
+  "2026-10-24/tistory-8",
+  "2026-10-24/tistory-9",
+  "2026-10-24/tistory-10",
+  "2026-10-25/naver1-1",
+  "2026-10-25/tistory-1",
+  "2026-10-25/tistory-2",
+  "2026-10-25/naver1-2",
+  "2026-10-25/naver2-1",
+  "2026-10-25/naver2-2",
+  "2026-10-25/naver3-1",
+  "2026-10-25/naver3-2",
+  "2026-10-25/naver1-3",
+  "2026-10-25/naver1-4",
+  "2026-10-26/tistory-1",
+  "2026-10-26/tistory-2",
+  "2026-10-26/naver1-1",
+  "2026-10-26/naver1-2",
+  "2026-10-26/naver2-1",
+  "2026-10-26/naver2-2",
+  "2026-10-26/naver3-1",
+  "2026-10-26/naver3-2",
+  "2026-10-26/naver1-3",
+  "2026-10-26/naver1-4",
+  "2026-10-26/naver1-5",
+  "2026-10-26/naver1-6",
+  "2026-10-26/naver1-7",
+  "2026-10-26/naver2-3",
+  "2026-10-26/naver2-4",
+  "2026-10-26/naver2-5",
+  "2026-10-26/naver2-6",
+  "2026-10-26/naver2-7",
+  "2026-10-26/naver3-3",
+  "2026-10-26/naver3-4",
+  "2026-10-26/naver3-5",
+  "2026-10-26/naver3-6",
+  "2026-10-26/naver3-7",
+  "2026-10-26/naver1-8",
+  "2026-10-26/naver1-9",
+  "2026-10-26/naver1-10",
+  "2026-10-26/naver1-11",
+  "2026-10-26/naver2-8",
+  "2026-10-26/naver2-9",
+  "2026-10-26/naver2-10",
+  "2026-10-26/naver2-11",
+  "2026-10-26/naver3-8",
+  "2026-10-26/naver3-9",
+  "2026-10-26/naver3-10",
+  "2026-10-26/naver3-11",
+  "2026-10-26/tistory-3",
+  "2026-10-26/tistory-4",
+  "2026-10-26/tistory-5",
+  "2026-10-26/tistory-6",
+  "2026-10-26/naver1-12",
+  "2026-10-26/naver1-13",
+  "2026-10-26/naver2-12",
+  "2026-10-26/naver2-13",
+  "2026-10-26/naver3-12",
+  "2026-10-26/naver3-13",
+  "2026-10-26/tistory-7",
+  "2026-10-26/tistory-8",
+  "2026-10-27/naver3-1",
+  "2026-10-27/naver3-2",
+  "2026-10-27/naver3-3",
+  "2026-10-27/naver3-4",
+  "2026-10-27/naver1-1",
+  "2026-10-27/naver1-2",
+  "2026-10-27/naver1-3",
+  "2026-10-27/naver1-4",
+  "2026-10-27/naver2-1",
+  "2026-10-27/naver2-2",
+  "2026-10-27/naver2-3",
+  "2026-10-27/naver2-4",
+  "2026-10-27/naver3-5",
+  "2026-10-27/naver3-6",
+  "2026-10-27/naver3-7",
+  "2026-10-27/naver3-8",
+  "2026-10-27/tistory-1",
+  "2026-10-27/tistory-2",
+  "2026-10-27/tistory-3",
+  "2026-10-27/tistory-4",
+  "2026-10-27/naver3-9",
+  "2026-10-27/naver3-10",
+  "2026-10-27/naver2-5",
+  "2026-10-27/naver2-6",
+  "2026-10-27/naver2-7",
+  "2026-10-27/naver2-8",
+  "2026-10-27/naver2-9",
+  "2026-10-27/naver2-10",
+  "2026-10-27/naver1-5",
+  "2026-10-27/naver1-6",
+  "2026-10-27/naver1-7",
+  "2026-10-27/naver1-8",
+  "2026-10-27/naver1-9",
+  "2026-10-28/naver1-1",
+  "2026-10-28/naver1-2",
+  "2026-10-28/naver1-3",
+  "2026-10-28/tistory-1",
+  "2026-10-28/tistory-2",
+  "2026-10-28/naver1-4",
+  "2026-10-28/naver1-5",
+  "2026-10-28/naver2-1",
+  "2026-10-28/naver2-2",
+  "2026-10-28/naver3-1",
+  "2026-10-28/naver3-2",
+  "2026-10-28/naver1-6",
+  "2026-10-28/naver1-7",
+  "2026-10-28/naver2-3",
+  "2026-10-28/naver3-3",
+  "2026-10-28/naver3-4",
+  "2026-10-28/naver3-5",
+  "2026-10-28/naver3-6",
+  "2026-10-28/naver2-4",
+  "2026-10-28/naver2-5",
+  "2026-10-28/naver2-6",
+  "2026-10-28/naver1-8",
+  "2026-10-28/naver1-9",
+  "2026-10-28/naver1-10",
+  "2026-10-28/naver2-7",
+  "2026-10-28/naver2-8",
+  "2026-10-28/naver1-11",
+  "2026-10-28/naver2-9",
+  "2026-10-28/naver3-7",
+  "2026-10-28/naver3-8",
+  "2026-10-28/naver3-9",
+  "2026-10-28/naver3-10",
+  "2026-10-28/naver3-11",
+  "2026-10-28/naver3-12",
+  "2026-10-28/naver3-13",
+  "2026-10-28/naver3-14",
+  "2026-10-28/naver3-15",
+  "2026-10-28/naver3-16",
+  "2026-10-28/naver1-12",
+  "2026-10-28/naver2-10",
+  "2026-10-28/naver1-13",
+  "2026-10-28/naver1-14",
+  "2026-10-28/naver1-15",
+  "2026-10-28/naver1-16",
+  "2026-10-28/naver2-11",
+  "2026-10-28/naver2-12",
+  "2026-10-28/naver3-17",
+  "2026-10-28/naver3-18",
+  "2026-10-28/naver3-19",
+  "2026-10-28/tistory-3",
+  "2026-10-28/tistory-4",
+  "2026-10-29/tistory-1",
+  "2026-10-29/tistory-2",
+  "2026-10-29/naver1-1",
+  "2026-10-29/naver1-2",
+  "2026-10-29/naver2-1",
+  "2026-10-29/naver2-2",
+  "2026-10-29/naver3-1",
+  "2026-10-29/naver3-2",
+  "2026-10-29/naver1-3",
+  "2026-10-29/naver1-4",
+  "2026-10-29/naver1-5",
+  "2026-10-29/naver2-3",
+  "2026-10-29/naver2-4",
+  "2026-10-29/naver2-5",
+  "2026-10-29/naver3-3",
+  "2026-10-29/naver3-4",
+  "2026-10-29/naver3-5",
+  "2026-10-29/tistory-3",
+  "2026-10-29/tistory-4",
+  "2026-10-29/tistory-5",
+  "2026-10-29/naver1-6",
+  "2026-10-29/naver2-6",
+  "2026-10-29/naver3-6",
+  "2026-10-29/tistory-6",
+  "2026-10-30/naver1-1",
+  "2026-10-30/tistory-1",
+  "2026-10-30/tistory-2",
+  "2026-10-30/tistory-3",
+  "2026-10-30/naver1-2",
+  "2026-10-30/naver1-3",
+  "2026-10-30/naver1-4",
+  "2026-10-30/naver1-5",
+  "2026-10-30/naver3-1",
+  "2026-10-30/naver3-2",
+  "2026-10-30/naver1-6",
+  "2026-10-30/naver1-7",
+  "2026-10-30/naver1-8",
+  "2026-10-30/naver2-1",
+  "2026-10-30/naver2-2",
+  "2026-10-30/naver2-3",
+  "2026-10-30/naver3-3",
+  "2026-10-30/naver3-4",
+  "2026-10-30/naver3-5",
+  "2026-10-30/tistory-4",
+  "2026-10-30/tistory-5",
+  "2026-10-30/tistory-6",
+  "2026-10-30/naver1-9",
+  "2026-10-30/naver1-10",
+  "2026-10-30/naver1-11",
+  "2026-10-30/naver2-4",
+  "2026-10-30/naver2-5",
+  "2026-10-30/naver2-6",
+  "2026-10-30/naver3-6",
+  "2026-10-30/naver3-7",
+  "2026-10-30/naver3-8",
+  "2026-10-30/tistory-7",
+  "2026-10-30/tistory-8",
+  "2026-10-30/tistory-9",
+  "2026-10-30/naver1-12",
+  "2026-10-30/naver2-7",
+  "2026-10-30/naver3-9",
+  "2026-10-30/tistory-10",
+  "2026-10-31/naver1-1",
+  "2026-10-31/tistory-1",
+  "2026-10-31/tistory-2",
+  "2026-10-31/tistory-3",
+  "2026-10-31/naver1-2",
+  "2026-10-31/naver1-3",
+  "2026-10-31/naver2-1",
+  "2026-10-31/naver3-1",
+  "2026-10-31/naver3-2",
+  "2026-10-31/tistory-4",
+  "2026-10-31/tistory-5",
+  "2026-10-31/naver2-2",
+  "2026-10-31/naver3-3",
+  "2026-10-31/naver3-4",
+  "2026-10-31/naver3-5",
+  "2026-10-31/naver3-6",
+  "2026-10-31/naver2-3",
+  "2026-10-31/naver2-4",
+  "2026-10-31/naver2-5",
+  "2026-10-31/naver2-6",
+  "2026-10-31/naver1-4",
+  "2026-10-31/naver2-7",
+  "2026-10-31/naver3-7",
+  "2026-10-31/tistory-6",
+  "2026-10-31/naver1-5",
+  "2026-10-31/naver1-6",
+  "2026-10-31/naver1-7",
+  "2026-10-31/naver1-8",
+  "2026-10-31/naver1-9",
+  "2026-11-01/tistory-1",
+  "2026-11-01/naver1-1",
+  "2026-11-01/naver1-2",
+  "2026-11-01/naver2-1",
+  "2026-11-01/naver3-1",
+  "2026-11-01/naver1-3",
+  "2026-11-01/naver1-4",
+  "2026-11-01/naver2-2",
+  "2026-11-01/naver2-3",
+  "2026-11-01/tistory-2",
+  "2026-11-01/naver1-5",
+  "2026-11-01/naver2-4",
+  "2026-11-01/naver3-2",
+  "2026-11-01/naver3-3",
+  "2026-11-01/naver3-4",
+  "2026-11-01/tistory-3",
+  "2026-11-01/tistory-4",
+  "2026-11-02/naver2-1",
+  "2026-11-02/naver1-1",
+  "2026-11-02/naver3-1",
+  "2026-11-02/naver1-2",
+  "2026-11-02/naver2-2",
+  "2026-11-02/naver3-2",
+  "2026-11-02/tistory-1",
+  "2026-11-02/naver2-3",
+  "2026-11-02/naver1-3",
+  "2026-11-02/naver2-4",
+  "2026-11-02/naver1-4",
+  "2026-11-02/naver1-5",
+  "2026-11-02/naver2-5",
+  "2026-11-02/naver3-3",
+  "2026-11-02/naver3-4",
+  "2026-11-02/naver1-6",
+  "2026-11-02/naver1-7",
+  "2026-11-02/naver2-6",
+  "2026-11-02/naver1-8",
+  "2026-11-02/naver2-7",
+  "2026-11-02/naver2-8",
+  "2026-11-02/naver3-5",
+  "2026-11-02/naver3-6",
+  "2026-11-02/naver3-7",
+  "2026-11-02/tistory-2",
+  "2026-11-02/tistory-3",
+  "2026-11-02/tistory-4",
+  "2026-11-03/tistory-1",
+  "2026-11-03/tistory-2",
+  "2026-11-03/naver1-1",
+  "2026-11-03/naver1-2",
+  "2026-11-03/naver2-1",
+  "2026-11-03/naver3-1",
+  "2026-11-03/naver3-2",
+  "2026-11-03/naver3-3",
+  "2026-11-03/naver3-4",
+  "2026-11-03/naver3-5",
+  "2026-11-04/naver2-1",
+  "2026-11-04/naver3-1",
+  "2026-11-04/tistory-1",
+  "2026-11-04/tistory-2",
+  "2026-11-04/naver2-2",
+  "2026-11-04/naver3-2",
+  "2026-11-04/tistory-3",
+  "2026-11-04/naver3-3",
+  "2026-11-04/naver3-4",
+  "2026-11-04/naver3-5",
+  "2026-11-04/naver3-6",
+  "2026-11-04/naver2-3",
+  "2026-11-04/naver3-7",
+  "2026-11-04/naver2-4",
+  "2026-11-04/naver2-5",
+  "2026-11-04/naver3-8",
+  "2026-11-04/naver2-6",
+  "2026-11-04/naver1-1",
+  "2026-11-04/naver1-2",
+  "2026-11-04/naver1-3",
+  "2026-11-05/tistory-1",
+  "2026-11-05/tistory-2",
+  "2026-11-05/tistory2-1",
+  "2026-11-05/tistory2-2",
+  "2026-11-05/naver1-1",
+  "2026-11-05/tistory_shop-1",
+  "2026-11-05/tistory_shop-2",
+  "2026-11-05/naver2-1",
+  "2026-11-05/naver3-1",
+  "2026-11-05/naver3-2",
+  "2026-11-05/tistory-3",
+  "2026-11-05/tistory-4",
+  "2026-11-05/tistory-5",
+  "2026-11-06/tistory2-1",
+  "2026-11-06/tistory_shop-1",
+  "2026-11-06/tistory_shop-2",
+  "2026-11-06/naver1-1",
+  "2026-11-06/naver2-1",
+  "2026-11-06/naver3-1",
+  "2026-11-06/tistory-1",
+  "2026-11-06/naver1-2",
+  "2026-11-06/naver1-3",
+  "2026-11-06/naver1-4",
+  "2026-11-06/naver1-5",
+  "2026-11-06/naver1-6",
+  "2026-11-06/naver2-2",
+  "2026-11-06/naver2-3",
+  "2026-11-06/naver2-4",
+  "2026-11-06/naver3-2",
+  "2026-11-06/naver3-3",
+  "2026-11-06/naver3-4",
+  "2026-11-06/tistory-2",
+  "2026-11-06/tistory-3",
+  "2026-11-06/tistory2-2",
+  "2026-11-06/tistory2-3",
+  "2026-11-06/naver1-7",
+  "2026-11-06/naver1-8",
+  "2026-11-06/naver2-5",
+  "2026-11-06/naver2-6",
+  "2026-11-06/naver3-5",
+  "2026-11-06/naver3-6",
+  "2026-11-06/tistory-4",
+  "2026-11-06/naver1-9",
+  "2026-11-06/naver3-7",
+  "2026-11-06/tistory-5",
+  "2026-11-07/tistory-1",
+  "2026-11-07/tistory2-1",
+  "2026-11-07/tistory2-2",
+  "2026-11-07/tistory_shop-1",
+  "2026-11-07/tistory_shop-2",
+  "2026-11-07/naver1-1",
+  "2026-11-07/naver1-2",
+  "2026-11-07/naver2-1",
+  "2026-11-07/naver3-1",
+  "2026-11-07/naver3-2"
+ ],
+ "notices": [
+  {
+   "at": "2026-10-21T18:22:04",
+   "blog": "naver1",
+   "name": "에어메이드 무선 물걸레 청소기 자동 세척 살균 글라이드 2150",
+   "reason": "이번엔 못 만들었어요 (ReadTimeout). 재료는 남아 있어 다음 서버 작업 때 다시 시도해요."
+  },
+  {
+   "at": "2026-10-21T18:22:04",
+   "blog": "naver1",
+   "name": "[더블구성] 이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 50ml, 2개",
+   "reason": "이번엔 못 만들었어요 (ReadTimeout). 재료는 남아 있어 다음 서버 작업 때 다시 시도해요."
+  },
+  {
+   "at": "2026-10-21T18:14:45",
+   "blog": "naver1",
+   "name": "[더블구성] 이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 50ml, 2개",
+   "reason": "이번엔 못 만들었어요 (ReadTimeout). 재료는 남아 있어 다음 서버 작업 때 다시 시도해요."
+  },
+  {
+   "at": "2026-10-21T17:44:45",
+   "blog": "naver1",
+   "name": "[더블구성] 이니스프리 그린티 씨드 히알루론산 보습 속건조 수분크림 50ml, 2개",
+   "reason": "이번엔 못 만들었어요 (ReadTimeout). 재료는 남아 있어 다음 서버 작업 때 다시 시도해요."
+  }
+ ],
+ "ig_keep": []
+}
