@@ -50,6 +50,7 @@
   .go { margin-top:auto; text-align:center; font-size:13px; font-weight:700; color:#fff; border-radius:12px; padding:10px 0;
         background:linear-gradient(135deg,var(--accent),var(--accent2)); }
   .empty { color:var(--muted); text-align:center; padding:32px 0; display:none; }
+  a.item.hit { outline:3px solid var(--accent); outline-offset:-3px; }
   .other { display:block; max-width:460px; margin:28px auto 0; text-align:center; text-decoration:none;
             color:var(--accent); font-size:14px; font-weight:700; background:var(--card); border:1px solid var(--line);
             border-radius:14px; padding:14px; }
@@ -79,6 +80,7 @@
          stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="q" type="search" placeholder="영상에서 본 번호나 상품 이름으로 찾기" autocomplete="off">
   </label></div>
+  <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
   <div class="tabs"><button class="on" data-k="">전체</button><button data-k="c1">뷰티템</button><button data-k="c2">생활템</button><button data-k="sc">추천템</button></div>
   <div class="grid" id="list">
     <a class="item" href="https://link.coupang.com/a/itI3Vz3Lhc" target="_blank" rel="sponsored noopener" data-k="c2" data-no="184" data-name="184번 생활템 문화연필 더존키즈 쓱 지오지네 슈퍼워셔블 마카">
@@ -250,7 +252,7 @@
       </div>
     </a>
     <a class="item" href="https://naver.me/Fc6ekNwh" target="_blank" rel="sponsored noopener" data-k="sc" data-no="163" data-name="163번 추천템 나래밥상 전라도 총각김치 1kg 국내산 알타리김치">
-      <div class="pic"><span class="no">163번</span><img src="../thumbs/naver-Fc6ekNwh.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
+      <div class="pic"><span class="no">163번</span><img src="../thumbs/naver-Fc6ekNwh.jpg" alt="" loading="lazy"></div>
       <div class="body">
         <div class="name">나래밥상 전라도 총각김치 1kg 국내산 알타리김치</div>
         <div class="date">2026.11.04</div>
@@ -1554,7 +1556,6 @@
       </div>
     </a>
   </div>
-  <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
   
 </main>
 <script>
@@ -1567,8 +1568,12 @@
     const m = k.match(/^(\D*?)(\d+)번?$/);
     const hit = a => m ? (a.dataset.no === m[2] && (!m[1] || norm(a.dataset.lab || a.dataset.name).startsWith(m[1].replace(/템$/, ''))))
                        : norm(a.dataset.name).includes(k);
-    list.forEach(a => { const ok = !a.dataset.hide && hit(a); a.style.display = ok ? '' : 'none'; shown += ok; });
-    empty.style.display = shown ? 'none' : 'block';
+    // 찾은 상품은 맨 위로 올려 테두리 표시, 나머지는 그 아래 그대로 (탭으로 가린 것만 숨김)
+    list.forEach(a => { const off = !!a.dataset.hide, ok = !!k && !off && hit(a);
+      a.style.display = off ? 'none' : ''; a.style.order = ok ? -1 : 0; a.classList.toggle('hit', ok); shown += ok; });
+    empty.style.display = k && !shown ? 'block' : 'none';
+    const top = document.getElementById('list').getBoundingClientRect().top + window.scrollY - 80;
+    if (shown && window.scrollY > top) window.scrollTo(0, top);
   });
 </script>
 <script>

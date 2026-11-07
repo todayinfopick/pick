@@ -50,6 +50,7 @@
   .go { margin-top:auto; text-align:center; font-size:13px; font-weight:700; color:#fff; border-radius:12px; padding:10px 0;
         background:linear-gradient(135deg,var(--accent),var(--accent2)); }
   .empty { color:var(--muted); text-align:center; padding:32px 0; display:none; }
+  a.item.hit { outline:3px solid var(--accent); outline-offset:-3px; }
   .other { display:block; max-width:460px; margin:28px auto 0; text-align:center; text-decoration:none;
             color:var(--accent); font-size:14px; font-weight:700; background:var(--card); border:1px solid var(--line);
             border-radius:14px; padding:14px; }
@@ -73,6 +74,7 @@
          stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     <input id="q" type="search" placeholder="번호나 상품 이름으로 찾기" autocomplete="off">
   </label></div>
+  <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
   <div class="grid" id="list">
     <a class="item" href="https://link.coupang.com/a/itI3Vz3Lhc" target="_blank" rel="sponsored noopener" data-no="54" data-name="54번 문화연필 더존키즈 쓱 지오지네 슈퍼워셔블 마카">
       <div class="pic"><span class="no">54번</span><img src="../thumbs/itI3Vz3Lhc.jpg" alt="" loading="lazy"><span class="new">NEW</span></div>
@@ -507,7 +509,6 @@
       </div>
     </a>
   </div>
-  <p class="empty" id="empty">찾는 상품이 없습니다. 이름 일부만 입력해 보세요.</p>
   <a class="other" href="../">💄 뷰티·패션템도 보러 가기 →</a>
 </main>
 <script>
@@ -520,8 +521,12 @@
     const m = k.match(/^(\D*?)(\d+)번?$/);
     const hit = a => m ? (a.dataset.no === m[2] && (!m[1] || norm(a.dataset.lab || a.dataset.name).startsWith(m[1].replace(/템$/, ''))))
                        : norm(a.dataset.name).includes(k);
-    list.forEach(a => { const ok = hit(a); a.style.display = ok ? '' : 'none'; shown += ok; });
-    empty.style.display = shown ? 'none' : 'block';
+    // 찾은 상품은 맨 위로 올려 테두리 표시, 나머지는 그 아래 그대로 (탭으로 가린 것만 숨김)
+    list.forEach(a => { const off = !!a.dataset.hide, ok = !!k && !off && hit(a);
+      a.style.display = off ? 'none' : ''; a.style.order = ok ? -1 : 0; a.classList.toggle('hit', ok); shown += ok; });
+    empty.style.display = k && !shown ? 'block' : 'none';
+    const top = document.getElementById('list').getBoundingClientRect().top + window.scrollY - 80;
+    if (shown && window.scrollY > top) window.scrollTo(0, top);
   });
 </script>
 </body>
