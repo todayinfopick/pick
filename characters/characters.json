@@ -81,11 +81,81 @@
    "name": "쓸모 비버",
    "blog": "쓸모있는 오늘",
    "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped"
+  },
+  {
+   "id": "c1794027003198_0",
+   "name": "인사",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_1",
+   "name": "엄지척",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_2",
+   "name": "고민",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_3",
+   "name": "서류 읽기",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_4",
+   "name": "감사 인사",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_5",
+   "name": "놀람",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_6",
+   "name": "돋보기",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_7",
+   "name": "계산기",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_8",
+   "name": "가리키기",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
+  },
+  {
+   "id": "c1794027003198_9",
+   "name": "잠깐",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped",
+   "pose": true
   }
  ],
  "blogChar": {
   "쓸모있는 오늘": "c1794026492108",
   "알뜰한 오늘": "c1794018538275"
  },
- "updated": "2026-11-07T04:41:38.317Z"
+ "updated": "2026-11-07T04:50:27.154Z"
 }
