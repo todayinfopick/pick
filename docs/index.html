@@ -68,7 +68,7 @@
   <div><span class="count">추천 상품 62개</span></div>
   <p class="disc">이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.</p>
 </header>
-<main>
+<main data-page="1" data-up="">
   <div class="search"><label>
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
          stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -576,8 +576,8 @@
   <a class="other" href="2/">🏠 생활·주방템도 보러 가기 →</a>
 </main>
 <script>
-  const q = document.getElementById('q'), list = document.querySelectorAll('a.item'),
-        empty = document.getElementById('empty');
+  const q = document.getElementById('q'), empty = document.getElementById('empty');
+  let list = document.querySelectorAll('a.item');
   const norm = s => s.toLowerCase().replace(/\s+/g, '');
   q.addEventListener('input', () => {
     const k = norm(q.value); let shown = 0;
@@ -592,6 +592,34 @@
     const top = document.getElementById('list').getBoundingClientRect().top + window.scrollY - 80;
     if (shown && window.scrollY > top) window.scrollTo(0, top);
   });
+</script>
+<script>
+  // PC 앱 '링크 추가'로 넣은 상품: 서버를 기다리지 않고 links.json 을 읽어 맨 앞에 붙임
+  (function () {
+    const main = document.querySelector('main'), page = main.dataset.page, up = main.dataset.up || '';
+    if (!page) return;
+    fetch(up + 'links.json?t=' + Date.now()).then(r => r.ok ? r.json() : []).then(arr => {
+      const grid = document.getElementById('list'), have = new Set([...list].map(a => a.getAttribute('href')));
+      const go = page === '3' ? '네이버에서 보기' : '쿠팡에서 보기', now = Date.now();
+      arr.filter(x => String(x.page) === page && !have.has(x.link))
+         .sort((a, b) => (a.at < b.at ? -1 : 1)).forEach(x => {
+        const a = document.createElement('a');
+        a.className = 'item'; a.href = x.link; a.target = '_blank'; a.rel = 'sponsored noopener';
+        a.dataset.no = String(x.no || ''); a.dataset.name = (x.no ? x.no + '번 ' : '') + (x.name || '');
+        const pic = document.createElement('div'); pic.className = 'pic';
+        if (x.no) { const n = document.createElement('span'); n.className = 'no'; n.textContent = x.no + '번'; pic.appendChild(n); }
+        if (now - Date.parse(x.at) < 3 * 864e5) { const n = document.createElement('span'); n.className = 'new'; n.textContent = 'NEW'; pic.appendChild(n); }
+        if (x.key) { const img = document.createElement('img'); img.src = up + 'thumbs/' + x.key + '.jpg'; img.loading = 'lazy'; img.alt = ''; pic.appendChild(img); }
+        const body = document.createElement('div'); body.className = 'body';
+        const nm = document.createElement('div'); nm.className = 'name'; nm.textContent = x.name || '';
+        const dt = document.createElement('div'); dt.className = 'date'; dt.textContent = (x.at || '').slice(0, 10).replace(/-/g, '.');
+        const g = document.createElement('span'); g.className = 'go'; g.textContent = go;
+        body.append(nm, dt, g); a.append(pic, body); grid.prepend(a);
+      });
+      list = document.querySelectorAll('a.item');
+      const c = document.querySelector('.count'); if (c) c.textContent = c.textContent.replace(/\d+/, list.length);
+    }).catch(() => {});
+  })();
 </script>
 </body>
 </html>
