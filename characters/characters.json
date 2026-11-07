@@ -227,12 +227,19 @@
    "blog": "오늘의 돈 공부",
    "desc": "honey-brown plush bear cub, round thin gold-rimmed glasses, green cable-knit vest with brown buttons and white collar, gold coin button on left ear, pink piggy-bank coin pouch on brown crossbody strap, small cream spiral ledger notebook with brown clasp",
    "pose": true
+  },
+  {
+   "id": "c1794030089936",
+   "name": "합부엉",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest"
   }
  ],
  "blogChar": {
   "쓸모있는 오늘": "c1794026492108",
   "알뜰한 오늘": "c1794018538275",
-  "오늘의 돈 공부": "c1794028254940"
+  "오늘의 돈 공부": "c1794028254940",
+  "오늘의 자격증": "c1794030089936"
  },
- "updated": "2026-11-07T05:22:42.851Z"
+ "updated": "2026-11-07T05:41:37.110Z"
 }
