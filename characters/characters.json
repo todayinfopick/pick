@@ -7,13 +7,6 @@
    "desc": "reddish-brown plush squirrel with cream face and belly, black bead eyes, small smile, mustard knitted acorn-cap beanie with a small stem, chubby puffed cheeks, left ear tip folded, beige linen apron with red-and-cream gingham patches and two mismatched buttons (wooden + green), white receipt sticking out of the front pocket"
   },
   {
-   "id": "c1794019790921_8",
-   "name": "알토리 가리키기",
-   "blog": "알뜰한 오늘",
-   "desc": "reddish-brown plush squirrel with cream face and belly, black bead eyes, small smile, mustard knitted acorn-cap beanie with a small stem, chubby puffed cheeks, left ear tip folded, beige linen apron with red-and-cream gingham patches and two mismatched buttons (wooden + green), white receipt sticking out of the front pocket",
-   "pose": true
-  },
-  {
    "id": "c1794021594085_0",
    "name": "인사",
    "blog": "알뜰한 오늘",
@@ -85,7 +78,7 @@
   }
  ],
  "blogChar": {
-  "알뜰한 오늘": "c1794019790921_8"
+  "알뜰한 오늘": "c1794018538275"
  },
- "updated": "2026-11-07T03:28:16.235Z"
+ "updated": "2026-11-07T03:28:20.424Z"
 }
