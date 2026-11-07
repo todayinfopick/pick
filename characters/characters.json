@@ -75,10 +75,17 @@
    "blog": "알뜰한 오늘",
    "desc": "reddish-brown plush squirrel with cream face and belly, black bead eyes, small smile, mustard knitted acorn-cap beanie with a small stem, chubby puffed cheeks, left ear tip folded, beige linen apron with red-and-cream gingham patches and two mismatched buttons (wooden + green), white receipt sticking out of the front pocket",
    "pose": true
+  },
+  {
+   "id": "c1794026492108",
+   "name": "쓸모 비버",
+   "blog": "쓸모있는 오늘",
+   "desc": "warm brown plush beaver with cream muzzle, black bead eyes, friendly smile, wide flat brown tail with gold ruler markings embroidered across it, short yellow pencil tucked behind the right ear, teal bandana scarf tied at the neck, denim overalls with rolled cuffs and a tiny silver wrench hanging from a side loop, two big front teeth with the left one slightly chipped"
   }
  ],
  "blogChar": {
+  "쓸모있는 오늘": "c1794026492108",
   "알뜰한 오늘": "c1794018538275"
  },
- "updated": "2026-11-07T03:29:27.407Z"
+ "updated": "2026-11-07T04:41:38.317Z"
 }
