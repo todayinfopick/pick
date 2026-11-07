@@ -233,6 +233,76 @@
    "name": "합부엉",
    "blog": "오늘의 자격증",
    "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest"
+  },
+  {
+   "id": "c1794030490652_0",
+   "name": "인사",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_1",
+   "name": "엄지척",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_2",
+   "name": "고민",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_3",
+   "name": "서류 읽기",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_4",
+   "name": "감사 인사",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_5",
+   "name": "놀람",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_6",
+   "name": "돋보기",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_7",
+   "name": "계산기",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_8",
+   "name": "가리키기",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
+  },
+  {
+   "id": "c1794030490652_9",
+   "name": "잠깐",
+   "blog": "오늘의 자격증",
+   "desc": "grey-brown plush baby owl with cream chest, big round amber eyes, navy graduation cap with gold tassel, red plaid knitted scarf, yellow pencil held in right wing, small sky-blue backpack, gold star badge on chest",
+   "pose": true
   }
  ],
  "blogChar": {
@@ -241,5 +311,5 @@
   "오늘의 돈 공부": "c1794028254940",
   "오늘의 자격증": "c1794030089936"
  },
- "updated": "2026-11-07T05:41:37.110Z"
+ "updated": "2026-11-07T05:48:34.312Z"
 }
