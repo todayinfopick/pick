@@ -16,7 +16,7 @@
   },
   "_meta": {
     "last_kind": "video",
-    "last_slot": "2026-11-10 21:00",
+    "last_slot": "2026-11-11 18:00",
     "last_general_slot": "2026-11-11 14:30",
     "naver_ig": {
       "posted": {
@@ -4704,6 +4704,132 @@
       "thumb": {
         "file": "shorts_2026-11-10_ixfQykoJYO_thumb.jpg",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-10_ixfQykoJYO_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:라운드랩1025독도수분크림,50ml,1개": {
+    "threads": {
+      "id": "18648989179034453",
+      "kind": "carousel",
+      "at": "2026-11-11T18:32:41",
+      "reply": "18351726982254141"
+    },
+    "no": 68,
+    "instagram": {
+      "id": "17917433457541190",
+      "kind": "carousel",
+      "at": "2026-11-11T18:34:19"
+    },
+    "name": "라운드랩 1025 독도 수분 크림, 50ml, 1개",
+    "link": "https://link.coupang.com/a/iz7LoTil2W",
+    "account": 1,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-11T18:39:25",
+      "file": "shorts_2026-11-11_iz7LoTil2W.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W.mp4",
+      "title": "속건조 잡는 독도 수분 크림 리얼 후기 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 겨울 내내 손해예요\n바르는 순간 수분이 꽉 채워지거든요\n스킨케어 마지막 단계에 듬뿍 발라요\n가볍게 밀착되면서 보습막이 생겨요\n끈적임 없이 촉촉함만 남더라고요\n근데 진짜는 이거예요\n모든 피부에 편하게 쓰기 좋아요\n\n🛒 구매 링크: 채널 프로필 링크 → 뷰티템 68번\n\n#라운드랩 #독도수분크림 #수분크림추천 #스킨케어 #올영추천템 #쿠팡추천 #살림템",
+      "sec": 26.8,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W_ai1.jpg",
+          "file": "shorts_2026-11-11_iz7LoTil2W_ai1.jpg",
+          "view": "작동 중(원본)",
+          "prompt": "A vertical 5-second video clip showing the exact arrangement of the two stacked cream jars in bright natural light. Clear refreshing water splashes dynamically around the base and sides of the jars, maintaining the exact shape, color, and printed text without any morphing."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W_ai2.jpg",
+          "file": "shorts_2026-11-11_iz7LoTil2W_ai2.jpg",
+          "view": "정면",
+          "prompt": "A vertical 5-second video clip in a bright natural Korean home. A person's hands unscrew the white lid from the blue jar and scoop out a rich dab of moisture cream to apply onto their skin."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W_ai3.jpg",
+          "file": "shorts_2026-11-11_iz7LoTil2W_ai3.jpg",
+          "view": "비스듬히",
+          "prompt": "A vertical 5-second video clip in a brightly lit room. A person's hands gently twist the white lid bearing the roundlab logo to open the blue cream jar, showcasing the smooth moisturizing texture inside."
+        }
+      ],
+      "lines": [
+        "이거 모르면 겨울 내내 손해예요",
+        "바르는 순간 수분이 꽉 채워지거든요",
+        "스킨케어 마지막 단계에 듬뿍 발라요",
+        "가볍게 밀착되면서 보습막이 생겨요",
+        "끈적임 없이 촉촉함만 남더라고요",
+        "근데 진짜는 이거예요",
+        "모든 피부에 편하게 쓰기 좋아요",
+        "구매는 프로필 링크에서 하실 수 있어요"
+      ],
+      "dub": {
+        "file": "shorts_2026-11-11_iz7LoTil2W_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-11_iz7LoTil2W_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz7LoTil2W_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:샤오미경량휴대용미니핸디형청소기": {
+    "threads": {
+      "id": "18353893915255348",
+      "kind": "carousel",
+      "at": "2026-11-11T18:37:01",
+      "reply": "18011070218880121"
+    },
+    "no": 60,
+    "instagram": {
+      "id": "18014110793768528",
+      "kind": "video",
+      "at": "2026-11-11T18:38:17"
+    },
+    "name": "샤오미 경량 휴대용 미니 핸디형청소기",
+    "link": "https://link.coupang.com/a/iz8pYpUDRI",
+    "account": 2,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-11T18:39:54",
+      "file": "shorts_2026-11-11_iz8pYpUDRI.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz8pYpUDRI.mp4",
+      "title": "책상과 차 안을 1초 만에 깨끗하게 만드는 미니 청소기 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n책상 위 먼지 아직도 그냥 두세요?\n가벼운 미니 청소기 하나면 싹 치워져요.\n컴퓨터 키보드 사이사이 먼지를 털어내기 편해요.\n무선이라 차 안에서도 쓰기 정말 편하더라고요.\n컵홀더 구석진 곳까지 쏙 들어가요.\n근데 진짜는 이거예요.\n버튼 하나 누르면 먼지가 바로 비워져요.\n필터도 쉽게 분리해서 씻을 수 있어요.\n차나 책상 정리가 귀찮은 분들께 추천해요.\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 60번\n\n#미니청소기 #핸디형청소기 #차량용청소기 #샤오미청소기 #책상청소 #쿠팡추천 #살림템",
+      "sec": 34.0,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz8pYpUDRI_ai1.jpg",
+          "file": "shorts_2026-11-11_iz8pYpUDRI_ai1.jpg",
+          "view": "정면",
+          "prompt": "A person's hands in a modern Korean home are holding the exact portable vacuum cleaner from the photo, keeping its shape, color, and printed text completely unchanged. The person presses the circular power button on the lower body of the handle, turning on the device. Tiny dust particles and crumbs are sucked cleanly into the top opening nozzle tip."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz8pYpUDRI_ai2.jpg",
+          "file": "shorts_2026-11-11_iz8pYpUDRI_ai2.jpg",
+          "view": "비스듬히",
+          "prompt": "In a bright Korean apartment living room, a person's hands hold the exact mini handheld vacuum cleaner shown in the photo, with no modifications to its design or logo. The user sweeps the top nozzle tip across a fabric sofa surface, efficiently vacuuming up small debris. The camera maintains a steady vertical close-up shot under natural daylight."
+        }
+      ],
+      "lines": [
+        "책상 위 먼지 아직도 그냥 두세요?",
+        "가벼운 미니 청소기 하나면 싹 치워져요.",
+        "컴퓨터 키보드 사이사이 먼지를 털어내기 편해요.",
+        "무선이라 차 안에서도 쓰기 정말 편하더라고요.",
+        "컵홀더 구석진 곳까지 쏙 들어가요.",
+        "근데 진짜는 이거예요.",
+        "버튼 하나 누르면 먼지가 바로 비워져요.",
+        "필터도 쉽게 분리해서 씻을 수 있어요.",
+        "차나 책상 정리가 귀찮은 분들께 추천해요.",
+        "구매는 프로필 링크에서 하실 수 있어요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-11_iz8pYpUDRI_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz8pYpUDRI_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-11_iz8pYpUDRI_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-11_iz8pYpUDRI_thumb.jpg"
       },
       "thumb_v": 3
     }
