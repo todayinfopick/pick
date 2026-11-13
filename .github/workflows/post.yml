@@ -179,6 +179,15 @@ jobs:
         if: "!cancelled() && (steps.check.outputs.mdue == '1' || inputs.mode == '직접 쓴 글 게시')"
         run: python manual_post.py
 
+      # 확인 대기 방식(자동 게시 끔)으로 확정한 상품도 그날 쇼츠를 만들도록: 직접 쓴 글을 올린 뒤 한 번 더
+      # (하루 개수 SHORTS_PER_DAY·상품당 한 번은 shorts.py가 지킴, 시트에 있는 상품만)
+      - name: 쇼츠 만들기 (확정한 글)
+        if: "!cancelled() && (steps.check.outputs.mdue == '1' || inputs.mode == '직접 쓴 글 게시')"
+        continue-on-error: true
+        env:
+          SHORTS_GH_TOKEN: ${{ github.token }}
+        run: python shorts.py --daily
+
       - name: 일반 글 지금 게시
         if: inputs.mode == '일반 글 게시'
         run: python general.py
