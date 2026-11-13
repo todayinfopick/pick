@@ -13,7 +13,7 @@ on:
         description: "할 일"
         type: choice
         default: 지금 게시
-        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 토큰 연장, 예약 확인, 쇼츠 다시 만들기]
+        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 직접 쓴 글 게시, 토큰 연장, 예약 확인, 쇼츠 다시 만들기]
       product:
         description: "쇼츠 다시 만들기: 파트너스 링크 또는 상품명 일부"
         type: string
@@ -174,6 +174,11 @@ jobs:
         if: "!cancelled() && steps.check.outputs.gdue == '1'"
         run: python general.py --slot "${{ steps.check.outputs.gslot }}"
 
+      # PC 앱 '✍ 직접 쓰기·예약'으로 예약한 글 (manual/queue.json). 자동 게시를 꺼도 올라감
+      - name: 직접 쓴 글
+        if: "!cancelled() && (steps.check.outputs.mdue == '1' || inputs.mode == '직접 쓴 글 게시')"
+        run: python manual_post.py
+
       - name: 일반 글 지금 게시
         if: inputs.mode == '일반 글 게시'
         run: python general.py
@@ -198,7 +203,7 @@ jobs:
           python cloud_sync.py push || true
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
-          for f in posted.json research.json ai_drop.json docs; do [ -e "$f" ] && git add -f "$f"; done
+          for f in posted.json research.json ai_drop.json docs manual/done.json; do [ -e "$f" ] && git add -f "$f"; done
           git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase -X theirs && git push -q)
 
       - name: 미리보기 이미지
