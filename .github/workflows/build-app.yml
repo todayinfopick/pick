@@ -14,7 +14,8 @@ permissions:
   contents: write
 
 env:
-  APP_FILES: app.py helper.py settings.py memo_ai.py general.py main.py gcloud.py image_tools.py affiliates.py icon.ico requirements-app.txt extension
+  # 맨 위 폴더의 .py 전부 (exe가 어느 파일을 가져다 쓰는지 하나씩 적으면 새 파일이 빠짐)
+  APP_FILES: "*.py icon.ico requirements-app.txt extension"
 
 jobs:
   check:
