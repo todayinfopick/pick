@@ -1,8 +1,9 @@
 name: 쓰레드 작업실(exe) 만들기
 
 # 쓰레드 작업실은 쿠팡 자동게시와 완전히 따로 도는 PC 프로그램 (코드: 비공개 pick-app 의 studio/ 폴더).
-# studio/ 가 바뀌었으면 윈도우용 ThreadsStudio.exe를 새로 만들어 릴리스 'studio'에 올린다:
-#   https://github.com/<계정>/<저장소>/releases/download/studio/ThreadsStudio.exe
+# studio/ 가 바뀌었으면 윈도우용 ThreadsStudio.exe를 새로 만들어 비공개 pick-app 릴리스 'studio'에 올린다.
+# 실행 파일은 공개 저장소에 두지 않고 비공개 pick-app 릴리스에 올린다 (로그인해야 받을 수 있음):
+#   https://github.com/todayinfopick/pick-app/releases/download/studio/ThreadsStudio.exe
 on:
   schedule:
     - cron: "47 * * * *"
@@ -28,10 +29,10 @@ jobs:
       - name: 바뀌었는지 확인
         id: sha
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CODE_TOKEN }}
         run: |
           sha=$(git log -1 --format=%H -- studio)
-          last=$(gh release view studio --repo "$GITHUB_REPOSITORY" --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
+          last=$(gh release view studio --repo todayinfopick/pick-app --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           if [ -n "$sha" ] && { [ "$sha" != "$last" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; }; then echo "build=1" >> "$GITHUB_OUTPUT"; fi
 
@@ -65,10 +66,10 @@ jobs:
 
       - name: 릴리스에 올리기
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CODE_TOKEN }}
         shell: bash
         run: |
-          gh release delete studio --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
-          gh release create studio studio/dist/ThreadsStudio.exe --repo "$GITHUB_REPOSITORY" \
+          gh release delete studio --repo todayinfopick/pick-app --yes --cleanup-tag || true
+          gh release create studio studio/dist/ThreadsStudio.exe --repo todayinfopick/pick-app \
             --target main --title "쓰레드 작업실" --latest=false \
             --notes "ThreadsStudio.exe를 원하는 폴더에 두고 실행하세요. 옆에 studio_data 폴더가 생겨요 (다른 PC로 옮길 땐 둘 다). (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ), sha:${{ needs.check.outputs.sha }})"
