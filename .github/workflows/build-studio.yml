@@ -73,3 +73,10 @@ jobs:
           gh release create studio studio/dist/ThreadsStudio.exe --repo todayinfopick/pick-app \
             --target main --title "쓰레드 작업실" --latest=false \
             --notes "ThreadsStudio.exe를 원하는 폴더에 두고 실행하세요. 옆에 studio_data 폴더가 생겨요 (다른 PC로 옮길 땐 둘 다). (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ), sha:${{ needs.check.outputs.sha }})"
+
+      # 예전에 공개 저장소(pick)에 올렸던 실행 파일은 지운다 (누구나 받을 수 있었음)
+      - name: 공개 저장소의 예전 실행 파일 지우기
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: gh release delete studio --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
