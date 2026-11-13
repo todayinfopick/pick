@@ -133,8 +133,11 @@ jobs:
         if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
 
+      # 직접 쓴 글만 올리는 실행(지금 올리기·예약 글만 차례)이면 사진은 필요한 상품 것만 받음 (전체는 몇 분 걸림)
       - name: 시트·사진 받기
         if: (env.CHECK != 'true' || steps.check.outputs.any == '1' || steps.when.outputs.refresh == '1')
+        env:
+          PULL_PHOTOS: ${{ (inputs.mode == '직접 쓴 글 게시' || (steps.check.outputs.mdue == '1' && steps.check.outputs.due != '1' && steps.check.outputs.gdue != '1' && steps.when.outputs.refresh != '1')) && 'manual' || 'all' }}
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
@@ -198,7 +201,7 @@ jobs:
 
       # 다음에 올라갈 상품의 사진 미리보기 (docs/preview/): 원할 때만 열어 사진을 빼거나 살림
       - name: 사진 미리보기 페이지
-        if: "!cancelled() && (env.CHECK != 'true' || steps.check.outputs.any == '1')"
+        if: "!cancelled() && inputs.mode != '직접 쓴 글 게시' && (env.CHECK != 'true' || (steps.check.outputs.any == '1' && (steps.check.outputs.due == '1' || steps.check.outputs.gdue == '1')))"
         continue-on-error: true
         run: python preview.py
 
