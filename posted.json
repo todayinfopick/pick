@@ -134,10 +134,10 @@
     "last_general_slot:1:instagram": "2026-11-13 17:00",
     "last_general_slot:2:threads": "2026-11-13 17:00",
     "last_general_slot:2:instagram": "2026-11-13 17:00",
-    "last_slot:1:threads": "2026-11-13 23:00",
-    "last_slot:1:instagram": "2026-11-13 23:00",
-    "last_slot:2:threads": "2026-11-13 23:00",
-    "last_slot:2:instagram": "2026-11-13 23:00"
+    "last_slot:1:threads": "2026-11-14 05:00",
+    "last_slot:1:instagram": "2026-11-14 05:00",
+    "last_slot:2:threads": "2026-11-14 05:00",
+    "last_slot:2:instagram": "2026-11-14 05:00"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
     "fails": {
@@ -5294,6 +5294,121 @@
       "thumb": {
         "file": "shorts_2026-11-14_iDVg1YJrfE_thumb.jpg",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDVg1YJrfE_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:ts지디청소년비듬샴푸포보이블루프레쉬향,800g,1개": {
+    "threads": {
+      "id": "18221202358347691",
+      "kind": "carousel",
+      "at": "2026-11-14T05:13:35",
+      "reply": "18108675311315200"
+    },
+    "no": 74,
+    "instagram": {
+      "id": "18078814580758380",
+      "kind": "video",
+      "at": "2026-11-14T05:15:11"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iDZGOk00g8_voice.mp4",
+      "script": {
+        "title": "사춘기 두피 냄새 해결",
+        "lines": [
+          "사춘기 정수리 냄새 고민이신가요?",
+          "머리 감아도 유분기가 싹 잡혀요.",
+          "사춘기 두피 고민을 집중 케어해주고요.",
+          "유분기가 51퍼센트나 줄어들어요.",
+          "시원한 블루 프레쉬향이라 상쾌해요.",
+          "근데 진짜는 이거예요.",
+          "정수리 체취가 24시간이나 지속돼요.",
+          "기름지는 청소년 두피로 고민할 때 써보세요.",
+          "자세한 정보는 프로필과 설명란을 확인해 주세요."
+        ],
+        "yt_title": "사춘기 유분기 잡는 청소년 비듬 샴푸 추천",
+        "tags": [
+          "청소년샴푸",
+          "비듬샴푸",
+          "TS샴푸",
+          "두피케어",
+          "올인원샴푸"
+        ]
+      }
+    },
+    "name": "TS 지디 청소년 비듬 샴푸 포보이 블루 프레쉬향, 800g, 1개",
+    "link": "https://link.coupang.com/a/iDZGOk00g8",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:동서가구세레노가죽3인용소파방문설치": {
+    "threads": {
+      "id": "18028747184870800",
+      "kind": "carousel",
+      "at": "2026-11-14T05:17:04",
+      "reply": "18147196462506283"
+    },
+    "no": 66,
+    "instagram": {
+      "id": "18083589905537006",
+      "kind": "video",
+      "at": "2026-11-14T05:18:22"
+    },
+    "name": "동서가구 세레노 가죽 3인용 소파 방문설치",
+    "link": "https://link.coupang.com/a/iDXbjgiSVU",
+    "account": 2,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-14T05:18:31",
+      "file": "shorts_2026-11-14_iDXbjgiSVU.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU.mp4",
+      "title": "공간 차지 안 하는 3인용 가죽 소파 추천 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 거실 쇼핑 후회해요\n딱 천구백팔십밀리 삼인용 사이즈예요\n부드러운 피유 레더 인조가죽 소재예요\n목까지 안정적으로 받쳐주는 높이고요\n근데 진짜는 이거예요\n너무 푹신하지도 딱딱하지도 않아요\n적당한 탄탄함이라 오래 앉기 편해요\n방문 설치까지 해주니까 정말 편하네요\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 66번\n\n#동서가구소파 #3인용소파 #가죽소파 #거실인테리어 #내돈내산가구 #쿠팡추천 #살림템",
+      "sec": 31.0,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_ai1.jpg",
+          "file": "shorts_2026-11-14_iDXbjgiSVU_ai1.jpg",
+          "view": "정면",
+          "prompt": "A person sits comfortably on the center of the sofa, leaning back against the high backrest as the PU leather cushions provide firm yet supportive comfort. The camera slowly pushes in on the upper body and hands resting naturally on the seat surface. Bright natural light streams through the window behind the sofa in a modern Korean living room."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_ai2.jpg",
+          "file": "shorts_2026-11-14_iDXbjgiSVU_ai2.jpg",
+          "view": "왼쪽",
+          "prompt": "A person's hand gently strokes the smooth PU leather surface of the left armrest, showing the soft texture and neat stitching. The camera remains steady at eye level, capturing the realistic grain of the material under warm indoor lighting. The sturdy build of the 3-in-1 sofa sits securely in a cozy apartment setting."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_ai3.jpg",
+          "file": "shorts_2026-11-14_iDXbjgiSVU_ai3.jpg",
+          "view": "오른쪽",
+          "prompt": "A person reaches out to adjust the small decorative pillow resting on the right side of the seat cushions. The camera maintains a medium shot focusing on the upper body and hands interacting with the balanced firmness of the sofa. Natural sunlight highlights the clean lines and padding of the furniture."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_ai4.jpg",
+          "file": "shorts_2026-11-14_iDXbjgiSVU_ai4.jpg",
+          "view": "정면",
+          "prompt": "A person sits down onto the sofa, and the cushions compress slightly before springing back to show the ideal medium firmness. The camera captures a straight-on vertical view of the upper body leaning back into the supportive neck rest. A calm, everyday Korean home atmosphere is lit by soft daylight."
+        }
+      ],
+      "lines": [
+        "이거 모르면 거실 쇼핑 후회해요",
+        "딱 천구백팔십밀리 삼인용 사이즈예요",
+        "부드러운 피유 레더 인조가죽 소재예요",
+        "목까지 안정적으로 받쳐주는 높이고요",
+        "근데 진짜는 이거예요",
+        "너무 푹신하지도 딱딱하지도 않아요",
+        "적당한 탄탄함이라 오래 앉기 편해요",
+        "방문 설치까지 해주니까 정말 편하네요",
+        "구매는 프로필 링크에서 확인하세요"
+      ],
+      "dub": {
+        "file": "shorts_2026-11-14_iDXbjgiSVU_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-14_iDXbjgiSVU_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDXbjgiSVU_thumb.jpg"
       },
       "thumb_v": 3
     }
