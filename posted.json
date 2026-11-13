@@ -134,10 +134,10 @@
     "last_general_slot:1:instagram": "2026-11-13 17:00",
     "last_general_slot:2:threads": "2026-11-13 17:00",
     "last_general_slot:2:instagram": "2026-11-13 17:00",
-    "last_slot:1:threads": "2026-11-13 20:00",
-    "last_slot:1:instagram": "2026-11-13 20:00",
-    "last_slot:2:threads": "2026-11-13 20:00",
-    "last_slot:2:instagram": "2026-11-13 20:00"
+    "last_slot:1:threads": "2026-11-13 23:00",
+    "last_slot:1:instagram": "2026-11-13 23:00",
+    "last_slot:2:threads": "2026-11-13 23:00",
+    "last_slot:2:instagram": "2026-11-13 23:00"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
     "fails": {
@@ -5198,6 +5198,102 @@
       "thumb": {
         "file": "shorts_2026-11-13_iDU6gthtLg_thumb.jpg",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDU6gthtLg_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:듀이트리하이아미노올클렌징밀크,400ml,1개": {
+    "threads": {
+      "id": "18115826036115719",
+      "kind": "carousel",
+      "at": "2026-11-13T23:56:08",
+      "reply": "18036453560910063"
+    },
+    "no": 73,
+    "instagram": {
+      "id": "18377903026209630",
+      "kind": "video",
+      "at": "2026-11-13T23:57:25"
+    },
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/media/iDVBpbbhwO_voice.mp4",
+      "script": {
+        "title": "클렌징 밀크 추천",
+        "lines": [
+          "이거 모르면 메이크업 지울 때마다 손해예요.",
+          "아미노 클린 워시라 세안 후에도 촉촉함만 남아요.",
+          "부드러운 밀크 타입이라 피부에 닿는 느낌이 아주 편안해요.",
+          "포인트 메이크업까지 원 스텝 솔루션으로 한 번에 지워져요.",
+          "문지를수록 순하게 녹아내려서 자극 걱정이 없어요.",
+          "근데 진짜는 이거예요, 400ml 대용량이라 아낌없이 쓰기 좋아요.",
+          "귀찮은 이중 세안이 싫었던 분들께 딱이에요.",
+          "자세한 정보는 프로필과 프로필을 확인해 주세요."
+        ],
+        "yt_title": "자극 없이 한 번에 지워지는 클렌징 밀크 추천",
+        "tags": [
+          "듀이트리",
+          "클렌징밀크",
+          "클렌징추천",
+          "올클렌징밀크",
+          "저자극클렌징"
+        ]
+      }
+    },
+    "name": "듀이트리 하이 아미노 올 클렌징 밀크, 400ml, 1개",
+    "link": "https://link.coupang.com/a/iDVBpbbhwO",
+    "account": 1,
+    "writer": "Claude"
+  },
+  "상품:남해안산지직송생물홍가리비(냉장),2kg,1개": {
+    "threads": {
+      "id": "18119042230832754",
+      "kind": "carousel",
+      "at": "2026-11-14T00:00:50",
+      "reply": "18117241415331876"
+    },
+    "no": 65,
+    "instagram": {
+      "id": "18152909917552499",
+      "kind": "video",
+      "at": "2026-11-14T00:02:00"
+    },
+    "name": "남해안 산지직송 생물 홍가리비 (냉장), 2kg, 1개",
+    "link": "https://link.coupang.com/a/iDVg1YJrfE",
+    "account": 2,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-14T00:02:08",
+      "file": "shorts_2026-11-14_iDVg1YJrfE.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDVg1YJrfE.mp4",
+      "title": "겨울 제철 남해안 생물 홍가리비 2kg 솔직 후기 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 겨울 내내 손해예요.\n남해안 산지직송 생물 홍가리비예요.\n쫄깃쫄깃한 식감에 은은한 단맛까지 나요.\n그냥 찜으로 먹어도 정말 맛있어요.\n칼칼하게 국물 요리로 끓여도 좋고요.\n근데 진짜는 이거예요.\n고소한 맛이 살아있어서 구이로도 딱이에요.\n신선한 제철 해산물 찾으시면 드셔보세요.\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 65번\n\n#홍가리비 #가리비 #제철음식 #해산물 #남해안가리비 #쿠팡추천 #살림템",
+      "sec": 32.0,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDVg1YJrfE_ai1.jpg",
+          "file": "shorts_2026-11-14_iDVg1YJrfE_ai1.jpg",
+          "view": "위",
+          "prompt": "A close-up vertical clip shows a person's hands in a bright Korean kitchen lifting a freshly steamed red scallop from the silver tray, revealing the tender white meat inside. Steam gently rises exclusively from the open shell gap as the plump scallop is picked up to be tasted. The camera slowly pushes in with steady natural lighting, capturing the realistic texture of the fresh seafood without any text on screen."
+        }
+      ],
+      "lines": [
+        "이거 모르면 겨울 내내 손해예요.",
+        "남해안 산지직송 생물 홍가리비예요.",
+        "쫄깃쫄깃한 식감에 은은한 단맛까지 나요.",
+        "그냥 찜으로 먹어도 정말 맛있어요.",
+        "칼칼하게 국물 요리로 끓여도 좋고요.",
+        "근데 진짜는 이거예요.",
+        "고소한 맛이 살아있어서 구이로도 딱이에요.",
+        "신선한 제철 해산물 찾으시면 드셔보세요.",
+        "구매는 프로필과 더보기란을 확인해 주세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-14_iDVg1YJrfE_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDVg1YJrfE_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-14_iDVg1YJrfE_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iDVg1YJrfE_thumb.jpg"
       },
       "thumb_v": 3
     }

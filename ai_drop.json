@@ -2328,5 +2328,41 @@
    "7b22784bd449e9eabdf77822dc3ea2f6"
   ],
   "drop": []
+ },
+ "달리프 글램 컬크림": {
+  "seen": [
+   "ddcd015b9bae0f7871202f9ddbc1a406",
+   "356c33717275446e5dfbe6e10243eae6",
+   "6c4cf657f067f21b743311b470f11d66",
+   "1fdb0fc162df0d3e1fad210565b8f98d",
+   "684ef401658d113f4ca856c9b590a10f",
+   "d87d1395728f27945fce5738d3e3d965",
+   "e44843507889df6bade474761661eeb1",
+   "a658f3dc4617ba048136aa67c139fde5",
+   "aceaf60ed07ec4523666ede6cdb1b1b6",
+   "a543a897fee8208b21c3f2304cdea2c8",
+   "6a1cb23f94f5c0d79a7d96c8c8db25a6",
+   "916a7223d5754159cb47a743e4189b90",
+   "463cdb638ec18c21b6f12c36738f7b9e"
+  ],
+  "drop": [
+   "a658f3dc4617ba048136aa67c139fde5",
+   "463cdb638ec18c21b6f12c36738f7b9e"
+  ]
+ },
+ "곰곰 대패삼겹 볶음밥 (냉동)": {
+  "seen": [
+   "b7a9d1f3386150bab2c0984cfe5e0b77",
+   "3ea2aa4b185e47e6457a09e78aff0ee8",
+   "c88c2c7ef525d78ff55590223298003b",
+   "383b7f67a99c16214256f732d52086db",
+   "447c4975fc56051b35d1d02d9b575b64",
+   "b9873c4191a135bb8a56f86a308b1769",
+   "16dc533f936d8ac403f72fce5e1fc85f",
+   "e8d951b9e9539a4844d37d0c0ccf98e6",
+   "7595d46548d7e4acfc9be40837c1fc6d",
+   "ee3190d91e0a64177d59687afb0fc185"
+  ],
+  "drop": []
  }
 }
