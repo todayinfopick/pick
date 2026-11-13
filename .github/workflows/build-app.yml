@@ -1,8 +1,9 @@
 name: 프로그램(exe) 만들기
 
 # 프로그램 코드는 비공개 저장소(pick-app)에 있다. 한 시간마다 PC 프로그램 파일이 바뀌었는지 보고,
-# 바뀌었으면 윈도우용 CoupangAutopost.exe와 크롬 확장 묶음을 새로 만들어 이 저장소 릴리스 'app'에 올린다:
-#   https://github.com/<계정>/<저장소>/releases/download/app/CoupangAutopost.exe
+# 바뀌었으면 윈도우용 CoupangAutopost.exe와 크롬 확장 묶음을 새로 만들어 비공개 pick-app 릴리스 'app'에 올린다.
+# 실행 파일은 공개 저장소에 두지 않고 비공개 pick-app 릴리스에 올린다 (로그인해야 받을 수 있음):
+#   https://github.com/todayinfopick/pick-app/releases/download/app/CoupangAutopost.exe
 # 바로 만들려면 Actions → 이 작업 → Run workflow.
 on:
   schedule:
@@ -32,10 +33,10 @@ jobs:
       - name: 바뀌었는지 확인
         id: sha
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CODE_TOKEN }}
         run: |
           sha=$(git log -1 --format=%H -- $APP_FILES)
-          last=$(gh release view app --repo "$GITHUB_REPOSITORY" --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
+          last=$(gh release view app --repo todayinfopick/pick-app --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
           echo "sha=$sha" >> "$GITHUB_OUTPUT"
           if [ "$sha" != "$last" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then echo "build=1" >> "$GITHUB_OUTPUT"; fi
 
@@ -71,10 +72,10 @@ jobs:
 
       - name: 릴리스에 올리기
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.CODE_TOKEN }}
         shell: bash
         run: |
-          gh release delete app --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
-          gh release create app dist/CoupangAutopost.exe dist/CoupangHelper-extension.zip --repo "$GITHUB_REPOSITORY" \
+          gh release delete app --repo todayinfopick/pick-app --yes --cleanup-tag || true
+          gh release create app dist/CoupangAutopost.exe dist/CoupangHelper-extension.zip --repo todayinfopick/pick-app \
             --target main --title "쿠팡 자동게시 프로그램" --latest \
             --notes "CoupangAutopost.exe를 받아 .env·google-key.json이 있는 프로그램 폴더에 넣고 실행하세요. (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ), sha:${{ needs.check.outputs.sha }})"
