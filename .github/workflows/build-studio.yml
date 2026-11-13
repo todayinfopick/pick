@@ -1,0 +1,74 @@
+name: 쓰레드 작업실(exe) 만들기
+
+# 쓰레드 작업실은 쿠팡 자동게시와 완전히 따로 도는 PC 프로그램 (코드: 비공개 pick-app 의 studio/ 폴더).
+# studio/ 가 바뀌었으면 윈도우용 ThreadsStudio.exe를 새로 만들어 릴리스 'studio'에 올린다:
+#   https://github.com/<계정>/<저장소>/releases/download/studio/ThreadsStudio.exe
+on:
+  schedule:
+    - cron: "47 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.sha.outputs.sha }}
+      build: ${{ steps.sha.outputs.build }}
+    steps:
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          fetch-depth: 0
+
+      - name: 바뀌었는지 확인
+        id: sha
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(git log -1 --format=%H -- studio)
+          last=$(gh release view studio --repo "$GITHUB_REPOSITORY" --json body -q .body 2>/dev/null | grep -o 'sha:[0-9a-f]*' | cut -d: -f2 || true)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          if [ -n "$sha" ] && { [ "$sha" != "$last" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; }; then echo "build=1" >> "$GITHUB_OUTPUT"; fi
+
+  build:
+    needs: check
+    if: needs.check.outputs.build == '1'
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          ref: ${{ needs.check.outputs.sha }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 준비
+        run: pip install -q requests pillow pyinstaller
+
+      - name: 실행 확인 (가져오기만)
+        working-directory: studio
+        run: python -c "import core, studio; print('ok')"
+
+      - name: exe 만들기
+        working-directory: studio
+        run: pyinstaller --noconfirm --onefile --windowed --name ThreadsStudio --icon ../icon.ico --add-data "web;web" studio.py
+
+      - name: 릴리스에 올리기
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          gh release delete studio --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag || true
+          gh release create studio studio/dist/ThreadsStudio.exe --repo "$GITHUB_REPOSITORY" \
+            --target main --title "쓰레드 작업실" --latest=false \
+            --notes "ThreadsStudio.exe를 원하는 폴더에 두고 실행하세요. 옆에 studio_data 폴더가 생겨요 (다른 PC로 옮길 땐 둘 다). (만든 시각: $(date -u +%Y-%m-%dT%H:%MZ), sha:${{ needs.check.outputs.sha }})"
