@@ -133,7 +133,11 @@
     "last_general_slot:1:threads": "2026-11-13 15:00",
     "last_general_slot:1:instagram": "2026-11-13 15:00",
     "last_general_slot:2:threads": "2026-11-13 15:00",
-    "last_general_slot:2:instagram": "2026-11-13 15:00"
+    "last_general_slot:2:instagram": "2026-11-13 15:00",
+    "last_slot:1:threads": "2026-11-13 20:00",
+    "last_slot:1:instagram": "2026-11-13 20:00",
+    "last_slot:2:threads": "2026-11-13 20:00",
+    "last_slot:2:instagram": "2026-11-13 20:00"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
     "fails": {
@@ -5092,6 +5096,106 @@
       "thumb": {
         "file": "shorts_2026-11-12_iz9muNZYse_thumb.jpg",
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-12_iz9muNZYse_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:여성초경량등산산책따뜻한패딩점퍼": {
+    "no": 72,
+    "instagram": {
+      "id": "18210236314374991",
+      "kind": "video",
+      "at": "2026-11-13T20:44:41"
+    },
+    "name": "여성 초경량 등산 산책 따뜻한 패딩 점퍼",
+    "link": "https://link.coupang.com/a/iDyG0c38vs",
+    "account": 1,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-13T20:48:51",
+      "file": "shorts_2026-11-13_iDyG0c38vs.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDyG0c38vs.mp4",
+      "title": "입자마자 깜짝 놀라는 여성 초경량 등산 산책 따뜻한 패딩 점퍼 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 겨울 산책할 때 손해예요.\n입은 듯 안 입은 듯 진짜 엄청 가벼운데 놀랄 만큼 따뜻해요.\n가벼운 등산 갈 때 가볍게 툭 걸치기 딱 좋아요.\n아침 저녁으로 동네 산책 나갈 때 입어도 찬바람을 싹 막아줘요.\n근데 진짜는 이거예요.\n후드 디자인이랑 깔끔한 지퍼 여밈이라 데일리로 입기에도 참 예뻐요.\n가볍고 따뜻한 아우터 찾고 계셨던 분들께 정말 잘 맞을 거예요.\n\n🛒 구매 링크: 채널 프로필 링크 → 뷰티템 72번\n\n#초경량패딩 #여성등산복 #산책룩 #패딩점퍼 #가벼운아우터 #쿠팡추천 #살림템",
+      "sec": 36.8,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDyG0c38vs_ai1.jpg",
+          "file": "shorts_2026-11-13_iDyG0c38vs_ai1.jpg",
+          "view": "정면",
+          "prompt": "A person stands in a brightly lit Korean apartment hallway, zipping up the black quilted lightweight padded jacket to get ready for a morning walk. The camera slowly pushes in on the upper body and hands as they smoothly pull the center zipper upward. The jacket retains its exact shape, color, and quilted pattern without any morphing."
+        }
+      ],
+      "lines": [
+        "이거 모르면 겨울 산책할 때 손해예요.",
+        "입은 듯 안 입은 듯 진짜 엄청 가벼운데 놀랄 만큼 따뜻해요.",
+        "가벼운 등산 갈 때 가볍게 툭 걸치기 딱 좋아요.",
+        "아침 저녁으로 동네 산책 나갈 때 입어도 찬바람을 싹 막아줘요.",
+        "근데 진짜는 이거예요.",
+        "후드 디자인이랑 깔끔한 지퍼 여밈이라 데일리로 입기에도 참 예뻐요.",
+        "가볍고 따뜻한 아우터 찾고 계셨던 분들께 정말 잘 맞을 거예요.",
+        "자세한 내용은 프로필과 설명란을 확인해 주세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-13_iDyG0c38vs_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDyG0c38vs_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-13_iDyG0c38vs_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDyG0c38vs_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
+  },
+  "상품:배스킨라빈스피스타치오크림모찌파이12p,264g,1개": {
+    "threads": {
+      "id": "18136081423684053",
+      "kind": "carousel",
+      "at": "2026-11-13T20:47:12",
+      "reply": "18653314777015889"
+    },
+    "no": 64,
+    "instagram": {
+      "id": "18153289975624231",
+      "kind": "video",
+      "at": "2026-11-13T20:48:43"
+    },
+    "name": "배스킨라빈스 피스타치오 크림 모찌 파이 12p, 264g, 1개",
+    "link": "https://link.coupang.com/a/iDU6gthtLg",
+    "account": 2,
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-13T20:50:19",
+      "file": "shorts_2026-11-13_iDU6gthtLg.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDU6gthtLg.mp4",
+      "title": "배스킨라빈스 신상 피스타치오 크림 모찌 파이 먹어봄 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 배스킨라빈스 덕후 손해예요\n고소한 피스타치오 크림이 가득 들어있거든요\n냉동실에서 꺼내서 시원하게 하나 딱 먹고요\n겉에 초콜릿이 싹 감싸져서 식감이 진짜 재밌어요\n근데 진짜는 이거예요\n모찌가 들어가서 쫀득함이 아주 대박이에요\n달달하고 쫀득한 디저트 좋아하는 분께 추천해요\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 64번\n\n#배스킨라빈스 #피스타치오모찌파이 #배라신상 #디저트추천 #간식템 #쿠팡추천 #살림템",
+      "sec": 30.4,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDU6gthtLg_ai1.jpg",
+          "file": "shorts_2026-11-13_iDU6gthtLg_ai1.jpg",
+          "view": "비스듬히",
+          "prompt": "A person's hands gently pick up the halved chocolate-coated pie on the right, stretching the chewy white mochi center apart to reveal the smooth pistachio cream layer inside. The camera slowly pushes in on the textured cross-section under bright natural lighting in a modern home kitchen. The product remains unchanged in shape, color, and texture throughout the natural motion."
+        }
+      ],
+      "lines": [
+        "이거 모르면 배스킨라빈스 덕후 손해예요",
+        "고소한 피스타치오 크림이 가득 들어있거든요",
+        "냉동실에서 꺼내서 시원하게 하나 딱 먹고요",
+        "겉에 초콜릿이 싹 감싸져서 식감이 진짜 재밌어요",
+        "근데 진짜는 이거예요",
+        "모찌가 들어가서 쫀득함이 아주 대박이에요",
+        "달달하고 쫀득한 디저트 좋아하는 분께 추천해요",
+        "구매는 프로필 링크에서 하실 수 있어요"
+      ],
+      "dub": {
+        "file": "shorts_2026-11-13_iDU6gthtLg_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDU6gthtLg_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-13_iDU6gthtLg_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-13_iDU6gthtLg_thumb.jpg"
       },
       "thumb_v": 3
     }
