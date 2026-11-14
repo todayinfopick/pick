@@ -134,10 +134,10 @@
     "last_general_slot:1:instagram": "2026-11-14 17:00",
     "last_general_slot:2:threads": "2026-11-14 17:00",
     "last_general_slot:2:instagram": "2026-11-14 17:00",
-    "last_slot:1:threads": "2026-11-14 11:00",
-    "last_slot:1:instagram": "2026-11-14 11:00",
-    "last_slot:2:threads": "2026-11-14 11:00",
-    "last_slot:2:instagram": "2026-11-14 11:00"
+    "last_slot:1:threads": "2026-11-14 20:00",
+    "last_slot:1:instagram": "2026-11-14 20:00",
+    "last_slot:2:threads": "2026-11-14 20:00",
+    "last_slot:2:instagram": "2026-11-14 20:00"
   },
   "상품:에이지투웨니스클라우드컴포트파우더팩트": {
     "fails": {
@@ -5502,6 +5502,12 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-14_iD2bSyb8OO_1401_thumb.jpg"
       },
       "thumb_v": 3
+    },
+    "threads": {
+      "id": "18350639395264429",
+      "kind": "carousel",
+      "at": "2026-11-14T20:33:23",
+      "reply": "18079396949443124"
     }
   },
   "상품:곰곰한돈뒷다리살다짐육(냉장),1kg,1팩": {
@@ -5539,6 +5545,12 @@
     "name": "곰곰 한돈 뒷다리살 다짐육 (냉장), 1kg, 1팩",
     "link": "https://link.coupang.com/a/iD1q4AtLS8",
     "account": 2,
-    "writer": "Claude"
+    "writer": "Claude",
+    "threads": {
+      "id": "17979815886156184",
+      "kind": "carousel",
+      "at": "2026-11-14T20:37:59",
+      "reply": "18192594187408794"
+    }
   }
 }
