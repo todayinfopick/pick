@@ -1,0 +1,183 @@
+{
+ "schemaVersion": 1,
+ "platform": "naver",
+ "blogName": "남다른 오늘",
+ "category": "오늘의 이슈",
+ "title": "골드만삭스 데이터센터 273GW 상향, 2030년 인프라 수혜주 투자 기준",
+ "tags": [
+  "골드만삭스",
+  "데이터센터 전망",
+  "AI 인프라 투자",
+  "2030 데이터센터 용량",
+  "설비투자 수혜주",
+  "글로벌 기술주",
+  "AI 데이터센터"
+ ],
+ "blocks": [
+  {
+   "id": "n001",
+   "type": "PARAGRAPH",
+   "text": "인공지능(AI) 모델을 구동하기 위한 전 세계 데이터센터 용량이 2030년까지 기존 217기가와트(GW)에서 273GW로 대폭 상향 조정되었습니다. 향후 5년간 순증하는 용량만 약 170GW에 달하며 이에 따른 총 설비투자 규모는 무려 8조 5,000억 달러(약 1경 1,400조 원)에 이를 것으로 추산되는데요. 시장에서는 AI 열풍이 일시적인 거품에 그칠 것이라는 우려와 실질적인 인프라 수요가 이를 압도한다는 주장이 팽팽하게 맞서고 있습니다. 과연 이 거대한 인프라 확장 국면에서 진짜 수혜를 입을 곳은 어디일까요?",
+   "marks": [
+    "273GW로 대폭 상향",
+    "8조 5,000억 달러(약 1경 1,400조 원)"
+   ]
+  },
+  {
+   "id": "n002",
+   "type": "H2",
+   "text": "2030년까지 글로벌 데이터센터 용량이 273GW로 급증하는 배경"
+  },
+  {
+   "id": "n003",
+   "type": "PARAGRAPH",
+   "text": "제가 관련 보고서와 외신 보도를 살펴보니, 이번 전망 상향의 핵심은 단순히 챗봇 사용량이 늘어난 것만이 아니었어요. 그래픽처리장치(GPU) 수요를 맹렬하게 뒷받침하는 클라우드 및 네오클라우드 업체의 인프라 확장 속도가 예상보다 훨씬 빠르기 때문입니다."
+  },
+  {
+   "id": "n004",
+   "type": "PARAGRAPH",
+   "text": "2025년 전 세계 공급량이 약 103GW 수준이었던 것과 비교하면 불과 몇 년 사이에 엄청난 물량이 쏟아지는 셈인데요. 지역별로는 미국이 2030년까지 152GW를 기록하며 전 세계 증설량의 60~70%를 거머쥘 것으로 예상됩니다."
+  },
+  {
+   "id": "n005",
+   "type": "TABLE",
+   "headers": [
+    "구분",
+    "2025년 기준",
+    "2030년 전망 (골드만삭스)",
+    "주요 특징"
+   ],
+   "rows": [
+    [
+     "글로벌 총용량",
+     "약 103GW",
+     "273GW",
+     "연평균 21% 성장"
+    ],
+    [
+     "미국 지역 용량",
+     "약 49GW",
+     "152GW",
+     "전 세계 순증분의 60% 이상 차지"
+    ],
+    [
+     "5년간 총투자",
+     "-",
+     "8조 5,000억 달러",
+     "기가와트당 약 500억 달러 가정"
+    ]
+   ]
+  },
+  {
+   "id": "n006",
+   "type": "PARAGRAPH",
+   "text": "개인적으로는 이 숫자를 보면서 인프라 구축의 스케일이 상상을 초월한다는 생각이 들었어요. 단순히 서버 몇 대 더 들여놓는 수준이 아니라 국가 전력망과 건설 자재 시장 전체를 흔드는 거대한 프로젝트가 진행되는 중입니다."
+  },
+  {
+   "id": "n007",
+   "type": "QUOTE",
+   "text": "골드만삭스는 향후 5년간 데이터센터 확장에만 8조 5,000억 달러가 소요되며, 이는 전례 없는 인프라 투자 사이클이라고 진단했습니다."
+  },
+  {
+   "id": "n008",
+   "type": "HIGHLIGHT",
+   "text": "최대 75메가와트(MW) 이상의 대규모 고성능 컴퓨팅(HPC) 프로젝트가 전체 건설 시장의 다수를 차지할 전망이에요."
+  },
+  {
+   "id": "n009",
+   "type": "H2",
+   "text": "거대한 자본 지출의 주인공들과 AI 인프라 수혜주 구조"
+  },
+  {
+   "id": "n010",
+   "type": "PARAGRAPH",
+   "text": "그렇다면 이 막대한 자금은 구체적으로 어디로 흘러 들어가고 있을까요? 보고서에 따르면 빅테크 기업들의 자본지출(CapEx) 규모가 눈덩이처럼 불어나는 중입니다. 올해와 내년 사이에 주요 기술 기업들의 지출이 폭증하면서 관련 하드웨어 및 전력망 공급 업체들이 직접적인 수혜를 입고 있어요."
+  },
+  {
+   "id": "n011",
+   "type": "PARAGRAPH",
+   "text": "• 빅테크 및 클라우드 서비스 제공업체의 공격적인 데이터센터 임대 계약 확대"
+  },
+  {
+   "id": "n012",
+   "type": "PARAGRAPH",
+   "text": "• 75MW 이상의 초대형 고성능 컴퓨팅(HPC) 캠퍼스 중심의 건설 집중"
+  },
+  {
+   "id": "n013",
+   "type": "PARAGRAPH",
+   "text": "• 전력 수요 급증에 따른 발전소 및 전력 인프라 기업들의 가치 재평가"
+  },
+  {
+   "id": "n015",
+   "type": "PARAGRAPH",
+   "text": "솔직히 처음엔 빅테크 기업들의 지출이 너무 과도해서 부담이 되지 않을까 싶었는데요. 데이터를 자세히 뜯어보니 대형 클라우드뿐만 아니라 네오클라우드와 고성능 GPU 연산을 필요로 하는 기업들의 실수요가 워낙 탄탄해서 공급이 따라가지 못하는 국면이더군요."
+  },
+  {
+   "id": "n016",
+   "type": "H2",
+   "text": "전력난과 규제 리스크라는 현실적인 병목 현상"
+  },
+  {
+   "id": "n017",
+   "type": "PARAGRAPH",
+   "text": "물론 무조건 장밋빛 전망만 있는 것은 아니에요. 데이터센터가 폭발적으로 늘어나면서 가장 큰 걸림돌로 지목되는 것은 바로 '전력 공급 부족'과 '인허가 지연' 문제입니다. 실제로 전력망 연결을 기다리는 대기 기간이 길어지고 있고, 일부 지역에서는 주민들의 반발이나 규제 강화로 인해 프로젝트가 지연되는 사례도 나오고 있거든요."
+  },
+  {
+   "id": "n018",
+   "type": "PARAGRAPH",
+   "text": "• 전력망 연결 신청부터 상업 운전까지 수년이 소요되는 구조적 지연"
+  },
+  {
+   "id": "n019",
+   "type": "PARAGRAPH",
+   "text": "• 프로젝트 비용의 대부분을 부채 조달에 의존하는 높은 차입 구조의 리스크"
+  },
+  {
+   "id": "n020",
+   "type": "PARAGRAPH",
+   "text": "• 지역 사회의 환경 규제 및 전력 요금 상승 우려에 따른 반발"
+  },
+  {
+   "id": "n021",
+   "type": "PARAGRAPH",
+   "text": "이런 현실적인 문제들 때문에 앞으로는 단순히 데이터센터를 짓겠다고 선언하는 기업보다는, 안정적인 전력 판권을 확보했거나 전력망 연계 능력이 뛰어난 기업들로 수혜주가 뚜렷하게 갈릴 가능성이 높습니다. 여러분은 이러한 인프라 팽창세가 앞으로 기술주 주가에 더 큰 호재가 될까요, 아니면 과잉 투자 우려를 키우는 독이 될까요? 댓글로 여러분의 생각을 들려주세요."
+  },
+  {
+   "id": "n022",
+   "type": "PARAGRAPH",
+   "text": "출처: 골드만삭스 글로벌 인베스트먼트 리서치",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "골드만삭스 데이터센터 273GW 상향, 2030년 인프라 수혜주 투자 기준",
+   "role": "COVER"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "n003",
+   "position": "after_block",
+   "heading": "2030년까지 글로벌 데이터센터 용량이 273GW로 급증하는 배경",
+   "near": "제가 관련 보고서와 외신 보도를 살펴보니, 이번 전망 상향의 핵심은 단순히 챗봇 사용량이 늘어난 것만이 아니었어요. 그래픽처리장치(GPU) 수요를 맹렬하게 뒷받침하는 클라우드 및 네오클라우드 업체의 인프라 확장 속도",
+   "alt": "2030년까지 글로벌 데이터센터 용량이 273GW로 급증하는 배경",
+   "ko": "30대 후반의 한국인 남성 엔지니어가 밝은 조명이 비치는 현대적인 사무실 창가에 서서 진지한 표정으로 태블릿 화면을 바라보고 있다. 그가 왼손에 든 태블릿 1대에는 복잡한 서버 인프라 도표가 띄워져 있으며, 창밖으로는 흐린 오전 시간대의 도시 풍경이 은은하게 펼쳐져 있다. 전체적으로 따뜻하고 차분한 실내 조명이 인물의 모습을 부드럽게 감싸고 있으며, 주인공이 화면 정중앙에 배치되어 양옆에 충분한 여유 공간이 확보된 눈높이 구도이다. 배경은 얕은 심도로 처리되어 살짝 흐릿하게 보여 대상에 시선이 집중된다.",
+   "en": "A male Korean engineer in his late 30s with a serious expression stands near a modern office window illuminated by bright light, looking at a tablet screen. He holds one tablet in his left hand displaying complex server infrastructure charts, while a cityscape under an overcast morning sky is softly visible outside the window. Warm and calm indoor lighting gently wraps around the figure, composed at eye-level with the protagonist positioned squarely in the center and ample empty space on both sides. The background is rendered with a shallow depth of field, appearing softly blurred to focus attention on the subject."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "n008",
+   "position": "after_block",
+   "heading": "2030년까지 글로벌 데이터센터 용량이 273GW로 급증하는 배경",
+   "near": "최대 75메가와트(MW) 이상의 대규모 고성능 컴퓨팅(HPC) 프로젝트가 전체 건설 시장의 다수를 차지할 전망이에요.",
+   "alt": "골드만삭스의 2030년 글로벌 데이터센터 용량 273GW 상향 발표와 AI 인프라 수혜주 분석",
+   "ko": "40대 초반의 한국인 남성 현장 소장이 밝은 주간의 야외 대규모 건설 현장에서 안전모를 착용한 채 결연한 표정으로 정면을 응시하고 있다. 그가 오른손에 든 두꺼운 종이 서류 1권과 왼손에 쥔 은색 철제 클립보드 1개를 들고 있으며, 배경에는 거대한 철골 구조물과 대형 크레인이 늘어선 데이터센터 건설 부지가 펼쳐져 있다. 자연광이 현장을 환하게 비추며 사실적이고 역동적인 분위기를 자아내고 있고, 주인공은 화면 정중앙에 위치하여 좌우로 여유가 충분한 눈높이 구도로 촬영되었다. 배경의 건설 장비들은 얕은 심도로 부드럽게 처리되어 인물이 돋보인다.",
+   "en": "A Korean male site manager in his early 40s wearing a safety helmet stands at a large-scale outdoor construction site during bright daylight, gazing forward with a determined expression. He holds one thick paper document book in his right hand and one silver metal clipboard in his left hand, against a backdrop of a data center construction site lined with massive steel structures and a large crane. Natural light brightly illuminates the site, creating a realistic and dynamic atmosphere, captured at eye-level with the protagonist positioned precisely in the center and plenty of space on the sides. The construction equipment in the background is softly blurred with shallow depth of field to make the figure stand out."
+  }
+ ]
+}
