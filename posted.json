@@ -130,10 +130,10 @@
         "닥터바이 강아지 관절 영양제 슬개골 탈구 무릎 고관절 케어 절뚝거림 조인트": true
       }
     },
-    "last_general_slot:1:threads": "2026-11-14 08:00",
-    "last_general_slot:1:instagram": "2026-11-14 08:00",
-    "last_general_slot:2:threads": "2026-11-14 08:00",
-    "last_general_slot:2:instagram": "2026-11-14 08:00",
+    "last_general_slot:1:threads": "2026-11-14 14:00",
+    "last_general_slot:1:instagram": "2026-11-14 14:00",
+    "last_general_slot:2:threads": "2026-11-14 14:00",
+    "last_general_slot:2:instagram": "2026-11-14 14:00",
     "last_slot:1:threads": "2026-11-14 11:00",
     "last_slot:1:instagram": "2026-11-14 11:00",
     "last_slot:2:threads": "2026-11-14 11:00",
@@ -223,22 +223,6 @@
     "no": 1
   },
   "_general": [
-    {
-      "topic": "가을철 트렌치코트 찌든 목때 샴푸로 지우는 법",
-      "id": "18454773982125986",
-      "ig_id": "18124842553918084",
-      "photo_id": "pixabay:5919148",
-      "account": 1,
-      "at": "2026-10-21T14:35:22"
-    },
-    {
-      "topic": "가을 무 부위별 맛 차이와 제대로 써먹는 팁",
-      "id": "17991423228110999",
-      "ig_id": null,
-      "photo_id": "pixabay:7405068",
-      "account": 2,
-      "at": "2026-10-21T14:36:07"
-    },
     {
       "topic": "가을철 푸석한 헤어 정전기 방지 꿀팁",
       "id": "18245213998315418",
@@ -1186,6 +1170,22 @@
       "photo_id": null,
       "account": 2,
       "at": "2026-11-14T08:13:41"
+    },
+    {
+      "topic": "늦가을 건조한 날씨 속 립밤 바를 때 각질 제거 꿀팁",
+      "id": null,
+      "ig_id": "17877499935594694",
+      "photo_id": "pixabay:6360689",
+      "account": 1,
+      "at": "2026-11-14T14:17:16"
+    },
+    {
+      "topic": "늦가을 무생채 만들 때 소금에 절이지 않고 아삭함 살리는 법",
+      "id": null,
+      "ig_id": "18128105479990731",
+      "photo_id": "pixabay:933305",
+      "account": 2,
+      "at": "2026-11-14T14:17:37"
     }
   ],
   "상품:솔루시안pdrn+egf리바이탈라이징크림": {
