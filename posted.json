@@ -5654,31 +5654,42 @@
       "kind": "video",
       "at": "2026-11-15T05:08:47"
     },
-    "reel_voice": {
-      "file": "/home/runner/work/pick/pick/media/iFFyGlnUZM_voice.mp4",
-      "script": {
-        "title": "탈모에 극손상까지?",
-        "lines": [
-          "상한 머리랑 탈모 한 번에 잡는 법 아세요?",
-          "려 함빛 샴푸로 영양 채우고 탈모도 완화해요.",
-          "부드러운 거품으로 두피부터 꼼꼼히 감아줘요.",
-          "머리 감을 때마다 빠지는 양이 확 줄어들어요.",
-          "근데 진짜는 이거예요 향기가 진짜 오래 가요.",
-          "은은한 플로럴 파우더리향이 하루 종일 남아요.",
-          "손상모랑 탈모 증상으로 고민하는 분들께 딱이에요.",
-          "자세한 정보는 프로필 링크를 확인해 보세요."
-        ],
-        "yt_title": "푸석한 손상모와 탈모를 한 번에 관리하는 샴푸 추천",
-        "tags": [
-          "려샴푸",
-          "탈모샴푸",
-          "손상모케어",
-          "샴푸추천",
-          "올영추천템"
-        ]
-      }
-    },
-    "writer": "Claude"
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-15T05:17:30",
+      "file": "shorts_2026-11-15_iFFyGlnUZM.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFFyGlnUZM.mp4",
+      "title": "푸석한 손상모와 탈모를 한 번에 관리하는 샴푸 추천 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n상한 머리랑 탈모 한 번에 잡는 법 아세요?\n려 함빛 샴푸로 영양 채우고 탈모도 완화해요.\n부드러운 거품으로 두피부터 꼼꼼히 감아줘요.\n머리 감을 때마다 빠지는 양이 확 줄어들어요.\n근데 진짜는 이거예요 향기가 진짜 오래 가요.\n은은한 플로럴 파우더리향이 하루 종일 남아요.\n손상모랑 탈모 증상으로 고민하는 분들께 딱이에요.\n\n🛒 구매 링크: 채널 프로필 링크 → 뷰티템 77번\n\n#려샴푸 #탈모샴푸 #손상모케어 #샴푸추천 #올영추천템 #쿠팡추천 #살림템",
+      "sec": 32.1,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFFyGlnUZM_ai1.jpg",
+          "file": "shorts_2026-11-15_iFFyGlnUZM_ai1.jpg",
+          "view": "정면",
+          "prompt": "A close-up vertical video shows hands of a person in a bright Korean bathroom pressing down once on the black pump dispenser of the exact same red RYO shampoo bottle. Rich, creamy shampoo dispenses smoothly only from the nozzle tip of the pump. The camera remains steady with a slow push-in, capturing the natural daily hair care routine in bright natural light with zero text on screen."
+        }
+      ],
+      "lines": [
+        "상한 머리랑 탈모 한 번에 잡는 법 아세요?",
+        "려 함빛 샴푸로 영양 채우고 탈모도 완화해요.",
+        "부드러운 거품으로 두피부터 꼼꼼히 감아줘요.",
+        "머리 감을 때마다 빠지는 양이 확 줄어들어요.",
+        "근데 진짜는 이거예요 향기가 진짜 오래 가요.",
+        "은은한 플로럴 파우더리향이 하루 종일 남아요.",
+        "손상모랑 탈모 증상으로 고민하는 분들께 딱이에요.",
+        "자세한 정보는 프로필 링크를 확인해 보세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-15_iFFyGlnUZM_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFFyGlnUZM_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-15_iFFyGlnUZM_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFFyGlnUZM_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
   },
   "상품:오꾸밥오븐에구운주먹밥12봉6종옵션소불2+참치2+불닭2+로제2+김치2+까치2": {
     "threads": {
