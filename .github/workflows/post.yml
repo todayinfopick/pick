@@ -69,9 +69,13 @@ jobs:
     # '예약 확인'은 외부 알람(cron-job.org)이 15분마다 부르는 것 — GitHub 예약과 똑같이 동작
     if: (github.event_name != 'schedule' && inputs.mode != '예약 확인') || vars.AUTO_POST != 'off'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # 게시 도중 끊기면 기록을 못 남겨 다음 실행이 같은 글을 또 올림 → 넉넉히 (보통 5분 안에 끝남)
+    timeout-minutes: 45
     env:
       TZ: Asia/Seoul
+      # 로그를 바로바로 남김 (끊겨도 무엇을 올렸는지 보이게) + 올릴 때마다 게시 기록을 저장소에 바로 올림
+      PYTHONUNBUFFERED: "1"
+      SAVE_PUSH: "1"
       CHECK: ${{ github.event.schedule == '7,22,37,52 * * * *' || inputs.mode == '예약 확인' }}
       PYTHONUTF8: "1"
       # 비밀값은 두 개뿐: 구글 키 파일 내용(GOOGLE_SA_JSON), PC .env 내용 통째(ENV_FILE)
@@ -137,7 +141,8 @@ jobs:
       - name: 시트·사진 받기
         if: (env.CHECK != 'true' || steps.check.outputs.any == '1' || steps.when.outputs.refresh == '1')
         env:
-          PULL_PHOTOS: ${{ (inputs.mode == '직접 쓴 글 게시' || (steps.check.outputs.mdue == '1' && steps.check.outputs.due != '1' && steps.check.outputs.gdue != '1' && steps.when.outputs.refresh != '1')) && 'manual' || 'all' }}
+          # 직접 쓴 글만: 그 글 상품 사진만 / 예약 회차: 다음 차례 상품 사진만 (전부 받으면 10분 넘게 걸림) / 그 밖: 전부
+          PULL_PHOTOS: ${{ (inputs.mode == '직접 쓴 글 게시' || (steps.check.outputs.mdue == '1' && steps.check.outputs.due != '1' && steps.check.outputs.gdue != '1' && steps.when.outputs.refresh != '1')) && 'manual' || (env.CHECK == 'true' && 'slot' || 'all') }}
         run: python cloud_sync.py pull
 
       - name: 토큰 연장
