@@ -5594,5 +5594,15 @@
       }
     },
     "writer": "Claude"
+  },
+  "상품:곰곰대패삼겹볶음밥(냉동)": {
+    "threads": {
+      "id": "17889399747688581",
+      "kind": "carousel",
+      "at": "2026-11-14T23:12:37"
+    },
+    "name": "곰곰 대패삼겹 볶음밥 (냉동)",
+    "link": "https://link.coupang.com/a/iD14Affao0",
+    "account": 2
   }
 }
