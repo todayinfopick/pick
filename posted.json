@@ -5696,30 +5696,65 @@
       "kind": "video",
       "at": "2026-11-15T05:16:05"
     },
-    "reel_voice": {
-      "file": "/home/runner/work/pick/pick/media/iFE4z0aLjE_voice.mp4",
-      "script": {
-        "title": "냉동실 필수 주먹밥",
-        "lines": [
-          "냉동실에 이거 없으면 진짜 손해예요.",
-          "오븐에 구워 기름 없이도 엄청 고소하거든요.",
-          "바쁜 아침에 전자레인지에 딱 돌려만 주세요.",
-          "소불고기부터 로제까지 무려 여섯 가지 맛이에요.",
-          "근데 진짜 매력 포인트는 겉은 바삭하고 속은 든든하다는 거예요.",
-          "매일 뭘 먹을지 고민하는 자취생에게 딱이에요.",
-          "든든한 한 끼를 간편하게 챙겨보세요.",
-          "자세한 정보는 프로필 링크를 확인해 주세요."
-        ],
-        "yt_title": "귀찮을 때 3분 만에 꺼내 먹는 오븐 구운 주먹밥 6종 추천",
-        "tags": [
-          "오꾸밥",
-          "구운주먹밥",
-          "냉동주먹밥",
-          "간단한끼",
-          "자취생필수품"
-        ]
-      }
-    },
-    "writer": "Claude"
+    "writer": "Claude",
+    "shorts": {
+      "at": "2026-11-15T05:16:22",
+      "file": "shorts_2026-11-15_iFE4z0aLjE.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE.mp4",
+      "title": "귀찮을 때 3분 만에 꺼내 먹는 오븐 구운 주먹밥 6종 추천 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n냉동실에 이거 없으면 진짜 손해예요.\n오븐에 구워 기름 없이도 엄청 고소하거든요.\n바쁜 아침에 전자레인지에 딱 돌려만 주세요.\n소불고기부터 로제까지 무려 여섯 가지 맛이에요.\n근데 진짜 매력 포인트는 겉은 바삭하고 속은 든든하다는 거예요.\n매일 뭘 먹을지 고민하는 자취생에게 딱이에요.\n든든한 한 끼를 간편하게 챙겨보세요.\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 69번\n\n#오꾸밥 #구운주먹밥 #냉동주먹밥 #간단한끼 #자취생필수품 #쿠팡추천 #살림템",
+      "sec": 35.1,
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_ai1.jpg",
+          "file": "shorts_2026-11-15_iFE4z0aLjE_ai1.jpg",
+          "view": "작동 중(원본)",
+          "prompt": "A close-up vertical shot showing hands pulling apart the oven-baked rice ball to reveal the stretching melted cheese connecting both halves from the split center. The camera remains steady with bright natural light illuminating the golden-brown crispy rice grains and stretchy cheese texture in an everyday Korean kitchen."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_ai2.jpg",
+          "file": "shorts_2026-11-15_iFE4z0aLjE_ai2.jpg",
+          "view": "정면",
+          "prompt": "A person's hands gently pick up one of the oven-baked rice balls topped with creamy tuna from a wooden serving plate in a bright Korean home. The camera slowly pushes in as the fresh, savory filling comes into focus under natural morning light, capturing the hearty and delicious texture."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_ai3.jpg",
+          "file": "shorts_2026-11-15_iFE4z0aLjE_ai3.jpg",
+          "view": "비스듬히",
+          "prompt": "In a warm Korean kitchen, hands use chopsticks to pick up an oven-baked rice ball revealing the rich meat filling exposed in the center from a grey ceramic bowl. The natural side lighting highlights the savory seasoning and perfectly toasted outer rice layer with no text on screen."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_ai4.jpg",
+          "file": "shorts_2026-11-15_iFE4z0aLjE_ai4.jpg",
+          "view": "위",
+          "prompt": "A close-up vertical video shows a person's hands arranging oven-baked rice balls on a wooden board next to fresh cherry tomatoes in a sunlit Korean kitchen. The camera maintains a steady angle, focusing on the golden crispy exterior and the warm melted filling oozing from the halved piece."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_ai5.jpg",
+          "file": "shorts_2026-11-15_iFE4z0aLjE_ai5.jpg",
+          "view": "왼쪽",
+          "prompt": "A person reaches into frame to pick up a cheesy oven-baked rice ball from a wooden cutting board set against a clean background in an everyday Korean home. Bright natural light emphasizes the rich golden crust and the creamy melted cheese center in a smooth, steady vertical shot."
+        }
+      ],
+      "lines": [
+        "냉동실에 이거 없으면 진짜 손해예요.",
+        "오븐에 구워 기름 없이도 엄청 고소하거든요.",
+        "바쁜 아침에 전자레인지에 딱 돌려만 주세요.",
+        "소불고기부터 로제까지 무려 여섯 가지 맛이에요.",
+        "근데 진짜 매력 포인트는 겉은 바삭하고 속은 든든하다는 거예요.",
+        "매일 뭘 먹을지 고민하는 자취생에게 딱이에요.",
+        "든든한 한 끼를 간편하게 챙겨보세요.",
+        "자세한 정보는 프로필 링크를 확인해 주세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-15_iFE4z0aLjE_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-15_iFE4z0aLjE_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-15_iFE4z0aLjE_thumb.jpg"
+      },
+      "thumb_v": 3
+    }
   }
 }
