@@ -2403,5 +2403,21 @@
   "drop": [
    "13f3bed871d310d243833bdfb96cce1e"
   ]
+ },
+ "휴비딕 초음파 무선 신장계": {
+  "seen": [
+   "70a95c3ca3693eddc5b0df8b2095db98",
+   "ba6a64d0d4282b37a8837c6a2d7d9bae",
+   "cb0cce42663b0e8c049ffaa903b333ab",
+   "572e2a8b72c6a721682646d4484b631a",
+   "44548878cb97a35dda881274649bd40e",
+   "f95df233f7f315382afc3f77c72cceec",
+   "d279f828c9818b6daa795efeb24d8c59",
+   "dbca13ca980b78d850a49a70f564a76c",
+   "a7f8d20dc8486f56c507668deda285bc",
+   "e016da32c9333d73a0d1907208b0a987",
+   "6160c593e4bcece1f05c3ab977b28092"
+  ],
+  "drop": []
  }
 }
