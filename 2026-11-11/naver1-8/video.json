@@ -1,0 +1,36 @@
+{
+ "title": "자연스러운 헤어라인 커버",
+ "lines": [
+  "톡톡 두드리는 퍼프 일체형",
+  "가루 날림 덜한 밀착 파우더",
+  "자연스러운 2가지 컬러",
+  "땀과 물기에도 안심 지속",
+  "샴푸로 지우는 깔끔 세정"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg",
+  "vsrc/11.jpg",
+  "vsrc/12.jpg",
+  "vsrc/13.jpg",
+  "vsrc/14.jpg",
+  "vsrc/15.jpg",
+  "vsrc/16.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/10.jpg",
+  "vsrc/12.jpg"
+ ]
+}

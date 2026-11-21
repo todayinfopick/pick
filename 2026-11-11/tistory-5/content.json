@@ -1,0 +1,253 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "티스토리",
+ "category": "글로벌 테크",
+ "title": "iOS 27.2.1 업데이트 해도 될까, 27.2 시리 한국어까지 한 번에 정리",
+ "tags": [
+  "iOS 27.2.1",
+  "iOS 27.2",
+  "아이폰 업데이트",
+  "시리 한국어",
+  "시리 AI",
+  "아이폰 보안 업데이트",
+  "iOS 27"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "아이폰 설정에 빨간 숫자 1이 떴다면 iOS 27.2.1일 가능성이 커요. \"지난번에 업데이트했는데 또?\" 싶으실 텐데, 이번 업데이트는 성격이 분명해요."
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "애플 공식 안내에 적힌 27.2.1 설명은 딱 한 줄이에요. \"iPhone의 버그 수정과 보안 업데이트를 제공합니다.\" 새 기능은 없고, 고칠 것을 고치는 업데이트라는 뜻이에요.",
+   "marks": [
+    "\"iPhone의 버그 수정과 보안 업데이트를 제공합니다.\""
+   ]
+  },
+  {
+   "id": "b003",
+   "type": "PARAGRAPH",
+   "text": "그래서 결론은 간단해요. 27.2를 이미 쓰고 있다면 27.2.1은 하는 게 좋아요. 보안 업데이트는 미룰수록 손해거든요. 다만 아직 27.2 이전 버전이라면, 이번에 한 번에 올라가면서 바뀌는 게 꽤 많아요. 그 이야기를 해 볼게요.",
+   "marks": [
+    "27.2를 이미 쓰고 있다면 27.2.1은 하는 게 좋아요."
+   ]
+  },
+  {
+   "id": "b004",
+   "type": "H2",
+   "text": "27.2.1, 지금 바로 해도 될까"
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "애플은 보안 업데이트의 세부 내용을 별도 보안 문서(support.apple.com/100100)에 정리해 둬요. 버그 수정 위주 업데이트는 보통 큰 화면 변화가 없어서 적응할 것도 없어요."
+  },
+  {
+   "id": "b006",
+   "type": "PARAGRAPH",
+   "text": "업데이트 전에 이것만 챙기세요."
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "• 아이클라우드나 컴퓨터로 백업해 두기"
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "• 배터리 50% 이상이거나 충전기 연결하기"
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "• 와이파이 연결 상태에서 진행하기"
+  },
+  {
+   "id": "b010",
+   "type": "PARAGRAPH",
+   "text": "경로는 설정 → 일반 → 소프트웨어 업데이트예요. 자동 업데이트를 켜 두면 밤사이 충전 중에 알아서 설치돼요.",
+   "marks": [
+    "설정 → 일반 → 소프트웨어 업데이트"
+   ]
+  },
+  {
+   "id": "b011",
+   "type": "H2",
+   "text": "27.2에서 달라진 것, 시리가 한국어를 한다"
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "27.2 이전 버전을 쓰는 분이라면 이번이 큰 변화예요. 가장 눈에 띄는 건 시리 AI의 한국어 지원이에요. 애플은 프랑스어, 일본어, 한국어, 포르투갈어, 스페인어를 새로 지원한다고 밝혔어요. 다만 EU와 중국 본토에서는 빠져요.",
+   "marks": [
+    "시리 AI의 한국어 지원"
+   ]
+  },
+  {
+   "id": "b013",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "iOS 27.2 변화"
+   ],
+   "rows": [
+    [
+     "시리 AI",
+     "한국어 등 5개 언어 추가, 지난 대화 기억"
+    ],
+    [
+     "메시지",
+     "답장 제안 기능 추가"
+    ],
+    [
+     "사진",
+     "공유 앨범 캡션·댓글 편집"
+    ],
+    [
+     "팟캐스트·게임",
+     "홈 탭 구성, 친구 탭 추가"
+    ],
+    [
+     "페이스타임",
+     "수어 통역사·자막 제공자 참여 지원"
+    ],
+    [
+     "보안",
+     "맥월드 집계 150건 이상 수정"
+    ]
+   ]
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "시리 AI 기능은 아무 아이폰에서나 되는 게 아니에요. 애플 안내 기준 아이폰 16 전 모델과 그 이후 모델, 아이폰 15 Pro와 15 Pro Max에서만 쓸 수 있어요.",
+   "marks": [
+    "아이폰 16 전 모델과 그 이후 모델, 아이폰 15 Pro와 15 Pro Max"
+   ]
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 한국 사용자에게는 이번 시리 한국어 지원이 iOS 27에서 가장 체감이 큰 변화예요. 그동안 한국어로 쓸 수 있는 AI 기능이 영어보다 적었으니까요."
+  },
+  {
+   "id": "b016",
+   "type": "H2",
+   "text": "기대했던 건강 앱 개편은 다음으로"
+  },
+  {
+   "id": "b017",
+   "type": "PARAGRAPH",
+   "text": "베타 때 화제였던 건강 앱 개편은 27.2 정식판에서 빠졌어요. 맥월드는 12월 출시가 예상되는 iOS 27.3에서 다시 나올 가능성이 높다고 봤어요. 이건 애플 발표가 아니라 매체의 예상이라는 점은 감안하세요.",
+   "marks": [
+    "건강 앱 개편"
+   ]
+  },
+  {
+   "id": "b018",
+   "type": "HIGHLIGHT",
+   "text": "기능 지원 여부는 국가와 기기마다 달라요. 내 아이폰에서 되는지는 설정 앱의 시리 메뉴에서 확인하세요."
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "업데이트 뒤 배터리가 빨리 닳는 느낌이 든다면 하루 이틀 지켜보세요. 큰 업데이트 직후에는 사진 정리나 색인 작업이 뒤에서 돌아가 일시적으로 배터리를 더 쓰는 경우가 있어요. 며칠이 지나도 그대로라면 설정의 배터리 메뉴에서 어떤 앱이 많이 쓰는지 확인해 보세요."
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "정리하면 27.2.1은 '하는 게 좋은' 업데이트, 27.2는 '기다릴 만했던' 업데이트예요. 한 번에 올리면 보안과 새 기능을 함께 챙길 수 있어요."
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "자동 업데이트를 꺼 둔 분이라면 이번 기회에 켜 두는 것도 방법이에요. 보안 업데이트를 놓치지 않는 가장 쉬운 방법이거든요."
+  },
+  {
+   "id": "b022",
+   "type": "PARAGRAPH",
+   "text": "업데이트 후 앱이 갑자기 꺼지거나 이상하게 움직이면 그 앱도 앱스토어에서 최신 버전으로 업데이트해 보세요. 운영체제가 바뀐 뒤에는 앱 쪽 업데이트가 같이 필요한 경우가 많아요."
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "회사 업무용 아이폰이라면 업데이트 전에 회사 IT 담당 부서 안내를 먼저 확인하세요. 업무 앱이 새 버전을 지원하는지 확인한 뒤에 올리라고 하는 곳도 있어요."
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "업데이트는 보통 와이파이 환경에서 10~30분 정도 걸리는 편이라, 바로 써야 할 일이 없는 밤 시간에 하는 게 마음 편해요."
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "시리 AI를 쓰려면 설정에서 시리 언어를 한국어로 맞춰 두어야 해요. 기기가 지원 모델인데도 기능이 안 보인다면 언어와 지역 설정부터 확인해 보세요."
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "새 기능은 지역에 따라 순차적으로 열리기도 하니, 며칠 기다려 보는 것도 방법이에요."
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "여러분은 시리 한국어, 써 보셨나요? 어떤 질문을 제일 먼저 해 보셨는지 댓글로 알려 주세요."
+  },
+  {
+   "id": "b028",
+   "type": "PARAGRAPH",
+   "text": "출처: 애플 iOS 27 업데이트 정보(support.apple.com), 맥월드(2026.10.27)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "iOS 27.2.1 업데이트 해도 될까, 27.2 시리 한국어까지 한 번에 정리",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-card.png",
+   "alt": "요약 카드",
+   "anchorBlockId": "b027",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b005",
+   "position": "after_block",
+   "heading": "27.2.1, 지금 바로 해도 될까",
+   "near": "애플은 보안 업데이트의 세부 내용을 별도 보안 문서(support.apple.com/100100)에 정리해 둬요. 버그 수정 위주 업데이트는 보통 큰 화면 변화가 없어서 적응할 것도 없어요.",
+   "alt": "휴대폰 설정 화면",
+   "ko": "밝은 실내 거실 소파에 앉아 있는 30대 초반 한국 여성. 단발머리에 흰색 니트를 입고 차분하고 편안한 표정. 무릎 위에 실버 아이폰 1대만 올려두고 손으로 화면을 가볍게 터치하고 있음. 배경은 따뜻한 원목 인테리어의 거실이며, 오후의 부드러운 자연광이 창문으로 들어옴. 주인공은 화면 중앙에 배치되고 양옆은 여유가 있으며, 눈높이에서 촬영되었고 배경은 살짝 흐리게 처리됨.",
+   "en": "A Korean woman in her early 30s sitting on a sofa in a bright living room, wearing a white knit sweater with a calm expression. She has only one silver iPhone placed on her lap, gently touching the screen. The background is a living room with warm wooden interior design, illuminated by soft afternoon natural light coming through the window. The subject is placed in the center of the frame with generous space on both sides, shot at eye level, and the background is slightly blurred."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "b013",
+   "position": "after_block",
+   "heading": "27.2에서 달라진 것, 시리가 한국어를 한다",
+   "near": "",
+   "alt": "휴대폰에 말을 거는 사람",
+   "ko": "책상 앞에 앉아 있는 20대 후반 한국 남성. 짧은 검은색 머리에 베이지색 셔츠를 입고 밝고 신기해하는 표정. 손에 실버 아이폰 1대를 들고 화면을 바라보고 있음. 배경은 깔끔한 서재이며, 창밖으로 낮의 은은한 햇빛이 들어옴. 주인공은 화면 중앙에 배치되고 양옆에 여유가 있으며, 눈높이로 촬영되었고 배경은 부드럽게 흐려짐.",
+   "en": "A Korean man in his late 20s sitting at a desk, wearing a beige shirt with short black hair and an intrigued expression. He is holding only one silver iPhone in his hand, looking at the screen. The background is a clean study room with soft daytime sunlight coming through the window. The subject is centered with ample space on both sides, captured at eye level, and the background is softly blurred."
+  },
+  {
+   "id": "need3",
+   "anchorBlockId": "b018",
+   "position": "after_block",
+   "heading": "기대했던 건강 앱 개편은 다음으로",
+   "near": "기능 지원 여부는 국가와 기기마다 달라요. 내 아이폰에서 되는지는 설정 앱의 시리 메뉴에서 확인하세요.",
+   "alt": "건강 앱 화면이 보이는 기기",
+   "ko": "카페 창가 자리에 앉아 있는 30대 중반 한국 여성. 긴 머리를 묶고 캐주얼한 회색 맨투맨을 입고 진지하면서도 궁금해하는 표정. 테이블 위에 실버 아이폰 1대만 놓여 있고 손가락으로 화면을 가리키고 있음. 배경은 차분한 분위기의 카페 내부이며, 창밖으로 낮의 자연광이 따뜻하게 들어옴. 주인공은 화면 가운데에 위치하고 양옆에 충분한 여백이 있으며, 눈높이 촬영에 배경은 살짝 흐리게 처리됨.",
+   "en": "A Korean woman in her mid-30s sitting by a cafe window, wearing a casual gray sweatshirt with tied-up long hair and a curious expression. Only one silver iPhone rests on the table, and she is pointing at the screen with her finger. The background is the interior of a cozy cafe with warm daytime natural light entering through the window. The subject is positioned in the center with plenty of space on both sides, shot at eye level, with a slightly blurred background."
+  }
+ ]
+}

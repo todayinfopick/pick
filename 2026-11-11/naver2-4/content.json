@@ -1,0 +1,272 @@
+{
+ "schemaVersion": 1,
+ "platform": "naver",
+ "blogName": "알뜰한 오늘",
+ "category": "할인·행사",
+ "title": "KFC 둠징거 출시, 최대 50% 쿠폰 받는 앱 챌린지까지 1월 4일까지",
+ "tags": [
+  "KFC 둠징거",
+  "KFC 신메뉴",
+  "KFC 둠스데이",
+  "둠트리플다운",
+  "KFC 쿠폰",
+  "KFC 할인",
+  "어벤져스 둠스데이"
+ ],
+ "blocks": [
+  {
+   "id": "n001",
+   "type": "PARAGRAPH",
+   "text": "까만 햄버거 번을 보신 적 있나요. KFC가 마블 영화 '어벤져스: 둠스데이' 개봉을 앞두고 악당 닥터 둠을 블랙 번으로 표현한 한정 메뉴를 내놨어요."
+  },
+  {
+   "id": "n002",
+   "type": "PARAGRAPH",
+   "text": "판매는 11월 10일부터 2027년 1월 4일까지예요. 영화가 12월 16일 개봉하니, 개봉 전후로 두 달 가까이 맛볼 수 있는 셈이죠.",
+   "marks": [
+    "11월 10일부터 2027년 1월 4일까지"
+   ]
+  },
+  {
+   "id": "n003",
+   "type": "PARAGRAPH",
+   "text": "그런데 알뜰하게 사려면 메뉴보다 이벤트를 먼저 봐야 해요. 앱에서 받을 수 있는 혜택이 꽤 크거든요."
+  },
+  {
+   "id": "n004",
+   "type": "H2",
+   "text": "새로 나온 메뉴 5가지, 뭐가 다를까"
+  },
+  {
+   "id": "n005",
+   "type": "PARAGRAPH",
+   "text": "이번에 나온 메뉴는 버거 두 가지와 사이드 세 가지예요."
+  },
+  {
+   "id": "n006",
+   "type": "TABLE",
+   "headers": [
+    "구분",
+    "메뉴"
+   ],
+   "rows": [
+    [
+     "버거",
+     "둠징거, 둠트리플다운"
+    ],
+    [
+     "사이드",
+     "둠프라이, 둠에그타르트, 둠너겟"
+    ],
+    [
+     "세트·팩",
+     "둠징거 슈퍼박스, 둠징거 인피니티팩, 둠 쉐이킹 버켓, 둠로디드 스낵, 둠타르트박스"
+    ]
+   ]
+  },
+  {
+   "id": "n007",
+   "type": "PARAGRAPH",
+   "text": "메뉴 이름 앞에 모두 '둠'이 붙었어요. 가격은 보도 자료에 나오지 않아서 매장이나 KFC 앱에서 확인해야 해요."
+  },
+  {
+   "id": "n008",
+   "type": "PARAGRAPH",
+   "text": "판매는 전국 매장에서 하지만 에버랜드, 잠실야구장, 인천공항 제1터미널 같은 특수 매장은 빠져요. 놀러 간 김에 먹으려던 분들은 참고하세요.",
+   "marks": [
+    "에버랜드, 잠실야구장, 인천공항 제1터미널"
+   ]
+  },
+  {
+   "id": "n009",
+   "type": "PARAGRAPH",
+   "text": "까만 번은 닥터 둠의 철가면 같은 어두운 분위기를 표현하려고 쓴 거예요. 영화 협업 메뉴는 보통 판매 기간이 정해져 있어서, 기간이 끝나면 다시 맛보기 어려워요. 이번 메뉴도 1월 4일까지만 판매하니 궁금하다면 그 전에 맛봐야 해요."
+  },
+  {
+   "id": "n010",
+   "type": "H2",
+   "text": "앱으로 받는 혜택 두 가지"
+  },
+  {
+   "id": "n011",
+   "type": "PARAGRAPH",
+   "text": "알뜰한 오늘이 주목한 건 이 부분이에요. 판매 기간과 똑같이 1월 4일까지 앱 이벤트가 두 개 열려요."
+  },
+  {
+   "id": "n012",
+   "type": "PARAGRAPH",
+   "text": "첫째는 친구 초대 이벤트예요. KFC 앱으로 친구를 초대하면 초대한 인원과 순위에 따라 에그타르트, 둠징거 세트 무료 쿠폰, 할인 쿠폰, 협업 굿즈를 줘요.",
+   "marks": [
+    "친구 초대 이벤트"
+   ]
+  },
+  {
+   "id": "n013",
+   "type": "PARAGRAPH",
+   "text": "둘째는 둠징거 구매 챌린지예요. 둠징거와 둠트리플다운이 전체적으로 많이 팔릴수록 쿠폰 할인 폭이 커지는 방식인데, 최대 50% 할인 쿠폰까지 열려요.",
+   "marks": [
+    "둠징거 구매 챌린지",
+    "50% 할인 쿠폰"
+   ]
+  },
+  {
+   "id": "n014",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 둘째 이벤트가 알짜예요. 내가 많이 사지 않아도 판매량이 쌓이면 쿠폰이 열리니까, 출시 첫 주보다 12월 영화 개봉 즈음에 쿠폰을 확인해 보는 게 이득일 수 있어요."
+  },
+  {
+   "id": "n015",
+   "type": "PARAGRAPH",
+   "text": "이벤트에 참여하기 전에 앱 회원가입과 알림 수신 동의를 해 두세요. 챌린지 쿠폰이 열려도 알림을 꺼 두면 모르고 지나가기 쉬워요. 받은 쿠폰의 사용 기한도 따로 있으니 쿠폰함에서 날짜를 한 번 확인하는 습관을 들이면 좋아요."
+  },
+  {
+   "id": "n016",
+   "type": "HIGHLIGHT",
+   "text": "쿠폰 지급 조건과 할인율은 앱 공지 기준으로 바뀔 수 있어요. 주문 전에 KFC 앱 이벤트 페이지를 꼭 확인하세요."
+  },
+  {
+   "id": "n017",
+   "type": "H2",
+   "text": "굿즈 좋아한다면 건대입구역점"
+  },
+  {
+   "id": "n018",
+   "type": "PARAGRAPH",
+   "text": "11월 17일부터는 건대입구역점이 '어벤져스: 둠스데이' 테마 매장으로 꾸며져요. 미션을 하며 즐기는 체험 공간이 생기고 협업 굿즈도 전시된다고 해요. 굿즈는 나중에 판매될 수도 있다고 하니 마블 팬이라면 눈여겨볼 만해요.",
+   "marks": [
+    "건대입구역점"
+   ]
+  },
+  {
+   "id": "n019",
+   "type": "TABLE",
+   "headers": [
+    "날짜",
+    "일정"
+   ],
+   "rows": [
+    [
+     "11월 10일",
+     "둠 시리즈 출시, 앱 이벤트 시작"
+    ],
+    [
+     "11월 17일",
+     "건대입구역점 테마 매장 오픈"
+    ],
+    [
+     "12월 16일",
+     "영화 '어벤져스: 둠스데이' 개봉"
+    ],
+    [
+     "1월 4일",
+     "판매·이벤트 종료"
+    ]
+   ]
+  },
+  {
+   "id": "n020",
+   "type": "PARAGRAPH",
+   "text": "정리하면 알뜰하게 즐기는 순서는 이래요."
+  },
+  {
+   "id": "n021",
+   "type": "PARAGRAPH",
+   "text": "• 앱 설치 후 친구 초대 이벤트부터 참여하기"
+  },
+  {
+   "id": "n022",
+   "type": "PARAGRAPH",
+   "text": "• 구매 챌린지 쿠폰이 몇 %까지 열렸는지 확인하기"
+  },
+  {
+   "id": "n023",
+   "type": "PARAGRAPH",
+   "text": "• 쿠폰이 커진 시점에 세트나 팩으로 주문하기"
+  },
+  {
+   "id": "n024",
+   "type": "PARAGRAPH",
+   "text": "가족이나 친구와 함께 먹는다면 낱개 세트보다 슈퍼박스나 버켓 같은 팩 메뉴가 나을 수 있어요. 쿠폰이 팩 메뉴에도 적용되는지는 쿠폰마다 다르니 주문 화면에서 적용 여부를 꼭 확인하세요."
+  },
+  {
+   "id": "n025",
+   "type": "PARAGRAPH",
+   "text": "혹시 KFC 앱을 처음 쓰는 분이라면 가입할 때 친구 초대 코드를 받는 쪽으로 들어가는 것도 방법이에요. 친구가 이미 이벤트에 참여 중이라면 서로에게 도움이 되거든요."
+  },
+  {
+   "id": "n026",
+   "type": "PARAGRAPH",
+   "text": "한정 메뉴는 출시 초반에 매장마다 재고가 고르지 않을 수 있어요. 특히 사이드 메뉴는 일찍 떨어지는 경우가 있으니, 꼭 먹고 싶은 메뉴가 있다면 앱 주문 화면에서 매장 재고를 먼저 확인하고 가는 게 헛걸음을 줄이는 방법이에요."
+  },
+  {
+   "id": "n027",
+   "type": "PARAGRAPH",
+   "text": "영화 개봉일인 12월 16일 전후로는 영화를 보고 나서 매장을 찾는 사람이 몰릴 수 있어요. 붐비는 게 싫다면 11월 평일 점심시간을 살짝 피해서 가 보세요."
+  },
+  {
+   "id": "n028",
+   "type": "PARAGRAPH",
+   "text": "협업 굿즈는 수량이 정해져 있는 경우가 많아요. 굿즈가 목적이라면 이벤트 초반에 참여하는 편이 유리할 수 있어요."
+  },
+  {
+   "id": "n029",
+   "type": "PARAGRAPH",
+   "text": "메뉴 사진과 실제 모습이 다를 수 있으니, 처음이라면 단품보다 세트로 맛을 보고 다음 주문을 정하는 것도 방법이에요."
+  },
+  {
+   "id": "n030",
+   "type": "PARAGRAPH",
+   "text": "요즘 버거 세트 하나도 만 원 가까이 하니, 쿠폰 하나가 꽤 크게 느껴지죠. 여러분은 까만 둠징거, 한번 드셔 보실 건가요? 맛이 궁금한지 댓글로 알려 주세요."
+  },
+  {
+   "id": "n031",
+   "type": "PARAGRAPH",
+   "text": "출처: 머니투데이(2026.11.10), 뉴스탭",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "KFC 둠징거 출시, 최대 50% 쿠폰 받는 앱 챌린지까지 1월 4일까지",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "검은 번으로 만든 버거",
+   "anchorBlockId": "n007",
+   "position": "after_block"
+  },
+  {
+   "id": "img3",
+   "file": "03-card.png",
+   "alt": "요약 카드",
+   "anchorBlockId": "n030",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "n014",
+   "position": "after_block",
+   "heading": "앱으로 받는 혜택 두 가지",
+   "near": "제가 보기엔 둘째 이벤트가 알짜예요. 내가 많이 사지 않아도 판매량이 쌓이면 쿠폰이 열리니까, 출시 첫 주보다 12월 영화 개봉 즈음에 쿠폰을 확인해 보는 게 이득일 수 있어요.",
+   "alt": "휴대폰으로 쿠폰을 확인하는 모습",
+   "ko": "20대 후반의 한국 여성 한 명이 밝은 목재 책상에 앉아 스마트폰 화면을 진지한 표정으로 바라보고 있습니다. 책상 위에는 스마트폰 1대와 투명한 유리 머그잔 1개가 놓여 있습니다. 실내 배경은 은은한 주황빛의 따뜻한 실내 조명이 비치는 아늑한 카페이며, 큰 창밖으로는 겨울 오후의 차분한 거리 풍경이 약간 흐릿하게 보입니다. 주인공은 화면 가운데에 위치하고 양옆에 충분한 여유 공간이 있으며, 카메라 높이는 사람의 눈높이에 맞춰져 있고 배경은 부드럽게 아웃포커싱 처리되어 있습니다.",
+   "en": "A late 20s Korean woman is sitting at a light wooden desk, looking at a smartphone screen with a focused expression. On the desk, there is exactly 1 smartphone and 1 clear glass mug. The indoor setting is a cozy cafe illuminated by soft orange warm indoor lighting, with a calm winter afternoon street view outside a large window slightly blurred. The main subject is centered with plenty of empty space on both sides, captured at eye-level with the background softly blurred."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "n019",
+   "position": "after_block",
+   "heading": "굿즈 좋아한다면 건대입구역점",
+   "near": "",
+   "alt": "패스트푸드 매장 카운터",
+   "ko": "30대 초반의 한국 남성 한 명이 영화 테마로 꾸며진 밝은 실내 공간에서 호기심 어린 표정으로 전시된 진열대를 구경하고 있습니다. 남성은 손에 든 검은색 스마트폰 1대를 가볍게 들고 있습니다. 배경은 히어로 영화를 연상시키는 세련된 인테리어의 매장이며, 은은한 스포트라이트 조명이 공간을 따뜻하게 비추고 있습니다. 주인공은 화면 가운데에 배치되어 양쪽에 여유가 있고, 눈높이에서 촬영되었으며 배경은 자연스럽게 흐리게 처리되어 있습니다.",
+   "en": "An early 30s Korean man is looking at a themed display shelf with a curious expression inside a brightly lit, movie-themed interior space. The man is holding exactly 1 black smartphone in his hand. The background is a stylishly decorated store reminiscent of a hero movie, warmly lit by subtle spotlight illumination. The main subject is positioned in the center with generous space on both sides, shot at eye-level, and the background is softly blurred."
+  }
+ ]
+}

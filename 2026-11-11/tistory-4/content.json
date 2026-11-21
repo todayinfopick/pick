@@ -1,0 +1,249 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "티스토리",
+ "category": "생산성 • 자동화",
+ "title": "아이폰 카톡 테마 무료로 바꾸는 법, ktheme 파일 하나로 5분이면 끝",
+ "tags": [
+  "아이폰 카톡 테마",
+  "카톡 테마 무료",
+  "카카오톡 테마 적용",
+  "ktheme",
+  "카톡 테마 바꾸기",
+  "아이폰 카카오톡",
+  "카톡 배경"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "카톡 채팅방 색깔만 바뀌어도 휴대폰이 새것처럼 느껴질 때가 있죠. 그런데 아이폰에서 카톡 테마를 바꾸려다 막히는 분이 많아요. 앱스토어에서 바로 설치하는 방식이 아니기 때문이에요."
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "아이폰 카톡 테마는 '.ktheme'이라는 파일 하나로 움직여요. 이 파일을 카카오톡으로 열어 주기만 하면 끝이라, 순서만 알면 5분이면 충분합니다.",
+   "marks": [
+    "'.ktheme'이라는 파일 하나"
+   ]
+  },
+  {
+   "id": "b003",
+   "type": "PARAGRAPH",
+   "text": "무료 테마도 꽤 많아요. 테마 제작자들이 블로그나 창작 플랫폼에 직접 만든 테마를 무료로 나누는 경우가 많거든요. 오늘은 받는 법부터 되돌리는 법까지 순서대로 정리해 볼게요."
+  },
+  {
+   "id": "b004",
+   "type": "H2",
+   "text": "1단계, ktheme 파일을 아이폰에 받기"
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "먼저 마음에 드는 테마의 iOS용 파일을 받아요. 테마 소개 글에 보통 'iOS'와 'Android' 파일이 따로 올라와 있으니 꼭 iOS용을 골라야 해요.",
+   "marks": [
+    "꼭 iOS용"
+   ]
+  },
+  {
+   "id": "b006",
+   "type": "PARAGRAPH",
+   "text": "다운로드는 Safari로 하는 게 좋아요. 다른 브라우저에서 받다가 오류가 나는 경우가 있어서, 판매처 안내에서도 Safari로 다시 받으라고 권하고 있어요.",
+   "marks": [
+    "Safari"
+   ]
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "받은 파일은 아이폰 '파일' 앱의 다운로드 폴더에 저장돼요."
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "한 가지 알아 둘 점이 있어요. 테마 소개 이미지에 쓰인 글꼴은 테마 파일에 들어 있지 않은 경우가 많아요. 소개 사진과 내 화면의 글씨가 다르게 보여도 고장이 아니니 놀라지 마세요."
+  },
+  {
+   "id": "b009",
+   "type": "H2",
+   "text": "2단계, 카톡으로 보내서 적용하기"
+  },
+  {
+   "id": "b010",
+   "type": "PARAGRAPH",
+   "text": "여기가 처음엔 헷갈리는 부분이에요. 파일을 바로 누르는 게 아니라 카톡으로 한 번 보내야 해요."
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "• 파일 앱에서 받은 ktheme 파일을 길게 눌러 '공유'를 선택해요"
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "• 공유 목록에서 카카오톡을 고르고 '나에게 보내기'를 눌러요"
+  },
+  {
+   "id": "b013",
+   "type": "PARAGRAPH",
+   "text": "• 카톡 '나와의 채팅'에 온 파일을 눌러 내려받아요"
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "• '열기'를 누른 뒤 '테마 적용하기'를 누르면 끝이에요"
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "적용하고 채팅방으로 돌아가면 배경, 말풍선, 아이콘이 바뀐 걸 볼 수 있어요."
+  },
+  {
+   "id": "b016",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 '나에게 보내기'를 쓰는 게 가장 깔끔한 방법이에요. 테마 파일이 나와의 채팅에 남아 있어서 나중에 다시 적용하기도 편하거든요."
+  },
+  {
+   "id": "b017",
+   "type": "HIGHLIGHT",
+   "text": "카카오톡이 최신 버전이 아니면 적용이 안 될 수 있어요. 앱스토어에서 먼저 업데이트하세요."
+  },
+  {
+   "id": "b018",
+   "type": "H2",
+   "text": "배경이 안 바뀔 때, 원래대로 돌릴 때"
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "테마를 적용했는데 채팅방 배경만 그대로인 경우가 있어요. 이럴 땐 카카오톡 설정 → 전체설정 → 화면 → 배경화면에서 '테마 배경 적용'을 골라 주세요.",
+   "marks": [
+    "설정 → 전체설정 → 화면 → 배경화면"
+   ]
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "여러 테마를 받아 두었다면 설정 → 전체설정 → 테마에서 바꿔 끼울 수 있어요. 기본 테마로 돌아가고 싶을 때도 여기서 고르면 돼요.",
+   "marks": [
+    "설정 → 전체설정 → 테마"
+   ]
+  },
+  {
+   "id": "b021",
+   "type": "TABLE",
+   "headers": [
+    "상황",
+    "해결 방법"
+   ],
+   "rows": [
+    [
+     "파일이 안 열림",
+     "Safari로 다시 받기, 카톡 업데이트"
+    ],
+    [
+     "배경만 그대로",
+     "화면 → 배경화면 → 테마 배경 적용"
+    ],
+    [
+     "원래대로",
+     "전체설정 → 테마에서 기본 테마 선택"
+    ],
+    [
+     "갤럭시에서 안 됨",
+     "iOS 파일은 안드로이드에 적용 불가"
+    ]
+   ]
+  },
+  {
+   "id": "b022",
+   "type": "PARAGRAPH",
+   "text": "무료 테마를 받을 때 지킬 것도 있어요. 대부분 제작자가 재배포와 수정을 금지하고 있어서, 다른 사람에게 파일을 그대로 넘기면 안 돼요. 제작자의 원래 게시글에서 받는 게 안전하고 예의이기도 해요. 출처를 알 수 없는 사이트에서 파일을 받는 건 피하는 게 좋아요.",
+   "marks": [
+    "재배포와 수정을 금지"
+   ]
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "갤럭시 같은 안드로이드폰은 테마 파일 형식과 설치 방법이 달라요. 그래서 iOS용 ktheme 파일은 안드로이드에서 열리지 않아요. 가족끼리 같은 테마를 쓰고 싶다면 각자 폰에 맞는 파일을 받아야 해요."
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "화면 구성은 카카오톡 업데이트에 따라 조금씩 달라질 수 있어요. 메뉴 이름이 다르다면 설정 안에서 '테마'를 찾으시면 됩니다."
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "테마를 여러 개 받아 두면 계절이나 기분에 따라 바꿔 쓰는 재미가 있어요. 받은 파일을 나와의 채팅에 모아 두면 언제든 다시 열어서 적용할 수 있어요."
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "카카오톡을 지웠다가 다시 깔면 적용했던 테마가 사라질 수 있어요. 이때도 나와의 채팅에 파일이 남아 있다면 같은 순서로 다시 적용하면 됩니다. 휴대폰을 바꿀 때도 마찬가지고요."
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "테마를 바꿨는데 글씨가 잘 안 보인다면 어두운 배경 테마와 시스템 다크 모드가 겹친 경우가 많아요. 아이폰 설정의 화면 밝기 메뉴에서 라이트·다크 모드를 바꿔 보면 해결되는 경우가 있어요."
+  },
+  {
+   "id": "b028",
+   "type": "PARAGRAPH",
+   "text": "마음에 드는 테마를 찾았다면 제작자의 게시글에 짧게 감사 댓글을 남기는 것도 좋아요. 무료 테마는 그런 반응을 힘 삼아 계속 만들어지는 경우가 많으니까요."
+  },
+  {
+   "id": "b029",
+   "type": "PARAGRAPH",
+   "text": "여러분은 요즘 어떤 카톡 테마를 쓰고 계세요? 마음에 드는 무료 테마가 있다면 댓글로 추천해 주세요."
+  },
+  {
+   "id": "b030",
+   "type": "PARAGRAPH",
+   "text": "출처: 산돌구름 카카오톡 테마 적용 안내, 카카오톡 앱 설정 화면",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "아이폰 카톡 테마 무료로 바꾸는 법, ktheme 파일 하나로 5분이면 끝",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "아이폰 공유 화면",
+   "anchorBlockId": "b014",
+   "position": "after_block"
+  },
+  {
+   "id": "img3",
+   "file": "03-photo.jpg",
+   "alt": "알록달록한 채팅 화면의 스마트폰",
+   "anchorBlockId": "b021",
+   "position": "after_block"
+  },
+  {
+   "id": "img4",
+   "file": "04-card.png",
+   "alt": "단계 카드",
+   "anchorBlockId": "b029",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b007",
+   "position": "after_block",
+   "heading": "1단계, ktheme 파일을 아이폰에 받기",
+   "near": "받은 파일은 아이폰 '파일' 앱의 다운로드 폴더에 저장돼요.",
+   "alt": "아이폰 파일 앱 화면",
+   "ko": "20대 후반의 한국 여성 한 명이 밝은 방 안의 소파에 편안하게 앉아 있습니다. 여성은 차분한 표정으로 자신의 아이폰 화면을 손가락으로 가볍게 터치하고 있습니다. 배경은 창밖으로 부드러운 낮 햇살이 들어오는 깔끔한 거실이며 계절은 가을입니다. 화면 안에는 아이폰 1대가 놓여 있고 다른 불필요한 물건은 없습니다. 따뜻한 자연광이 실내를 비추며 차분하고 아늑한 분위기를 자아냅니다. 주인공은 화면 가운데에 위치하고 양옆에 충분한 여유 공간이 있으며 눈높이에서 촬영되었고 배경은 자연스럽게 흐리게 처리되어 있습니다.",
+   "en": "A late-20s Korean woman sits comfortably on a sofa in a bright room with a calm expression. She is gently touching her iPhone screen with her finger. The background is a tidy living room with soft daytime sunlight coming through the window during autumn. One iPhone is visible with no other unnecessary objects. Warm natural light illuminates the indoor space, creating a cozy and serene atmosphere. The subject is positioned near the center of the frame with generous space on both sides, shot at eye-level, and the background is softly blurred."
+  }
+ ]
+}

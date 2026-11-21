@@ -1,0 +1,268 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "오늘의 비교 쇼핑",
+ "category": "생활가전",
+ "title": "후지필름 X half vs 캐논 파워샷 V1, 100만원 안팎 똑딱이 고를 때 갈리는 한 가지",
+ "tags": [
+  "후지필름 X half",
+  "캐논 파워샷 V1",
+  "똑딱이 카메라",
+  "컴팩트 카메라 추천",
+  "X half",
+  "파워샷 V1",
+  "브이로그 카메라"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "후지필름 X half와 캐논 파워샷 V1은 둘 다 100만 원 안팎의 작은 카메라지만, 성격은 정반대예요. 사진을 '찍는 재미'가 중요하면 X half, 영상까지 제대로 찍고 싶으면 V1이에요.",
+   "marks": [
+    "사진을 '찍는 재미'가 중요하면 X half, 영상까지 제대로 찍고 싶으면 V1"
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "요즘 사진 관련 검색에서 두 카메라가 나란히 오르고 있어요. 스마트폰이 아닌 카메라로 일상을 남기고 싶은 사람이 늘면서 '똑딱이'라 불리는 컴팩트 카메라가 다시 인기를 끄는 분위기예요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "한눈에 보는 차이"
+  },
+  {
+   "id": "b004",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "후지필름 X half",
+    "캐논 파워샷 V1"
+   ],
+   "rows": [
+    [
+     "출시",
+     "2025년 6월",
+     "2025년 4월(국내)"
+    ],
+    [
+     "센서",
+     "1인치, 1,774만 화소",
+     "1.4인치, 2,230만 화소"
+    ],
+    [
+     "렌즈",
+     "32mm(환산) F2.8 단렌즈",
+     "16-50mm F2.8-4.5, 3배 줌"
+    ],
+    [
+     "영상",
+     "풀HD",
+     "4K, 냉각팬, 최대 2시간"
+    ],
+    [
+     "뷰파인더",
+     "광학식 있음",
+     "없음(화면으로 촬영)"
+    ],
+    [
+     "무게",
+     "240g",
+     "426g"
+    ],
+    [
+     "가격",
+     "출시가 104만 9천 원",
+     "출시가 119만 9천 원"
+    ]
+   ]
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "숫자만 보면 V1이 센서도 크고 줌도 되고 영상도 강해요. 그런데 이 둘을 숫자로만 비교하면 X half의 매력을 놓치게 돼요."
+  },
+  {
+   "id": "src4",
+   "type": "PARAGRAPH",
+   "text": "사진: 昼落ち / 위키미디어 공용 (CC0)",
+   "size": "small",
+   "align": "center"
+  },
+  {
+   "id": "b006",
+   "type": "H2",
+   "text": "X half, 필름 카메라처럼 찍는 재미"
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "X half는 센서를 세로로 넣은 카메라예요. 그래서 기본으로 세로 사진이 찍혀요. 인스타그램이나 스마트폰 화면에 그대로 올리기 좋은 비율이죠."
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "가장 큰 특징은 '필름 카메라 모드'예요. 필름처럼 정해진 장수를 다 찍을 때까지 결과를 바로 볼 수 없고, 레버를 감아 다음 장으로 넘기는 손맛이 있어요. 사진 두 장을 한 장으로 붙이는 2-in-1 모드도 있고요. 후지필름 특유의 색감을 내는 필름 시뮬레이션도 들어 있어요."
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "무게가 240g이라 주머니나 작은 가방에 넣고 다니기 편해요. 광학 뷰파인더가 있어서 눈을 대고 찍는 맛도 있고요."
+  },
+  {
+   "id": "b010",
+   "type": "PARAGRAPH",
+   "text": "대신 렌즈가 하나로 고정돼 있어 줌이 안 되고, 영상은 풀HD까지예요. 영상보다 사진, 결과보다 찍는 과정을 즐기는 분에게 맞는 카메라예요."
+  },
+  {
+   "id": "b011",
+   "type": "H2",
+   "text": "파워샷 V1, 브이로그를 위한 카메라"
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "V1은 처음부터 영상을 염두에 두고 만든 카메라예요. 1.4인치 센서는 1인치보다 면적이 두 배 가까이 넓어서 어두운 곳에서도 유리하고, 5.7K로 찍어 4K로 줄이는 방식이라 화질이 좋아요."
+  },
+  {
+   "id": "b013",
+   "type": "PARAGRAPH",
+   "text": "눈에 띄는 건 안에 들어간 냉각팬이에요. 작은 카메라는 4K로 오래 찍으면 열 때문에 멈추는 경우가 많은데, V1은 팬으로 열을 식혀 최대 2시간까지 찍을 수 있다고 해요. 16-50mm 줌 렌즈라 셀카처럼 넓게 찍다가 가까이 당기는 것도 돼요.",
+   "marks": [
+    "냉각팬"
+   ]
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "캐논의 듀얼 픽셀 AF II가 들어가 있어 움직이는 사람을 잘 따라가고, PC에 USB로 연결하면 웹캠처럼 방송이나 화상회의에도 쓸 수 있어요. 무게는 426g으로 X half보다 두 배 가까이 무거워요."
+  },
+  {
+   "id": "src14",
+   "type": "PARAGRAPH",
+   "text": "사진: Kyu3a / 위키미디어 공용 (CC BY-SA 4.0)",
+   "size": "small",
+   "align": "center"
+  },
+  {
+   "id": "b015",
+   "type": "H2",
+   "text": "사기 전에 한 번 더 생각할 것"
+  },
+  {
+   "id": "b016",
+   "type": "PARAGRAPH",
+   "text": "두 카메라 모두 렌즈를 바꿀 수 없는 일체형이에요. 나중에 망원이나 광각을 따로 붙이고 싶다면 처음부터 렌즈 교환식 카메라를 보는 게 맞아요."
+  },
+  {
+   "id": "b017",
+   "type": "PARAGRAPH",
+   "text": "X half는 동영상을 거의 안 찍을 때 가장 빛나요. 아이의 움직임이나 여행 영상을 주로 남기려는 분이라면 풀HD와 고정 렌즈가 금방 아쉬워질 수 있어요. V1은 반대로 사진만 찍기엔 다소 크고 무거워서, 매일 들고 다니다 보면 결국 집에 두게 될 수도 있어요."
+  },
+  {
+   "id": "b018",
+   "type": "PARAGRAPH",
+   "text": "결국 \"나는 일주일에 몇 번, 무엇을 찍는가\"를 먼저 적어 보는 게 가장 확실한 비교 방법이에요."
+  },
+  {
+   "id": "b019",
+   "type": "H2",
+   "text": "가격과 고르는 기준"
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "다나와 기준으로 X half 정품은 84만 원대(현금가 79만 원대)에 팔리고 있어요. 출시가보다 20만 원 넘게 내려온 셈이에요. V1은 국내 출시가가 119만 9천 원이었어요."
+  },
+  {
+   "id": "b021",
+   "type": "HIGHLIGHT",
+   "text": "가격은 다나와 조회 시점 기준이라 바뀔 수 있어요. 사양은 제조사 발표와 언론 보도 기준이에요."
+  },
+  {
+   "id": "b022",
+   "type": "PARAGRAPH",
+   "text": "고르는 기준은 간단해요."
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "• 여행이나 일상을 사진으로 남기고, 결과물에 감성을 원한다면 X half"
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "• 유튜브나 SNS용 영상을 자주 찍고, 줌도 필요하다면 V1"
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "• 가볍게 늘 들고 다닐 카메라라면 X half, 촬영 날 따로 챙길 카메라라면 V1"
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 X half는 '스마트폰과 다른 사진'을 원하는 사람에게, V1은 '스마트폰보다 나은 영상'을 원하는 사람에게 답이 되는 카메라예요. 같은 가격대라도 질문이 다르면 답도 달라지죠."
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "여러분은 카메라로 사진을 더 많이 찍으세요, 영상을 더 많이 찍으세요?"
+  },
+  {
+   "id": "b028",
+   "type": "PARAGRAPH",
+   "text": "출처: 위키백과(Fujifilm X half), 다나와, ZDNet Korea(2025.4.7) · 대표 사진: 昼落ち / 위키미디어 공용 (CC0)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "후지필름 X half vs 캐논 파워샷 V1, 100만원 안팎 똑딱이 고를 때 갈리는 한 가지",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "세로 사진에 맞춘 후지필름 X half",
+   "anchorBlockId": "b005",
+   "position": "after_block"
+  },
+  {
+   "id": "img3",
+   "file": "03-photo.jpg",
+   "alt": "브이로그용으로 나온 캐논 파워샷 V1",
+   "anchorBlockId": "b014",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b007",
+   "position": "after_block",
+   "heading": "X half, 필름 카메라처럼 찍는 재미",
+   "near": "X half는 센서를 세로로 넣은 카메라예요. 그래서 기본으로 세로 사진이 찍혀요. 인스타그램이나 스마트폰 화면에 그대로 올리기 좋은 비율이죠.",
+   "alt": "X half, 필름 카메라처럼 찍는 재미",
+   "ko": "늦가을 오후, 서울 골목의 작은 가게들 앞. 20대 한국인 여성이 은색과 검은색으로 된 작은 필름 카메라 모양 디지털카메라를 세로로 들고 눈에 대고 사진을 찍고 있다. 바닥에 낙엽, 부드러운 오후 햇빛.",
+   "v": 2,
+   "subject": "골목길에서 은색 소형 카메라를 세로로 들고 찍는 여성",
+   "en": "A late-autumn afternoon in a Seoul alley lined with small shops. A Korean woman in her 20s holds a small silver-and-black film-style digital camera vertically to her eye, taking a photo. Fallen leaves on the ground, soft afternoon sun."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "b012",
+   "position": "after_block",
+   "heading": "파워샷 V1, 브이로그를 위한 카메라",
+   "near": "V1은 처음부터 영상을 염두에 두고 만든 카메라예요. 1.4인치 센서는 1인치보다 면적이 두 배 가까이 넓어서 어두운 곳에서도 유리하고, 5.7K로 찍어 4K로 줄이는 방식이라 화질이 좋아요.",
+   "alt": "파워샷 V1, 브이로그를 위한 카메라",
+   "ko": "주말 오후, 서울 한강 공원 산책로. 20대 한국인 청년이 줌 렌즈가 달린 검은 소형 카메라를 셀카 방향으로 들고 말하며 걷고 있다. 뒤로 강과 다리, 자전거 타는 사람들. 맑은 날.",
+   "v": 2,
+   "subject": "한강 공원에서 브이로그를 찍는 청년",
+   "en": "A weekend afternoon on a Han River park path in Seoul. A Korean man in his 20s walks while talking to a black compact camera with a zoom lens held toward himself. River, bridge and cyclists behind. Clear day."
+  }
+ ]
+}

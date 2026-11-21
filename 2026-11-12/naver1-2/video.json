@@ -1,0 +1,26 @@
+{
+ "title": "아이깨끗해 핸드워시 구성 보기",
+ "lines": [
+  "250ml 본품 구성",
+  "리필 4개 대용량",
+  "99.9% 항균 효과",
+  "재활용 플라스틱 용기",
+  "올바른 손씻기 습관"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/05.jpg",
+  "vsrc/07.jpg"
+ ]
+}

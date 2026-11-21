@@ -1,0 +1,31 @@
+{
+ "title": "빗물 튕겨내는 발수 와이퍼",
+ "lines": [
+  "우수한 닦임성",
+  "3분 발수코팅",
+  "50만회 테스트",
+  "들뜸현상 최소화",
+  "쉬운 셀프 교체"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg",
+  "vsrc/11.jpg"
+ ],
+ "used": [
+  "vsrc/04.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg"
+ ]
+}

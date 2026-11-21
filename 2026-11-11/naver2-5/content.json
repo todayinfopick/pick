@@ -1,0 +1,275 @@
+{
+ "schemaVersion": 1,
+ "platform": "naver",
+ "blogName": "알뜰한 오늘",
+ "category": "할인·행사",
+ "title": "스타벅스 크리스마스 케이크 예약 12일 시작, 조선델리 케이크는 19일까지만",
+ "tags": [
+  "스타벅스 크리스마스 케이크",
+  "크리스마스 케이크 예약",
+  "스타벅스 케이크 예약",
+  "조선델리 케이크",
+  "크리스마스 케이크 할인",
+  "파스쿠찌 케이크",
+  "뚜레쥬르 케이크"
+ ],
+ "blocks": [
+  {
+   "id": "n001",
+   "type": "PARAGRAPH",
+   "text": "작년 스타벅스 조선델리 크리스마스 케이크는 예약 20분 만에 다 팔렸어요. 올해도 비슷할 거라는 예상이 많은데, 그 예약이 바로 내일(11월 12일) 열립니다.",
+   "marks": [
+    "내일(11월 12일)"
+   ]
+  },
+  {
+   "id": "n002",
+   "type": "PARAGRAPH",
+   "text": "아시아경제 보도에 따르면 스타벅스는 올해 크리스마스 케이크 사전 예약을 작년보다 이틀 빠른 12일부터 받아요. 크리스마스까지 한 달 넘게 남았지만 인기 케이크는 이번 주가 승부처인 셈이에요."
+  },
+  {
+   "id": "n003",
+   "type": "PARAGRAPH",
+   "text": "케이크 하나 값이 만만치 않은 만큼, 할인 받는 방법까지 같이 챙겨 두면 좋아요."
+  },
+  {
+   "id": "n004",
+   "type": "H2",
+   "text": "조선델리 노엘 트리 케이크, 일정부터 확인"
+  },
+  {
+   "id": "n005",
+   "type": "PARAGRAPH",
+   "text": "올해 가장 눈에 띄는 건 조선호텔과 함께 만든 '조선델리 노엘 트리 케이크'예요.",
+   "marks": [
+    "'조선델리 노엘 트리 케이크'"
+   ]
+  },
+  {
+   "id": "n006",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "내용"
+   ],
+   "rows": [
+    [
+     "예약 기간",
+     "11월 12일 ~ 11월 19일 (수량 한정)"
+    ],
+    [
+     "픽업 기간",
+     "12월 19일 ~ 12월 25일"
+    ],
+    [
+     "증정품",
+     "산타 베어리스타 캔들"
+    ],
+    [
+     "주의",
+     "준비 수량이 다 팔리면 조기 마감"
+    ]
+   ]
+  },
+  {
+   "id": "n007",
+   "type": "PARAGRAPH",
+   "text": "기간이 19일까지로 적혀 있지만 작년처럼 첫날 마감될 수도 있어요. 이 케이크가 목표라면 예약 첫날 오전에 앱을 열어 두는 게 안전해요."
+  },
+  {
+   "id": "n008",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 픽업 날짜를 미리 정해 두는 것도 중요해요. 크리스마스이브와 당일 픽업은 매장이 붐벼서 원하는 시간대가 빨리 차거든요."
+  },
+  {
+   "id": "n009",
+   "type": "PARAGRAPH",
+   "text": "예약 당일엔 이렇게 준비해 두면 덜 허둥대요."
+  },
+  {
+   "id": "n010",
+   "type": "PARAGRAPH",
+   "text": "• 스타벅스 앱을 최신 버전으로 업데이트하기"
+  },
+  {
+   "id": "n011",
+   "type": "PARAGRAPH",
+   "text": "• 결제할 카드를 앱에 미리 등록해 두기"
+  },
+  {
+   "id": "n012",
+   "type": "PARAGRAPH",
+   "text": "• 픽업할 매장과 날짜를 두세 개 후보로 정해 두기"
+  },
+  {
+   "id": "n013",
+   "type": "H2",
+   "text": "작년 할인 구조로 보는 알뜰 예약법"
+  },
+  {
+   "id": "n014",
+   "type": "PARAGRAPH",
+   "text": "올해 할인 조건은 아직 자세히 공개되지 않았어요. 다만 작년 방식을 보면 어떤 할인을 노려야 할지 감이 와요."
+  },
+  {
+   "id": "n015",
+   "type": "PARAGRAPH",
+   "text": "작년에는 스타벅스 앱 사이렌오더로 상품, 픽업 날짜, 매장을 고르는 방식이었어요. 할인은 이렇게 겹쳤어요."
+  },
+  {
+   "id": "n016",
+   "type": "PARAGRAPH",
+   "text": "• 스타벅스 리워드 회원 얼리버드 10% 할인"
+  },
+  {
+   "id": "n017",
+   "type": "PARAGRAPH",
+   "text": "• 행사 카드 결제 시 10% 청구 할인과 아메리카노 1+1 쿠폰"
+  },
+  {
+   "id": "n018",
+   "type": "PARAGRAPH",
+   "text": "• KT 멤버십 일부 케이크 20% 쿠폰"
+  },
+  {
+   "id": "n019",
+   "type": "PARAGRAPH",
+   "text": "• 조건을 합치면 최대 28% 할인"
+  },
+  {
+   "id": "n020",
+   "type": "PARAGRAPH",
+   "text": "작년 라인업은 매장 픽업 5종, 배송 14종으로 모두 19종이었어요. 배송 케이크는 매장 픽업보다 늦게 따로 예약을 열었어요. 1차는 11월 25일, 2차는 12월 2일에 열렸고, 1차는 15%, 2차는 10% 얼리버드 할인이 붙었어요. 집에서 받고 싶다면 배송 케이크 일정도 따로 챙겨 보세요."
+  },
+  {
+   "id": "n021",
+   "type": "HIGHLIGHT",
+   "text": "위 할인은 2025년 기준이에요. 올해 할인율과 행사 카드는 12일 스타벅스 앱 공지에서 꼭 다시 확인하세요."
+  },
+  {
+   "id": "n022",
+   "type": "H2",
+   "text": "다른 브랜드 케이크 예약 일정도 같이 보기"
+  },
+  {
+   "id": "n023",
+   "type": "PARAGRAPH",
+   "text": "스타벅스만 보면 아쉬울 수 있으니 다른 곳 일정도 정리해 봤어요."
+  },
+  {
+   "id": "n024",
+   "type": "PARAGRAPH",
+   "text": "• 파스쿠찌: 10월 29일부터 예약 중, 스와로브스키와 협업한 '크리스탈 스완' 케이크"
+  },
+  {
+   "id": "n025",
+   "type": "PARAGRAPH",
+   "text": "• 뚜레쥬르: 11월 11일부터 예약 시작"
+  },
+  {
+   "id": "n026",
+   "type": "PARAGRAPH",
+   "text": "• 투썸플레이스: 11월 중순 예약 예정"
+  },
+  {
+   "id": "n027",
+   "type": "PARAGRAPH",
+   "text": "• 파리바게뜨, 배스킨라빈스: 아직 일정 발표 전"
+  },
+  {
+   "id": "n028",
+   "type": "PARAGRAPH",
+   "text": "매장 디저트로는 10월 22일부터 누텔라 촉촉 생크림 케이크, 루돌프 쿠키 치즈 케이크 같은 크리스마스 메뉴가 이미 나와 있어요. 예약이 부담스럽다면 이쪽도 방법이에요."
+  },
+  {
+   "id": "n029",
+   "type": "PARAGRAPH",
+   "text": "브랜드를 고를 때는 픽업이 쉬운지도 같이 보세요. 집이나 회사 근처에 매장이 있는지, 크리스마스 당일 영업 시간이 어떤지에 따라 같은 케이크라도 받는 수고가 크게 달라져요. 배송 케이크는 받는 날을 고를 수 있는지도 확인해 보시고요."
+  },
+  {
+   "id": "n030",
+   "type": "PARAGRAPH",
+   "text": "케이크 값은 해마다 오르는데, 같은 케이크도 할인을 몇 개 겹치느냐에 따라 만 원 가까이 차이가 날 수 있어요. 그래서 예약 버튼보다 할인 조건을 먼저 보는 게 알뜰한 순서라고 생각해요."
+  },
+  {
+   "id": "n031",
+   "type": "PARAGRAPH",
+   "text": "한 가지 더 챙길 건 픽업 날짜의 매장 상황이에요. 크리스마스 직전에는 케이크를 찾으러 온 사람과 음료 주문이 겹쳐 매장이 붐비는 경우가 많아요. 가능하면 사람이 덜한 오전이나 이른 오후 시간으로 픽업 시간을 잡아 두면 기다리는 시간이 줄어요."
+  },
+  {
+   "id": "n032",
+   "type": "PARAGRAPH",
+   "text": "케이크는 받은 뒤 바로 냉장 보관해야 해요. 차로 이동한다면 히터 바람이 직접 닿지 않게 두고, 집에 오래 걸리는 거리라면 보냉 가방을 챙기는 것도 좋아요."
+  },
+  {
+   "id": "n033",
+   "type": "PARAGRAPH",
+   "text": "그리고 예약 확정 문자나 앱 화면은 픽업 날까지 꼭 남겨 두세요. 매장에서 예약 내역을 보여 달라고 할 때 바로 꺼낼 수 있어야 하거든요."
+  },
+  {
+   "id": "n034",
+   "type": "PARAGRAPH",
+   "text": "올해 케이크 가격은 아직 발표 전이에요. 12일 예약 화면이 열리면 가격과 할인 조건을 함께 비교해 보고, 작년보다 얼마나 올랐는지도 확인해 보세요."
+  },
+  {
+   "id": "n035",
+   "type": "PARAGRAPH",
+   "text": "지인 선물용이라면 픽업보다 배송 케이크가 편할 수 있어요."
+  },
+  {
+   "id": "n036",
+   "type": "PARAGRAPH",
+   "text": "여러분은 올해 크리스마스 케이크, 어느 브랜드로 고르실 건가요?"
+  },
+  {
+   "id": "n037",
+   "type": "PARAGRAPH",
+   "text": "출처: 아시아경제(2026.11.7), 신세계그룹 뉴스룸(2025), 인사이트",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "스타벅스 크리스마스 케이크 예약 12일 시작, 조선델리 케이크는 19일까지만",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "카페 진열장의 크리스마스 디저트",
+   "anchorBlockId": "n028",
+   "position": "after_block"
+  },
+  {
+   "id": "img3",
+   "file": "03-card.png",
+   "alt": "요약 카드",
+   "anchorBlockId": "n036",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "n006",
+   "position": "after_block",
+   "heading": "조선델리 노엘 트리 케이크, 일정부터 확인",
+   "near": "",
+   "alt": "트리 모양 크리스마스 케이크",
+   "ko": "누가는 30대 중반의 한국 여성으로, 차분한 표정으로 단정하고 따뜻한 니트 옷차림을 하고 있습니다. 무엇을은 밝고 세련된 실내 카페 테이블에 앉아 스마트폰을 두 손으로 가볍게 쥐고 화면을 바라보고 있습니다. 어디서는 은은한 조명이 비치는 한국의 아늑한 베이커리 카페 창가 자리이며, 늦가을의 부드러운 자연광이 들어옵니다. 물건은 화면이 켜진 스마트폰 1대만 놓여 있고 다른 잡동사니는 없습니다. 빛과 분위기는 따뜻한 노란빛의 실내 조명과 창밖의 부드러운 햇살이 어우러져 차분하고 기대감 넘치는 분위기를 자아냅니다. 구도는 주인공이 화면 중앙에 위치하며 양옆과 위아래에 여유 공간이 충분하고, 눈높이에서 촬영되었으며 배경은 부드럽게 흐려져 있습니다.",
+   "en": "Who is a mid-30s Korean woman with a calm expression, wearing a neat and warm knitted sweater. What she is doing is sitting at a bright and sophisticated indoor café table, gently holding a smartphone with both hands and looking at the screen. Where is a cozy bakery café window seat in South Korea illuminated by subtle lighting, with soft natural light entering in late autumn. Objects include only 1 smartphone with its screen lit up, placed on the table with no other clutter. Light and mood feature a combination of warm yellow indoor lighting and soft sunlight from the window, creating a calm and anticipating atmosphere. Composition places the subject in the center of the screen with plenty of negative space on the sides and vertical margins, shot at eye level with the background softly blurred."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "n020",
+   "position": "after_block",
+   "heading": "작년 할인 구조로 보는 알뜰 예약법",
+   "near": "작년 라인업은 매장 픽업 5종, 배송 14종으로 모두 19종이었어요. 배송 케이크는 매장 픽업보다 늦게 따로 예약을 열었어요. 1차는 11월 25일, 2차는 12월 2일에 열렸고, 1차는 15%, 2차는 10% 얼리",
+   "alt": "휴대폰 앱으로 주문하는 모습",
+   "ko": "누가는 30대 초반의 한국 남성으로, 진지하고 집중하는 표정으로 깔끔한 셔츠 차림을 하고 있습니다. 무엇을은 원목 책상 앞에 앉아 펼쳐진 달력에 작은 메모를 적으며 화면을 진지하게 살펴보고 있습니다. 어디서는 아늑하고 정돈된 한국의 가정집 서재이며, 가을 오후의 따뜻한 햇살이 창문으로 부드럽게 스며듭니다. 물건은 종이 달력 1개와 검은색 볼펜 1자루만 놓여 있으며 주변은 깔끔합니다. 빛과 분위기는 창가에서 들어오는 따뜻한 자연광이 방 안을 채우며 차분하고 계획적인 분위기를 연출합니다. 구도는 주인공이 화면 중앙에 위치하며 양옆으로 넉넉한 여백이 있고, 눈높이 구도로 촬영되었으며 배경은 은은하게 아웃포커싱 처리되어 있습니다.",
+   "en": "Who is a Korean man in his early 30s with a serious and focused expression, wearing a clean shirt. What he is doing is sitting at a wooden desk, writing a small note on an open calendar and carefully examining the items. Where is a cozy and tidy home study in South Korea, with warm autumn afternoon sunlight softly filtering through the window. Objects include only 1 paper calendar and 1 black ballpoint pen on the desk, keeping the surface clean. Light and mood feature warm natural light from the window filling the room, creating a calm and organized atmosphere. Composition places the subject in the center with generous negative space on both sides, shot at eye level with the background softly out of focus."
+  }
+ ]
+}

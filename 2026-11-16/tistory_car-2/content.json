@@ -1,0 +1,298 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "오늘의 자동차",
+ "category": "신차·출시",
+ "title": "PV5 캠핑카 얼마면 될까? 299만원 키트부터 라이트 캠퍼까지 3가지 길",
+ "tags": [
+  "PV5 캠핑카",
+  "기아 PV5",
+  "PV5 라이트 캠퍼",
+  "PV5 가격",
+  "전기차 캠핑카",
+  "차박 전기차",
+  "PV5 캠핑 키트"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "기아 PV5로 캠핑카를 꾸미는 길은 지금 세 가지예요. 패신저에 299만 원짜리 캠핑 키트를 얹는 방법, 카고를 사서 개조하는 방법, 그리고 기아의 'PV5 라이트 캠퍼'를 기다리는 방법이죠. 라이트 캠퍼는 국내 인증을 마쳤지만 아직 가격이 발표되지 않았어요.",
+   "marks": [
+    "패신저에 299만 원짜리 캠핑 키트를 얹는 방법, 카고를 사서 개조하는 방법, 그리고 기아의 'PV5 라이트 캠퍼'를 기다리는 방법"
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "캠핑카 검색이 늘어난 건 \"전기차로 차박이 되나\", \"얼마면 되나\"가 궁금해서일 거예요. 공개된 가격과 사양으로 세 가지를 나란히 놓아 봤어요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "먼저 바탕이 되는 PV5 가격",
+   "align": "center"
+  },
+  {
+   "id": "b004",
+   "type": "TABLE",
+   "headers": [
+    "모델",
+    "가격 (보도 기준)"
+   ],
+   "rows": [
+    [
+     "2027 PV5 패신저",
+     "4,590만 원부터 (9월 1일 기준)"
+    ],
+    [
+     "PV5 카고 컴팩트",
+     "4,100만 원"
+    ],
+    [
+     "PV5 카고 롱",
+     "4,250만 원"
+    ],
+    [
+     "PV5 카고 롱레인지",
+     "4,520만 원"
+    ]
+   ]
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "배터리는 51.5kWh(최대 280km)와 71.2kWh(최대 377km) 두 가지예요. 350kW 급속충전기에서 10%에서 80%까지 약 30분이면 돼요. 보조금은 지역과 시점에 따라 달라지니 구매 전 따로 확인해야 해요."
+  },
+  {
+   "id": "b006",
+   "type": "H2",
+   "text": "방법 1. 패신저 + 캠핑 키트 (약 299만 원)",
+   "align": "center"
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "기아가 '기아 컬렉션'으로 파는 미국 밴랩(VanLab)의 캠핑 키트예요. 사전 예약가가 약 299만 원, 정가는 349만 원이었어요."
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "• 양쪽 벤치형 라운지, 벤치 아래 수납과 조리 도구 공간, 평평한 침대"
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "• 차를 뜯어고치지 않고 직접 조립하는 방식"
+  },
+  {
+   "id": "b010",
+   "type": "PARAGRAPH",
+   "text": "• 샤워·화장실은 없음"
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "• PV5 패신저 전용"
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "가장 싸고 원래대로 되돌리기 쉬운 방법이에요. 차값 4,590만 원에 키트를 더해도 5천만 원이 안 되니, 세 가지 중 진입 비용이 가장 낮아요. 평일엔 가족차, 주말엔 차박용으로 쓰고 싶은 분께 맞아요."
+  },
+  {
+   "id": "src11",
+   "type": "PARAGRAPH",
+   "text": "사진: Alexander Migl / 위키미디어 공용 (CC BY-SA 4.0)",
+   "size": "small",
+   "align": "center"
+  },
+  {
+   "id": "b013",
+   "type": "H2",
+   "text": "방법 2. 카고 + 개조",
+   "align": "center"
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "최근 방송인 풍자 씨가 PV5 카고로 만든 캠핑카를 공개하면서 관심이 커졌어요. 카고 롱의 짐칸은 길이 2,255mm, 너비 1,565mm, 높이 1,520mm로 꽤 넓어요. 기아도 평평한 바닥, 바닥 매트, 휠하우스 수납 커버, L-트랙 패키지 같은 액세서리를 내놓았어요."
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "개조 비용은 차값에 포함되지 않아 업체와 사양에 따라 크게 달라져요. 다만 카고는 뒷좌석이 없는 화물차라, 가족이 함께 타야 한다면 맞지 않아요."
+  },
+  {
+   "id": "b016",
+   "type": "H2",
+   "text": "방법 3. 기아 PV5 라이트 캠퍼",
+   "align": "center"
+  },
+  {
+   "id": "b017",
+   "type": "PARAGRAPH",
+   "text": "기아가 직접 내놓는 전기 캠핑카예요. 올해 1월 국내 인증을 마쳤어요."
+  },
+  {
+   "id": "b018",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "내용"
+   ],
+   "rows": [
+    [
+     "배터리",
+     "71.2kWh"
+    ],
+    [
+     "주행거리",
+     "복합 345km (도심 379km, 고속 305km)"
+    ],
+    [
+     "외부 전원",
+     "V2L 최대 3.6kW"
+    ],
+    [
+     "실내",
+     "회전하는 앞좌석, 평평한 바닥, L-트랙"
+    ]
+   ]
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "국내 가격은 아직 공식 발표가 없어요. 7천~8천만 원대가 될 거라는 보도가 있었지만 확정된 숫자는 아니에요. 참고로 유럽에서 네덜란드 밴트랙(VanTrack)이 만든 'PV5 라이트 캠프'는 6만 5천 유로, 우리 돈 약 1억 1천만 원이에요. 이 모델에는 190×130cm 슬라이딩 침대, 18L 냉장고, 인덕션, 11L 물탱크 싱크, 루프 텐트가 들어가요."
+  },
+  {
+   "id": "b020",
+   "type": "H2",
+   "text": "전기차 캠핑카, 이건 알고 가세요",
+   "align": "center"
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "V2L 3.6kW면 전기히터나 전기밥솥, 작은 전자레인지 정도는 쓸 수 있어요. 시동 소음 없이 냉난방을 돌릴 수 있다는 게 전기차 캠핑의 가장 큰 장점이죠."
+  },
+  {
+   "id": "b022",
+   "type": "PARAGRAPH",
+   "text": "대신 밤새 난방을 돌리면 그만큼 다음 날 갈 수 있는 거리가 줄어요. 겨울엔 배터리 효율도 떨어지니, 캠핑장 근처 충전기 위치는 미리 찾아 두는 게 좋아요."
+  },
+  {
+   "id": "b023",
+   "type": "H2",
+   "text": "처음 전기차 차박을 간다면 체크할 것",
+   "align": "center"
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "• 출발 전 충전량: 80% 이상 채우고, 돌아오는 길에 들를 급속충전소를 한 곳 정해 두기",
+   "marks": [
+    "출발 전 충전량"
+   ]
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "• 캠핑장 전기 사용: 캠핑장 전기를 차 충전에 쓰는 걸 막는 곳이 많으니 예약 때 물어보기",
+   "marks": [
+    "캠핑장 전기 사용"
+   ]
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "• 결로와 환기: 겨울엔 창문을 살짝 열고 자야 아침에 유리와 이불이 젖지 않아요",
+   "marks": [
+    "결로와 환기"
+   ]
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "• 주차 가능한 곳인지: 노지·해변 중에는 차박을 금지하는 곳이 있어요",
+   "marks": [
+    "주차 가능한 곳인지"
+   ]
+  },
+  {
+   "id": "b028",
+   "type": "PARAGRAPH",
+   "text": "캠핑 키트든 개조든, 처음엔 가까운 오토캠핑장에서 하룻밤 자 보고 무엇이 부족한지 확인한 뒤 장비를 늘리는 게 돈을 아끼는 순서예요."
+  },
+  {
+   "id": "b029",
+   "type": "H2",
+   "text": "나에게 맞는 선택은",
+   "align": "center"
+  },
+  {
+   "id": "b030",
+   "type": "PARAGRAPH",
+   "text": "1. 예산이 적고 가족차도 필요하다면: 패신저 + 캠핑 키트",
+   "marks": [
+    "예산이 적고 가족차도 필요하다면"
+   ]
+  },
+  {
+   "id": "b031",
+   "type": "PARAGRAPH",
+   "text": "2. 짐 많은 혼캠·부부캠, 실내를 내 마음대로: 카고 + 개조",
+   "marks": [
+    "짐 많은 혼캠·부부캠, 실내를 내 마음대로"
+   ]
+  },
+  {
+   "id": "b032",
+   "type": "PARAGRAPH",
+   "text": "3. 조리·침대까지 다 갖춘 완성형: 라이트 캠퍼 가격 발표를 기다리기",
+   "marks": [
+    "조리·침대까지 다 갖춘 완성형"
+   ]
+  },
+  {
+   "id": "b033",
+   "type": "PARAGRAPH",
+   "text": "현대 스타리아 캠퍼가 오래 팔렸지만 판매는 부진했다는 평가도 있어요. PV5가 '평일엔 업무용, 주말엔 캠핑카'라는 쓰임새로 이 시장을 넓힐 수 있을지, 라이트 캠퍼 가격이 그 답을 줄 것 같아요."
+  },
+  {
+   "id": "b034",
+   "type": "PARAGRAPH",
+   "text": "출처: 오토헤럴드, 지피코리아, 카픽트리, 더드라이브, 뉴스와, VanTrack · 대표 사진: TTTNIS / 위키미디어 공용 (CC0)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "PV5 캠핑카 얼마면 될까? 299만원 키트부터 라이트 캠퍼까지 3가지 길",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "전기 밴 옆에서 캠핑하는 가족",
+   "anchorBlockId": "b012",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b005",
+   "position": "after_block",
+   "heading": "먼저 바탕이 되는 PV5 가격",
+   "near": "배터리는 51.5kWh(최대 280km)와 71.2kWh(최대 377km) 두 가지예요. 350kW 급속충전기에서 10%에서 80%까지 약 30분이면 돼요. 보조금은 지역과 시점에 따라 달라지니 구매 전 따로 확인해",
+   "alt": "먼저 바탕이 되는 PV5 가격",
+   "ko": "제목의 주제인 기아 PV5 캠핑카의 바탕이 되는 전기차 충전 장면을 보여준다. 은색 기아 PV5 패신저 전기차가 환한 낮에 한국의 도심형 야외 급속충전소 주차장에 주차되어 충전 케이블이 연결된 모습이다. 차체 옆면에는 충전 상태를 보여주는 작은 디스플레이와 51.5kWh 배터리를 탑재한 매끄러운 형태가 보인다. 주변에는 아스팔트 바닥과 1대의 파란색 충전기가 함께 보인다. 맑은 봄날 오후의 밝고 깨끗한 자연광이 차체를 비춘다.",
+   "v": 2,
+   "subject": "충전 중인 은색 기아 PV5 패신저",
+   "en": "Shows the electric vehicle charging scene that forms the basis of the Kia PV5 camper, the topic of the title. A silver Kia PV5 passenger electric vehicle is parked in an outdoor DC fast-charging station parking lot in South Korea during broad daylight, with a charging cable connected. The side of the car shows a smooth shape equipped with a battery. Nearby, an asphalt ground and one blue charger are visible together. Bright, clean natural light of a clear spring afternoon illuminates the car body."
+  }
+ ]
+}

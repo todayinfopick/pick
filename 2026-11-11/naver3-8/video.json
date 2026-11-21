@@ -1,0 +1,23 @@
+{
+ "title": "프리미엄 한돈 골라담기",
+ "lines": [
+  "신선한 국내산 한돈",
+  "취향대로 골라담는 구성",
+  "풍부한 육즙과 감칠맛",
+  "캠핑과 홈파티 메인 메뉴",
+  "부위별 매력 비교"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg"
+ ]
+}

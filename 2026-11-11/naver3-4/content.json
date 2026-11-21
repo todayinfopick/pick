@@ -1,0 +1,260 @@
+{
+ "schemaVersion": 1,
+ "platform": "naver",
+ "blogName": "쓸모있는 오늘",
+ "category": "여행·축제",
+ "title": "수락휴 예약 방법, 1월 객실은 12월 10일 오후 2시에 열린다",
+ "tags": [
+  "수락휴 예약",
+  "수락휴",
+  "노원 수락휴",
+  "서울 자연휴양림",
+  "숲나들e",
+  "트리하우스 숙소",
+  "서울 근교 숙소"
+ ],
+ "blocks": [
+  {
+   "id": "n001",
+   "type": "PARAGRAPH",
+   "text": "\"서울 안에서 트리하우스에서 자 볼 수 있다고?\" 노원구 수락산 자락의 수락휴는 이 한 문장으로 유명해졌어요. 서울 첫 자연휴양림으로 2025년 7월 문을 연 뒤 예약 전쟁이 이어지고 있죠.",
+   "marks": [
+    "수락휴"
+   ]
+  },
+  {
+   "id": "n002",
+   "type": "PARAGRAPH",
+   "text": "작년 12월 객실은 예약 문이 열린 지 2분 만에 다 찼고, 개장 뒤 숙박 객실이 계속 꽉 찼다는 보도도 있었어요. 그래서 수락휴는 '언제, 어떻게 누르느냐'가 전부예요.",
+   "marks": [
+    "2분 만에"
+   ]
+  },
+  {
+   "id": "n003",
+   "type": "PARAGRAPH",
+   "text": "지금 예약을 노린다면 다음 기회는 12월이에요. 1월에 묵을 객실이 12월에 열리거든요. 순서대로 정리해 볼게요."
+  },
+  {
+   "id": "n004",
+   "type": "H2",
+   "text": "예약은 숲나들e, 날짜와 시간이 핵심"
+  },
+  {
+   "id": "n005",
+   "type": "PARAGRAPH",
+   "text": "수락휴 숙박은 국립·공립 휴양림 예약 사이트인 숲나들e(foresttrip.go.kr)에서 받아요. 매달 묵을 날의 전달에 예약이 열립니다.",
+   "marks": [
+    "숲나들e(foresttrip.go.kr)",
+    "전달"
+   ]
+  },
+  {
+   "id": "n006",
+   "type": "TABLE",
+   "headers": [
+    "대상",
+    "예약 시기",
+    "객실"
+   ],
+   "rows": [
+    [
+     "노원구민·장애인",
+     "전월 7일 14시 ~ 9일 18시",
+     "최대 50%"
+    ],
+    [
+     "일반",
+     "전월 10일 14시부터",
+     "남은 객실"
+    ],
+    [
+     "예) 1월 숙박",
+     "일반은 12월 10일 14시",
+     "선착순"
+    ]
+   ]
+  },
+  {
+   "id": "n007",
+   "type": "PARAGRAPH",
+   "text": "선착순이라 10일 오후 2시 정각이 승부예요. 휴대폰과 컴퓨터 시계가 몇 초씩 다를 수 있으니, 정각 직전에 새로고침할 준비를 해 두는 게 좋아요. 미리 숲나들e에 회원가입하고 로그인해 두세요. 날짜와 객실 후보를 두세 개 정해 두면 한 곳이 차도 바로 다음으로 넘어갈 수 있어요."
+  },
+  {
+   "id": "n008",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 평일 숙박을 노리는 게 그나마 현실적인 방법이에요. 주말과 연휴 객실은 거의 첫 화면에서 사라지니까요."
+  },
+  {
+   "id": "n009",
+   "type": "H2",
+   "text": "묵기 전에 알아 둘 이용 규칙"
+  },
+  {
+   "id": "n010",
+   "type": "PARAGRAPH",
+   "text": "객실은 햇살정원, 별빛정원, 하늘정원으로 나뉘어 있고, 지상 14m 높이의 트리하우스 3동이 가장 인기예요. 개장 당시 기준 하루 24실 규모예요.",
+   "marks": [
+    "트리하우스 3동"
+   ]
+  },
+  {
+   "id": "n011",
+   "type": "PARAGRAPH",
+   "text": "• 1인 1일 1실, 1박 2일만 예약 가능"
+  },
+  {
+   "id": "n012",
+   "type": "PARAGRAPH",
+   "text": "• 체크인 15~21시, 체크아웃 다음 날 11시"
+  },
+  {
+   "id": "n013",
+   "type": "PARAGRAPH",
+   "text": "• 수건은 직접 챙겨 가기"
+  },
+  {
+   "id": "n014",
+   "type": "PARAGRAPH",
+   "text": "• 반려동물은 들어갈 수 없음(장애인 보조견 제외)"
+  },
+  {
+   "id": "n015",
+   "type": "HIGHLIGHT",
+   "text": "요금과 세부 규칙은 바뀔 수 있어요. 예약 전에 숲나들e 수락휴 안내를 꼭 확인하세요."
+  },
+  {
+   "id": "n016",
+   "type": "PARAGRAPH",
+   "text": "호텔처럼 수건이 준비돼 있을 거라 생각하기 쉬운데, 휴양림은 개인 물품을 챙기는 곳이 많아요. 수건과 세면도구는 짐 쌀 때 체크리스트에 꼭 넣어 두세요."
+  },
+  {
+   "id": "n017",
+   "type": "H2",
+   "text": "숙박 못 해도 당일로 즐기는 법"
+  },
+  {
+   "id": "n018",
+   "type": "PARAGRAPH",
+   "text": "예약에 실패했다고 실망할 필요는 없어요. 수락휴는 숙박객이 아니어도 둘러볼 곳이 꽤 있어요."
+  },
+  {
+   "id": "n019",
+   "type": "PARAGRAPH",
+   "text": "• 카페: 누구나 이용 가능, 8시~19시"
+  },
+  {
+   "id": "n020",
+   "type": "PARAGRAPH",
+   "text": "• 식당 '씨즌서울': 숙박하지 않아도 이용 가능, 11시~21시 30분"
+  },
+  {
+   "id": "n021",
+   "type": "PARAGRAPH",
+   "text": "• 무장애 숲길, 그늘막 쉼터, 유아숲체험 공간"
+  },
+  {
+   "id": "n022",
+   "type": "PARAGRAPH",
+   "text": "카페와 식당은 숲이 내려다보이는 자리에 있어서, 숙박하지 않아도 분위기를 느끼기엔 충분해요. 아이와 함께라면 유아숲체험 공간과 무장애 숲길을 엮어 반나절 코스로 다녀오기 좋아요. 무장애 숲길은 경사가 완만하게 만들어져 유모차나 휠체어로도 다니기 편한 길이에요."
+  },
+  {
+   "id": "n023",
+   "type": "PARAGRAPH",
+   "text": "가는 길은 지하철 4호선 불암산역(옛 당고개역) 1번 출구에서 걸어서 25분 정도예요. 주소는 서울 노원구 덕릉로145길 108이고, 화요일은 쉬는 시설이 있으니 날짜를 확인하고 가세요.",
+   "marks": [
+    "불암산역(옛 당고개역) 1번 출구"
+   ]
+  },
+  {
+   "id": "n024",
+   "type": "PARAGRAPH",
+   "text": "개인적으로는 당일 방문으로 분위기를 먼저 보고, 그다음 달 예약에 도전하는 순서를 추천해요. 어떤 객실이 마음에 드는지 직접 보고 고르면 예약 화면에서 망설이는 시간도 줄어들거든요."
+  },
+  {
+   "id": "n025",
+   "type": "PARAGRAPH",
+   "text": "예약에 성공했다면 취소 규정도 미리 읽어 두세요. 인기 숙소일수록 취소 표가 나오면 금방 다른 사람이 가져가니, 일정이 바뀌면 빨리 취소해 주는 게 서로를 위한 매너예요."
+  },
+  {
+   "id": "n026",
+   "type": "PARAGRAPH",
+   "text": "처음 예약에 도전한다면 숲나들e 회원가입 단계에서 본인 인증까지 미리 끝내 두세요. 예약 당일에 인증 문자를 기다리다 객실을 놓치는 경우가 생길 수 있거든요."
+  },
+  {
+   "id": "n027",
+   "type": "PARAGRAPH",
+   "text": "비슷한 분위기를 원한다면 다른 국립·공립 자연휴양림도 함께 살펴보세요. 숲나들e에서 지역별로 검색할 수 있어서, 수락휴 예약에 실패했을 때 대안을 찾기 좋아요."
+  },
+  {
+   "id": "n028",
+   "type": "PARAGRAPH",
+   "text": "겨울에는 산속이라 도심보다 기온이 낮아요. 밤에는 꽤 쌀쌀하니 겉옷을 넉넉하게 챙겨 가세요."
+  },
+  {
+   "id": "n029",
+   "type": "PARAGRAPH",
+   "text": "당일 방문이라면 주차 공간이 넉넉하지 않을 수 있으니 대중교통을 먼저 생각해 보세요. 불암산역에서 걸어가는 길도 산책 삼아 다녀오기 좋은 거리예요."
+  },
+  {
+   "id": "n030",
+   "type": "PARAGRAPH",
+   "text": "카페나 식당만 이용하더라도 화요일 휴무는 꼭 확인하고 출발하세요."
+  },
+  {
+   "id": "n031",
+   "type": "PARAGRAPH",
+   "text": "여러분은 수락휴 예약, 성공해 보셨나요? 성공 팁이 있다면 댓글로 나눠 주세요."
+  },
+  {
+   "id": "n032",
+   "type": "PARAGRAPH",
+   "text": "출처: 서울시 미디어허브(2026.10.14), 헤럴드경제, 서울신문",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "수락휴 예약 방법, 1월 객실은 12월 10일 오후 2시에 열린다",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "숲속 나무 데크 산책길",
+   "anchorBlockId": "n021",
+   "position": "after_block"
+  },
+  {
+   "id": "img3",
+   "file": "03-card.png",
+   "alt": "요약 카드",
+   "anchorBlockId": "n031",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "n006",
+   "position": "after_block",
+   "heading": "예약은 숲나들e, 날짜와 시간이 핵심",
+   "near": "",
+   "alt": "숲속 목조 숙소의 아침",
+   "ko": "30대 한국인 여성 1명이 밝은 실내 책상 앞에 앉아 컴퓨터 화면을 보며 긴장된 표정으로 마우스를 쥐고 있습니다. 책상 위에는 검은색 노트북 1대와 스마트폰 1대가 놓여 있으며, 화면에는 예약 웹사이트가 띄워져 있습니다. 오후의 따스한 자연광이 창문으로 부드럽게 들어와 방 안을 비추고 있습니다. 주인공은 화면 중앙에 위치하여 양옆에 충분한 여유 공간이 있고, 눈높이에서 촬영되었으며 배경은 은은하게 흐려져 있습니다.",
+   "en": "A 30-year-old Korean woman sitting at a desk indoors, looking at a computer screen with a tense expression while holding a computer mouse. On the desk, there is one black laptop and one smartphone, displaying a reservation website on the screen. Warm afternoon natural light streams softly through the window, illuminating the room. The main subject is centered with generous negative space on both sides, shot at eye level with the background softly blurred."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "n009",
+   "position": "after_block",
+   "heading": "묵기 전에 알아 둘 이용 규칙",
+   "near": "묵기 전에 알아 둘 이용 규칙",
+   "alt": "숲속 높은 곳에 지은 트리하우스",
+   "ko": "30대 한국인 남성 1명이 밝은 실내에서 흰색 수건 1장을 두 손으로 가지런히 개어 들고 차분한 미소를 짓고 있습니다. 깔끔하게 정돈된 방 안 테이블 위에는 세면도구 파우치 1개가 놓여 있습니다. 실내는 은은하고 따뜻한 실내 조명으로 아늑한 분위기를 자아냅니다. 주인공은 화면 중앙에 배치되어 양옆에 여백이 충분하고, 눈높이 구도로 촬영되었으며 배경은 부드럽게 아웃포커싱되었습니다.",
+   "en": "A 30-year-old Korean man standing indoors, neatly folding a white towel with both hands with a calm smile. On a clean table in the room, there is one toiletries pouch. The indoor space creates a cozy atmosphere with soft and warm indoor lighting. The main subject is positioned in the center of the frame with ample space on both sides, shot at eye level, and the background is softly out of focus."
+  }
+ ]
+}

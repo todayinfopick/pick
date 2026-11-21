@@ -1,0 +1,30 @@
+{
+ "title": "촉촉한 머릿결을 위한 선택",
+ "lines": [
+  "1+1 알뜰 구성",
+  "라이트한 제형",
+  "풍부한 아르간오일",
+  "빠른 흡수력",
+  "은은한 향기"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg"
+ ],
+ "used": [
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg"
+ ]
+}

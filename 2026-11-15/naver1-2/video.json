@@ -1,0 +1,27 @@
+{
+ "title": "3초 슥슥 모두봄 헤어틴트",
+ "lines": [
+  "3초 만에 슥슥 커버",
+  "뭉침 없이 가벼운 텍스처",
+  "자연스러운 컬러 매칭",
+  "퀵 드라이 빠른 건조",
+  "바쁜 아침 간편한 스타일링"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/06.jpg"
+ ]
+}
