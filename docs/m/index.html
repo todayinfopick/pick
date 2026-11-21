@@ -342,6 +342,9 @@ const reviewPrompt=()=>`아래 블로그 글을 웹 검색으로 사실 확인�
 - 근거를 못 찾은 세부 내용(영업시간, 휴무일, 확인 안 되는 금액 등)은 그 부분만 빼거나 "방문 전 확인하세요"처럼 부드럽게 바꿔. 새 내용을 지어내지 마.
 - 문체, 의견, 경험 문장은 건드리지 마.
 - 새 기사·공식 안내를 근거로 고쳤으면, 글 맨 끝 "출처:" 줄도 [고침] 하나로 고쳐서 그 기관·언론사 이름을 덧붙여 (예: "출처: 소방청" → "출처: 소방청, 연합뉴스"). 링크는 넣지 말고 이름만. 출처 줄이 없으면 이 [고침]은 빼.
+- 표 칸이 틀렸으면 원문에는 틀린 칸의 글자만 쓰고(| 기호나 다른 칸은 넣지 말 것), 수정에도 그 칸에 들어갈 글자만 써.
+- [고침]마다 원문·수정·근거 세 줄을 빠짐없이 써. 수정 줄을 빼먹지 마 (문장을 지우려면 "수정:"만 쓰고 뒤를 비워 둬).
+- 답을 표(| 기호)나 코드 블록으로 만들지 말고 일반 글자로만 써.
 - 고칠 곳이 없거나 사소한 것뿐이면 "결론: 이대로 올려도 됨"만 써.
 - 답은 아래 형식만 써. 고칠 곳마다 반복:
 [고침]
@@ -355,14 +358,14 @@ ${postText()}`;
 const clean=s=>String(s||'').split('\n').filter(l=>!/^\s*\|?\s*:?-{3,}[\s\-:|]*$/.test(l)).map(l=>{l=l.trim();return l.includes('|')?l.replace(/^\|\s*|\s*\|$/g,''):l}).join('\n').replace(/^[-*•]\s*/,'').trim().replace(/^[`"'“”‘’「『]+|[`"'“”‘’」』]+$/g,'').replace(/^\*\*|\*\*$/g,'').trim();
 function parseFixes(txt){
   txt=String(txt||'').replace(/\r/g,'').replace(/[ \t]*\\+[ \t]*$/gm,'').replace(/^[ \t]*\|[ \t]*(?=(원문|수정|근거)\s*[:：])/gm,'').replace(/\*\*/g,'').replace(/^[ \t]*(?:[-*•]|\d+\.)[ \t]+(?=(원문|수정|근거)\s*[:：])/gm,'');
-  const parts=txt.split(/\[\s*고침\s*\]/).slice(1);const out=[];
+  const parts=txt.split(/\[\s*고침\s*\]/).slice(1);const out=[],missing=[];
   for(const p of parts){
     const m=p.match(/원문[ \t]*[:：][ \t]*([\s\S]*?)\n[ \t]*수정[ \t]*[:：][ \t]*([^\n]*(?:\n(?![ \t]*근거[ \t]*[:：])[^\n]*)*?)(?:\n[ \t]*근거[ \t]*[:：][\s\S]*)?$/);
-    if(!m)continue;let to=m[2];to=to.split(/\n\s*(?:결론\s*[:：]|\[\s*고침)/)[0];
+    if(!m){const o=p.match(/원문[ \t]*[:：][ \t]*([^\n]+)/);if(o&&!/수정[ \t]*[:：]/.test(p))missing.push(clean(o[1]).replace(/^(?:제목\s*[:：]\s*|#{1,4}\s+|>\s+)/,''));continue}let to=m[2];to=to.split(/\n\s*(?:결론\s*[:：]|\[\s*고침)/)[0];
     const lead=x=>x.replace(/^(?:제목\s*[:：]\s*|#{1,4}\s+|>\s+)/,'').replace(/\\([~*_`#\[\]().!>|+\-])/g,'$1');
     const norm=x=>clean(lead(clean(x)));const from=norm(m[1]);to=norm(to);if(from)out.push({from,to});
   }
-  const c=String(txt||'').match(/결론\s*[:：]\s*([^\n]+)/);return {fixes:out,verdict:c?c[1].trim():''};
+  const c=String(txt||'').match(/결론\s*[:：]\s*([^\n]+)/);return {fixes:out,verdict:c?c[1].trim():'',missing};
 }
 function findLoose(hay,needle){
   hay=String(hay||'');const i=hay.indexOf(needle);if(i>=0)return [i,i+needle.length];
@@ -407,8 +410,9 @@ function applyFixes(fixes){
   return res;
 }
 function doApply(){
-  const out=$('#revOut');const {fixes,verdict}=parseFixes($('#revTxt').value);
-  if(!fixes.length){out.textContent=(verdict?`결론: ${verdict}\n`:'')+'고칠 곳([고침] 원문/수정)을 찾지 못했어요.'+(/이대로/.test(verdict)?'\n\n👉 고칠 곳이 없으면 [💾 검수 저장]을 눌러 검수완료로 표시하세요.':'');return}
+  const out=$('#revOut');const {fixes,verdict,missing}=parseFixes($('#revTxt').value);
+  const miss=missing.length?`\n\n⚠ "수정:" 줄이 없는 고침 ${missing.length}개 (무엇으로 바꿀지 몰라 건너뜀):\n`+missing.map(x=>'· '+x.slice(0,80)).join('\n')+'\n👉 검수한 AI에게 "수정 줄까지 [고침] 원문/수정/근거 형식으로, 표 기호(|) 없이 다시 써 줘"라고 보내 주세요. 표 칸이면 ✏로 그 칸만 직접 고쳐도 돼요.':'';
+  if(!fixes.length){out.textContent=(verdict?`결론: ${verdict}\n`:'')+(missing.length?'적용할 수 있는 고침이 없어요.':'고칠 곳([고침] 원문/수정)을 찾지 못했어요.')+miss+(/이대로/.test(verdict)?'\n\n👉 고칠 곳이 없으면 [💾 검수 저장]을 눌러 검수완료로 표시하세요.':'');return}
   const r=applyFixes(fixes);const ok=r.filter(x=>x.done),al=r.filter(x=>x.already),no=r.filter(x=>!x.done&&!x.already);
   if(!ok.length&&!al.length&&no.length){out.textContent=`⚠ 이 글「${String(CUR.content.title||'').slice(0,30)}」과 맞는 곳이 하나도 없어요. 다른 글의 검수 결과를 붙여 넣은 것 같아요.\n\n못 찾은 원문:\n`+no.map(x=>'· '+x.from).join('\n');return}
   for(const f of [...ok,...al])if(!CUR.fixes.some(o=>o.from===f.from&&o.to===f.to))CUR.fixes.push({from:f.from,to:f.to||''});
@@ -417,7 +421,7 @@ function doApply(){
   if(no.length)t+='\n\n못 찾은 원문:\n'+no.map(x=>'· '+x.from+(x.to?'  →  '+x.to:'  →  (지우기)')).join('\n');
   if(ok.length)t+='\n\n고친 곳:\n'+ok.map(x=>(x.fuzzy?'· [비슷한 문장에 적용, 확인] ':'· ')+diff(x.from,x.to)).join('\n');
   if(/빼기/.test(verdict))t='⚠ 결론이 "빼기"예요. 이 글은 올리지 않는 게 좋아요.\n'+t;
-  t+='\n\n👉 다 고쳤으면 [💾 검수 저장]을 눌러 주세요.';
+  t+=miss+'\n\n👉 다 고쳤으면 [💾 검수 저장]을 눌러 주세요.';
   renderKeep();$('#revOut').textContent=t;
 }
 function diff(a,b){if(!b)return a.slice(0,40)+'  →  (지움)';let i=0;while(i<a.length&&i<b.length&&a[i]===b[i])i++;let j=0;while(j<a.length-i&&j<b.length-i&&a[a.length-1-j]===b[b.length-1-j])j++;const st=Math.max(0,i-12),cut=(v,e)=>{const m=v.slice(st,Math.min(v.length,e+12));return (st?'…':'')+(m.length>60?m.slice(0,60)+'…':m)+(e+12<v.length&&m.length<=60?'…':'')};return cut(a,a.length-j)+'  →  '+cut(b,b.length-j)}
