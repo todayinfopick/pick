@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#1a73e8">
+<title>블로그 발행</title>
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--text:#1c2430;--muted:#6b7785;--line:#e2e7ee;--accent:#1a73e8;--soft:#eaf2fe;--ok:#0b9b5a;--okbg:#e6f6ee;--warn:#c0392b;--warnbg:#fdecea;--purple:#7c3aed;--purplebg:#f5f0ff;--hl:#fff7d6}
+@media (prefers-color-scheme:dark){:root{--bg:#111418;--card:#1b2027;--text:#e9edf2;--muted:#9aa6b3;--line:#2b323c;--accent:#5b9cf5;--soft:#1d2a3d;--ok:#3ccf8e;--okbg:#15302a;--warn:#ff7b6b;--warnbg:#3a1f1c;--purple:#a78bfa;--purplebg:#251d3a;--hl:#3a3418}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+header{position:sticky;top:0;z-index:10;background:var(--card);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;gap:8px}
+header h1{font-size:18px;margin:0;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+main{max-width:720px;margin:0 auto;padding:12px 16px 120px}
+button,.btn{font:inherit;font-size:15px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:10px;padding:9px 12px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+button:disabled{opacity:.5}
+button.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+button.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+button.pur{background:var(--purple);border-color:var(--purple);color:#fff}
+button.sm{font-size:13px;padding:5px 9px;border-radius:8px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0}
+.muted{color:var(--muted);font-size:13px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:4px 0 8px;scrollbar-width:none}
+.chip{border-radius:999px;padding:6px 12px;font-size:14px;flex:none}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.badge{display:inline-block;font-size:12px;border-radius:999px;padding:1px 8px;margin-right:4px;white-space:nowrap;background:var(--soft);color:var(--accent)}
+.b-urgent{background:#e74c3c;color:#fff}.b-old{background:#999;color:#fff}.b-rev{background:var(--ok);color:#fff}.b-done{background:var(--line);color:var(--muted)}
+.item{display:block;width:100%;text-align:left;white-space:normal;padding:12px 14px;margin:8px 0;border-radius:14px}
+.item .t{font-weight:600;line-height:1.45;margin:4px 0 2px}
+.item.isdone{opacity:.55}
+h2.grp{font-size:15px;margin:18px 2px 4px;color:var(--muted)}
+.notice{border:2px solid var(--warn);background:var(--warnbg);border-radius:12px;padding:8px 12px;margin:8px 0;font-size:14px}
+.post h2{font-size:19px;margin:22px 0 8px;padding:6px 10px;border-left:4px solid var(--accent);background:var(--soft);border-radius:4px}
+.post h3{font-size:17px;margin:18px 0 6px}
+.post p{margin:8px 0;white-space:pre-wrap;word-break:keep-all;overflow-wrap:anywhere}
+.post blockquote{margin:10px 0;padding:8px 12px;border-left:4px solid var(--muted);color:var(--muted);white-space:pre-wrap}
+.post .hl{background:var(--hl);border-radius:8px;padding:10px 12px;margin:10px 0;white-space:pre-wrap}
+.post table{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0;display:block;overflow-x:auto}
+.post td,.post th{border:1px solid var(--line);padding:6px 8px;vertical-align:top}
+.post th{background:var(--soft)}
+.blk{position:relative;border-radius:8px}
+.blk.changed{outline:2px dashed var(--ok);outline-offset:3px}
+.blk{padding-right:34px}.blk .edit{position:absolute;right:0;top:2px;opacity:.7;padding:2px 6px;font-size:12px}
+.post b.mk{background:linear-gradient(transparent 55%,#ffe36e 55%);color:inherit}
+@media (prefers-color-scheme:dark){.post b.mk{background:linear-gradient(transparent 55%,#7a6510 55%)}}
+.pic{margin:14px 0;text-align:center}
+.pic img{max-width:100%;border-radius:10px;display:block;margin:0 auto 6px;background:var(--line);min-height:60px}
+.pic .cap{font-size:13px;color:var(--muted)}
+.sect{border-top:2px dotted var(--line);margin:16px 0 6px;padding-top:8px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+textarea,input[type=text],input[type=password]{width:100%;font:inherit;font-size:15px;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:10px;padding:8px 10px}
+textarea{min-height:120px}
+.out{white-space:pre-wrap;font-size:14px;margin-top:8px}
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--card);border-top:1px solid var(--line);padding:8px 10px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bar button{justify-content:center;font-size:14px;padding:8px 4px}
+main{padding-bottom:150px}
+#toast{position:fixed;left:50%;bottom:150px;transform:translateX(-50%);background:#222;color:#fff;padding:8px 14px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20;max-width:90vw;text-align:center}
+#toast.on{opacity:.92}
+details summary{cursor:pointer;font-weight:600;padding:4px 0}
+.hidden{display:none!important}
+.tags{font-size:14px;color:var(--accent);word-break:break-all}
+</style>
+</head>
+<body>
+<header><button id="back" class="hidden sm" aria-label="목록으로">←</button><h1 id="htitle">블로그 발행</h1><button id="reload" class="sm">새로고침</button><button id="gear" class="sm" aria-label="설정">⚙</button></header>
+<main id="main"></main>
+<div id="toast"></div>
+<script>
+'use strict';
+const BASE='https://raw.githubusercontent.com/todayinfopick/pick/blog-packages/';
+const OWNER='todayinfopick',REPO='pick',BRANCH='blog-packages';
+const API=`https://api.github.com/repos/${OWNER}/${REPO}/`;
+const BLOGS={naver1:'남다른 오늘',naver2:'알뜰한 오늘',naver3:'쓸모있는 오늘',tistory:'티스토리 IT',tistory2:'오늘의 돈 공부',tistory_shop:'오늘의 쇼핑',tistory_car:'오늘의 자동차',tistory_job:'오늘의 자격증'};
+const COUPANG_NOTE='이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.';
+const NAVER_NOTE='이 포스팅은 네이버 쇼핑 커넥트 활동의 일환으로, 판매 발생 시 수수료를 제공받습니다.';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const kst=()=>new Date(Date.now()+9*3600e3).toISOString().slice(0,19);
+const todayK=()=>kst().slice(0,10);
+const store={get(k,d){try{const v=localStorage.getItem('m_'+k);return v==null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem('m_'+k,JSON.stringify(v))}catch(_){}}};
+const token=()=>String(store.get('token','')).replace(/[^\x21-\x7E]/g,'');
+function toast(t,ms=2200){const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),ms)}
+const b64=s=>btoa(unescape(encodeURIComponent(s)));
+const unb64=s=>decodeURIComponent(escape(atob(String(s).replace(/\n/g,''))));
+
+// ---------- 서버 읽기·쓰기 ----------
+async function gh(method,path,body){
+  const t=token();
+  const r=await fetch(API+path,{method,cache:'no-store',headers:{Accept:'application/vnd.github+json',...(t?{Authorization:'Bearer '+t}:{})},body:body?JSON.stringify(body):undefined});
+  if(method==='GET'&&r.status===404)return null;
+  if(r.status===401||r.status===403)throw new Error(`깃허브 키를 확인해 주세요 (${r.status}). Contents 쓰기 권한이 있어야 해요.`);
+  if(!r.ok)throw new Error(`${r.status} ${path.split('?')[0]}`);
+  return r.json();
+}
+async function rawFile(path,asBlob){
+  // 키가 있으면 깃허브 API로 바로 (raw 주소는 5분 늦게 바뀔 수 있음)
+  const t=token();
+  if(t){try{const r=await fetch(API+'contents/'+path.split('/').map(encodeURIComponent).join('/')+`?ref=${BRANCH}&t=${Date.now()}`,{cache:'no-store',headers:{Accept:'application/vnd.github.raw',Authorization:'Bearer '+t}});if(r.ok)return asBlob?r.blob():r.text()}catch(_){}}
+  const r=await fetch(BASE+path.split('/').map(encodeURIComponent).join('/')+'?t='+Date.now(),{cache:'no-store'});
+  if(!r.ok)throw new Error(r.status+' '+path);
+  return asBlob?r.blob():r.text();
+}
+let saveQueue=Promise.resolve();
+function queue(job){const run=saveQueue.then(job);saveQueue=run.catch(()=>{});return run}
+const retry=async fn=>{for(let i=0;;i++){try{return await fn()}catch(e){if(i>=4||!/^(409|422) /.test(String(e.message)))throw e;await new Promise(r=>setTimeout(r,900*(i+1)))}}};
+
+// ---------- 상태 ----------
+let INDEX=null,DONE={},CUR=null; // CUR: {pkg, content, orig, fixes:[], edited:Set, sha}
+const isDone=p=>!!DONE[p.id]||store.get('localDone',[]).includes(p.id);
+const rank=p=>isDone(p)?3:p.stock?1.5:p.urgent?(p.until&&p.until<todayK()?2:0):1;
+
+async function loadIndex(){
+  const [ix,dn]=await Promise.all([rawFile('index.json').then(JSON.parse),rawFile('done.json').then(JSON.parse).catch(()=>({}))]);
+  INDEX=ix;DONE=(dn&&dn.done)||{};
+}
+
+// ---------- 목록 ----------
+async function showList(force){
+  CUR=null;$('#back').classList.add('hidden');$('#htitle').textContent='블로그 발행';
+  const m=$('#main');
+  if(!INDEX||force){m.innerHTML='<p class="muted">목록을 받는 중…</p>';try{await loadIndex()}catch(e){m.innerHTML=`<div class="notice">목록을 받지 못했어요. (${esc(e.message)})</div>`;return}}
+  const filt=store.get('blog','all'),showDone=store.get('showDone',false);
+  const all=(INDEX.packages||[]).map((p,i)=>({...p,_i:i}));
+  const keys=[...new Set(all.map(p=>p.blogKey))];
+  const pk=all.filter(p=>filt==='all'||p.blogKey===filt).sort((a,b)=>rank(a)-rank(b)||(rank(a)===0?(a.until||'9999').localeCompare(b.until||'9999'):0)||String(b.date).localeCompare(String(a.date))||a._i-b._i);
+  const live=pk.filter(p=>!isDone(p)),done=pk.filter(isDone);
+  const since=new Date(Date.now()+9*3600e3-2*864e5).toISOString().slice(0,19);
+  const hid=store.get('hidNotices',[]);
+  const notices=(INDEX.notices||[]).filter(n=>n&&String(n.at||'')>=since&&!hid.includes(n.at+'|'+n.blog+'|'+n.name));
+  const cnt=k=>all.filter(p=>(k==='all'||p.blogKey===k)&&!isDone(p)).length;
+  let h=`<div class="chips">${['all',...keys].map(k=>`<button class="chip ${filt===k?'on':''}" data-blog="${esc(k)}">${esc(k==='all'?'전체':BLOGS[k]||all.find(p=>p.blogKey===k)?.blogName||k)} ${cnt(k)}</button>`).join('')}</div>`;
+  if(!token())h+=`<div class="card muted">깃허브 키를 넣으면 검수 저장·발행 완료 표시가 PC와 같이 저장돼요. <button class="sm" data-act="gear">키 넣기</button></div>`;
+  h+=notices.map(n=>`<div class="notice"><button class="sm" style="float:right" data-hide="${esc(n.at+'|'+n.blog+'|'+n.name)}">✕</button><b>⚠ ${esc(fmtT(n.at))} · ${esc(BLOGS[n.blog]||n.blog||'')}</b><br>${esc(n.name||'')} — ${esc(n.reason||'')}</div>`).join('');
+  if(!live.length)h+=`<p class="muted">남은 글이 없어요.</p>`;
+  const groups=filt==='all'?keys.map(k=>[k,live.filter(p=>p.blogKey===k)]).filter(g=>g[1].length):[[filt,live]];
+  for(const [k,ps] of groups){h+=filt==='all'?`<h2 class="grp">${esc(BLOGS[k]||ps[0].blogName||k)}</h2>`:'';h+=ps.map(item).join('')}
+  if(done.length)h+=`<details ${showDone?'open':''} id="doneBox" class="card"><summary>✔ 발행 완료한 글 ${done.length}개</summary>${done.map(item).join('')}</details>`;
+  h+=`<p class="muted">마지막 작성: ${esc(String(INDEX.updated||'').replace('T',' ').slice(0,16))}</p>`;
+  m.innerHTML=h;
+  m.querySelectorAll('[data-blog]').forEach(b=>b.onclick=()=>{store.set('blog',b.dataset.blog);showList()});
+  m.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{location.hash='p='+encodeURIComponent(b.dataset.id)});
+  m.querySelectorAll('[data-hide]').forEach(b=>b.onclick=()=>{store.set('hidNotices',[b.dataset.hide,...store.get('hidNotices',[])].slice(0,50));showList()});
+  m.querySelector('[data-act=gear]')?.addEventListener('click',showSettings);
+  const db=$('#doneBox');if(db)db.ontoggle=()=>store.set('showDone',db.open);
+}
+function fmtT(iso){const x=String(iso||'').match(/^\d{4}-(\d\d)-(\d\d)T(\d\d:\d\d)/);return x?`${+x[1]}/${+x[2]} ${x[3]}`:''}
+function item(p){
+  const r=rank(p),until=p.until?' ~'+p.until.slice(5).replace('-','/'):'';
+  const b=[r===0?`<span class="badge b-urgent">급함${esc(until)}</span>`:r===2?`<span class="badge b-old">기한 지남</span>`:r===1.5?`<span class="badge">비상용</span>`:r===3?`<span class="badge b-done">완료 ${esc(fmtT(DONE[p.id]))}</span>`:`<span class="badge">상시</span>`];
+  if(p.reviewed)b.push(`<span class="badge b-rev">검수완료</span>`);
+  if(p.kind==='쇼핑')b.push(`<span class="badge">상품</span>`);
+  if(p.kind==='영상')b.push(`<span class="badge">영상</span>`);
+  return `<button class="item card ${isDone(p)?'isdone':''}" data-id="${esc(p.id)}"><div>${b.join('')}</div><div class="t">${esc(p.title||p.id)}</div><div class="muted">${esc(p.blogName||BLOGS[p.blogKey]||'')} · ${esc(p.category||'')} · ${esc(String(p.date||'').slice(5).replace('-','/'))} · ${p.chars||'?'}자 · 사진 ${(p.files||[]).filter(isImg).length}장</div></button>`;
+}
+const isImg=f=>/\.(jpe?g|png|webp|gif)$/i.test(f);
+
+// ---------- 글 보기 ----------
+async function gitBlobSha(text){const bytes=new TextEncoder().encode(text);const head=new TextEncoder().encode(`blob ${bytes.length}\0`);const all=new Uint8Array(head.length+bytes.length);all.set(head);all.set(bytes,head.length);const h=await crypto.subtle.digest('SHA-1',all);return [...new Uint8Array(h)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+async function showPost(id){
+  if(!INDEX)try{await loadIndex()}catch(e){$('#main').innerHTML=`<div class="notice">목록을 받지 못했어요. (${esc(e.message)})</div>`;return}
+  const pkg=(INDEX.packages||[]).find(p=>p.id===id);
+  if(!pkg){$('#main').innerHTML='<div class="notice">이 글이 서버에 없어요 (지워졌을 수 있어요).</div>';$('#back').classList.remove('hidden');return}
+  $('#back').classList.remove('hidden');$('#htitle').textContent=pkg.blogName||BLOGS[pkg.blogKey]||'글';
+  $('#main').innerHTML='<p class="muted">글을 받는 중…</p>';
+  let txt;try{txt=await rawFile(pkg.id+'/content.json')}catch(e){$('#main').innerHTML=`<div class="notice">글을 받지 못했어요. (${esc(e.message)})</div>`;return}
+  const content=JSON.parse(txt);
+  const draft=store.get('draft:'+pkg.id,null);
+  const sha=await gitBlobSha(txt).catch(()=>'');
+  CUR={pkg,content,sha,fixes:[],edited:new Set()};
+  if(draft&&draft.sha===sha&&draft.content){CUR.content=draft.content;CUR.fixes=draft.fixes||[];CUR.edited=new Set(draft.edited||[]);toast('저장 안 한 고침을 다시 불러왔어요')}
+  else if(draft)store.set('draft:'+pkg.id,null);
+  renderPost();window.scrollTo(0,0);
+}
+function keepDraft(){if(!CUR)return;store.set('draft:'+CUR.pkg.id,{sha:CUR.sha,content:CUR.content,fixes:CUR.fixes,edited:[...CUR.edited]})}
+const imgUrl=(pkg,f)=>BASE+pkg.id.split('/').map(encodeURIComponent).join('/')+'/'+encodeURIComponent(f)+(pkg.photoVer||pkg.reviewed?'?v='+encodeURIComponent((pkg.photoVer||'')+(pkg.reviewed||'')):'');
+function imageList(c){
+  const decl=[...(c.blocks||[]).filter(b=>String(b?.type).toUpperCase()==='IMAGE').map(b=>({...b,file:b.file||b.text||b.content})),...(c.images||[])];
+  const seen=new Set();return decl.filter(d=>d&&d.file&&!seen.has(d.file)&&seen.add(d.file));
+}
+// 글 순서대로: 대표 사진 → 블록 (블록 뒤에 붙은 사진)
+function layout(c){
+  const imgs=imageList(c),text=(c.blocks||[]).filter(b=>String(b?.type).toUpperCase()!=='IMAGE');
+  const ids=new Set(text.map(b=>String(b.id)));
+  const top=imgs.filter(i=>!i.anchorBlockId||!ids.has(String(i.anchorBlockId)));
+  const seq=top.map(i=>({img:i}));
+  for(const b of text){seq.push({blk:b});for(const i of imgs)if(i.anchorBlockId&&String(i.anchorBlockId)===String(b.id))seq.push({img:i})}
+  return seq;
+}
+function disclosure(){const p=CUR.pkg,all=JSON.stringify(CUR.content.blocks||[]);
+  if((p.shop==='coupang'||/coupang\.com|coupa\.ng/i.test(all+(p.link||'')))&&!/쿠팡\s*파트너스\s*활동/.test(all))return COUPANG_NOTE;
+  if(/naver\.me|smartstore|shopping\.naver|brand\.naver/i.test(p.link||'')&&p.platform==='naver'&&!/쇼핑\s*커넥트\s*활동/.test(all))return NAVER_NOTE;
+  return ''}
+// **굵게**, marks → 표시
+function inline(text,marks,html){
+  let s=String(text||'');
+  if(!html)return s.replace(/\*\*(.+?)\*\*/g,'$1');
+  let h=esc(s).replace(/\*\*(.+?)\*\*/g,'<b class="mk">$1</b>');
+  for(const m of marks||[]){const em=esc(m);if(em&&h.includes(em)&&!h.includes('<b class="mk">'+em))h=h.split(em).join('<b class="mk">'+em+'</b>')}
+  return h;
+}
+function blockHtml(b,forCopy){
+  const t=String(b.type||'PARAGRAPH').toUpperCase(),tx=inline(b.text,b.marks,true);
+  const st=forCopy?{h2:' style="font-size:20px;font-weight:bold"',q:' style="border-left:4px solid #999;padding-left:10px;color:#555"',hl:' style="background:#fff7d6;padding:10px"',td:' style="border:1px solid #c8c8c8;padding:6px"',th:' style="border:1px solid #c8c8c8;padding:6px;background:#f2f2f2;font-weight:bold"'}:{h2:'',q:'',hl:' class="hl"',td:'',th:''};
+  const mk=forCopy?h=>h.replace(/<b class="mk">/g,'<b>'):h=>h;
+  if(t==='H2')return `<h2${st.h2}>${mk(tx)}</h2>`;
+  if(t==='H3')return `<h3>${mk(tx)}</h3>`;
+  if(t==='QUOTE')return `<blockquote${st.q}>${mk(tx)}</blockquote>`;
+  if(t==='HIGHLIGHT')return `<div${st.hl}>${mk(tx)}</div>`;
+  if(t==='TABLE')return `<table${forCopy?' style="border-collapse:collapse"':''}>${b.headers?.length?`<tr>${b.headers.map(x=>`<th${st.th}>${esc(x)}</th>`).join('')}</tr>`:''}${(b.rows||[]).map(r=>`<tr>${r.map(x=>`<td${st.td}>${esc(x)}</td>`).join('')}</tr>`).join('')}</table>`;
+  return `<p>${mk(tx)}</p>`;
+}
+function blockText(b){
+  const t=String(b.type||'').toUpperCase();
+  if(t==='TABLE')return [b.headers||[],...(b.rows||[])].filter(r=>r.length).map(r=>r.join(' | ')).join('\n');
+  return inline(b.text,null,false);
+}
+function renderPost(){
+  const {pkg,content:c}=CUR;const seq=layout(c);const done=isDone(pkg);
+  // 사진을 경계로 나눈 '부분' (붙여넣기 → 사진 넣기 → 다음 부분)
+  const parts=[];let cur=[];for(const s of seq){if(s.img){if(cur.length)parts.push(cur),cur=[]}else cur.push(s.blk)}if(cur.length)parts.push(cur);
+  CUR.parts=parts;
+  let h=`<div class="card"><div>${item(pkg).replace(/^<button[^>]*>|<\/button>$/g,'').replace(/<div class="t">[\s\S]*?<\/div>/,'')}</div>
+    <div class="blk" data-k="title" style="margin:6px 0"><b style="font-size:18px">${esc(c.title||'')}</b> <button class="sm edit" data-edit="title">✏</button></div>
+    <div class="tags">${(c.tags||[]).map(t=>'#'+esc(t)).join(' ')}</div>
+    ${c.category?`<div class="muted">카테고리: ${esc(c.category)}</div>`:''}
+    ${pkg.links?.length||pkg.link?`<div class="row" style="margin-top:6px">${(pkg.links?.length?pkg.links:[{name:'상품 링크',link:pkg.link}]).map(l=>`<button class="sm" data-copy-link="${esc(l.link)}">🔗 ${esc(String(l.name||'링크').slice(0,18))} 복사</button>`).join('')}</div>`:''}
+    ${disclosure()?`<div class="muted" style="margin-top:6px">⚠ 글 맨 위에 넣을 안내문: ${esc(disclosure())} <button class="sm" data-copy-note>복사</button></div>`:''}
+  </div>`;
+  // 검수
+  h+=`<details class="card" id="revBox" ${store.get('revOpen',true)?'open':''}><summary>🔎 검수 (지피티·제미나이·클로드 앱)</summary>
+    <ol class="muted" style="padding-left:18px;margin:6px 0"><li>[검수 요청 복사]를 누르고 AI 앱 채팅에 붙여 넣기</li><li>AI 답을 통째로 복사해서 아래 칸에 붙여 넣고 [적용]</li><li>[💾 검수 저장]을 누르면 PC 스튜디오에도 고친 글로 나와요</li></ol>
+    <div class="row"><button class="pri" data-act="revcopy">📋 검수 요청 복사</button><a class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener">지피티</a><a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">제미나이</a><a class="btn" href="https://claude.ai/new" target="_blank" rel="noopener">클로드</a></div>
+    <textarea id="revTxt" style="margin-top:8px" placeholder="[고침]&#10;원문: …&#10;수정: …&#10;근거: …"></textarea>
+    <div class="row" style="margin-top:6px"><button class="pur" data-act="paste">📥 붙여넣고 적용</button><button data-act="apply">적용</button><button class="ok" data-act="save">💾 검수 저장</button></div>
+    <div id="revOut" class="out"></div>
+    ${pkg.reviewed?`<div class="muted">검수 저장: ${esc(fmtT(pkg.reviewed))}${pkg.reviewFixes!=null?` · ${pkg.reviewFixes}곳 고침`:''}</div>`:''}
+    ${CUR.edited.size||CUR.fixes.length?`<div class="muted" style="color:var(--warn)">● 아직 서버에 저장 안 한 고침이 있어요 (점선 상자)</div>`:''}
+  </details>`;
+  // 본문
+  h+=`<div class="post card">`;let pi=0;let first=true;
+  for(const s of seq){
+    if(s.img){const f=s.img.file;h+=`<div class="pic"><img loading="lazy" src="${esc(imgUrl(pkg,f))}" alt="${esc(s.img.alt||'')}"><div class="cap">${esc(s.img.role==='COVER'?'대표 사진 · ':'')}${esc(s.img.caption||'')}</div><button class="sm" data-save-img="${esc(f)}">⬇ 이 사진 저장</button></div>`;first=true;continue}
+    if(first){h+=`<div class="sect"><span class="muted">부분 ${pi+1}/${parts.length}</span><button class="sm pri" data-copy-part="${pi}">📋 이 부분 복사</button></div>`;pi++;first=false}
+    const b=s.blk;h+=`<div class="blk ${CUR.edited.has(String(b.id))?'changed':''}" data-k="${esc(b.id)}">${blockHtml(b,false)}<button class="sm edit" data-edit="${esc(b.id)}">✏</button></div>`;
+  }
+  h+=`</div><div class="row" style="justify-content:center;margin:16px 0"><button class="${done?'':'ok'}" data-act="done">${done?'↩ 발행 완료 취소':'✔ 발행 완료 표시'}</button></div>`;
+  $('#main').innerHTML=h;
+  // 아래 고정 버튼
+  let bar=$('.bar');if(!bar){bar=document.createElement('div');bar.className='bar';document.body.appendChild(bar)}
+  bar.innerHTML=`<button data-act="ctitle">제목 복사</button><button data-act="ctags">태그 복사</button><button class="pri" data-act="call">본문 전체 복사</button><button data-act="ctext">글자만 복사</button><button data-act="pics">📷 사진 모두 저장</button><button data-act="done2">✔ 발행 완료</button>`;
+  wirePost();
+}
+function wirePost(){
+  const on=(sel,fn)=>document.querySelectorAll(sel).forEach(b=>b.onclick=e=>fn(b,e));
+  on('[data-act=ctitle]',()=>copyText(CUR.content.title||'','제목'));
+  on('[data-act=ctags]',()=>{const t=(CUR.content.tags||[]).map(x=>String(x).replace(/^#/,'').trim()).filter(Boolean);copyText(CUR.pkg.platform==='naver'?t.map(x=>'#'+x.replace(/\s+/g,'')).join(' '):t.join(', '),'태그')});
+  on('[data-act=call]',()=>copyRich(CUR.parts.flat(),'본문 전체',true));
+  on('[data-act=ctext]',()=>copyText((disclosure()?disclosure()+'\n\n':'')+CUR.parts.flat().map(blockText).filter(Boolean).join('\n\n'),'본문 글자'));
+  on('[data-copy-part]',b=>copyRich(CUR.parts[+b.dataset.copyPart],`부분 ${+b.dataset.copyPart+1}`,+b.dataset.copyPart===0));
+  on('[data-copy-link]',b=>copyText(b.dataset.copyLink,'링크'));
+  on('[data-copy-note]',()=>copyText(disclosure(),'안내문'));
+  on('[data-save-img]',b=>savePics([b.dataset.saveImg],b));
+  on('[data-act=pics]',b=>savePics(imageList(CUR.content).map(i=>i.file),b));
+  on('[data-edit]',b=>editBlock(b.dataset.edit));
+  on('[data-act=revcopy]',()=>copyText(reviewPrompt(),'검수 요청'));
+  on('[data-act=apply]',()=>doApply());
+  on('[data-act=paste]',async()=>{try{const t=await navigator.clipboard.readText();if(t){$('#revTxt').value=t;doApply()}else toast('복사한 내용이 없어요')}catch(_){toast('붙여넣기 권한이 없어요. 칸을 길게 눌러 붙여 넣고 [적용]을 누르세요',3500);$('#revTxt').focus()}});
+  on('[data-act=save]',b=>saveReview(b));
+  on('[data-act=done]',b=>toggleDone(b));on('[data-act=done2]',b=>{if(isDone(CUR.pkg)){toast('이미 발행 완료로 표시된 글이에요');return}toggleDone(b)});
+  const rb=$('#revBox');if(rb)rb.ontoggle=()=>store.set('revOpen',rb.open);
+}
+async function copyText(t,label){
+  try{await navigator.clipboard.writeText(t);toast(`✓ ${label} 복사됨`)}
+  catch(_){const ta=document.createElement('textarea');ta.value=t;ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.select();let ok=false;try{ok=document.execCommand('copy')}catch(_){}ta.remove();toast(ok?`✓ ${label} 복사됨`:'복사하지 못했어요')}
+}
+async function copyRich(blocks,label,withNote){
+  const note=withNote?disclosure():'';
+  const plain=(note?note+'\n\n':'')+blocks.map(blockText).filter(Boolean).join('\n\n');
+  const html=(note?`<p style="font-size:13px;color:#777">${esc(note)}</p>`:'')+blocks.map(b=>blockHtml(b,true)).join('');
+  try{if(window.ClipboardItem&&navigator.clipboard?.write){await navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([plain],{type:'text/plain'})})]);toast(`✓ ${label} 복사됨 (서식 포함)`);return}}catch(_){}
+  copyText(plain,label);
+}
+
+// ---------- 사진 저장 (사진 속 정보는 지우고 다시 저장) ----------
+async function cleanBlob(blob,name){
+  try{
+    const bmp=await createImageBitmap(blob);const cv=document.createElement('canvas');cv.width=bmp.width;cv.height=bmp.height;cv.getContext('2d').drawImage(bmp,0,0);
+    const png=/\.png$/i.test(name);const out=await new Promise(r=>cv.toBlob(r,png?'image/png':'image/jpeg',.92));
+    return out||blob;
+  }catch(_){return blob}
+}
+async function savePics(files,btn){
+  if(!files.length){toast('사진이 없어요');return}
+  const old=btn.textContent;btn.disabled=true;btn.textContent='받는 중…';
+  try{
+    const safe=CUR.pkg.id.replace(/[^\w-]+/g,'_'); // 영문 이름: 한글 파일 이름은 일부 폰에서 'download'로 바뀜
+    const list=await Promise.all(files.map(async(f,i)=>{const blob=await rawFile(CUR.pkg.id+'/'+f,true);const nb=await cleanBlob(blob,f);const ext=/\.png$/i.test(f)?'png':'jpg';
+      const name=files.length>1?`${safe}_${String(imageList(CUR.content).findIndex(x=>x.file===f)+1).padStart(2,'0')}.${ext}`:`${safe}_${f.replace(/\.\w+$/,'')}.${ext}`;
+      return new File([nb],name,{type:ext==='png'?'image/png':'image/jpeg'})}));
+    if(navigator.canShare&&navigator.canShare({files:list})){
+      try{await navigator.share({files:list});btn.textContent='✓ 공유함';return}catch(e){if(e&&e.name==='AbortError'){btn.textContent=old;return}}
+    }
+    for(const f of list){const a=document.createElement('a');a.href=URL.createObjectURL(f);a.download=f.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),60000);await new Promise(r=>setTimeout(r,400))}
+    btn.textContent=`✓ ${list.length}장 내려받음`;
+  }catch(e){toast('사진을 받지 못했어요: '+e.message,3500);btn.textContent=old}
+  finally{btn.disabled=false;setTimeout(()=>{if(btn.isConnected&&/^✓/.test(btn.textContent))btn.textContent=old},4000)}
+}
+
+// ---------- 직접 고치기 ----------
+function editBlock(k){
+  const el=document.querySelector(`.blk[data-k="${CSS.escape(k)}"]`);if(!el||el.querySelector('textarea'))return;
+  const c=CUR.content;const b=k==='title'?null:(c.blocks||[]).find(x=>String(x.id)===k);
+  const isTable=b&&String(b.type).toUpperCase()==='TABLE';
+  const val=k==='title'?c.title:isTable?[b.headers||[],...(b.rows||[])].map(r=>r.join(' | ')).join('\n'):b.text;
+  el.innerHTML=`<textarea>${esc(val||'')}</textarea><div class="row" style="margin:4px 0 10px"><button class="sm ok" data-ok>확인</button><button class="sm" data-no>취소</button>${b?'<button class="sm" data-del style="color:var(--warn)">이 문단 빼기</button>':''}${isTable?'<span class="muted">칸은 | 로 나눠요. 첫 줄은 제목 줄</span>':''}</div>`;
+  const ta=el.querySelector('textarea');ta.style.minHeight=Math.min(400,Math.max(90,ta.scrollHeight+10))+'px';ta.focus();
+  el.querySelector('[data-no]').onclick=()=>renderKeep();
+  el.querySelector('[data-ok]').onclick=()=>{const v=ta.value.trim();
+    if(k==='title'){if(v&&v!==c.title){c.title=v;CUR.edited.add('title')}}
+    else if(isTable){const rows=v.split('\n').map(r=>r.replace(/^\s*\|+|\|+\s*$/g,'').split('|').map(x=>x.trim())).filter(r=>r.some(Boolean));const nh=rows[0]||[],nr=rows.slice(1);if(JSON.stringify([nh,nr])!==JSON.stringify([b.headers||[],b.rows||[]])){b.headers=nh;b.rows=nr;CUR.edited.add(String(b.id))}}
+    else if(v!==b.text){if(!v){c.blocks=c.blocks.filter(x=>x!==b)}else b.text=v;CUR.edited.add(String(b.id))}
+    keepDraft();renderKeep()};
+  const d=el.querySelector('[data-del]');if(d)d.onclick=()=>{if(!confirm('이 문단을 뺄까요? (저장 전에는 새로고침하면 되돌릴 수 있어요)'))return;c.blocks=c.blocks.filter(x=>x!==b);CUR.edited.add(String(b.id));keepDraft();renderKeep()};
+}
+function renderKeep(){const y=window.scrollY;const rv=$('#revTxt')?.value||'',ro=$('#revOut')?.textContent||'';renderPost();if($('#revTxt'))$('#revTxt').value=rv;if($('#revOut'))$('#revOut').textContent=ro;window.scrollTo(0,y)}
+
+// ---------- 검수 (스튜디오 RC5.1.411 rc354review.js와 같은 지시문·적용 방식) ----------
+function postText(){
+  const c=CUR.content;const out=[];if(c.title)out.push('제목: '+c.title,'');
+  for(const b of (c.blocks||[])){const t=String(b.type||'').toUpperCase();if(t==='IMAGE')continue;
+    const x=t==='TABLE'?[b.headers||[],...(b.rows||[])].filter(r=>r.length).map(r=>r.join(' | ')).join('\n'):String(b.text||'').trim();if(!x)continue;
+    out.push(t==='H2'||t==='H3'?'## '+x:t==='QUOTE'?'> '+x:x)}
+  return out.join('\n');
+}
+const reviewPrompt=()=>`아래 블로그 글을 웹 검색으로 사실 확인해 줘. (오늘: ${todayK()})
+규칙:
+- 가게·사람·상품·기관 이름, 날짜, 기간, 금액, 숫자만 확인해.
+- 뜻이 틀린 것만 고쳐: 이름이 다르거나, 날짜·기간·금액·숫자가 근거(기사·공식 안내)와 다를 때. 근거가 있어야 고친다.
+- 고치지 말 것: 더 정확하게 다듬기, 범위 좁히기(예: "60~70%"를 "약 60%"로), 표현 바꾸기, 맞는 내용에 덧붙이기. 근거와 크게 어긋나지 않으면 그대로 둔다.
+- 근거를 못 찾은 세부 내용(영업시간, 휴무일, 확인 안 되는 금액 등)은 그 부분만 빼거나 "방문 전 확인하세요"처럼 부드럽게 바꿔. 새 내용을 지어내지 마.
+- 문체, 의견, 경험 문장은 건드리지 마.
+- 새 기사·공식 안내를 근거로 고쳤으면, 글 맨 끝 "출처:" 줄도 [고침] 하나로 고쳐서 그 기관·언론사 이름을 덧붙여 (예: "출처: 소방청" → "출처: 소방청, 연합뉴스"). 링크는 넣지 말고 이름만. 출처 줄이 없으면 이 [고침]은 빼.
+- 고칠 곳이 없거나 사소한 것뿐이면 "결론: 이대로 올려도 됨"만 써.
+- 답은 아래 형식만 써. 고칠 곳마다 반복:
+[고침]
+원문: (글에 있는 그대로 복사. 한 문장 이내, 글자 하나도 바꾸지 말 것)
+수정: (바꿀 문장. 그 문장을 통째로 지우려면 비워 둬)
+근거: (링크 또는 "확인 못함")
+- 마지막 줄: 결론: 이대로 올려도 됨 / 고친 뒤 올리기 / 빼기
+
+----- 글 -----
+${postText()}`;
+const clean=s=>String(s||'').split('\n').filter(l=>!/^\s*\|?\s*:?-{3,}[\s\-:|]*$/.test(l)).map(l=>{l=l.trim();return l.includes('|')?l.replace(/^\|\s*|\s*\|$/g,''):l}).join('\n').replace(/^[-*•]\s*/,'').trim().replace(/^[`"'“”‘’「『]+|[`"'“”‘’」』]+$/g,'').replace(/^\*\*|\*\*$/g,'').trim();
+function parseFixes(txt){
+  txt=String(txt||'').replace(/\r/g,'').replace(/[ \t]*\\+[ \t]*$/gm,'').replace(/^[ \t]*\|[ \t]*(?=(원문|수정|근거)\s*[:：])/gm,'').replace(/\*\*/g,'').replace(/^[ \t]*(?:[-*•]|\d+\.)[ \t]+(?=(원문|수정|근거)\s*[:：])/gm,'');
+  const parts=txt.split(/\[\s*고침\s*\]/).slice(1);const out=[];
+  for(const p of parts){
+    const m=p.match(/원문[ \t]*[:：][ \t]*([\s\S]*?)\n[ \t]*수정[ \t]*[:：][ \t]*([^\n]*(?:\n(?![ \t]*근거[ \t]*[:：])[^\n]*)*?)(?:\n[ \t]*근거[ \t]*[:：][\s\S]*)?$/);
+    if(!m)continue;let to=m[2];to=to.split(/\n\s*(?:결론\s*[:：]|\[\s*고침)/)[0];
+    const lead=x=>x.replace(/^(?:제목\s*[:：]\s*|#{1,4}\s+|>\s+)/,'').replace(/\\([~*_`#\[\]().!>|+\-])/g,'$1');
+    const norm=x=>clean(lead(clean(x)));const from=norm(m[1]);to=norm(to);if(from)out.push({from,to});
+  }
+  const c=String(txt||'').match(/결론\s*[:：]\s*([^\n]+)/);return {fixes:out,verdict:c?c[1].trim():''};
+}
+function findLoose(hay,needle){
+  hay=String(hay||'');const i=hay.indexOf(needle);if(i>=0)return [i,i+needle.length];
+  const n=needle.replace(/\s+/g,'');if(n.length<4)return null;
+  const map=[];let comp='';for(let k=0;k<hay.length;k++){if(!/\s/.test(hay[k])){map.push(k);comp+=hay[k]}}
+  const j=comp.indexOf(n);if(j>=0)return [map[j],map[j+n.length-1]+1];
+  const W=/[\p{L}\p{N}]/u,n2=[...needle].filter(c=>W.test(c)).join('');if(n2.length<6)return null;
+  const m2=[];let c2='';for(let k=0;k<hay.length;k++){if(W.test(hay[k])){m2.push(k);c2+=hay[k]}}
+  const j2=c2.indexOf(n2);if(j2<0)return null;
+  let st=m2[j2],en=m2[j2+n2.length-1]+1;const tail=needle.match(/[^\p{L}\p{N}\s]+$/u);if(tail&&hay.slice(en,en+tail[0].length)===tail[0])en+=tail[0].length;
+  return [st,en];
+}
+function findFuzzy(hay,needle){
+  hay=String(hay||'');const W=/[\p{L}\p{N}]/u,key=x=>[...x].filter(c=>W.test(c)).join('');const n=key(needle);if(n.length<15)return null;
+  const bg=x=>{const m=new Map();for(let k=0;k<x.length-1;k++){const g=x.slice(k,k+2);m.set(g,(m.get(g)||0)+1)}return m};
+  const nb=bg(n);const dice=x=>{const xb=bg(x);let c=0;for(const [g,v] of xb)c+=Math.min(v,nb.get(g)||0);return 2*c/Math.max(1,(n.length-1)+(x.length-1))};
+  const sents=[];const re=/[^.!?。\n]+[.!?。]*/g;let mm;while((mm=re.exec(hay)))if(mm[0].trim())sents.push([mm.index,mm.index+mm[0].length]);
+  let best=null;for(let a=0;a<sents.length;a++)for(let b=a;b<Math.min(sents.length,a+3);b++){const st=sents[a][0],en=sents[b][1];const seg=hay.slice(st,en);const lead=seg.length-seg.trimStart().length;const d=dice(key(seg));if(!best||d>best.d)best={d,r:[st+lead,en]}}
+  return best&&best.d>=0.85?best.r:null;
+}
+// 바꿀 수 있는 곳: 제목, 글 블록, 표 칸, 핵심 문구
+function targets(){
+  const c=CUR.content,t=[{id:'title',get:()=>c.title||'',set:v=>{c.title=v}}];
+  for(const b of c.blocks||[]){const ty=String(b.type||'').toUpperCase();if(ty==='IMAGE')continue;
+    if(ty==='TABLE'){[b.headers||[],...(b.rows||[])].forEach(row=>row.forEach((_,k)=>t.push({id:String(b.id),get:()=>String(row[k]??''),set:v=>{row[k]=v}})))}
+    else t.push({id:String(b.id),blk:b,get:()=>String(b.text||''),set:v=>{
+      if(Array.isArray(b.marks))b.marks=b.marks.filter(m=>v.includes(m));b.text=v}})}
+  return t;
+}
+function applyFixes(fixes){
+  const res=[];
+  for(const f of fixes){let done=false;const T=targets();
+    if(f.to&&!T.some(t=>findLoose(t.get(),f.from)&&!findLoose(t.get(),f.to))&&T.some(t=>findLoose(t.get(),f.to))&&!T.some(t=>{const v=t.get(),a=findLoose(v,f.from),b=findLoose(v,f.to);return a&&!(b&&b[0]<=a[0]&&b[1]>=a[1])})){res.push({...f,done:false,already:true});continue}
+    let fuzzy=false;
+    for(const pass of [0,1]){if(done)break;for(const t of T){const v=t.get();const r=pass?findFuzzy(v,f.from):findLoose(v,f.from);if(!r)continue;if(pass){if(f.to&&findLoose(v.slice(r[0],r[1]),f.to))continue;fuzzy=true}
+      let nv=v.slice(0,r[0])+f.to+v.slice(r[1]);if(!f.to)nv=nv.replace(/[ \t]{2,}/g,' ').replace(/^\s+|\s+$/g,'').replace(/\s+([.,!?])/g,'$1');
+      if(/^\s*출처\s*[:：]/.test(nv)){const [h,...rest]=nv.split(/[:：]/);const seen=new Set();nv=h+': '+rest.join(':').split(/\s*,\s*/).map(x=>x.trim()).filter(x=>x&&!seen.has(x)&&seen.add(x)).join(', ')}
+      t.set(nv);CUR.edited.add(t.id);done=true;break}}
+    res.push({...f,done,fuzzy});
+  }
+  CUR.content.blocks=(CUR.content.blocks||[]).filter(b=>String(b.type).toUpperCase()!=='PARAGRAPH'||String(b.text||'').trim());
+  return res;
+}
+function doApply(){
+  const out=$('#revOut');const {fixes,verdict}=parseFixes($('#revTxt').value);
+  if(!fixes.length){out.textContent=(verdict?`결론: ${verdict}\n`:'')+'고칠 곳([고침] 원문/수정)을 찾지 못했어요.'+(/이대로/.test(verdict)?'\n\n👉 고칠 곳이 없으면 [💾 검수 저장]을 눌러 검수완료로 표시하세요.':'');return}
+  const r=applyFixes(fixes);const ok=r.filter(x=>x.done),al=r.filter(x=>x.already),no=r.filter(x=>!x.done&&!x.already);
+  if(!ok.length&&!al.length&&no.length){out.textContent=`⚠ 이 글「${String(CUR.content.title||'').slice(0,30)}」과 맞는 곳이 하나도 없어요. 다른 글의 검수 결과를 붙여 넣은 것 같아요.\n\n못 찾은 원문:\n`+no.map(x=>'· '+x.from).join('\n');return}
+  for(const f of [...ok,...al])if(!CUR.fixes.some(o=>o.from===f.from&&o.to===f.to))CUR.fixes.push({from:f.from,to:f.to||''});
+  keepDraft();
+  let t=`✓ ${ok.length}곳 고침${al.length?` · ${al.length}곳은 이미 반영됨`:''}${no.length?` · ⚠ ${no.length}곳은 글에서 못 찾음 (직접 확인)`:''}${verdict?`\n결론: ${verdict}`:''}`;
+  if(no.length)t+='\n\n못 찾은 원문:\n'+no.map(x=>'· '+x.from+(x.to?'  →  '+x.to:'  →  (지우기)')).join('\n');
+  if(ok.length)t+='\n\n고친 곳:\n'+ok.map(x=>(x.fuzzy?'· [비슷한 문장에 적용, 확인] ':'· ')+diff(x.from,x.to)).join('\n');
+  if(/빼기/.test(verdict))t='⚠ 결론이 "빼기"예요. 이 글은 올리지 않는 게 좋아요.\n'+t;
+  t+='\n\n👉 다 고쳤으면 [💾 검수 저장]을 눌러 주세요.';
+  renderKeep();$('#revOut').textContent=t;
+}
+function diff(a,b){if(!b)return a.slice(0,40)+'  →  (지움)';let i=0;while(i<a.length&&i<b.length&&a[i]===b[i])i++;let j=0;while(j<a.length-i&&j<b.length-i&&a[a.length-1-j]===b[b.length-1-j])j++;const st=Math.max(0,i-12),cut=(v,e)=>{const m=v.slice(st,Math.min(v.length,e+12));return (st?'…':'')+(m.length>60?m.slice(0,60)+'…':m)+(e+12<v.length&&m.length<=60?'…':'')};return cut(a,a.length-j)+'  →  '+cut(b,b.length-j)}
+
+// ---------- 💾 검수 저장 (스튜디오 rc388save.js와 같은 저장: content.json + index.json reviewed) ----------
+async function saveReview(btn){
+  const out=$('#revOut');const say=t=>{out.textContent=t};
+  if(!token()){say('깃허브 키가 없어서 서버에 저장할 수 없어요. 위 ⚙에서 키를 넣어 주세요.');return}
+  const {pkg}=CUR;const old=btn.textContent;btn.disabled=true;btn.textContent='저장 중…';
+  try{
+    const res=await queue(()=>retry(async()=>{
+      const ref=await gh('GET',`git/ref/heads/${BRANCH}?t=${Date.now()}`);
+      const head=ref.object.sha,commit=await gh('GET',`git/commits/${head}`);
+      const tree=await gh('GET',`git/trees/${commit.tree.sha}?recursive=1`);
+      const ci=tree.tree.find(t=>t.path===pkg.id+'/content.json'),ii=tree.tree.find(t=>t.path==='index.json');
+      if(!ci||!ii)throw new Error('서버에 이 글이 없어요 (지워졌을 수 있어요)');
+      if(CUR.sha&&ci.sha!==CUR.sha)throw new Error('이 글을 연 뒤에 다른 곳(PC 스튜디오·서버)에서 글이 바뀌었어요. 덮어쓰지 않았어요. [새로고침] 후 다시 고쳐 주세요');
+      const index=JSON.parse(unb64((await gh('GET',`git/blobs/${ii.sha}`)).content));
+      const p=(index.packages||[]).find(x=>x.id===pkg.id);if(!p)throw new Error('목록(index.json)에 이 글이 없어요');
+      const c=CUR.content;const changed=CUR.edited.size>0||CUR.fixes.length>0;
+      let chars=0;for(const b of c.blocks||[]){const t=String(b.type).toUpperCase();if(t==='IMAGE')continue;chars+=(t==='TABLE'?[...(b.headers||[]),...(b.rows||[]).flat()].join(''):String(b.text||'')).replace(/[\s|]/g,'').length}
+      const now=kst();p.reviewed=now;p.reviewFixes=CUR.fixes.length;if(c.title)p.title=c.title;if(changed)p.chars=chars;
+      const items=[{path:'index.json',mode:'100644',type:'blob',content:JSON.stringify(index,null,1)}];
+      const ctext=JSON.stringify(c,null,1);
+      if(changed)items.push({path:pkg.id+'/content.json',mode:'100644',type:'blob',content:ctext});
+      const nt=await gh('POST','git/trees',{base_tree:commit.tree.sha,tree:items});
+      const nc=await gh('POST','git/commits',{message:`검수 저장(폰): ${pkg.id} (${CUR.fixes.length}곳)`,tree:nt.sha,parents:[head]});
+      await gh('PATCH',`git/refs/heads/${BRANCH}`,{sha:nc.sha,force:false});
+      return {changed,n:CUR.fixes.length,edits:CUR.edited.size,now,ctext,p};
+    }));
+    store.set('draft:'+pkg.id,null);
+    if(res.changed)CUR.sha=await gitBlobSha(res.ctext);
+    CUR.fixes=[];CUR.edited=new Set();
+    Object.assign(pkg,{reviewed:res.now,reviewFixes:res.n,title:res.p.title,chars:res.p.chars});
+    renderKeep();
+    $('#revOut').textContent=res.changed?`💾 서버에 저장했어요 (고친 블록 ${res.edits}곳). PC 스튜디오 목록에도 '검수완료'로 나와요.`:`💾 고친 곳 없이 '검수완료'로만 표시했어요.`;
+    toast('✓ 저장됨');
+  }catch(e){say('⚠ 저장하지 못했어요: '+(e?.message||e))}
+  finally{btn.disabled=false;btn.textContent=old}
+}
+
+// ---------- 발행 완료 표시 (done.json, PC 프로그램·스튜디오와 같은 파일) ----------
+async function toggleDone(btn){
+  const id=CUR.pkg.id,on=!isDone(CUR.pkg);
+  const loc=store.get('localDone',[]).filter(x=>x!==id);
+  if(!token()){store.set('localDone',on?[id,...loc].slice(0,300):loc);if(on)DONE[id]=DONE[id]||kst();else delete DONE[id];toast(on?'이 폰에만 완료로 표시했어요 (키를 넣으면 PC와 같이 저장돼요)':'완료 표시를 뺐어요',3500);renderKeep();return}
+  btn.disabled=true;btn.textContent='저장 중…';
+  try{
+    await queue(()=>retry(async()=>{
+      const cur=await gh('GET',`contents/done.json?ref=${BRANCH}&t=${Date.now()}`);
+      const data=cur?JSON.parse(unb64(cur.content)||'{}'):{};data.done=data.done||{};
+      if(on)data.done[id]=data.done[id]||kst();else delete data.done[id];
+      await gh('PUT','contents/done.json',{branch:BRANCH,message:`발행 완료 표시: ${id}`,content:b64(JSON.stringify(data,null,1)+'\n'),...(cur?{sha:cur.sha}:{})});
+      DONE=data.done;
+    }));
+    store.set('localDone',loc);
+    toast(on?'✔ 발행 완료로 표시했어요':'완료 표시를 뺐어요');
+    if(on){location.hash='';return}
+    renderKeep();
+  }catch(e){toast('⚠ 저장하지 못했어요: '+e.message,4000);btn.disabled=false;renderKeep()}
+}
+
+// ---------- 설정 ----------
+function showSettings(){
+  $('.bar')?.remove();CUR=null;$('#back').classList.remove('hidden');$('#htitle').textContent='설정';
+  const has=!!token();
+  $('#main').innerHTML=`<div class="card"><b>깃허브 키</b>
+    <p class="muted">PC 스튜디오에 넣은 키와 같은 키를 넣으세요 (Contents 읽기·쓰기 권한). 키는 이 폰의 이 브라우저에만 저장되고, 깃허브 말고는 어디에도 보내지 않아요.</p>
+    <input type="password" id="tk" placeholder="${has?'저장된 키가 있어요 (바꾸려면 새 키 붙여넣기)':'github_pat_… 또는 ghp_…'}" autocomplete="off">
+    <div class="row" style="margin-top:8px"><button class="pri" id="tkSave">저장하고 확인</button>${has?'<button id="tkDel" style="color:var(--warn)">키 지우기</button>':''}</div>
+    <div id="tkOut" class="out"></div></div>
+    <div class="card muted">이 페이지에서 못 하는 것: 사진 편집·꾸미기, AI 그림 채우기, 네이버·티스토리 편집기에 자동으로 넣기. 이런 건 PC 스튜디오에서 해 주세요.</div>`;
+  $('#tkSave').onclick=async()=>{const v=$('#tk').value.replace(/[^\x21-\x7E]/g,'');const o=$('#tkOut');
+    if(v)store.set('token',v);if(!token()){o.textContent='키 칸이 비어 있어요.';return}
+    o.textContent='확인 중…';
+    try{const r=await gh('GET',`branches/${BRANCH}`);const ok=r&&(await fetch(API,{headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json'}}).then(x=>x.json())).permissions?.push;
+      o.textContent=ok?'✓ 키가 맞아요. 저장·완료 표시를 쓸 수 있어요.':'키는 맞지만 쓰기 권한이 안 보여요. 저장할 때 막히면 키 권한(Contents 읽기·쓰기)을 확인해 주세요.'}
+    catch(e){o.textContent='⚠ '+e.message}};
+  const d=$('#tkDel');if(d)d.onclick=()=>{if(confirm('이 폰에서 키를 지울까요?')){store.set('token','');showSettings()}};
+}
+
+// ---------- 화면 전환 ----------
+function route(){
+  const m=location.hash.match(/^#p=(.+)$/);
+  if(m){showPost(decodeURIComponent(m[1]))}else{$('.bar')?.remove();showList()}
+}
+$('#back').onclick=()=>{if(location.hash)history.length>1?history.back():(location.hash='');else route()};
+$('#gear').onclick=showSettings;
+$('#reload').onclick=async()=>{INDEX=null;if(CUR&&(CUR.edited.size||CUR.fixes.length)&&!confirm('저장 안 한 고침이 있어요. 그래도 새로 받을까요? (고침은 버려져요)'))return;if(CUR)store.set('draft:'+CUR.pkg.id,null);route()};
+window.addEventListener('hashchange',route);
+window.addEventListener('beforeunload',e=>{if(CUR&&(CUR.edited.size||CUR.fixes.length)){keepDraft()}});
+route();
+</script>
+</body>
+</html>
