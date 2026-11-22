@@ -1,0 +1,91 @@
+name: 카드 영상 만들기
+
+# PC 게시함 카드의 🎬 '이 대본·사진으로 영상 만들기' (사용자 11/22).
+# 게시 작업(post.yml)과 줄을 따로 써서 여러 카드를 한꺼번에 눌러도 다 만들어짐
+# (같은 줄에 서면 기다리는 요청이 다음 요청에 밀려 취소됨). 결과는 manual/reels/요청번호.json 하나만 남김.
+on:
+  workflow_dispatch:
+    inputs:
+      product:
+        description: "파트너스 링크 또는 상품명 일부"
+        type: string
+      script:
+        description: "확인한 대본 (한 줄에 한 문장)"
+        type: string
+        default: ""
+      photos:
+        description: "카드 사진 폴더 (manual/reel/…)"
+        type: string
+        default: ""
+      tag:
+        description: "카드 글 요청 번호"
+        type: string
+
+concurrency:
+  group: reel-${{ inputs.tag }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Seoul
+      PYTHONUNBUFFERED: "1"
+      PYTHONUTF8: "1"
+      GOOGLE_SA_JSON: ${{ secrets.GOOGLE_SA_JSON }}
+      ENV_FILE: ${{ secrets.ENV_FILE }}
+      GEMINI_PAID_API_KEY: ${{ secrets.GEMINI_PAID_API_KEY }}
+      GOOGLE_SHEET_ID: 18BVfA22ELRzZE6_fWLRy5Qgi-E1y7aY-n44NDfC2h9o
+      GOOGLE_PHOTO_FOLDER_ID: 1eo1ooVxJ3eqTuEfIINj58eGcbVOTFI03
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 프로그램 받기
+        uses: actions/checkout@v4
+        with:
+          repository: todayinfopick/pick-app
+          token: ${{ secrets.CODE_TOKEN }}
+          path: _app
+
+      - name: 프로그램 놓기
+        run: tar -C _app --exclude=./.git --exclude=./.github -cf - . | tar -xf - --skip-old-files && rm -rf _app
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: 파이썬 준비
+        run: pip install -q -r requirements.txt
+
+      - name: 글꼴 준비
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
+
+      - name: 시트 받기
+        env:
+          PULL_PHOTOS: manual
+        run: python cloud_sync.py pull
+
+      - name: 영상 만들기
+        env:
+          SHORTS_GH_TOKEN: ${{ github.token }}
+          SHORTS_CARD: "1"
+          PRODUCT: ${{ inputs.product }}
+          SHORTS_SCRIPT: ${{ inputs.script }}
+          SHORTS_PHOTOS: ${{ inputs.photos }}
+          SHORTS_TAG: ${{ inputs.tag }}
+        run: python shorts.py --remake "$PRODUCT"
+
+      - name: 결과 저장
+        run: |
+          git config user.name "autopost-bot"
+          git config user.email "autopost-bot@users.noreply.github.com"
+          git add -f manual/reels
+          git diff --cached --quiet && exit 0
+          git commit -q -m "카드 영상 ${{ inputs.tag }}"
+          for i in 1 2 3 4 5; do git pull -q --rebase && git push -q && exit 0; sleep $((i * 5)); done
+          exit 1
