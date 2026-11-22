@@ -5821,5 +5821,72 @@
     "name": "휴비딕 초음파 무선 신장계, HUK-2, 블루, 1개",
     "link": "https://link.coupang.com/a/iGVDaOXoPI",
     "account": 1
+  },
+  "상품:다이치이노픽스부스터카시트": {
+    "name": "다이치 이노픽스 부스터 카시트",
+    "link": "https://link.coupang.com/a/iSyKh7jmfs",
+    "shorts": {
+      "at": "2026-11-22T16:01:46",
+      "file": "shorts_2026-11-22_iSyKh7jmfs_1601.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601.mp4",
+      "title": "아이도 부모도 편해지는 다이치 이노픽스 부스터 카시트 추천 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n차만 타면 울고불고 난리인가요?\n아이 체형에 찰떡같이 맞춰져서 흔들림이 없어요.\n엉덩이 시트도 폭신해서 장거리 이동도 거뜬해요.\n차량 장착도 진짜 쉬워서 누구나 1분 만에 끝나요.\n근데 진짜는 이거예요.\n아이도 부모도 차 안에서 스트레스가 확 줄어들어요.\n외출만 하면 힘든 육아맘들에게 딱이에요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#카시트 #다이치 #부스터카시트 #유아용품 #육아템 #쿠팡추천 #살림템",
+      "sec": 24.0,
+      "voice": "basic",
+      "remade": true,
+      "tag": "11221548225300-1122155736",
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601_ai1.jpg",
+          "file": "shorts_2026-11-22_iSyKh7jmfs_1601_ai1.jpg",
+          "view": "비스듬히",
+          "prompt": "A parent's hands gently place the pink booster car seat onto the back seat of a clean modern car in a Korean home garage. The camera slowly pushes in as hands adjust the side armrests to demonstrate the stable child-customized design. Bright natural daylight illuminates the seat surface without changing its shape, color, or logo."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601_ai2.jpg",
+          "file": "shorts_2026-11-22_iSyKh7jmfs_1601_ai2.jpg",
+          "view": "정면",
+          "prompt": "A parent's hands adjust the padded seating area of the pink booster car seat placed on a living room floor to show its comfortable cushion design. The camera remains mostly steady under bright indoor natural light, capturing realistic textures. The product stays completely unchanged in shape, color, and printed text."
+        }
+      ],
+      "lines": [
+        "차만 타면 울고불고 난리인가요?",
+        "아이 체형에 찰떡같이 맞춰져서 흔들림이 없어요.",
+        "엉덩이 시트도 폭신해서 장거리 이동도 거뜬해요.",
+        "차량 장착도 진짜 쉬워서 누구나 1분 만에 끝나요.",
+        "근데 진짜는 이거예요.",
+        "아이도 부모도 차 안에서 스트레스가 확 줄어들어요.",
+        "외출만 하면 힘든 육아맘들에게 딱이에요.",
+        "자세한 정보는 프로필 링크를 확인해 보세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-22_iSyKh7jmfs_1601_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-22_iSyKh7jmfs_1601_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601_thumb.jpg"
+      },
+      "thumb_v": 3
+    },
+    "reels": {
+      "11221548225300-1122155736": {
+        "at": "2026-11-22T16:01:46",
+        "file": "shorts_2026-11-22_iSyKh7jmfs_1601.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-22_iSyKh7jmfs_1601.mp4",
+        "sec": 24.0,
+        "voice": "basic",
+        "lines": [
+          "차만 타면 울고불고 난리인가요?",
+          "아이 체형에 찰떡같이 맞춰져서 흔들림이 없어요.",
+          "엉덩이 시트도 폭신해서 장거리 이동도 거뜬해요.",
+          "차량 장착도 진짜 쉬워서 누구나 1분 만에 끝나요.",
+          "근데 진짜는 이거예요.",
+          "아이도 부모도 차 안에서 스트레스가 확 줄어들어요.",
+          "외출만 하면 힘든 육아맘들에게 딱이에요.",
+          "자세한 정보는 프로필 링크를 확인해 보세요."
+        ]
+      }
+    }
   }
 }
