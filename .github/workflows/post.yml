@@ -228,6 +228,7 @@ jobs:
         if: always() && (env.CHECK != 'true' || steps.check.outputs.any == '1' || steps.when.outputs.refresh == '1')
         run: |
           python cloud_sync.py push || true
+          git rebase --abort 2>/dev/null || true  # 게시 직후 저장이 중간에 멈췄으면 되돌림 (11/23 중복 게시)
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
           for f in posted.json research.json ai_drop.json docs manual/done.json; do [ -e "$f" ] && git add -f "$f"; done
