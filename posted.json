@@ -6255,10 +6255,22 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795442515/coupang-autopost/wk1rtpi052bthqr1yal7.mp4",
         "account": 1,
         "at": "2026-11-23T23:01:57"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795442820/coupang-autopost/xbdismtd0jrvjlx6t5xl.mp4",
+        "account": 1,
+        "at": "2026-11-23T23:07:01"
+      },
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795442815/coupang-autopost/cb5jsxgllsnhhlrl7yzp.mp4",
+        "account": 1,
+        "at": "2026-11-23T23:07:01"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123185450a819-210207.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123185455e3a8-210250.mp4",
       "script": {
         "title": "돌돌말이 대패삼겹살 바로구이 (냉동)",
         "lines": [
@@ -6281,6 +6293,13 @@
     },
     "name": "돌돌말이 대패삼겹살 바로구이 (냉동), 1개, 750g",
     "link": "https://link.coupang.com/a/iUhoz3U5vM",
-    "account": 1
+    "account": 1,
+    "no": 83,
+    "instagram": {
+      "id": "18170762737488919",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T23:07:45"
+    }
   }
 }
