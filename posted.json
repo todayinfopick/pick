@@ -6348,5 +6348,39 @@
       "manual": true,
       "at": "2026-11-23T23:20:28"
     }
+  },
+  "상품:코카콜라제로": {
+    "name": "코카콜라 제로, 300ml, 24개",
+    "link": "https://link.coupang.com/a/iUgVVZ4Ge4",
+    "account": 1,
+    "threads": {
+      "id": "17917325667519268",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T21:17:38"
+    },
+    "instagram": {
+      "id": "18032389805921542",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T21:22:16"
+    }
+  },
+  "상품:스위스마운틴캠프파이어오로라불멍가루": {
+    "name": "스위스마운틴 캠프파이어 오로라 불멍가루, 혼합색상, 10개",
+    "link": "https://link.coupang.com/a/iT2D5Ko7HM",
+    "account": 2,
+    "threads": {
+      "id": "18134740264833694",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-23T21:23:39"
+    },
+    "instagram": {
+      "id": "18134926517502921",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T21:27:30"
+    }
   }
 }
