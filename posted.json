@@ -6201,10 +6201,22 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795417003/coupang-autopost/wtcio5bifn39zaqdqapz.mp4",
         "account": 2,
         "at": "2026-11-23T15:56:43"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795417303/coupang-autopost/mribtmcx754gkozm4qeg.mp4",
+        "account": 2,
+        "at": "2026-11-23T16:01:43"
+      },
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795417297/coupang-autopost/wsg7pot0v2ueesplu9bf.mp4",
+        "account": 2,
+        "at": "2026-11-23T16:01:43"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261123-112314520450b0-154714.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123145208cd2b-154748.mp4",
       "script": {
         "title": "메이튼 차량용 트렁크 매트 일체형",
         "lines": [
@@ -6226,6 +6238,13 @@
     },
     "name": "메이튼 차량용 트렁크 매트 일체형",
     "link": "https://link.coupang.com/a/iT22CHoxC8",
-    "account": 2
+    "account": 2,
+    "no": 73,
+    "instagram": {
+      "id": "18030291389696889",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T16:02:18"
+    }
   }
 }
