@@ -6193,5 +6193,39 @@
       "manual": true,
       "at": "2026-11-23T15:56:40"
     }
+  },
+  "상품:메이튼차량용트렁크매트일체형": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795417003/coupang-autopost/wtcio5bifn39zaqdqapz.mp4",
+        "account": 2,
+        "at": "2026-11-23T15:56:43"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261123-112314520450b0-154714.mp4",
+      "script": {
+        "title": "메이튼 차량용 트렁크 매트 일체형",
+        "lines": [
+          "트렁크 청소하기 아직도 귀찮으세요?",
+          "차종별로 빈틈없이 딱 맞아서 정말 편해요.",
+          "음식을 흘려도 물티슈로 쓱 닦아내면 끝이에요.",
+          "바닥에 깔아두면 밀릴 걱정도 전혀 없어요.",
+          "근데 진짜는 이거예요.",
+          "일체형이라 구석구석 먼지가 안 들어가요.",
+          "트렁크 정리가 고민인 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18182968090429491",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T16:01:35"
+    },
+    "name": "메이튼 차량용 트렁크 매트 일체형",
+    "link": "https://link.coupang.com/a/iT22CHoxC8",
+    "account": 2
   }
 }
