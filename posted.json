@@ -6247,5 +6247,40 @@
       "manual": true,
       "at": "2026-11-23T16:02:18"
     }
+  },
+  "상품:돌돌말이대패삼겹살바로구이(냉동),1개,750g": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795442515/coupang-autopost/wk1rtpi052bthqr1yal7.mp4",
+        "account": 1,
+        "at": "2026-11-23T23:01:57"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123185450a819-210207.mp4",
+      "script": {
+        "title": "돌돌말이 대패삼겹살 바로구이 (냉동)",
+        "lines": [
+          "오늘 저녁 메뉴 고민이시죠?",
+          "얇게 썰어 금방 구워 먹는 대패삼겹살이에요.",
+          "선홍빛 살코기와 지방이 알맞게 섞여 있어요.",
+          "잡내 없이 고소하고 쫄깃한 식감이 아주 좋아요.",
+          "근데 진짜는 이거예요.",
+          "지퍼백 포장이라 냉동실에 두고 쓰기 너무 편해요.",
+          "HACCP 인증을 받아 더 안심하고 먹을 수 있어요.",
+          "냉동실에 쟁여두면 든든한 한 끼 완성이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18111780386289995",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T23:06:19"
+    },
+    "name": "돌돌말이 대패삼겹살 바로구이 (냉동), 1개, 750g",
+    "link": "https://link.coupang.com/a/iUhoz3U5vM",
+    "account": 1
   }
 }
