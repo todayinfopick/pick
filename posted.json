@@ -6147,10 +6147,22 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795416554/coupang-autopost/gwqs5renag6bxpaa2kik.mp4",
         "account": 1,
         "at": "2026-11-23T15:49:15"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795416914/coupang-autopost/ef9xf2tzpj9q3ljpus2m.mp4",
+        "account": 1,
+        "at": "2026-11-23T15:55:15"
+      },
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795416904/coupang-autopost/gq3hgy6j0fkw1pn9cfen.mp4",
+        "account": 1,
+        "at": "2026-11-23T15:55:15"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123152820073d-154625.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261123-1123152823b3f7-154649.mp4",
       "script": {
         "title": "스노우화이트 멜라 스탑 화이트닝 크림",
         "lines": [
@@ -6173,6 +6185,13 @@
     },
     "name": "스노우화이트 멜라 스탑 화이트닝 크림, 80ml, 2개",
     "link": "https://link.coupang.com/a/iT3hNr3tXF",
-    "account": 1
+    "account": 1,
+    "no": 82,
+    "instagram": {
+      "id": "18121313950993827",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-23T15:56:40"
+    }
   }
 }
