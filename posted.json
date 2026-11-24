@@ -6702,5 +6702,40 @@
       },
       "thumb_v": 3
     }
+  },
+  "상품:브라이튼브이여행용확장형캐리어20인치24인치28인치": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795492714/coupang-autopost/vjajowoztqu8vzrtmiui.mp4",
+        "account": 2,
+        "at": "2026-11-24T12:58:35"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124100110533c-101422.mp4",
+      "script": {
+        "title": "브라이튼 브이 여행용 확장형 캐리어 20인치 24인치 28인치",
+        "lines": [
+          "여행 짐을 싸다 보면 가방이 안 잠겨서 난감할 때가 있지요.",
+          "짐이 늘어날 때 유용한 지퍼 확장 기능이 있어요.",
+          "부드러운 360도 회전 휠로 어디서나 이동이 정말 편리해요.",
+          "안전한 TSA 잠금장치와 모서리 보호 캡이 적용되었어요.",
+          "세로 스트라이프 패턴으로 디자인까지 아주 깔끔해요.",
+          "근데 진짜는 이거예요.",
+          "튼튼하면서도 수납이 넉넉해서 여행 준비가 너무 편해져요.",
+          "이번 휴가에는 어떤 캐리어가 필요하신가요?"
+        ]
+      }
+    },
+    "threads": {
+      "id": "18342325954276381",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T13:02:23"
+    },
+    "name": "브라이튼 브이 여행용 확장형 캐리어 20인치 24인치 28인치",
+    "link": "https://link.coupang.com/a/iUhxeQOUrk",
+    "account": 2
   }
 }
