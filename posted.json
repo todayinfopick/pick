@@ -6710,10 +6710,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795492714/coupang-autopost/vjajowoztqu8vzrtmiui.mp4",
         "account": 2,
         "at": "2026-11-24T12:58:35"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795492994/coupang-autopost/vro3bh0kpl28ncujyfbf.mp4",
+        "account": 2,
+        "at": "2026-11-24T13:03:15"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124100110533c-101422.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-112410021214de-101630.mp4",
       "script": {
         "title": "브라이튼 브이 여행용 확장형 캐리어 20인치 24인치 28인치",
         "lines": [
@@ -6736,6 +6742,13 @@
     },
     "name": "브라이튼 브이 여행용 확장형 캐리어 20인치 24인치 28인치",
     "link": "https://link.coupang.com/a/iUhxeQOUrk",
-    "account": 2
+    "account": 2,
+    "no": 76,
+    "instagram": {
+      "id": "18115234028128518",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T13:03:48"
+    }
   }
 }
