@@ -6871,10 +6871,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795505500/coupang-autopost/clxazqyfymqdnfktjhyw.mp4",
         "account": 2,
         "at": "2026-11-24T16:31:41"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795505770/coupang-autopost/wiun6ttbfqdxtewbzozp.mp4",
+        "account": 2,
+        "at": "2026-11-24T16:36:11"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124100122d056-101511.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11241002261f4f-101720.mp4",
       "script": {
         "title": "탐사 줄전구 800구 + 점멸기 + 리모컨 세트",
         "lines": [
@@ -6896,6 +6902,13 @@
     },
     "name": "탐사 줄전구 800구 + 점멸기 + 리모컨 세트",
     "link": "https://link.coupang.com/a/iUjUqTC6HQ",
-    "account": 2
+    "account": 2,
+    "no": 78,
+    "instagram": {
+      "id": "18091926959278561",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T16:36:32"
+    }
   }
 }
