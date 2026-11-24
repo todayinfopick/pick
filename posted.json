@@ -6758,10 +6758,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795496488/coupang-autopost/vvckujwucw9vc4sidbsv.mp4",
         "account": 1,
         "at": "2026-11-24T14:01:30"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795496761/coupang-autopost/pnjki8fkglsidgedog7i.mp4",
+        "account": 1,
+        "at": "2026-11-24T14:06:01"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11240904124b0b-094947.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11240905165684-095123.mp4",
       "script": {
         "title": "듀이트리 하이 아미노 올 클렌징 밀크",
         "lines": [
@@ -6784,6 +6790,13 @@
     },
     "name": "듀이트리 하이 아미노 올 클렌징 밀크, 200ml, 2개",
     "link": "https://link.coupang.com/a/iUuEQE6R52",
-    "account": 1
+    "account": 1,
+    "no": 86,
+    "instagram": {
+      "id": "18025505324948716",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T14:06:35"
+    }
   }
 }
