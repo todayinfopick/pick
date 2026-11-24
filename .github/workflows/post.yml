@@ -72,6 +72,23 @@ jobs:
           if [ -n "$last" ] && [ $(( $(date +%s) - $(date -d "$last" +%s) )) -lt 3300 ]; then echo "최근 블로그 작업 $last → 다음에 확인"; exit 0; fi
           gh workflow run blog.yml -f mode="예약 확인" && echo "블로그 '예약 확인'을 불렀어요"
 
+  # 줄 선 영상 요청(remake_queue/)이 남아 있으면 '쇼츠 다시 만들기'를 부름 (요청 실행이 취소됐거나 한 번에 다 못 만든 것)
+  remake_kick:
+    if: github.event_name == 'schedule' || inputs.mode == '예약 확인'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          n=$(gh api "repos/$GH_REPO/contents/remake_queue?ref=main" --jq 'length' 2>/dev/null || echo 0)
+          echo "줄 선 영상 요청 $n개"
+          [ "$n" -gt 0 ] 2>/dev/null && gh workflow run post.yml -f mode="쇼츠 다시 만들기" && echo "영상 만들기를 불렀어요" || true
+
   run:
     # 예약 실행을 잠시 멈추려면 저장소 변수 AUTO_POST=off
     # '예약 확인'은 외부 알람(cron-job.org)이 15분마다 부르는 것 — GitHub 예약과 똑같이 동작
@@ -186,7 +203,27 @@ jobs:
           SHORTS_SCRIPT: ${{ inputs.script }}
           SHORTS_PHOTOS: ${{ inputs.photos }}
           SHORTS_TAG: ${{ inputs.tag }}
-        run: python shorts.py --remake "$PRODUCT"
+        # 11/24: 여러 개를 연달아 요청하면 기다리던 실행이 취소돼 요청이 사라졌음 → PC가 요청을 remake_queue/에 파일로 적고,
+        # 이 실행이 줄 선 요청을 차례로 모두 만든 뒤 지움 (한 번에 최대 6개, 남은 것은 15분마다 확인이 다시 부름)
+        run: |
+          [ -n "$PRODUCT" ] && { python shorts.py --remake "$PRODUCT" || echo "::warning::영상 못 만듦: $PRODUCT"; }
+          python - <<'PY'
+          import json, os, pathlib, subprocess
+          for f in sorted(pathlib.Path("remake_queue").glob("*.json"))[:6]:
+              try:
+                  q = json.loads(f.read_text("utf-8"))
+              except Exception:
+                  q = {}
+              if q.get("product"):
+                  env = dict(os.environ, SHORTS_SCRIPT=q.get("script", ""), SHORTS_PHOTOS=q.get("photos", ""),
+                             SHORTS_TAG=str(q.get("tag", "")))
+                  print(f"::group::영상 만들기 {q['product']}", flush=True)
+                  r = subprocess.run(["python", "shorts.py", "--remake", q["product"]], env=env)
+                  print("::endgroup::", flush=True)
+                  if r.returncode:
+                      print(f"::warning::영상 못 만듦: {q['product']}", flush=True)
+              subprocess.run(["git", "rm", "-q", str(f)])
+          PY
 
       - name: 일반 글
         if: "!cancelled() && steps.check.outputs.gdue == '1'"
