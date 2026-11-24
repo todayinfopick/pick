@@ -6750,5 +6750,40 @@
       "manual": true,
       "at": "2026-11-24T13:03:48"
     }
+  },
+  "상품:듀이트리하이아미노올클렌징밀크,200ml,2개": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795496488/coupang-autopost/vvckujwucw9vc4sidbsv.mp4",
+        "account": 1,
+        "at": "2026-11-24T14:01:30"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11240904124b0b-094947.mp4",
+      "script": {
+        "title": "듀이트리 하이 아미노 올 클렌징 밀크",
+        "lines": [
+          "세안만 하면 얼굴이 당기시나요?",
+          "부드러운 밀크 제형이라 당김이 전혀 없어요.",
+          "화장을 지울 때 피부가 편안해서 정말 좋아요.",
+          "펌프 타입이라 바쁜 아침에도 쓰기 편해요.",
+          "모든 피부용이라 피부 타입 상관없이 쓸 수 있어요.",
+          "근데 진짜는 이거예요.",
+          "순하게 싹 지워져서 자극이 거의 없더라고요.",
+          "세안 후 촉촉한 클렌징 밀크 찾는 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "17990755086087512",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T14:05:15"
+    },
+    "name": "듀이트리 하이 아미노 올 클렌징 밀크, 200ml, 2개",
+    "link": "https://link.coupang.com/a/iUuEQE6R52",
+    "account": 1
   }
 }
