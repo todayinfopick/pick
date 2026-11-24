@@ -6816,5 +6816,39 @@
       "manual": true,
       "at": "2026-11-24T14:38:07"
     }
+  },
+  "상품:곰곰후레쉬모짜렐라보코치니,1kg,1개": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795503701/coupang-autopost/augfuzinxijljnfxcnah.mp4",
+        "account": 1,
+        "at": "2026-11-24T16:01:41"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124090416bbec-095011.mp4",
+      "script": {
+        "title": "곰곰 후레쉬 모짜렐라 보코치니",
+        "lines": [
+          "냉동실에 쟁여두기 좋은 모짜렐라 치즈 찾으셨나요?",
+          "한 입 크기의 동글동글한 형태라서 다루기 정말 편해요.",
+          "샐러드나 다양한 요리에 곁들이기 딱 좋은 치즈예요.",
+          "냉동 보관이 가능해서 언제든 꺼내 쓰기 편리하답니다.",
+          "집에서 요리할 때 어떤 치즈 쓸지 고민일 때 딱이에요.",
+          "근데 진짜는 필요할 때 바로 꺼내 쓸 수 있다는 거예요.",
+          "샐러드나 홈메이드 요리 자주 만드는 분들께 알맞을 거예요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18510968239097104",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T16:05:25"
+    },
+    "name": "곰곰 후레쉬 모짜렐라 보코치니, 1kg, 1개",
+    "link": "https://link.coupang.com/a/iUvgsvQp52",
+    "account": 1
   }
 }
