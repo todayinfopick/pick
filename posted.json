@@ -6976,10 +6976,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795527127/coupang-autopost/egcrasckmgembb6vpmv4.mp4",
         "account": 2,
         "at": "2026-11-24T22:32:08"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795527398/coupang-autopost/iqjf8kxr2rd003h85s5n.mp4",
+        "account": 2,
+        "at": "2026-11-24T22:36:39"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124100158aef9-101600.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11241003124c4f-101808.mp4",
       "script": {
         "title": "스카치브라이트 프리미엄 고무장갑 5개입",
         "lines": [
@@ -7001,6 +7007,13 @@
     },
     "name": "스카치브라이트 프리미엄 고무장갑 5개입",
     "link": "https://link.coupang.com/a/iUtaolPLEa",
-    "account": 2
+    "account": 2,
+    "no": 80,
+    "instagram": {
+      "id": "18110254154252345",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T22:37:13"
+    }
   }
 }
