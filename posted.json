@@ -6824,10 +6824,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795503701/coupang-autopost/augfuzinxijljnfxcnah.mp4",
         "account": 1,
         "at": "2026-11-24T16:01:41"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795503972/coupang-autopost/qhrifqoizpiktwgfv3rb.mp4",
+        "account": 1,
+        "at": "2026-11-24T16:06:13"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124090416bbec-095011.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-11240905195b8d-095146.mp4",
       "script": {
         "title": "곰곰 후레쉬 모짜렐라 보코치니",
         "lines": [
@@ -6849,6 +6855,13 @@
     },
     "name": "곰곰 후레쉬 모짜렐라 보코치니, 1kg, 1개",
     "link": "https://link.coupang.com/a/iUvgsvQp52",
-    "account": 1
+    "account": 1,
+    "no": 87,
+    "instagram": {
+      "id": "18116893223271162",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T16:06:47"
+    }
   }
 }
