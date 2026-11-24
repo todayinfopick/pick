@@ -6968,5 +6968,39 @@
       "manual": true,
       "at": "2026-11-24T22:07:36"
     }
+  },
+  "상품:스카치브라이트프리미엄고무장갑5개입": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795527127/coupang-autopost/egcrasckmgembb6vpmv4.mp4",
+        "account": 2,
+        "at": "2026-11-24T22:32:08"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261124-1124100158aef9-101600.mp4",
+      "script": {
+        "title": "스카치브라이트 프리미엄 고무장갑 5개입",
+        "lines": [
+          "설거지만 하면 주방이 우울해지나요?",
+          "싱그로운 옐로우그린 컬러 하나면 분위기가 확 살아요.",
+          "도톰하고 튼튼한 라텍스 소재라 오래 쓸 수 있어요.",
+          "미끄럼 방지 돌기가 있어서 미끄러질 걱정도 없죠.",
+          "근데 진짜는 이거예요.",
+          "손에 착 감기는 인체공학적 설계로 엄청 편해요.",
+          "지루한 설거지 시간을 상쾌하게 바꾸고 싶다면 써보세요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18394897201228521",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-24T22:35:51"
+    },
+    "name": "스카치브라이트 프리미엄 고무장갑 5개입",
+    "link": "https://link.coupang.com/a/iUtaolPLEa",
+    "account": 2
   }
 }
