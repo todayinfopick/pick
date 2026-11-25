@@ -1,4 +1,6 @@
 name: 자동 게시
+# 영상 다시 만들기 실행은 이름을 달리 (PC '🎬 만드는 중' 목록이 만드는 중인지 알아봄)
+run-name: ${{ inputs.mode == '쇼츠 다시 만들기' && '영상 다시 만들기' || '자동 게시' }}
 
 on:
   schedule:
@@ -207,24 +209,49 @@ jobs:
           SHORTS_TAG: ${{ inputs.tag }}
         # 11/24: 여러 개를 연달아 요청하면 기다리던 실행이 취소돼 요청이 사라졌음 → PC가 요청을 remake_queue/에 파일로 적고,
         # 이 실행이 줄 선 요청을 차례로 모두 만든 뒤 지움 (한 번에 최대 6개, 남은 것은 15분마다 확인이 다시 부름)
+        # 11/25 취소: PC '✖ 취소'가 요청 파일을 지우면, 아직 안 만든 것은 건너뛰고 만드는 중이면 15초 안에 멈춤.
+        # 다 만든 요청은 바로 저장소에서 지움 (실행이 중간에 멈춰도 다시 만들지 않게)
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
         run: |
           [ -n "$PRODUCT" ] && { python shorts.py --remake "$PRODUCT" || echo "::warning::영상 못 만듦: $PRODUCT"; }
           python - <<'PY'
-          import json, os, pathlib, subprocess
+          import json, os, pathlib, signal, subprocess, time
+          def remote(f):  # 저장소에 요청 파일이 아직 있나 (PC가 취소하면 지워짐)
+              r = subprocess.run(["gh", "api", f"repos/{os.environ['GH_REPO']}/contents/remake_queue/{f.name}?ref=main",
+                                  "--jq", ".sha"], capture_output=True, text=True)
+              return r.stdout.strip() if r.returncode == 0 else ("" if "404" in r.stderr else "?")
           for f in sorted(pathlib.Path("remake_queue").glob("*.json"))[:6]:
               try:
                   q = json.loads(f.read_text("utf-8"))
               except Exception:
                   q = {}
-              if q.get("product"):
+              if q.get("product") and remote(f):
                   env = dict(os.environ, SHORTS_SCRIPT=q.get("script", ""), SHORTS_PHOTOS=q.get("photos", ""),
                              SHORTS_TAG=str(q.get("tag", "")))
                   print(f"::group::영상 만들기 {q['product']}", flush=True)
-                  r = subprocess.run(["python", "shorts.py", "--remake", q["product"]], env=env)
+                  p = subprocess.Popen(["python", "shorts.py", "--remake", q["product"]], env=env, start_new_session=True)
+                  cancelled = False
+                  while p.poll() is None:
+                      time.sleep(15)
+                      if p.poll() is None and not remote(f):
+                          os.killpg(p.pid, signal.SIGKILL)
+                          p.wait()
+                          cancelled = True
+                  subprocess.run(["git", "rebase", "--abort"], capture_output=True)  # 저장 도중 멈췄으면 되돌림
                   print("::endgroup::", flush=True)
-                  if r.returncode:
+                  if cancelled:
+                      print(f"::notice::취소됨: {q['product']}", flush=True)
+                  elif p.returncode:
                       print(f"::warning::영상 못 만듦: {q['product']}", flush=True)
-              subprocess.run(["git", "rm", "-q", str(f)])
+              elif q.get("product"):
+                  print(f"취소돼서 건너뜀: {q['product']}", flush=True)
+              sha = remote(f)
+              if sha and sha != "?":
+                  subprocess.run(["gh", "api", "-X", "DELETE", f"repos/{os.environ['GH_REPO']}/contents/remake_queue/{f.name}",
+                                  "-f", "message=영상 요청 끝", "-f", f"sha={sha}", "-f", "branch=main"], capture_output=True)
+              subprocess.run(["git", "rm", "-q", "--cached", "--ignore-unmatch", str(f)])
+              f.unlink(missing_ok=True)
           PY
 
       - name: 일반 글
