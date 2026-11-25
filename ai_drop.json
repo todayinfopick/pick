@@ -2997,25 +2997,15 @@
  },
  "유팡 시그니처2 플러스 젖병 소독기 UP920A": {
   "seen": [
-   "b7f71915f00b6062cf49925d3122ab60",
-   "c28e318312cde590eb164fab80a3b40c",
-   "a97df8e541a92a748b2414ba5e8898bc",
-   "5640ca344595a0588a0464f676a23be6",
-   "3e03f65b281ad7b7fd6ec7c87ca300bd",
-   "8121327d2f23efbb55f390b7fe92f6e4",
-   "9c6e639eb8dd4af5f3bd4ad569fd9517",
-   "b2a8c95cf65bbf3c94fa0678b51127ad",
-   "b08debeab746c2a818ba70f37780ac8f",
-   "a7efb723104689804a7077969902fe26",
-   "7fb60a8933d7224c2d8391398dd76eb8",
-   "141f9a8ecc5370877a6641dd4209001c",
-   "e961436a53ef62198758008a61816630",
-   "3cdc1ed29bbaf7500324a5253b02e5e1",
-   "45ec8f2e66ffd99d7d7c62d87c6bbd4c"
+   "7a0e2c492cba555f4386d37adeb07368",
+   "910b634bfb60c43a522a9d1c8682540a",
+   "5794507a3df615ae3e5922a365e309a3",
+   "b28fc7aa25ec19807a12de9c050f678f",
+   "7cb73d1fc95355a163ffae794774db75",
+   "cc036bdfd0285818dec3bcc43893fb9d",
+   "32bdd7372d5cb2e276b41da868c014b7"
   ],
-  "drop": [
-   "c28e318312cde590eb164fab80a3b40c"
-  ]
+  "drop": []
  },
  "위닉스 타워 프라임 플러스 공기청정기 실버 122.1㎡": {
   "seen": [
@@ -3052,6 +3042,20 @@
    "6fae04e3cc746ad3e0c8c3a339d505ed",
    "9191048e3d2cdec12bbbd82fd432bdaf",
    "4ee96c26a65c7471e81e3b4cadaf5b74"
+  ],
+  "drop": []
+ },
+ "이경제 더힘찬 녹용진": {
+  "seen": [
+   "55abec8bdbdf5c914b6db86fbeb43707",
+   "3ae69384b604b55510c1e389d6c9be34",
+   "79d456231744e476a227910679a30e95",
+   "24c47015f9db59d2878ea530fb0db1ba",
+   "9d5d0cc7084f35b0aa430c857e992392",
+   "01a2033de88167bce4416bbc5c2595b8",
+   "983217ba13493921e57337e5a1d70f41",
+   "8c65f5d29c85488089896f5e27b3c576",
+   "baf732096235f4cd2c47bcffad128433"
   ],
   "drop": []
  }
