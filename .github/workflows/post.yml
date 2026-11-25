@@ -31,8 +31,10 @@ on:
         type: string
         default: ""
 
+# 영상 다시 만들기(등록·목록 탭 🎬)는 따로 줄을 섬: 영상이 여러 개 밀려도 발행은 제시간에 (사용자 11/25)
+# 기록(posted.json)은 json_merge.py가 글·칸별로 합쳐서 동시에 저장해도 서로 안 지움
 concurrency:
-  group: autopost
+  group: ${{ inputs.mode == '쇼츠 다시 만들기' && 'remake' || 'autopost' }}
   cancel-in-progress: false
 
 permissions:
@@ -253,12 +255,12 @@ jobs:
 
       # 다음에 올라갈 상품의 사진 미리보기 (docs/preview/): 원할 때만 열어 사진을 빼거나 살림
       - name: 사진 미리보기 페이지
-        if: "!cancelled() && inputs.mode != '직접 쓴 글 게시' && (env.CHECK != 'true' || (steps.check.outputs.any == '1' && (steps.check.outputs.due == '1' || steps.check.outputs.gdue == '1')))"
+        if: "!cancelled() && inputs.mode != '직접 쓴 글 게시' && inputs.mode != '쇼츠 다시 만들기' && (env.CHECK != 'true' || (steps.check.outputs.any == '1' && (steps.check.outputs.due == '1' || steps.check.outputs.gdue == '1')))"
         continue-on-error: true
         run: python preview.py
 
       - name: 링크 페이지 만들기
-        if: always() && (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        if: always() && inputs.mode != '쇼츠 다시 만들기' && (env.CHECK != 'true' || steps.check.outputs.any == '1')
         run: python build_page.py
 
       - name: 결과 저장
@@ -266,6 +268,7 @@ jobs:
         run: |
           python cloud_sync.py push || true
           git rebase --abort 2>/dev/null || true  # 게시 직후 저장이 중간에 멈췄으면 되돌림 (11/23 중복 게시)
+          python json_merge.py setup . || true  # 기록 파일은 글·칸별로 합침 (영상 실행과 동시에 저장해도 안 지워지게)
           git config user.name "autopost-bot"
           git config user.email "autopost-bot@users.noreply.github.com"
           for f in posted.json research.json ai_drop.json docs manual/done.json; do [ -e "$f" ] && git add -f "$f"; done
