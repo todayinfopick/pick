@@ -225,14 +225,6 @@
   },
   "_general": [
     {
-      "topic": "가을 연근 손질 및 보관법",
-      "id": "18115474003844087",
-      "ig_id": "18117919940097454",
-      "photo_id": "ai:20261028143419",
-      "account": 2,
-      "at": "2026-10-28T14:34:43"
-    },
-    {
       "topic": "가을철 건조한 속눈썹 뷰러 컬링 유지 꿀팁",
       "id": "18131514469796666",
       "ig_id": "18120130748003299",
@@ -1212,6 +1204,15 @@
       "account": 1,
       "manual": true,
       "at": "2026-11-25T18:32:24"
+    },
+    {
+      "topic": "위고비·마운자로 실명 경고 반사이익 기대",
+      "id": null,
+      "ig_id": "18102281990535518",
+      "photo_id": "pixabay:316571",
+      "account": 1,
+      "manual": true,
+      "at": "2026-11-25T18:33:22"
     }
   ],
   "상품:솔루시안pdrn+egf리바이탈라이징크림": {
@@ -7693,46 +7694,40 @@
     "name": "빌리프 슈퍼 나이츠 비타민 마스크, 75ml, 1개",
     "link": "https://link.coupang.com/a/iXaKTXpQMS",
     "shorts": {
-      "at": "2026-11-25T18:29:39",
-      "file": "shorts_2026-11-25_iXaKTXpQMS_182939.mp4",
-      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939.mp4",
-      "title": "바르고 자기만 하면 피부가 환해지는 비타민 마스크 #shorts",
-      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 겨울 내내 손해예요.\n비타민 성분 덕분에 아침에 피부가 환해져요.\n세안하고 마지막 단계에 듬뿍 발라주면 돼요.\n꾸덕하지 않고 촉촉하게 스며들어서 편해요.\n근데 진짜는 이거예요, 씻어낼 필요 없이 자면 끝이에요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#빌리프 #비타민마스크 #오버나이트마스크 #나이트케어 #슬리핑팩 #쿠팡추천 #살림템",
-      "sec": 25.2,
+      "at": "2026-11-25T18:22:40",
+      "file": "shorts_2026-11-25_iXaKTXpQMS_182240.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240.mp4",
+      "title": "자고 일어나니 피부가 맑아진 비결, 빌리프 비타민 마스크 #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n이거 모르면 겨울 내내 손해예요.\n자는 동안 비타민이 피부를 꽉 채워줘요.\n세안 후에 요거 하나만 듬뿍 발라주세요.\n끈적임 없이 촉촉하게 스며들더라고요.\n근데 진짜는 이거예요, 아침에 일어나면 피부가 맑아져요.\n\n🛒 구매 링크는 채널 프로필 링크에서 확인하세요.\n\n#빌리프 #비타민마스크 #오버나이트마스크 #수면팩 #스킨케어 #쿠팡추천 #살림템",
+      "sec": 23.0,
       "voice": "gemini",
       "remade": true,
-      "url_th": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939_th.mp4",
-      "file_th": "shorts_2026-11-25_iXaKTXpQMS_182939_th.mp4",
+      "url_th": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240_th.mp4",
+      "file_th": "shorts_2026-11-25_iXaKTXpQMS_182240_th.mp4",
       "tag": "",
       "ai": [
         {
-          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939_ai1.jpg",
-          "file": "shorts_2026-11-25_iXaKTXpQMS_182939_ai1.jpg",
-          "view": "작동 중(원본)",
-          "prompt": "A close-up vertical shot of the pale yellow vitamin mask cream texture on a flat surface, with smooth light reflecting along the raised streaks. The cream lines gently glisten under bright natural light with a subtle camera push-in. The product texture stays completely static and unchanged in shape, color, and form."
-        },
-        {
-          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939_ai2.jpg",
-          "file": "shorts_2026-11-25_iXaKTXpQMS_182939_ai2.jpg",
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240_ai1.jpg",
+          "file": "shorts_2026-11-25_iXaKTXpQMS_182240_ai1.jpg",
           "view": "정면",
-          "prompt": "In a bright and cozy Korean home bedroom, a person's hands are shown twisting off the black cap of the belif Super knights multi vitamin mask jar resting on a wooden nightstand. The person scoops a small amount of the yellow cream from the jar opening with their fingertips to apply as an overnight mask. The jar remains completely unchanged in shape, color, logo, and text throughout the natural, steady action."
+          "prompt": "A close-up vertical video shows a person in a cozy Korean bedroom at night unscrewing the black cap of the belif Super knights multi vitamin mask jar to reveal the yellow cream inside. The person uses their fingertips to scoop up a small amount of the yellow cream directly from the opening of the jar and applies it smoothly onto their cheek. The jar remains completely unchanged in shape, color, and logo throughout the steady, slow push-in shot under warm bedside lighting."
         }
       ],
       "lines": [
         "이거 모르면 겨울 내내 손해예요.",
-        "비타민 성분 덕분에 아침에 피부가 환해져요.",
-        "세안하고 마지막 단계에 듬뿍 발라주면 돼요.",
-        "꾸덕하지 않고 촉촉하게 스며들어서 편해요.",
-        "근데 진짜는 이거예요, 씻어낼 필요 없이 자면 끝이에요.",
-        "매일 밤 간편하게 생기 충전하고 싶은 분께 추천해요."
+        "자는 동안 비타민이 피부를 꽉 채워줘요.",
+        "세안 후에 요거 하나만 듬뿍 발라주세요.",
+        "끈적임 없이 촉촉하게 스며들더라고요.",
+        "근데 진짜는 이거예요, 아침에 일어나면 피부가 맑아져요.",
+        "건조한 피부로 고민인 분들께 추천해요."
       ],
       "dub": {
-        "file": "shorts_2026-11-25_iXaKTXpQMS_182939_dub.mp4",
-        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939_dub.mp4"
+        "file": "shorts_2026-11-25_iXaKTXpQMS_182240_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240_dub.mp4"
       },
       "thumb": {
-        "file": "shorts_2026-11-25_iXaKTXpQMS_182939_thumb.jpg",
-        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182939_thumb.jpg"
+        "file": "shorts_2026-11-25_iXaKTXpQMS_182240_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240_thumb.jpg"
       },
       "thumb_v": 3
     }
