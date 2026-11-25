@@ -7475,10 +7475,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795584682/coupang-autopost/amoxwqusqvdwwy878exm.mp4",
         "account": 1,
         "at": "2026-11-25T14:31:23"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795584957/coupang-autopost/r6fonoraehnemqo6mvdr.mp4",
+        "account": 1,
+        "at": "2026-11-25T14:35:58"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261125-11250916283662-102957.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-1125091724cc9e-103116.mp4",
       "script": {
         "title": "설화수 탄력 크림 EX 세트",
         "lines": [
@@ -7500,6 +7506,13 @@
     },
     "name": "설화수 탄력 크림 EX 세트, 1세트",
     "link": "https://link.coupang.com/a/iVtxb2EfMO",
-    "account": 1
+    "account": 1,
+    "no": 91,
+    "instagram": {
+      "id": "18115058033524496",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T14:36:31"
+    }
   }
 }
