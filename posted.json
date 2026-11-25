@@ -7622,5 +7622,16 @@
       },
       "thumb_v": 3
     }
+  },
+  "상품:크리스마스럭셔리선물세트,웨이퍼5종,1세트": {
+    "threads": {
+      "id": "17956373520341128",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-25T16:36:10"
+    },
+    "name": "크리스마스 럭셔리 선물세트, 웨이퍼 5종, 1세트",
+    "link": "https://link.coupang.com/a/iWwVdEzdRs",
+    "account": 1
   }
 }
