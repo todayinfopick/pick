@@ -221,7 +221,13 @@ jobs:
               r = subprocess.run(["gh", "api", f"repos/{os.environ['GH_REPO']}/contents/remake_queue/{f.name}?ref=main",
                                   "--jq", ".sha"], capture_output=True, text=True)
               return r.stdout.strip() if r.returncode == 0 else ("" if "404" in r.stderr else "?")
+          # 11/25: 저장소 안의 요청 파일을 지우면(git rm) 게시 기록 저장과 엉켜 저장이 실패, 만든 영상 기록이 사라졌음
+          # → 요청은 임시 폴더에 복사해 읽고, 저장소 쪽 파일은 손대지 않음 (지우기는 API로만 → 다음 pull에서 같이 지워짐)
+          import shutil, tempfile
+          tmp = pathlib.Path(tempfile.mkdtemp())
           for f in sorted(pathlib.Path("remake_queue").glob("*.json"))[:6]:
+              shutil.copy(f, tmp / f.name)
+          for f in sorted(tmp.glob("*.json")):
               try:
                   q = json.loads(f.read_text("utf-8"))
               except Exception:
@@ -250,8 +256,6 @@ jobs:
               if sha and sha != "?":
                   subprocess.run(["gh", "api", "-X", "DELETE", f"repos/{os.environ['GH_REPO']}/contents/remake_queue/{f.name}",
                                   "-f", "message=영상 요청 끝", "-f", f"sha={sha}", "-f", "branch=main"], capture_output=True)
-              subprocess.run(["git", "rm", "-q", "--cached", "--ignore-unmatch", str(f)])
-              f.unlink(missing_ok=True)
           PY
 
       - name: 일반 글
