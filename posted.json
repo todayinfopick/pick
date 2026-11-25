@@ -7397,10 +7397,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795577473/coupang-autopost/rsxvsznu5co3pha2ubar.mp4",
         "account": 1,
         "at": "2026-11-25T12:31:14"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795577759/coupang-autopost/ktyjbwvj101f0qwup3oh.mp4",
+        "account": 1,
+        "at": "2026-11-25T12:36:00"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261125-1125091624f0c8-102931.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-11250917211c28-103049.mp4",
       "script": {
         "title": "셀렉스 프로틴 락토프리 음료",
         "lines": [
@@ -7423,6 +7429,13 @@
     },
     "name": "셀렉스 프로틴 락토프리 음료, 190ml, 24개",
     "link": "https://link.coupang.com/a/iVtlYZ6F2q",
-    "account": 1
+    "account": 1,
+    "no": 90,
+    "instagram": {
+      "id": "17980726476152972",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T12:37:19"
+    }
   }
 }
