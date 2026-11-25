@@ -7648,10 +7648,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795593719/coupang-autopost/ustk3aez5fadxbjluvcj.mp4",
         "account": 2,
         "at": "2026-11-25T17:02:00"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795594085/coupang-autopost/pmubs6k7qkqnbdryrhls.mp4",
+        "account": 2,
+        "at": "2026-11-25T17:08:08"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261125-11250919457390-103252.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-11250921133100-103508.mp4",
       "script": {
         "title": "지오리스 해피슬립Air 5단 테크닉 천연 라텍스 & 20D 메모리폼 매트리스",
         "lines": [
@@ -7673,6 +7679,13 @@
     },
     "name": "지오리스 해피슬립Air 5단 테크닉 천연 라텍스 & 20D 메모리폼 매트리스",
     "link": "https://link.coupang.com/a/iWyeLY2x9o",
-    "account": 2
+    "account": 2,
+    "no": 83,
+    "instagram": {
+      "id": "18645215086055826",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T17:08:38"
+    }
   }
 }
