@@ -8202,6 +8202,13 @@
     },
     "name": "pick-app 사진 편집 창(manual_ui.PhotoEditor, 쿠팡 상품 등록 탭에서도 씀) 수정 이어서 해줘. 1) 비율 버튼(1:1·4:5·9:16·16:9)을 누를 때마다 이미 자른 사진을 또 잘라서 계속 작아짐(52×29까지) → 마지막 누른 비율만 원본 기준으로 적용 2) '↺ 처음대로'가 이전·다음으로 갔다 오거나 창을 다시 열면 원본이",
     "link": "https://link.coupang.com/a/iWyutZ9oS4",
-    "account": 2
+    "account": 2,
+    "no": 84,
+    "instagram": {
+      "id": "17897369439436379",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-25T21:08:50"
+    }
   }
 }
