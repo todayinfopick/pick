@@ -8236,10 +8236,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795615362/coupang-autopost/j52j61cx44i3znbazmew.mp4",
         "account": 2,
         "at": "2026-11-25T23:02:43"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795615671/coupang-autopost/yzwao0liadvvuzevbaxj.mp4",
+        "account": 2,
+        "at": "2026-11-25T23:07:52"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261125-112509203547d8-103348.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-1125092135f80f-103606.mp4",
       "script": {
         "title": "PERFFIER 미니 무선 가습기 1500ml 사무실 탁상용 초음파 휴대용 저소음 수면 무드등 겸용",
         "lines": [
@@ -8261,6 +8267,13 @@
     },
     "name": "PERFFIER 미니 무선 가습기 1500ml 사무실 탁상용 초음파 휴대용 저소음 수면 무드등 겸용",
     "link": "https://link.coupang.com/a/iW6KIPncey",
-    "account": 2
+    "account": 2,
+    "no": 85,
+    "instagram": {
+      "id": "18461081344121640",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T23:08:24"
+    }
   }
 }
