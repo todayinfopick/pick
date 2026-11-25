@@ -7389,5 +7389,40 @@
       },
       "thumb_v": 3
     }
+  },
+  "상품:셀렉스프로틴락토프리음료,190ml,24개": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795577473/coupang-autopost/rsxvsznu5co3pha2ubar.mp4",
+        "account": 1,
+        "at": "2026-11-25T12:31:14"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-1125091624f0c8-102931.mp4",
+      "script": {
+        "title": "셀렉스 프로틴 락토프리 음료",
+        "lines": [
+          "유당 없는 단백질 찾으셨나요?",
+          "유당 0% 락토프리라 마셔도 속이 정말 편안해요.",
+          "동식물성 단백질이 무려 14g이나 들어있어요.",
+          "류신도 1,400mg에 비타민까지 14종이나 챙길 수 있죠.",
+          "근데 진짜는 이거예요.",
+          "190ml라 가방에 쏙 넣고 다니기 딱 좋아요.",
+          "칼로리도 140kcal라 부담 없이 마시기 좋답니다.",
+          "매일 간편하게 단백질 챙기고 싶은 분께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18140857078640450",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T12:34:58"
+    },
+    "name": "셀렉스 프로틴 락토프리 음료, 190ml, 24개",
+    "link": "https://link.coupang.com/a/iVtlYZ6F2q",
+    "account": 1
   }
 }
