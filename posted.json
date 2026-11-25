@@ -7467,5 +7467,39 @@
       "manual": true,
       "at": "2026-11-25T12:57:47"
     }
+  },
+  "상품:설화수탄력크림ex세트,1세트": {
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795584682/coupang-autopost/amoxwqusqvdwwy878exm.mp4",
+        "account": 1,
+        "at": "2026-11-25T14:31:23"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261125-11250916283662-102957.mp4",
+      "script": {
+        "title": "설화수 탄력 크림 EX 세트",
+        "lines": [
+          "이거 모르면 탄력 케어 손해예요.",
+          "모든 피부에 편하게 바르기 딱 좋아요.",
+          "탄력 크림 EX 본품에 증정용까지 들어있어요.",
+          "부드럽게 싹 스며들어서 매일 바르기 편해요.",
+          "근데 진짜는 이거예요.",
+          "넉넉한 구성이라 여유 있게 탄력 케어 시작하기 좋아요.",
+          "피부 탄력 고민될 때 쓰기 딱 좋은 세트예요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18457394257127641",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-25T14:35:07"
+    },
+    "name": "설화수 탄력 크림 EX 세트, 1세트",
+    "link": "https://link.coupang.com/a/iVtxb2EfMO",
+    "account": 1
   }
 }
