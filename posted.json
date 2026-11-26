@@ -8240,10 +8240,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795691336/coupang-autopost/qeqtppiaepcvys0xszdj.mp4",
         "account": 2,
         "at": "2026-11-26T20:08:57"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795691652/coupang-autopost/kc74jwh5zozhlsrmil0t.mp4",
+        "account": 2,
+        "at": "2026-11-26T20:14:13"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126084220470f-095445.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126084317bce9-095706.mp4",
       "script": {
         "title": "홈플래닛 초음파 가습기 4L",
         "lines": [
@@ -8262,7 +8268,14 @@
       "manual": true,
       "at": "2026-11-26T20:12:42"
     },
-    "account": 2
+    "account": 2,
+    "no": 89,
+    "instagram": {
+      "id": "17912004885327713",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T20:15:34"
+    }
   },
   "상품:락앤락바로한끼이유식원형보관용기": {
     "name": "락앤락 바로한끼 이유식 원형 보관용기",
