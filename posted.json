@@ -7825,7 +7825,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXaKTXpQMS_182240_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795668543/coupang-autopost/ymi3vm2lmpeznnuqswo7.mp4",
+        "account": 1,
+        "at": "2026-11-26T13:49:04"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083836aec2-094924.mp4",
+      "script": {
+        "title": "빌리프 슈퍼 나이츠 비타민 마스크",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요",
+          "자고 나면 건조해지는 날씨에 딱이에요",
+          "세안하고 크림처럼 슥 바르고 자면 끝이에요",
+          "비타민 성분이 들어있어서 생기가 돌아요",
+          "근데 진짜는 이거예요",
+          "건성 피부라면 무조건 체크해 보세요"
+        ]
+      }
+    },
+    "threads": {
+      "id": "18110017145573324",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T13:52:48"
+    },
+    "account": 1
   },
   "상품:곰곰달달꿀호떡": {
     "name": "곰곰 달달 꿀호떡",
