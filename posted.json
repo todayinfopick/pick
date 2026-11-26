@@ -7917,10 +7917,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795675744/coupang-autopost/uirnmw9ahfw1sccw2qj2.mp4",
         "account": 1,
         "at": "2026-11-26T15:49:05"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795676034/coupang-autopost/kfceizd0kdchftyicmdu.mp4",
+        "account": 1,
+        "at": "2026-11-26T15:53:55"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083845ec7f-094951.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126084001576e-095156.mp4",
       "script": {
         "title": "곰곰 달달 꿀호떡",
         "lines": [
@@ -7940,7 +7946,14 @@
       "manual": true,
       "at": "2026-11-26T15:52:48"
     },
-    "account": 1
+    "account": 1,
+    "no": 97,
+    "instagram": {
+      "id": "18452439907135514",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T15:54:24"
+    }
   },
   "상품:교동육개장,500g,10개": {
     "name": "교동 육개장, 500g, 10개",
