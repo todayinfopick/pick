@@ -7832,10 +7832,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795668543/coupang-autopost/ymi3vm2lmpeznnuqswo7.mp4",
         "account": 1,
         "at": "2026-11-26T13:49:04"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795668842/coupang-autopost/iovgz6llmmslgzyd8jkk.mp4",
+        "account": 1,
+        "at": "2026-11-26T13:54:03"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083836aec2-094924.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083947c8e3-095130.mp4",
       "script": {
         "title": "빌리프 슈퍼 나이츠 비타민 마스크",
         "lines": [
@@ -7854,7 +7860,14 @@
       "manual": true,
       "at": "2026-11-26T13:52:48"
     },
-    "account": 1
+    "account": 1,
+    "no": 96,
+    "instagram": {
+      "id": "18656948458033677",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T13:54:32"
+    }
   },
   "상품:곰곰달달꿀호떡": {
     "name": "곰곰 달달 꿀호떡",
