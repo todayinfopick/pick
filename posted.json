@@ -7910,7 +7910,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXTzr196zc_201212_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795675744/coupang-autopost/uirnmw9ahfw1sccw2qj2.mp4",
+        "account": 1,
+        "at": "2026-11-26T15:49:05"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083845ec7f-094951.mp4",
+      "script": {
+        "title": "곰곰 달달 꿀호떡",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "냉동실에 쟁여두는 곰곰 달달 꿀호떡이에요.",
+          "-18도 이하로 안전하게 냉동 보관하면 끝이에요.",
+          "아카시아꿀이 들어있어서 달달함이 대박이에요.",
+          "근데 진짜는 이거예요.",
+          "총 10개입이라 간식으로 먹기 딱 좋아요.",
+          "달달한 간식 찾는 분들께 추천드려요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "17993362698085445",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T15:52:48"
+    },
+    "account": 1
   },
   "상품:교동육개장,500g,10개": {
     "name": "교동 육개장, 500g, 10개",
