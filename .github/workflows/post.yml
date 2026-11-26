@@ -98,6 +98,10 @@ jobs:
     # '예약 확인'은 외부 알람(cron-job.org)이 15분마다 부르는 것 — GitHub 예약과 똑같이 동작
     if: (github.event_name != 'schedule' && inputs.mode != '예약 확인') || vars.AUTO_POST != 'off'
     runs-on: ubuntu-latest
+    # actions: write = 영상 요청이 남으면 다음 묶음을 바로 부르기 (11/26)
+    permissions:
+      contents: write
+      actions: write
     # 게시 도중 끊기면 기록을 못 남겨 다음 실행이 같은 글을 또 올림 → 넉넉히 (보통 5분 안에 끝남)
     timeout-minutes: 45
     env:
@@ -208,7 +212,7 @@ jobs:
           SHORTS_PHOTOS: ${{ inputs.photos }}
           SHORTS_TAG: ${{ inputs.tag }}
         # 11/24: 여러 개를 연달아 요청하면 기다리던 실행이 취소돼 요청이 사라졌음 → PC가 요청을 remake_queue/에 파일로 적고,
-        # 이 실행이 줄 선 요청을 차례로 모두 만든 뒤 지움 (한 번에 최대 6개, 남은 것은 15분마다 확인이 다시 부름)
+        # 이 실행이 줄 선 요청을 차례로 모두 만든 뒤 지움 (한 번에 최대 6개, 남은 것은 끝나자마자 다음 묶음을 부름)
         # 11/25 취소: PC '✖ 취소'가 요청 파일을 지우면, 아직 안 만든 것은 건너뛰고 만드는 중이면 15초 안에 멈춤.
         # 다 만든 요청은 바로 저장소에서 지움 (실행이 중간에 멈춰도 다시 만들지 않게)
           GH_TOKEN: ${{ github.token }}
@@ -257,6 +261,10 @@ jobs:
                   subprocess.run(["gh", "api", "-X", "DELETE", f"repos/{os.environ['GH_REPO']}/contents/remake_queue/{f.name}",
                                   "-f", "message=영상 요청 끝", "-f", f"sha={sha}", "-f", "branch=main"], capture_output=True)
           PY
+          # 사용자 11/26 '6개 만들고 바로 6개를 새로': 요청이 남았으면 15분 확인을 기다리지 않고 다음 묶음을 바로 부름
+          # (다 만든·못 만든 요청 파일은 위에서 지우므로 같은 것을 끝없이 부르지 않음)
+          n=$(gh api "repos/$GH_REPO/contents/remake_queue?ref=main" --jq 'length' 2>/dev/null || echo 0)
+          [ "$n" -gt 0 ] 2>/dev/null && gh workflow run post.yml -f mode="쇼츠 다시 만들기" && echo "남은 영상 요청 ${n}개 → 다음 묶음 바로 시작" || true
 
       - name: 일반 글
         if: "!cancelled() && steps.check.outputs.gdue == '1'"
