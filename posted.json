@@ -7629,7 +7629,34 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXagbtse9Q_161533_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795661340/coupang-autopost/mizf1szqgqvs2zofjcnt.mp4",
+        "account": 1,
+        "at": "2026-11-26T11:49:01"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083833449f-094901.mp4",
+      "script": {
+        "title": "연안식당 부추꼬막장 (냉동)",
+        "lines": [
+          "이거 모르면 오늘 반찬 또 고민해요.",
+          "탱글탱글한 새꼬막살이 가득 들어있거든요.",
+          "따뜻한 밥에 슥슥 비벼 먹으면 끝이에요.",
+          "근데 진짜는 향긋한 부추가 더해졌다는 거예요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18419843473087321",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T11:52:33"
+    },
+    "account": 1
   },
   "상품:크리스마스럭셔리선물세트,웨이퍼5종,1세트": {
     "threads": {
