@@ -154,6 +154,10 @@ jobs:
               git diff --binary "$(cat ../base_sha.txt)" FETCH_HEAD -- . ':(exclude)index.json' ':(exclude)done.json' > ../others.patch || true
               [ -s ../others.patch ] && { git apply --reject ../others.patch || echo "일부 변경은 옮기지 못함"; }
               git show FETCH_HEAD:done.json > done.json 2>/dev/null || true
+              # 2026-11-27: 작업 중에 바뀐 목록 정보(검수완료 표시 등)도 합침 (예전엔 index.json을 통째로 덮어써서 빠졌음)
+              git show "$(cat ../base_sha.txt)":index.json > ../index_base.json 2>/dev/null || true
+              git show FETCH_HEAD:index.json > ../index_theirs.json 2>/dev/null || true
+              [ -s ../index_base.json ] && [ -s ../index_theirs.json ] && python3 ../.github/scripts/merge_index.py ../index_base.json ../index_theirs.json index.json || true
               find . -name '*.rej' -delete
             fi
             # 지운 글(content.json 없음)은 목록에서 빼고, 목록에 없는 글 폴더(지우고 남은 사진·영상)도 정리 (지운 글이 목록에 다시 뜨지 않게)
