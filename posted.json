@@ -8527,10 +8527,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795678279/coupang-autopost/h08yrigptolngo9hdrq6.mp4",
         "account": 2,
         "at": "2026-11-26T16:31:20"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795678576/coupang-autopost/z9uyqbprbm3fnnjnzw9f.mp4",
+        "account": 2,
+        "at": "2026-11-26T16:36:17"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-112608420057d5-095409.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260842552f09-095630.mp4",
       "script": {
         "title": "홈럭스 파워수압 필터 샤워기 + 필터 5개 + 샤워호스 1.5M + 거치데 안마 샤워기세트 8pcs",
         "lines": [
@@ -8551,6 +8557,13 @@
     },
     "name": "홈럭스 파워수압 필터 샤워기 + 필터 5개 + 샤워호스 1.5M + 거치데 안마 샤워기세트 8pcs",
     "link": "https://link.coupang.com/a/iXPxjvD6s0",
-    "account": 2
+    "account": 2,
+    "no": 88,
+    "instagram": {
+      "id": "18127642291916324",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T16:36:55"
+    }
   }
 }
