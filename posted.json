@@ -8535,20 +8535,6 @@
         "at": "2026-11-26T16:36:17"
       }
     ],
-    "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260842552f09-095630.mp4",
-      "script": {
-        "title": "홈럭스 파워수압 필터 샤워기 + 필터 5개 + 샤워호스 1.5M + 거치데 안마 샤워기세트 8pcs",
-        "lines": [
-          "욕실 수압이 약해 답답할 때 꼭 보세요.",
-          "수압이 확 강해져서 씻을 때 정말 시원해요.",
-          "필터가 들어있어 물을 깨끗하게 걸러줘요.",
-          "3단계 분사 모드라 골라 쓰는 재미가 있어요.",
-          "근데 진짜는 이거예요, 실리콘 노즐이 엄청 부드러워요.",
-          "욕실 환경을 싹 바꾸고 싶다면 써보세요."
-        ]
-      }
-    },
     "threads": {
       "id": "17957839542333853",
       "kind": "video",
@@ -8564,6 +8550,58 @@
       "kind": "video",
       "manual": true,
       "at": "2026-11-26T16:36:55"
+    },
+    "shorts": {
+      "at": "2026-11-26T16:37:12",
+      "file": "shorts_2026-11-26_iXPxjvD6s0.mp4",
+      "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0.mp4",
+      "title": "홈럭스 파워수압 필터 샤워기 + 필터 5개 + 샤워호스 1.5M + 거치데 안마 샤워기세트 8pcs #shorts",
+      "desc": "이 영상은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.\n\n욕실 수압이 약해 답답할 때 꼭 보세요.\n수압이 확 강해져서 씻을 때 정말 시원해요.\n필터가 들어있어 물을 깨끗하게 걸러줘요.\n3단계 분사 모드라 골라 쓰는 재미가 있어요.\n근데 진짜는 이거예요, 실리콘 노즐이 엄청 부드러워요.\n\n🛒 구매 링크: 채널 프로필 링크 → 생활템 88번\n\n#쿠팡추천 #살림템",
+      "sec": 20.2,
+      "voice": "",
+      "ai": [
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_ai1.jpg",
+          "file": "shorts_2026-11-26_iXPxjvD6s0_ai1.jpg",
+          "view": "작동 중(원본)",
+          "prompt": "A close-up shot of the gray power-pressure filter shower head mounted on a bathroom wall, with pressurized water streaming powerfully from the circular spray face. High-speed fine water jets continuously spray outwards from the front nozzle face against a softly lit tiled bathroom background. The camera remains steady, capturing the steady, high-pressure water flow under bright natural bathroom lighting."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_ai2.jpg",
+          "file": "shorts_2026-11-26_iXPxjvD6s0_ai2.jpg",
+          "view": "비스듬히",
+          "prompt": "A person stands in a bright, modern Korean bathroom with eyes closed, enjoying a relaxing shower as fine water streams from the gray shower head mounted on the wall bracket. High-pressure water flows continuously from the circular spray face, cascading over the person's shoulder and upper back. The camera slowly pushes in on the relaxed individual experiencing the purified water spray."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_ai3.jpg",
+          "file": "shorts_2026-11-26_iXPxjvD6s0_ai3.jpg",
+          "view": "비스듬히",
+          "prompt": "A person's hand holds the gray power-pressure shower head in an everyday Korean bathroom, pressing the black round stop button on the handle to pause the flow. Water instantly stops spraying from the circular spray face while the hand adjusts the grip. The camera remains steady on the hand and the product handle under bright indoor lighting."
+        },
+        {
+          "img": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_ai4.jpg",
+          "file": "shorts_2026-11-26_iXPxjvD6s0_ai4.jpg",
+          "view": "비스듬히",
+          "prompt": "A close-up shot of the gray power-pressure filter shower head active in an everyday Korean bathroom, with pressurized water streaming powerfully from the circular spray face. High-speed fine water jets continuously spray outwards from the front nozzle face against a softly lit tiled background. The camera remains steady, capturing the steady, high-pressure water flow under bright natural bathroom lighting."
+        }
+      ],
+      "lines": [
+        "욕실 수압이 약해 답답할 때 꼭 보세요.",
+        "수압이 확 강해져서 씻을 때 정말 시원해요.",
+        "필터가 들어있어 물을 깨끗하게 걸러줘요.",
+        "3단계 분사 모드라 골라 쓰는 재미가 있어요.",
+        "근데 진짜는 이거예요, 실리콘 노즐이 엄청 부드러워요.",
+        "욕실 환경을 싹 바꾸고 싶다면 써보세요."
+      ],
+      "dub": {
+        "file": "shorts_2026-11-26_iXPxjvD6s0_dub.mp4",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_dub.mp4"
+      },
+      "thumb": {
+        "file": "shorts_2026-11-26_iXPxjvD6s0_thumb.jpg",
+        "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-26_iXPxjvD6s0_thumb.jpg"
+      },
+      "thumb_v": 3
     }
   }
 }
