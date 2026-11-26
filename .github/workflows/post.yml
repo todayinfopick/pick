@@ -15,7 +15,7 @@ on:
         description: "할 일"
         type: choice
         default: 지금 게시
-        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 직접 쓴 글 게시, 토큰 연장, 예약 확인, 쇼츠 다시 만들기]
+        options: [지금 게시, 미리보기, 일반 글 게시, 일반 글 미리보기, 직접 쓴 글 게시, 토큰 연장, 예약 확인, 쇼츠 다시 만들기, 게시 기록]
       product:
         description: "쇼츠 다시 만들기: 파트너스 링크 또는 상품명 일부"
         type: string
@@ -164,15 +164,19 @@ jobs:
           if [ "$SCHED" = '0 23 * * 6' ] || [ "$MODE" = '토큰 연장' ] || [ $weekly = 1 ]; then
             echo "refresh=1" >> "$GITHUB_OUTPUT"
           fi
+          # 게시 기록·조회수: 매일 한국 시간 6시대 앞 30분 확인 때 (시트 탭을 통째로 다시 써서 두 번 돌아도 같음)
+          if { [ "$CHECK" = 'true' ] && [ "$(date +%H)" = 06 ] && [ "$(date +%-M)" -lt 30 ]; } || [ "$MODE" = '게시 기록' ]; then
+            echo "stats=1" >> "$GITHUB_OUTPUT"
+          fi
 
       # 글꼴 + 사진 속 글자 확인(OCR, 한국어): 글자 박힌 사진은 인스타·쓰레드에 안 쓰려고
       - name: 글꼴·글자 인식 준비
-        if: (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        if: inputs.mode != '게시 기록' && (env.CHECK != 'true' || steps.check.outputs.any == '1')
         run: sudo apt-get update -qq && sudo apt-get install -y -qq fonts-nanum tesseract-ocr tesseract-ocr-kor > /dev/null
 
       # 직접 쓴 글만 올리는 실행(지금 올리기·예약 글만 차례)이면 사진은 필요한 상품 것만 받음 (전체는 몇 분 걸림)
       - name: 시트·사진 받기
-        if: (env.CHECK != 'true' || steps.check.outputs.any == '1' || steps.when.outputs.refresh == '1')
+        if: inputs.mode != '게시 기록' && (env.CHECK != 'true' || steps.check.outputs.any == '1' || steps.when.outputs.refresh == '1')
         env:
           # 직접 쓴 글만: 그 글 상품 사진만 / 예약 회차: 다음 차례 상품 사진만 (전부 받으면 10분 넘게 걸림) / 그 밖: 전부
           PULL_PHOTOS: ${{ (inputs.mode == '직접 쓴 글 게시' || (steps.check.outputs.mdue == '1' && steps.check.outputs.due != '1' && steps.check.outputs.gdue != '1' && steps.when.outputs.refresh != '1')) && 'manual' || (env.CHECK == 'true' && 'slot' || 'all') }}
@@ -294,12 +298,12 @@ jobs:
 
       # 다음에 올라갈 상품의 사진 미리보기 (docs/preview/): 원할 때만 열어 사진을 빼거나 살림
       - name: 사진 미리보기 페이지
-        if: "!cancelled() && inputs.mode != '직접 쓴 글 게시' && inputs.mode != '쇼츠 다시 만들기' && (env.CHECK != 'true' || (steps.check.outputs.any == '1' && (steps.check.outputs.due == '1' || steps.check.outputs.gdue == '1')))"
+        if: "!cancelled() && inputs.mode != '직접 쓴 글 게시' && inputs.mode != '쇼츠 다시 만들기' && inputs.mode != '게시 기록' && (env.CHECK != 'true' || (steps.check.outputs.any == '1' && (steps.check.outputs.due == '1' || steps.check.outputs.gdue == '1')))"
         continue-on-error: true
         run: python preview.py
 
       - name: 링크 페이지 만들기
-        if: always() && inputs.mode != '쇼츠 다시 만들기' && (env.CHECK != 'true' || steps.check.outputs.any == '1')
+        if: always() && inputs.mode != '쇼츠 다시 만들기' && inputs.mode != '게시 기록' && (env.CHECK != 'true' || steps.check.outputs.any == '1')
         run: python build_page.py
 
       - name: 결과 저장
@@ -312,6 +316,12 @@ jobs:
           git config user.email "autopost-bot@users.noreply.github.com"
           for f in posted.json research.json ai_drop.json docs manual/done.json; do [ -e "$f" ] && git add -f "$f"; done
           git diff --cached --quiet || (git commit -q -m "게시 기록 업데이트" && git pull -q --rebase -X theirs && git push -q)
+
+      # 사용자 11/26 '발행 게시 데이터 · 데이터 검증': 게시물마다 말투·글·형식 + 조회수 등 → 시트 '게시기록' 탭
+      - name: 게시 기록·조회수
+        if: "!cancelled() && steps.when.outputs.stats == '1'"
+        continue-on-error: true
+        run: python cloud_sync.py env && python post_log.py
 
       - name: 미리보기 이미지
         if: inputs.mode == '미리보기'
