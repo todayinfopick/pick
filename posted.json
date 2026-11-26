@@ -7578,10 +7578,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795662980/coupang-autopost/xboztimf9pj2yyrmc4vk.mp4",
         "account": 2,
         "at": "2026-11-26T12:16:21"
+      },
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795663089/coupang-autopost/txbkeadob1hh0cnoxs14.mp4",
+        "account": 2,
+        "at": "2026-11-26T12:18:10"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260842464493-095530.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260841423d93-095311.mp4",
       "script": {
         "title": "2026년형 틴도우 스팀 습식청소기 18000pa강력 흡입 소파 매트리스 패브릭청소기 고온살균 침구청소기+브러쉬 5종",
         "lines": [
@@ -7608,7 +7614,13 @@
         "link": "https://link.coupang.com/a/iW98JMJJam"
       }
     },
-    "account": 2
+    "account": 2,
+    "threads": {
+      "id": "17948122434380741",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T12:22:00"
+    }
   },
   "상품:르까프방한터치논슬립장갑le6o007blk": {
     "threads": {
