@@ -8233,7 +8233,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXSZJzyyES_204118_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795691336/coupang-autopost/qeqtppiaepcvys0xszdj.mp4",
+        "account": 2,
+        "at": "2026-11-26T20:08:57"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126084220470f-095445.mp4",
+      "script": {
+        "title": "홈플래닛 초음파 가습기 4L",
+        "lines": [
+          "아직도 가습기 물 매일 채우세요?",
+          "4L 대용량이라 하루 종일 틀어도 넉넉해요.",
+          "뚜껑만 열어서 편하게 물을 붓기만 하면 끝이에요.",
+          "다이얼로 풍량과 타이머를 쉽게 조절할 수 있어요.",
+          "근데 진짜는 이거예요, 세척하기가 너무 편해요.",
+          "자주 물을 채우기 귀찮았던 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "17886755220522635",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T20:12:42"
+    },
+    "account": 2
   },
   "상품:락앤락바로한끼이유식원형보관용기": {
     "name": "락앤락 바로한끼 이유식 원형 보관용기",
