@@ -8373,7 +8373,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXTIYXgMpM_205550_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795690491/coupang-autopost/v2ws11mssa6ygihtshxo.mp4",
+        "account": 1,
+        "at": "2026-11-26T19:54:51"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-112608391335cf-095020.mp4",
+      "script": {
+        "title": "하이뮨 프로틴 밸런스 음료 초코",
+        "lines": [
+          "아직도 단백질을 억지로 씹어 드시나요?",
+          "그냥 음료수처럼 마시면 끝이에요.",
+          "바쁜 아침에 하나씩 챙겨 마시고 있어요.",
+          "동물성과 식물성 단백질이 6대 4로 들어있어요.",
+          "근데 진짜는 이거예요.",
+          "비타민과 미네랄도 16종이나 들어있거든요.",
+          "간편하게 단백질 채우고 싶은 분들께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18137741332671070",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T19:58:33"
+    },
+    "account": 1
   },
   "상품:pick-app사진편집창(manual_ui.photoeditor,쿠팡상품등록탭에서도씀)수정이어서해줘.1)비율버튼(1:1·4:5·9:16·16:9)을누를때마다이미자른사진을또잘라서계속작아짐(52×29까지)→마지막누른비율만원본기준으로적용2)'↺처음대로'가이전·다음으로갔다오거나창을다시열면원본이": {
     "threads": {
