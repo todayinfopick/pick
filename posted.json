@@ -7571,7 +7571,44 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iW98JMJJam_145528_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795662980/coupang-autopost/xboztimf9pj2yyrmc4vk.mp4",
+        "account": 2,
+        "at": "2026-11-26T12:16:21"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260842464493-095530.mp4",
+      "script": {
+        "title": "2026년형 틴도우 스팀 습식청소기 18000pa강력 흡입 소파 매트리스 패브릭청소기 고온살균 침구청소기+브러쉬 5종",
+        "lines": [
+          "매트리스에 쏟은 커피 어떡해요?",
+          "고온살균 스팀으로 싹 지우면 돼요.",
+          "18000pa 흡입력으로 속까지 말끔해요.",
+          "소파랑 패브릭도 이거 하나면 끝이에요.",
+          "근데 진짜는 이거예요.",
+          "브러쉬 5종으로 구석구석 다 닦여요.",
+          "오수 탱크도 간편하게 분리돼요.",
+          "더러워진 패브릭 청소하고 싶다면 추천해요."
+        ]
+      }
+    },
+    "no": 86,
+    "instagram": {
+      "id": "18182697883431988",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T12:16:56"
+    },
+    "pages": {
+      "2": {
+        "link": "https://link.coupang.com/a/iW98JMJJam"
+      }
+    },
+    "account": 2
   },
   "상품:르까프방한터치논슬립장갑le6o007blk": {
     "threads": {
