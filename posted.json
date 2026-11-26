@@ -7636,10 +7636,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795661340/coupang-autopost/mizf1szqgqvs2zofjcnt.mp4",
         "account": 1,
         "at": "2026-11-26T11:49:01"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795661617/coupang-autopost/qbsa7fz8pfkwzohpsm4h.mp4",
+        "account": 1,
+        "at": "2026-11-26T11:53:39"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261126-1126083833449f-094901.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261126-11260839386164-095108.mp4",
       "script": {
         "title": "연안식당 부추꼬막장 (냉동)",
         "lines": [
@@ -7656,7 +7662,14 @@
       "manual": true,
       "at": "2026-11-26T11:52:33"
     },
-    "account": 1
+    "account": 1,
+    "no": 95,
+    "instagram": {
+      "id": "18027223385718003",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-26T11:54:11"
+    }
   },
   "상품:크리스마스럭셔리선물세트,웨이퍼5종,1세트": {
     "threads": {
