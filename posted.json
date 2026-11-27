@@ -9008,7 +9008,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-27_i0rDqFdebA_103555_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795772677/coupang-autopost/rrnokcgzqr7hfzgl9dgh.mp4",
+        "account": 1,
+        "at": "2026-11-27T18:44:38"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-11271021556449-104404.mp4",
+      "script": {
+        "title": "피지오겔 데일리 모이스쳐 테라피 페이셜 크림",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "바르자마자 건조했던 피부가 편안해져요.",
+          "세안하고 이거 하나만 듬뿍 발라주세요.",
+          "150ml 용량이라 넉넉하게 쓰기 좋아요.",
+          "근데 진짜는 이거예요, 수분 장벽이 탄탄해져요.",
+          "건조하고 예민한 피부로 고민하는 분들께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18142933684626609",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T18:48:25"
+    },
+    "account": 1
   },
   "상품:라비킷유아용라이너루프트필로우두상베개": {
     "name": "라비킷 유아용 라이너 루프트 필로우 두상베개",
