@@ -9006,7 +9006,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-27_i0rj3QJR1w_092555_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795788258/coupang-autopost/hsaogzqftpd3vqm3kys9.mp4",
+        "account": 2,
+        "at": "2026-11-27T23:04:19"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-112710232946f9-104832.mp4",
+      "script": {
+        "title": "베로 가벼운 크로와상 크로스백",
+        "lines": [
+          "이거 모르면 데일리백으로 완전 손해예요.",
+          "깃털처럼 가벼운데 크로와상 쉐입이라 핏이 진짜 예뻐요.",
+          "지갑이랑 스마트폰도 넉넉하게 쏙 들어가요.",
+          "끈 길이 조절도 돼서 원피스나 청바지 다 잘 어울려요.",
+          "근데 진짜는 이거예요, 매일 메도 어깨가 하나도 안 아파요.",
+          "가볍고 예쁜 크로스백 찾는 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "17956116936305465",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T23:08:06"
+    },
+    "account": 2
   },
   "상품:피지오겔데일리모이스쳐테라피페이셜크림,150ml,1개": {
     "name": "피지오겔 데일리 모이스쳐 테라피 페이셜 크림, 150ml, 1개",
