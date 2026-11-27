@@ -8148,7 +8148,22 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-25_iXVpLOfAWa_202946_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795752253/coupang-autopost/h5wkrb4wi1hkkigh0jya.mp4",
+        "account": 2,
+        "at": "2026-11-27T13:04:14"
+      }
+    ],
+    "threads": {
+      "id": "18016509375003545",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T13:07:57"
+    },
+    "account": 2
   },
   "상품:홈스타핑크파워욕실찌든때클리너,750ml,2개": {
     "name": "홈스타 핑크파워 욕실 찌든때 클리너, 750ml, 2개",
