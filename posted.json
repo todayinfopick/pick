@@ -8155,6 +8155,12 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795752253/coupang-autopost/h5wkrb4wi1hkkigh0jya.mp4",
         "account": 2,
         "at": "2026-11-27T13:04:14"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795752549/coupang-autopost/tjd3tzmcmrmruwczdrni.mp4",
+        "account": 2,
+        "at": "2026-11-27T13:09:10"
       }
     ],
     "threads": {
@@ -8163,7 +8169,14 @@
       "manual": true,
       "at": "2026-11-27T13:07:57"
     },
-    "account": 2
+    "account": 2,
+    "no": 91,
+    "instagram": {
+      "id": "17971699314197746",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T13:09:43"
+    }
   },
   "상품:홈스타핑크파워욕실찌든때클리너,750ml,2개": {
     "name": "홈스타 핑크파워 욕실 찌든때 클리너, 750ml, 2개",
