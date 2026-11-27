@@ -8916,10 +8916,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795781034/coupang-autopost/wrganzlatx8dzrcu23ev.mp4",
         "account": 2,
         "at": "2026-11-27T21:03:55"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795781337/coupang-autopost/wnsrniwuta96yzano4tf.mp4",
+        "account": 2,
+        "at": "2026-11-27T21:08:58"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102327657c-104806.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-11271023420436-105024.mp4",
       "script": {
         "title": "일월 컴펙트 싱글 초절전매트 IW-KM31S-3A 랜덤발송",
         "lines": [
@@ -8939,7 +8945,14 @@
       "manual": true,
       "at": "2026-11-27T21:07:39"
     },
-    "account": 2
+    "account": 2,
+    "no": 94,
+    "instagram": {
+      "id": "18104949881546498",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T21:10:11"
+    }
   },
   "상품:베로가벼운크로와상크로스백": {
     "name": "베로 가벼운 크로와상 크로스백",
