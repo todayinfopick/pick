@@ -8808,7 +8808,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-27_i0p5xaCoCa_090918_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795766678/coupang-autopost/skt2rsqoflzkrjik4zkq.mp4",
+        "account": 2,
+        "at": "2026-11-27T17:04:39"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-11271023220510-104743.mp4",
+      "script": {
+        "title": "조지루시 가열식 가습기 1.8L",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "끓여서 뿜어주니까 세균 걱정이 없더라고요.",
+          "1.8L 용량이라 아담해도 알차게 채워줘요.",
+          "버튼 하나로 조작하니까 쓰기 정말 편해요.",
+          "근데 진짜는 이거예요.",
+          "어린이 안전 잠금 기능이 있어서 안심돼요.",
+          "위생적인 가습기 찾으시는 분께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18094424234667518",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T17:08:21"
+    },
+    "account": 2
   },
   "상품:일월컴펙트싱글초절전매트iw-km31s-3a랜덤발송": {
     "name": "일월 컴펙트 싱글 초절전매트 IW-KM31S-3A 랜덤발송",
