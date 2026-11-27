@@ -8909,7 +8909,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-27_i0qXzSZY5I_092241_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795781034/coupang-autopost/wrganzlatx8dzrcu23ev.mp4",
+        "account": 2,
+        "at": "2026-11-27T21:03:55"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102327657c-104806.mp4",
+      "script": {
+        "title": "일월 컴펙트 싱글 초절전매트 IW-KM31S-3A 랜덤발송",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "초절전 설계라 전기세 부담을 싹 줄여줘요.",
+          "싱글 컴팩트 사이즈라 침대에 쏙 들어가요.",
+          "세밀한 온도 조절 기능으로 딱 좋은 온도를 맞춰줘요.",
+          "근데 진짜는 이거예요.",
+          "어떤 패턴이 올지 모르는 랜덤 발송이라 열어보는 재미까지 있어요.",
+          "자취방이나 원룸 쓰는 분들께 딱 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18115973417465432",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T21:07:39"
+    },
+    "account": 2
   },
   "상품:베로가벼운크로와상크로스백": {
     "name": "베로 가벼운 크로와상 크로스백",
