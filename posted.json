@@ -8815,10 +8815,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795766678/coupang-autopost/skt2rsqoflzkrjik4zkq.mp4",
         "account": 2,
         "at": "2026-11-27T17:04:39"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795766978/coupang-autopost/zdnqsknrfv7atgfgz6r7.mp4",
+        "account": 2,
+        "at": "2026-11-27T17:09:39"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261127-11271023220510-104743.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102338c671-105000.mp4",
       "script": {
         "title": "조지루시 가열식 가습기 1.8L",
         "lines": [
@@ -8838,7 +8844,14 @@
       "manual": true,
       "at": "2026-11-27T17:08:21"
     },
-    "account": 2
+    "account": 2,
+    "no": 93,
+    "instagram": {
+      "id": "18002109293829107",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T17:10:11"
+    }
   },
   "상품:일월컴펙트싱글초절전매트iw-km31s-3a랜덤발송": {
     "name": "일월 컴펙트 싱글 초절전매트 IW-KM31S-3A 랜덤발송",
