@@ -9013,10 +9013,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795788258/coupang-autopost/hsaogzqftpd3vqm3kys9.mp4",
         "account": 2,
         "at": "2026-11-27T23:04:19"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795788612/coupang-autopost/hzdesc5dzvitng6rscnt.mp4",
+        "account": 2,
+        "at": "2026-11-27T23:10:13"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261127-112710232946f9-104832.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-112710234504ea-105049.mp4",
       "script": {
         "title": "베로 가벼운 크로와상 크로스백",
         "lines": [
@@ -9035,7 +9041,14 @@
       "manual": true,
       "at": "2026-11-27T23:08:06"
     },
-    "account": 2
+    "account": 2,
+    "no": 95,
+    "instagram": {
+      "id": "18115635047231068",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T23:10:48"
+    }
   },
   "상품:피지오겔데일리모이스쳐테라피페이셜크림,150ml,1개": {
     "name": "피지오겔 데일리 모이스쳐 테라피 페이셜 크림, 150ml, 1개",
