@@ -9018,10 +9018,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795772677/coupang-autopost/rrnokcgzqr7hfzgl9dgh.mp4",
         "account": 1,
         "at": "2026-11-27T18:44:38"
+      },
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795779837/coupang-autopost/a7ubywvhhyyzj8ph9eul.mp4",
+        "account": 1,
+        "at": "2026-11-27T20:43:58"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261127-11271021556449-104404.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102159c406-104431.mp4",
       "script": {
         "title": "피지오겔 데일리 모이스쳐 테라피 페이셜 크림",
         "lines": [
@@ -9035,10 +9041,10 @@
       }
     },
     "threads": {
-      "id": "18142933684626609",
+      "id": "18122109538989772",
       "kind": "video",
       "manual": true,
-      "at": "2026-11-27T18:48:25"
+      "at": "2026-11-27T20:47:40"
     },
     "account": 1,
     "no": 103
