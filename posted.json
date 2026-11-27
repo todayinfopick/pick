@@ -9024,10 +9024,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795779837/coupang-autopost/a7ubywvhhyyzj8ph9eul.mp4",
         "account": 1,
         "at": "2026-11-27T20:43:58"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795780143/coupang-autopost/gf4vpa43qt404lrwmhif.mp4",
+        "account": 1,
+        "at": "2026-11-27T20:49:04"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102159c406-104431.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261127-1127102219f073-104553.mp4",
       "script": {
         "title": "피지오겔 데일리 모이스쳐 테라피 페이셜 크림",
         "lines": [
@@ -9047,7 +9053,13 @@
       "at": "2026-11-27T20:47:40"
     },
     "account": 1,
-    "no": 103
+    "no": 103,
+    "instagram": {
+      "id": "18107033111376169",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-27T20:49:31"
+    }
   },
   "상품:라비킷유아용라이너루프트필로우두상베개": {
     "name": "라비킷 유아용 라이너 루프트 필로우 두상베개",
