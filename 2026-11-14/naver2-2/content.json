@@ -1,0 +1,277 @@
+{
+ "schemaVersion": 1,
+ "platform": "naver",
+ "blogName": "알뜰한 오늘",
+ "category": "할인·행사",
+ "title": "빕스 네이버페이 5만 포인트, 10만원 딱 맞춰 먹는 게 이득인 이유",
+ "tags": [
+  "빕스 네이버페이",
+  "빕스 할인",
+  "네이버페이 현장결제",
+  "네이버페이 포인트",
+  "던킨 두바이 도넛",
+  "11월 네이버페이 혜택",
+  "외식 할인"
+ ],
+ "blocks": [
+  {
+   "id": "n001",
+   "type": "PARAGRAPH",
+   "text": "빕스에서 10만원 이상 먹고 네이버페이 포인트나 머니로 결제하면 5만 포인트가 돌아와요. 11월 22일 일요일까지예요. 이번 주말을 놓쳐도 다음 주말이 한 번 더 남아 있어요.",
+   "marks": [
+    "네이버페이 포인트나 머니로 결제하면 5만 포인트가 돌아와요."
+   ]
+  },
+  {
+   "id": "n002",
+   "type": "PARAGRAPH",
+   "text": "그런데 이 행사는 \"반값 할인\"이 아니에요. 계산대에서 깎아 주는 게 아니라 결제가 끝난 뒤 포인트로 쌓이는 방식이라, 어떻게 결제하느냐에 따라 받기도 하고 못 받기도 해요. 놓치기 쉬운 부분부터 볼게요."
+  },
+  {
+   "id": "n003",
+   "type": "H2",
+   "text": "카드 QR로 내면 못 받아요"
+  },
+  {
+   "id": "n004",
+   "type": "PARAGRAPH",
+   "text": "가장 많이 틀리는 게 결제 수단이에요. 네이버페이에 카드를 연결해 두고 QR로 결제하면 적립 대상에서 빠져요. 네이버페이 포인트나 네이버페이 머니로 전액을 내야 해요.",
+   "marks": [
+    "적립 대상에서 빠져요."
+   ]
+  },
+  {
+   "id": "n005",
+   "type": "PARAGRAPH",
+   "text": "머니가 부족하다면 식사 전에 미리 충전해 두세요. 반은 머니, 반은 카드처럼 나눠 내는 것도 안 돼요. 분할 결제는 인정되지 않아요."
+  },
+  {
+   "id": "n006",
+   "type": "PARAGRAPH",
+   "text": "• 결제 수단: 네이버페이 포인트 또는 머니, 전액"
+  },
+  {
+   "id": "n007",
+   "type": "PARAGRAPH",
+   "text": "• 최소 금액: 10만원 이상"
+  },
+  {
+   "id": "n008",
+   "type": "PARAGRAPH",
+   "text": "• 적립: 5만 포인트 (즉시 할인 아님)"
+  },
+  {
+   "id": "n009",
+   "type": "PARAGRAPH",
+   "text": "• 횟수: 주차별 1회, 행사 기간 최대 3회"
+  },
+  {
+   "id": "n010",
+   "type": "PARAGRAPH",
+   "text": "• 기준: 테이블당 1회"
+  },
+  {
+   "id": "n011",
+   "type": "H2",
+   "text": "얼마를 먹어야 제일 이득일까"
+  },
+  {
+   "id": "n012",
+   "type": "PARAGRAPH",
+   "text": "적립액이 5만 포인트로 정해져 있어서, 많이 먹을수록 혜택 비율은 떨어져요."
+  },
+  {
+   "id": "n013",
+   "type": "TABLE",
+   "headers": [
+    "결제 금액",
+    "돌려받는 비율"
+   ],
+   "rows": [
+    [
+     "10만원",
+     "50%"
+    ],
+    [
+     "12만원",
+     "약 41.7%"
+    ],
+    [
+     "15만원",
+     "약 33.3%"
+    ],
+    [
+     "20만원",
+     "25%"
+    ]
+   ]
+  },
+  {
+   "id": "n014",
+   "type": "PARAGRAPH",
+   "text": "네 명이 가서 20만원이 나왔다면, 테이블을 둘로 나눠 10만원씩 결제하고 싶어지죠. 하지만 이 행사는 테이블당 1회라 한 테이블에서 두 번 받을 수는 없어요. 차라리 주를 나눠서 두 번 가는 쪽이 맞아요. 이번 주에 한 번, 다음 주에 한 번 가면 5만 포인트를 두 번 받는 셈이에요."
+  },
+  {
+   "id": "n015",
+   "type": "PARAGRAPH",
+   "text": "다른 쿠폰이나 일부 제휴 할인과는 겹쳐 쓸 수 없어요. 생일 쿠폰이나 통신사 할인이 있다면 어느 쪽이 큰지 미리 따져 보세요."
+  },
+  {
+   "id": "n016",
+   "type": "H2",
+   "text": "이번 주말에 끝나는 네이버페이 혜택"
+  },
+  {
+   "id": "n017",
+   "type": "PARAGRAPH",
+   "text": "빕스 말고도 이번 달 네이버페이 현장결제 행사가 몇 개 더 있어요. 일정이 짧은 것부터 적었어요."
+  },
+  {
+   "id": "n018",
+   "type": "PARAGRAPH",
+   "text": "• 파스쿠찌: 15일 일요일까지. 1만원 이상 결제하면 40% 즉시 할인, 최대 6천원.",
+   "marks": [
+    "파스쿠찌"
+   ]
+  },
+  {
+   "id": "n019",
+   "type": "PARAGRAPH",
+   "text": "• 쉐이크쉑: 15일까지. QR 결제 30% 할인. 세트 메뉴, 주류, 쉑픽은 빠져요.",
+   "marks": [
+    "쉐이크쉑"
+   ]
+  },
+  {
+   "id": "n020",
+   "type": "PARAGRAPH",
+   "text": "• 설빙: 15일까지. 9,900원 이상 포인트·머니로 매장 결제하면 50% 적립, 1인 최대 3만 포인트. 앱 주문은 안 돼요.",
+   "marks": [
+    "설빙"
+   ]
+  },
+  {
+   "id": "n021",
+   "type": "PARAGRAPH",
+   "text": "• 던킨: 30일까지. 두바이 스타일 도넛 4종만 50% 즉시 할인. 이건 카드 QR도 돼요. 매장마다 재고가 달라서 오후에는 없는 곳도 있어요.",
+   "marks": [
+    "던킨"
+   ]
+  },
+  {
+   "id": "n022",
+   "type": "PARAGRAPH",
+   "text": "뚜레쥬르 1만 포인트 적립은 13일 하루 행사라 이미 끝났어요."
+  },
+  {
+   "id": "n023",
+   "type": "H2",
+   "text": "가족 넷이 가면 이렇게 계산돼요"
+  },
+  {
+   "id": "n024",
+   "type": "PARAGRAPH",
+   "text": "어른 둘, 아이 둘이 주말 저녁에 가서 12만원이 나왔다고 해 볼게요. 네이버페이 머니로 전액 결제하면 5만 포인트가 쌓이니 실제로 낸 돈은 7만원이에요. 다음 주에 다시 가서 10만원을 쓰면 또 5만 포인트가 돌아와요. 두 번 합쳐 22만원을 쓰고 10만 포인트를 받는 셈이에요."
+  },
+  {
+   "id": "n025",
+   "type": "PARAGRAPH",
+   "text": "반대로 친구 여섯 명이 한 테이블에서 18만원을 먹으면 5만 포인트 한 번이 끝이에요. 인원이 많을수록 혜택 비율은 줄어드니, 이 행사는 둘에서 넷이 가는 가족 외식에 가장 잘 맞아요."
+  },
+  {
+   "id": "n026",
+   "type": "H2",
+   "text": "결제하기 전에 이 순서로"
+  },
+  {
+   "id": "n027",
+   "type": "PARAGRAPH",
+   "text": "계산대 앞에서 허둥대지 않으려면 순서를 미리 정해 두는 게 좋아요."
+  },
+  {
+   "id": "n028",
+   "type": "PARAGRAPH",
+   "text": "1. 식사 전에 네이버페이 머니 잔액을 확인하고, 모자라면 계좌에서 충전해 두기"
+  },
+  {
+   "id": "n029",
+   "type": "PARAGRAPH",
+   "text": "2. 주문할 때 다른 쿠폰을 쓸지 정하기 (쿠폰을 쓰면 이 행사와 겹치지 않을 수 있어요)"
+  },
+  {
+   "id": "n030",
+   "type": "PARAGRAPH",
+   "text": "3. 계산할 때 네이버페이 앱에서 현장결제 화면을 열고, 결제 수단이 카드가 아니라 머니·포인트로 되어 있는지 확인하기"
+  },
+  {
+   "id": "n031",
+   "type": "PARAGRAPH",
+   "text": "4. 결제 금액이 10만원 이상인지 영수증으로 확인하기"
+  },
+  {
+   "id": "n032",
+   "type": "PARAGRAPH",
+   "text": "특히 3번이 중요해요. 평소에 카드를 기본 결제 수단으로 해 둔 분이 많아서, 그대로 결제하면 적립 대상에서 빠져요. 화면에 \"머니\"나 \"포인트\"가 선택돼 있는지 한 번만 보면 돼요."
+  },
+  {
+   "id": "n033",
+   "type": "PARAGRAPH",
+   "text": "10만원이 조금 모자라면 디저트나 음료를 추가해 맞추는 것도 방법이에요. 9만8천원을 내면 한 푼도 못 받지만, 음료 하나 더해 10만원을 넘기면 5만 포인트가 돌아오니까요."
+  },
+  {
+   "id": "n034",
+   "type": "H2",
+   "text": "포인트는 어디에 쓰나"
+  },
+  {
+   "id": "n035",
+   "type": "PARAGRAPH",
+   "text": "돌려받은 5만 포인트는 네이버페이 결제가 되는 곳이면 대부분 쓸 수 있어요. 스마트스토어 장보기나 다음 외식에 쓰면 사실상 현금이에요. 다만 이번처럼 \"포인트·머니 전액 결제\" 행사에 다시 쓰면 한 번 더 혜택을 받을 수 있어서, 급하게 써 버리기보다 이런 행사 때 꺼내 쓰는 게 이득이에요."
+  },
+  {
+   "id": "n036",
+   "type": "PARAGRAPH",
+   "text": "연말 모임 장소를 아직 못 정했다면 이번 달은 빕스가 꽤 괜찮은 선택이에요. 여러분은 10만원 맞추기, 몇 명이면 딱 될 것 같으세요?"
+  },
+  {
+   "id": "credit36",
+   "type": "PARAGRAPH",
+   "text": "대표 사진: Tbhotch / 위키미디어 공용 (CC BY-SA 4.0)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "빕스 네이버페이 5만 포인트, 10만원 딱 맞춰 먹는 게 이득인 이유",
+   "role": "COVER"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "n010",
+   "position": "after_block",
+   "heading": "카드 QR로 내면 못 받아요",
+   "near": "• 기준: 테이블당 1회",
+   "alt": "10만원 결제 후 5만 포인트가 쌓이는 빕스 행사",
+   "ko": "빕스 네이버페이 5만 포인트, 10만원 딱 맞춰 먹는 게 이득인 이유를 보여주는 그림입니다. 밝은 조명이 비치는 빕스 매장의 원목 식탁 위에 놓인 검은색 스마트폰 화면에 네이버페이 머니 잔액과 전액 결제 설정 문구가 선명하게 보입니다. 스마트폰 옆에는 10만원을 겨우 넘긴 스테이크 접시와 영수증이 단정하게 놓여 있습니다. 오후의 부드러운 자연광이 창문을 통해 들어와 테이블 위를 아늑하게 비춥니다.",
+   "v": 2,
+   "subject": "네이버페이 앱의 머니 잔액이 표시된 스마트폰 화면",
+   "en": "An image illustrating why it is advantageous to spend exactly 100,000 won at VIPS for the Naver Pay 50,000 point benefit. On a wooden dining table in a brightly lit VIPS restaurant, a black smartphone displays the Naver Pay money balance and full payment setting clearly on its screen. Next to the smartphone, a steak dish slightly exceeding 100,000 won and a receipt are neatly placed. Soft afternoon natural light streams through the window, cozily illuminating the tabletop."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "n022",
+   "position": "after_block",
+   "heading": "이번 주말에 끝나는 네이버페이 혜택",
+   "near": "뚜레쥬르 1만 포인트 적립은 13일 하루 행사라 이미 끝났어요.",
+   "alt": "30일까지 반값인 던킨 두바이 도넛",
+   "ko": "이번 주말에 끝나는 네이버페이 혜택을 보여주는 그림입니다. 주말 저녁 서울의 한 파스쿠찌 카페 카운터 앞에서 한국인 손님이 스마트폰을 들고 현장결제를 준비하고 있습니다. 카운터 쇼케이스 안에는 1만원 이상 결제 대상인 조각 케이크 2개와 음료가 진열되어 있습니다. 매장 안에는 따뜻한 주황색 펜던트 조명이 비치고 손님들의 활기찬 주말 저녁 분위기가 감돕니다.",
+   "v": 2,
+   "subject": "주말 저녁 네이버페이 현장결제를 준비하는 파스쿠찌 매장 카운터",
+   "en": "An image showing the Naver Pay benefits ending this weekend. In front of the counter at a Pascucci cafe in Seoul on a weekend evening, a Korean customer holds a smartphone and prepares for an on-site payment. Inside the counter showcase, two slice cakes and drinks eligible for purchases over 10,000 won are displayed. The cafe is illuminated by warm orange pendant lights, creating a lively weekend evening atmosphere among customers."
+  }
+ ]
+}

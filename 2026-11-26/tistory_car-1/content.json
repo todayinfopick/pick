@@ -1,0 +1,249 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "오늘의 자동차",
+ "category": "보험·세금",
+ "title": "자동차 환급금 조회, 세금·채권·보험 3곳 따로 봐야 하는 이유와 5분 확인법",
+ "tags": [
+  "자동차 환급금 조회",
+  "자동차세 환급",
+  "자동차 채권 환급금",
+  "자동차보험 환급금",
+  "위택스 환급",
+  "자동차세 연납",
+  "차량 환급금"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "'자동차 환급금'은 한 군데서 다 나오지 않아요. 자동차세는 위택스, 자동차 채권은 그 채권을 산 은행, 보험료는 파인에서 각각 따로 확인해야 해요.",
+   "marks": [
+    "'자동차 환급금'은 한 군데서 다 나오지 않아요."
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "요즘 이 검색어가 부쩍 많이 보이는 건 12월 자동차세 고지서가 나올 때가 됐고, 연말에 차를 바꾸는 분도 많아서예요. 그런데 \"조회해 봤더니 없더라\"는 분 중 상당수는 엉뚱한 곳에서 찾고 있었던 경우예요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "차 팔았다면 1순위, 자동차세 환급은 신청해야 나와요",
+   "align": "center"
+  },
+  {
+   "id": "b004",
+   "type": "PARAGRAPH",
+   "text": "자동차세는 미리 내는 세금이에요. 6월과 12월에 반년 치를 내거나, 1월에 1년 치를 한꺼번에 내죠. 그래서 중간에 차를 팔거나 폐차하면 이미 낸 세금 중 남은 기간만큼 돌려받을 수 있어요."
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "돌려받는 돈은 날짜 기준으로 나눠서 계산해요. 예를 들어 1월에 1년 치를 연납했는데 8월에 차를 팔았다면, 남은 날짜만큼이 환급 대상이에요. 연납 할인을 받았다면 그 할인분은 빼고 계산합니다."
+  },
+  {
+   "id": "b006",
+   "type": "PARAGRAPH",
+   "text": "중요한 건 자동으로 들어오지 않는 경우가 많다는 거예요. 위택스에 로그인해서 환급 신청 메뉴에서 대상 내역을 확인하고, 돌려받을 계좌를 입력해야 해요. 서울에 등록된 차라면 서울시 이택스에서 확인합니다.",
+   "marks": [
+    "자동으로 들어오지 않는 경우가 많다"
+   ]
+  },
+  {
+   "id": "b007",
+   "type": "QUOTE",
+   "text": "내야 할 다른 지방세(재산세 등)가 밀려 있으면 그 금액을 먼저 빼고 남은 돈만 돌려줘요."
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "헷갈리는 건 중고차를 팔 때예요. 매매상사에 넘기면 명의 이전 날짜가 판 날보다 며칠 늦어질 수 있는데, 환급은 실제 명의가 넘어간 날 기준으로 계산돼요. 그래서 계약서만 믿지 말고 위택스에 뜨는 날짜를 확인하는 게 정확해요. 폐차는 말소등록이 끝난 날이 기준이라, 폐차장에서 말소 처리를 미루면 그만큼 환급이 줄어듭니다."
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "같은 세금을 두 번 냈거나, 감면 대상인데 모르고 낸 경우도 환급 대상이에요. 장애인·국가유공자 차량 감면처럼 나중에 신청해서 인정받으면 이미 낸 세금을 돌려받을 수 있어요."
+  },
+  {
+   "id": "b010",
+   "type": "H2",
+   "text": "가장 많이 놓치는 돈, 자동차 채권 미환급금",
+   "align": "center"
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "차를 처음 등록하거나 명의를 옮길 때 지역개발채권이나 도시철도채권을 사야 하는 경우가 있어요. 대부분은 그 자리에서 할인해서 바로 팔아 버리지만, 채권을 그대로 들고 있었다면 만기 때 원금과 이자를 돌려받을 수 있어요."
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "문제는 이 돈이 위택스나 정부24에선 안 보인다는 거예요. 채권을 산 은행에서 따로 조회해야 해요. 지역마다 맡은 은행이 다르니 차를 등록한 지역부터 확인하세요."
+  },
+  {
+   "id": "b013",
+   "type": "TABLE",
+   "headers": [
+    "등록 지역",
+    "조회할 곳(예)"
+   ],
+   "rows": [
+    [
+     "서울",
+     "신한은행"
+    ],
+    [
+     "경기",
+     "NH농협은행"
+    ],
+    [
+     "인천",
+     "신한·NH농협은행"
+    ],
+    [
+     "대전·세종",
+     "하나은행"
+    ],
+    [
+     "부산",
+     "부산은행 등"
+    ]
+   ]
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "은행 인터넷뱅킹의 공과금이나 채권 메뉴에서 '미상환 채권 조회'를 찾으면 돼요. 못 찾겠으면 시·도청의 채권 상환 공고를 보거나 은행에 전화로 물어보는 게 빨라요."
+  },
+  {
+   "id": "b015",
+   "type": "HIGHLIGHT",
+   "text": "채권은 소멸시효가 있어요. 경기 지역개발채권은 원금 10년·이자 5년처럼 지역마다 달라서, 오래된 차일수록 빨리 확인하는 게 좋아요."
+  },
+  {
+   "id": "b016",
+   "type": "PARAGRAPH",
+   "text": "참고로 2023년 3월부터는 1,600cc 미만 비영업용 승용차는 채권 매입 의무가 없어졌어요. 그 뒤에 작은 차를 등록했다면 이 항목은 해당이 없을 가능성이 커요."
+  },
+  {
+   "id": "b017",
+   "type": "H2",
+   "text": "보험료 환급은 파인에서 한 번에",
+   "align": "center"
+  },
+  {
+   "id": "b018",
+   "type": "PARAGRAPH",
+   "text": "자동차보험료도 돌려받을 돈이 남아 있을 수 있어요. 중간에 해지했는데 정산이 안 된 보험료, 마일리지 특약으로 덜 탄 만큼 돌려받는 돈, 군대·회사 운전 경력을 나중에 인정받아서 생기는 차액 같은 거예요."
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "금융감독원 '파인'에 들어가 '잠자고 있는 내 돈 찾기'에서 보험 미수령금을 조회하면 여러 보험사 것을 한 번에 볼 수 있어요. 마일리지 특약은 보험 만기 무렵 계기판 사진을 내야 돌려받는 경우가 많아서, 보험사 앱 알림을 놓치지 않는 게 좋아요."
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "차를 바꾸면서 보험을 새 차로 옮겼다면 그 차액도 한 번 볼 만해요. 차량 가액이나 담보가 바뀌면 보험료가 다시 계산되는데, 더 낸 쪽이면 돌려받을 돈이 생겨요. 보험사가 알아서 처리하는 경우도 있지만, 안내 문자를 못 봤다면 고객센터에 '차량 변경 정산'이 끝났는지 물어보면 바로 알려 줘요."
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "제가 보기엔 세 가지 중 실제로 가장 많이 놓치는 건 마일리지 환급이에요. 차를 덜 탔는데 사진 한 장을 안 올려서 못 받는 경우가 생각보다 많거든요."
+  },
+  {
+   "id": "b022",
+   "type": "H2",
+   "text": "12월 고지서 나오기 전에 같이 챙길 것",
+   "align": "center"
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "12월 자동차세 정기분은 12월 16일부터 31일까지 내요. 과세 기준일이 12월 1일이라, 그 전에 차를 판 분이라면 12월분 고지서가 아예 안 나올 수 있어요. 고지서가 안 왔다고 다 끝난 건 아니니, 위택스에서 내 차의 납부 내역을 한 번 확인해 두는 게 좋아요."
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "내년 세금을 아끼고 싶다면 1월 연납을 기억하세요. 1월 16일부터 31일 사이에 1년 치를 한꺼번에 내면 실제로 약 4.6% 정도 덜 내요. 3월, 6월, 9월에도 신청할 수 있지만 늦을수록 할인 폭이 줄어들어요."
+  },
+  {
+   "id": "b025",
+   "type": "TABLE",
+   "headers": [
+    "연납 시기",
+    "실제 할인 효과(연세액 대비)"
+   ],
+   "rows": [
+    [
+     "1월",
+     "약 4.6%"
+    ],
+    [
+     "3월",
+     "약 3.8%"
+    ],
+    [
+     "6월",
+     "약 2.5%"
+    ],
+    [
+     "9월",
+     "약 1.25%"
+    ]
+   ]
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "정리하면 차를 팔았다면 위택스, 채권을 들고 있었다면 은행, 보험은 파인이에요. 세 곳 다 본인 인증만 있으면 5분이면 확인할 수 있어요."
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "혹시 조회해 보고 생각지도 못한 돈을 찾은 경험 있으신가요? 어느 쪽에서 나왔는지 궁금해요."
+  },
+  {
+   "id": "b028",
+   "type": "PARAGRAPH",
+   "text": "출처: 위택스, 금융감독원 파인, 지자체 채권 상환 공고",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "자동차 환급금 조회, 세금·채권·보험 3곳 따로 봐야 하는 이유와 5분 확인법",
+   "role": "COVER"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b004",
+   "position": "after_block",
+   "heading": "차 팔았다면 1순위, 자동차세 환급은 신청해야 나와요",
+   "near": "자동차세는 미리 내는 세금이에요. 6월과 12월에 반년 치를 내거나, 1월에 1년 치를 한꺼번에 내죠. 그래서 중간에 차를 팔거나 폐차하면 이미 낸 세금 중 남은 기간만큼 돌려받을 수 있어요.",
+   "alt": "차 팔았다면 1순위, 자동차세 환급은 신청해야 나와요",
+   "ko": "자동차 환급금 조회, 세금·채권·보험 3곳 따로 봐야 하는 이유와 5분 확인법을 주제로, 12월 겨울 오후에 서울의 밝은 거실 창가 나무 식탁 위에서 찍은 실감 나는 사진. 화면에 위택스 자동차세 환급 신청 메뉴가 선명하게 뜬 태블릿 PC 1대가 놓여 있다. 그 옆에는 김이 모르는 따뜻한 아메리카노가 담긴 하얀색 머그컵 1개가 나란히 배치되어 있다. 창밖으로는 겨울 날씨의 앙상한 가로수와 흐린 하늘이 은은하게 보인다. 부드러운 자연광이 창문을 통해 들어와 태블릿 화면과 식탁 위를 따뜻하게 비춘다.",
+   "v": 2,
+   "subject": "자동차세 환급 신청 화면이 켜져 있는 태블릿 PC",
+   "en": "A realistic photo depicting checking car refunds, the importance of checking taxes, bonds, and insurance in three separate places, and a 5-minute confirmation method, shot on a wooden dining table by a bright living room window in Seoul on a December winter afternoon. One tablet PC with a Wetax car tax refund application menu clearly visible on the screen is placed on the table. Right next to it sits one white mug filled with warm Americano with a wisp of steam. Outside the window, bare street trees of winter and an overcast sky are softly visible. Gentle natural light streams through the window, warmly illuminating the tablet screen and the tabletop."
+  },
+  {
+   "id": "need2",
+   "anchorBlockId": "b014",
+   "position": "after_block",
+   "heading": "가장 많이 놓치는 돈, 자동차 채권 미환급금",
+   "near": "은행 인터넷뱅킹의 공과금이나 채권 메뉴에서 '미상환 채권 조회'를 찾으면 돼요. 못 찾겠으면 시·도청의 채권 상환 공고를 보거나 은행에 전화로 물어보는 게 빨라요.",
+   "alt": "은행 창구",
+   "ko": "자동차 환급금 조회, 세금·채권·보험 3곳 따로 봐야 하는 이유와 5분 확인법을 주제로, 어느 12월 평일 오후 한국의 시중 은행 창구 앞 서류 대리석 카운터 위에서 찍은 사실적인 사진. 화면에 지역개발채권 미상환 채권 조회 메뉴가 떠 있는 노트북 1대가 놓여 있다. 노트북 키보드 옆에는 은행 업무용 검은색 볼펜 1개가 가지런히 놓여 있다. 배경으로는 은행의 깔끔한 실내 공간과 은은한 실내 조명이 자연스럽게 보인다. 차분하고 깨끗한 실내 조명빛이 노트북 화면을 선명하게 비추고 있다.",
+   "v": 2,
+   "subject": "미상환 채권 조회 메뉴가 켜져 있는 노트북 화면",
+   "en": "A realistic photo depicting checking car refunds, the importance of checking taxes, bonds, and insurance in three separate places, and a 5-minute confirmation method, shot on a marble counter at a commercial bank branch in South Korea on a December weekday afternoon. One laptop with an unredeemed regional development bond inquiry menu displayed on the screen is placed on the counter. Right beside the laptop keyboard sits one black bank ballpoint pen. In the background, the clean interior space of the bank and soft indoor lighting are naturally visible. Calm and clean indoor lighting brightly illuminates the laptop screen."
+  }
+ ]
+}

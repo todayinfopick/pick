@@ -1,0 +1,30 @@
+{
+ "title": "코튼클라우드 호텔 수건 답례품",
+ "lines": [
+  "도톰한 두께감",
+  "부드러운 코마사",
+  "다양한 행사용",
+  "깔끔한 포장",
+  "자수 디자인"
+ ],
+ "photos": [
+  "vsrc/01.jpg",
+  "vsrc/02.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/06.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg",
+  "vsrc/09.jpg",
+  "vsrc/10.jpg"
+ ],
+ "used": [
+  "vsrc/01.jpg",
+  "vsrc/03.jpg",
+  "vsrc/04.jpg",
+  "vsrc/05.jpg",
+  "vsrc/07.jpg",
+  "vsrc/08.jpg"
+ ]
+}

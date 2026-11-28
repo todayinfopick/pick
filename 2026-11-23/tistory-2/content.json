@@ -1,0 +1,266 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "티스토리",
+ "category": "글로벌 테크",
+ "title": "갤럭시핏4 아직 안 나왔다, 지금 핏3 살까 기다릴까 판단 기준 4가지",
+ "tags": [
+  "갤럭시핏4",
+  "갤럭시 핏4 출시일",
+  "갤럭시 핏4 가격",
+  "갤럭시 핏3",
+  "스마트밴드 추천",
+  "삼성 스마트밴드",
+  "갤럭시핏3 vs 핏4"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "갤럭시핏4는 11월 23일 현재 정식 출시되지 않았어요. 삼성전자가 공식으로 발표한 날짜도, 가격도 아직 없습니다.",
+   "marks": [
+    "갤럭시핏4는 11월 23일 현재 정식 출시되지 않았어요."
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "해외 전파 인증을 통과했다는 소식이 이어지면서 '곧 나온다'는 기대가 커진 상태예요. 그래서 지금 스마트밴드를 사려는 분들은 핏3를 살지, 핏4를 기다릴지 고민이 많죠. 그 판단에 필요한 것만 짚어 볼게요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "핏4, 지금까지 나온 이야기",
+   "align": "center"
+  },
+  {
+   "id": "b004",
+   "type": "PARAGRAPH",
+   "text": "확인된 것과 아직 소문인 것을 나눠 보면 이래요."
+  },
+  {
+   "id": "b005",
+   "type": "TABLE",
+   "headers": [
+    "구분",
+    "내용"
+   ],
+   "rows": [
+    [
+     "공식 발표",
+     "없음 (11월 23일 기준)"
+    ],
+    [
+     "모델명",
+     "SM-R391로 알려짐"
+    ],
+    [
+     "인증",
+     "미국 FCC 등 해외 인증 통과 보도"
+    ],
+    [
+     "출시 시기",
+     "미정 (하반기 출시설은 빗나감)"
+    ],
+    [
+     "가격",
+     "공식 정보 없음, 나도는 숫자는 추정"
+    ],
+    [
+     "GPS 탑재",
+     "확인 안 됨"
+    ]
+   ]
+  },
+  {
+   "id": "b006",
+   "type": "PARAGRAPH",
+   "text": "보통 전파 인증은 출시 몇 달 전에 거치는 절차라서 '나오긴 나온다'는 신호로 봐요. 다만 인증 뒤 출시까지 걸리는 기간은 제품마다 제각각이에요. 올여름 인증 소식이 나왔을 때도 가을 출시를 점치는 이야기가 많았지만, 결국 지금까지 소식이 없죠."
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "그러니 \"다음 달엔 나온다\"는 식의 날짜 예측은 지금으로선 근거가 약해요. 인터넷에 도는 가격표 역시 모두 추정이에요."
+  },
+  {
+   "id": "b008",
+   "type": "H2",
+   "text": "비교 기준이 될 핏3는 어떤 제품",
+   "align": "center"
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "핏4를 기다릴지 정하려면, 지금 살 수 있는 핏3가 뭘 해 주는지부터 알아야 해요. 삼성전자가 2024년 4월 국내에 내놓을 때 밝힌 내용이에요."
+  },
+  {
+   "id": "b010",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "갤럭시 핏3"
+   ],
+   "rows": [
+    [
+     "국내 출시",
+     "2024년 4월 3일"
+    ],
+    [
+     "출시 가격",
+     "89,000원"
+    ],
+    [
+     "배터리",
+     "최대 13일 (30분 충전 시 최대 65%)"
+    ],
+    [
+     "방수·방진",
+     "IP68, 5ATM"
+    ],
+    [
+     "운동 기록",
+     "100종 이상"
+    ],
+    [
+     "안전 기능",
+     "낙상 감지, 긴급 SOS"
+    ],
+    [
+     "무게",
+     "본체 18.5g"
+    ],
+    [
+     "GPS",
+     "없음 (휴대폰 연결 필요)"
+    ]
+   ]
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "핏3의 가장 큰 장점은 배터리예요. 한 번 충전하면 열흘 넘게 쓰니까, 매일 밤 충전하는 스마트워치와는 생활이 확 달라져요. 수면 기록을 꾸준히 보고 싶은 사람에게 특히 잘 맞아요."
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "반면 GPS가 없어서, 휴대폰 없이 달리기만 하는 사람에겐 기록이 아쉬울 수 있어요. 핏4에 GPS가 들어가길 바라는 목소리가 큰 이유도 여기 있어요. 낙상 감지 후 긴급 연락은 갤럭시 폰(One UI 6.1 이상)과 연결해야 쓸 수 있다는 점도 기억해 두세요."
+  },
+  {
+   "id": "b013",
+   "type": "H2",
+   "text": "핏4에서 달라졌으면 하는 것",
+   "align": "center"
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "공식 정보는 없지만, 핏3를 써 본 사람들의 아쉬움을 보면 핏4에 기대하는 방향은 꽤 분명해요."
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "가장 많이 나오는 건 역시 GPS예요. 휴대폰을 두고 가볍게 뛰는 사람이 늘면서, 밴드만으로 경로와 거리를 재고 싶다는 요구가 커졌어요. 다음은 화면 밝기와 시인성이에요. 한낮 야외에서 글씨가 잘 안 보인다는 이야기가 종종 나와요."
+  },
+  {
+   "id": "b016",
+   "type": "PARAGRAPH",
+   "text": "여기에 스트랩 교체 편의나 더 다양한 건강 지표를 바라는 목소리도 있어요. 다만 기능이 늘어날수록 배터리가 줄어드는 건 피하기 어려워요. 핏 시리즈의 정체성은 결국 '오래가는 배터리'라서, 삼성이 이 균형을 어떻게 잡을지가 핏4의 성패를 가를 것 같아요."
+  },
+  {
+   "id": "b017",
+   "type": "H2",
+   "text": "지금 살까, 기다릴까: 판단 기준 4가지",
+   "align": "center"
+  },
+  {
+   "id": "b018",
+   "type": "PARAGRAPH",
+   "text": "출시일도 모르는 제품을 기다리며 몇 달을 기록 없이 보내는 건 손해예요. 핏3는 출시된 지 2년이 넘어서 판매처마다 가격 차이가 있으니, 몇 곳 비교해 보고 사면 부담이 덜해요."
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "GPS가 꼭 필요하면 핏3는 답이 아니에요. 핏4의 GPS 탑재는 확인되지 않았으니, 확실하게 필요하다면 GPS가 있는 스마트워치를 보는 게 빠를 수 있어요."
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "수면·걸음 수·심박 기록 정도가 목적이라면 핏3로 충분해요. 받는 사람이 아이폰을 쓴다면 갤럭시 핏 시리즈는 연동이 제한적이니 먼저 확인하세요."
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "새 디자인과 새 기능을 원한다면 기다리는 게 맞아요. 다만 그 기간이 얼마나 될지는 아무도 장담 못 한다는 걸 감안해야 해요."
+  },
+  {
+   "id": "b022",
+   "type": "HIGHLIGHT",
+   "text": "'SM-R391' 같은 모델명으로 미리 판매한다는 해외 구매 대행 글은 주의하세요. 정식 출시 전 제품은 국내 사후 지원을 받기 어려워요."
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "제 생각엔 지금 핏3를 사는 사람이 크게 손해 볼 일은 없어요. 스마트밴드는 한 세대가 바뀌어도 걸음 수와 수면 기록이라는 핵심 기능은 크게 달라지지 않거든요. 핏4가 GPS를 달고 나온다면 그때가 진짜 바꿀 이유가 생기는 순간이에요."
+  },
+  {
+   "id": "b024",
+   "type": "QUOTE",
+   "text": "갤럭시핏4는 아직 미출시, 공식 발표 전이에요. 급하면 핏3, GPS가 꼭 필요하면 기다리거나 워치를 보세요."
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "여러분은 스마트밴드에서 배터리와 GPS 중 어느 쪽이 더 중요하세요?"
+  },
+  {
+   "id": "b026",
+   "type": "PARAGRAPH",
+   "text": "사진 출처: 삼성전자 뉴스룸 (Galaxy Fit3 공식 제품 이미지)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "0ded26d0-505a-47db-bda9-058a84211750",
+   "file": "e-0ded26d0-505a-47db-bda9--mwsl4f5r.jpg",
+   "anchorBlockId": "b008",
+   "position": "after_block",
+   "provenance": "USER"
+  },
+  {
+   "id": "42c80fa9-cfe7-4ab7-8caf-3dddb78945c6",
+   "file": "e-42c80fa9-cfe7-4ab7-8caf--mwsl4f5r.jpg",
+   "anchorBlockId": "b010",
+   "position": "after_block",
+   "provenance": "USER"
+  },
+  {
+   "id": "9c24eae4-faa4-428b-9345-4f0b481d6965",
+   "file": "e-9c24eae4-faa4-428b-9345--mwsl4f5r.jpg",
+   "anchorBlockId": "b020",
+   "position": "after_block",
+   "provenance": "USER"
+  },
+  {
+   "id": "16bfea79-61f4-4a98-88a5-d18df206f27e",
+   "file": "e-16bfea79-61f4-4a98-88a5--mwsl4f5r.jpg",
+   "anchorBlockId": "b024",
+   "position": "after_block",
+   "provenance": "USER"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b007",
+   "position": "after_block",
+   "heading": "핏4, 지금까지 나온 이야기",
+   "near": "그러니 \"다음 달엔 나온다\"는 식의 날짜 예측은 지금으로선 근거가 약해요. 인터넷에 도는 가격표 역시 모두 추정이에요.",
+   "alt": "아직 소식 없는 갤럭시핏4",
+   "ko": "갤럭시핏4의 출시 여부를 고민하며 검색하는 주제를 보여주기 위해, 밝은 거실의 원목 식탁 위에 놓인 스마트폰 화면을 사실적인 사진으로 담았습니다. 스마트폰 화면에는 해외 전파 인증 내역을 보여주는 웹페이지가 켜져 있으며, 화면 속 글씨는 알아볼 수 없는 추상적인 선으로 표현되어 있습니다. 화면 옆에는 투명한 유리 컵 하나와 작은 메모장이 나란히 놓여 있습니다. 오후의 부드러운 햇살이 창문을 통해 들어와 식탁 위를 따뜻하게 비추고 있습니다. 깔끔하고 차분한 실내 분위기 속에서 스마트밴드 구매를 고민하는 순간을 보여줍니다.",
+   "v": 2,
+   "subject": "전파 인증 문서를 보여주는 스마트폰 화면",
+   "en": "A realistic photo depicting a smartphone screen resting on a wooden dining table in a bright living room, capturing the dilemma of waiting for the unreleased Galaxy Fit4. The smartphone screen displays a webpage showing foreign radio certification records, with the text represented as abstract lines. Next to the phone, a transparent glass cup and a small notepad are placed neatly side by side. Soft afternoon sunlight streams through the window, warmly illuminating the tabletop. The scene conveys a calm and neat indoor atmosphere during the moment of pondering a smartband purchase."
+  }
+ ]
+}

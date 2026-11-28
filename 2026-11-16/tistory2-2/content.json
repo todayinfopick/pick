@@ -1,0 +1,216 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "오늘의 돈 공부",
+ "category": "금리·대출",
+ "title": "삼전·닉스 빚투 7조, 반대매매 유예가 끝나는 1월 31일 전에 내 계좌에서 볼 3가지",
+ "tags": [
+  "빚투",
+  "삼성전자 빚투",
+  "SK하이닉스 빚투",
+  "신용융자 잔고",
+  "반대매매",
+  "담보비율",
+  "반대매매 유예"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "삼성전자와 SK하이닉스 두 종목에 빌린 돈으로 산 주식, 이른바 '빚투'가 6조 9,340억 원까지 쌓였어요(13일 기준). 전체 신용융자 잔고의 27.7%가 두 종목에 몰려 있는 셈이에요. 주가가 고점보다 크게 빠진 지금, 금융당국은 반대매매를 내년 1월 31일까지 미룰 수 있게 숨통을 터 줬습니다.",
+   "marks": [
+    "6조 9,340억 원",
+    "내년 1월 31일까지"
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "문제는 유예가 '면제'가 아니라는 점이에요. 신용으로 산 주식이 있다면 지금 무엇을 확인해야 하는지부터 정리했어요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "숫자로 보는 지금 상황",
+   "align": "center"
+  },
+  {
+   "id": "b004",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "수치"
+   ],
+   "rows": [
+    [
+     "삼성전자 신용융자",
+     "3조 6,157억 원"
+    ],
+    [
+     "SK하이닉스 신용융자",
+     "3조 3,183억 원"
+    ],
+    [
+     "두 종목 합계",
+     "6조 9,340억 원"
+    ],
+    [
+     "전체 신용융자 대비",
+     "27.7% (코스피만 보면 36% 이상)"
+    ],
+    [
+     "전체 신용융자 잔고",
+     "약 25조 원 (6월 24일 최고 38조 6,328억 원)"
+    ]
+   ]
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "두 종목 쏠림이 얼마나 심한지는 과거와 비교하면 보여요. 2020~2023년에는 두 종목 비중이 2~4%대였고, 2025년 연말에도 10% 정도였어요. 올해 6월 25%를 넘더니 8월에는 33.6%까지 올라갔죠."
+  },
+  {
+   "id": "b006",
+   "type": "PARAGRAPH",
+   "text": "주가는 반대로 움직였어요. 6월 22일 무렵까지 삼성전자는 194.8%, SK하이닉스는 348.4% 오를 만큼 뜨거웠는데, 그 뒤 이달 13일까지 각각 41.7%, 58.3% 빠졌다고 보도됐어요. 오를 때 빚을 늘린 사람이 많았으니, 내릴 때 부담이 두 배로 커진 거죠. 코스피도 연고점 9,114.55에서 40% 넘게 내려왔고요."
+  },
+  {
+   "id": "b007",
+   "type": "H2",
+   "text": "반대매매는 왜 생기고, 유예는 무엇이 다를까",
+   "align": "center"
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "신용융자는 증권사에서 돈을 빌려 주식을 사는 거예요. 증권사는 그 주식을 담보로 잡고, 담보 가치가 빌린 돈보다 일정 비율 이상 유지되길 요구해요. 이 비율이 무너지면 추가로 돈을 넣으라고 하고, 못 넣으면 증권사가 주식을 강제로 팔아 버리죠. 이게 반대매매예요."
+  },
+  {
+   "id": "b009",
+   "type": "PARAGRAPH",
+   "text": "10월에도 이 일이 실제로 있었어요. 10월 14일 하루에만 미수금 반대매매가 893억 원, 1일부터 14일까지 2,534억 원이었어요."
+  },
+  {
+   "id": "b010",
+   "type": "PARAGRAPH",
+   "text": "이번 조치는 증권사가 지켜야 하는 '신용공여 담보비율 140% 이상 유지' 의무를 11월 9일부터 내년 1월 31일까지 잠시 풀어 준 거예요. 그래서 증권사가 주가가 떨어져도 반대매매를 미룰 수 있게 됐어요."
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "하지만 '미룰 수 있다'는 것이지 '안 한다'는 게 아니에요. 증권사마다 적용이 다를 수 있고, 유예가 끝나는 2월에 담보가 여전히 부족하면 그때 한꺼번에 정리될 수도 있어요."
+  },
+  {
+   "id": "b012",
+   "type": "H2",
+   "text": "신용 쓰는 분이 지금 확인할 3가지",
+   "align": "center"
+  },
+  {
+   "id": "b013",
+   "type": "PARAGRAPH",
+   "text": "1. 내 계좌의 담보비율: 증권사 앱 '신용/대출' 메뉴에서 현재 담보비율과 반대매매 기준선을 확인하세요. 이번 완화가 내 증권사에 어떻게 적용되는지도 공지를 보세요.",
+   "marks": [
+    "내 계좌의 담보비율"
+   ]
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "2. 만기일과 이자: 신용융자에는 만기가 있고, 기다리는 동안 이자가 계속 붙어요. 연장이 되는지, 금리가 몇 %인지 같이 보세요.",
+   "marks": [
+    "만기일과 이자"
+   ]
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "3. ELS 연계 위험: 6월 고점 근처에 나온 ELS 가운데 SK하이닉스를 기초자산으로 한 게 42개, 삼성전자가 38개예요. 다음 달 만기인 'NH투자증권24866'은 SK하이닉스가 기준가의 45.7% 수준인데 손실 구간이 35%라 여유가 크지 않아요. 이런 상품의 헤지 물량이 나오면 주가가 더 흔들릴 수 있어요.",
+   "marks": [
+    "ELS 연계 위험"
+   ]
+  },
+  {
+   "id": "b016",
+   "type": "H2",
+   "text": "전문가들이 걱정하는 지점",
+   "align": "center"
+  },
+  {
+   "id": "b017",
+   "type": "PARAGRAPH",
+   "text": "시장에서는 지수 비중이 큰 두 종목에 빚이 몰려 있어서, 매도가 시작되면 지수 전체가 크게 흔들릴 수 있다고 봐요. 반대매매가 또 다른 하락을 부르는 악순환이죠."
+  },
+  {
+   "id": "b018",
+   "type": "PARAGRAPH",
+   "text": "장근혁 자본시장연구원 선임연구위원은 반대매매 유예와 함께 신용융자 자체를 줄이는 조치가 필요하다고 지적했어요. 금융감독원도 12일 9개 대형 증권사를 불러 종목별·사람별 신용 한도를 엄격하게 관리하라고 주문했고요. 앞으로 신용 한도가 줄거나 금리가 오를 수 있다는 뜻이기도 해요. 실제로 10월에는 일부 증권사가 두 종목의 신규 신용 매수를 막거나 보증금률을 올리기도 했어요."
+  },
+  {
+   "id": "b019",
+   "type": "H2",
+   "text": "정리하면",
+   "align": "center"
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "• 유예는 시간을 벌어 준 것일 뿐, 빚은 그대로예요."
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "• 1월 31일 전에 담보를 채울지, 일부를 갚을지 계획을 세워 두는 게 좋아요."
+  },
+  {
+   "id": "b022",
+   "type": "PARAGRAPH",
+   "text": "• 떨어졌다고 신용을 더 써서 물타기하면, 반등이 늦어질 때 손실과 이자가 같이 커져요."
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "• 새로 신용을 쓰려는 분은 지금처럼 쏠림이 클 때 특히 조심해야 해요."
+  },
+  {
+   "id": "b024",
+   "type": "PARAGRAPH",
+   "text": "이 글은 투자 권유가 아니라 제도와 위험을 정리한 글이에요. 실제 담보비율과 적용 여부는 이용하는 증권사에 꼭 확인하세요."
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "출처: 파이낸셜뉴스, 세계일보, 디지털타임스, 키즈맘 · 대표 사진: Artyom Svetlov / 위키미디어 공용 (CC BY 4.0)",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "삼전·닉스 빚투 7조, 반대매매 유예가 끝나는 1월 31일 전에 내 계좌에서 볼 3가지",
+   "role": "COVER"
+  },
+  {
+   "id": "img2",
+   "file": "02-photo.jpg",
+   "alt": "주식 계좌를 확인하는 개인 투자자",
+   "anchorBlockId": "b006",
+   "position": "after_block"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b005",
+   "position": "after_block",
+   "heading": "숫자로 보는 지금 상황",
+   "near": "두 종목 쏠림이 얼마나 심한지는 과거와 비교하면 보여요. 2020~2023년에는 두 종목 비중이 2~4%대였고, 2025년 연말에도 10% 정도였어요. 올해 6월 25%를 넘더니 8월에는 33.6%까지 올라갔죠.",
+   "alt": "숫자로 보는 지금 상황",
+   "ko": "제목의 주제인 삼성전자와 SK하이닉스 빚투와 반대매매 유예를 보여주기 위해, '숫자로 보는 지금 상황' 소제목에 맞춰 서울의 한 증권사 객장 창가 테이블 위에 놓인 스마트폰 화면을 사실적인 사진으로 담았습니다. 스마트폰 화면에는 붉은색과 파란색 선이 섞여 아래로 가파르게 꺾인 주가 하락 그래프가 선명하게 켜져 있고, 그 옆에는 194.8%와 41.7%라는 숫자 데이터가 작게 표시되어 있습니다. 장소는 겨울 오후 3시의 은은한 자연광이 커다란 통유리창을 통해 들어오는 증권사 상담실입니다. 함께 보이는 것은 스마트폰 옆에 놓인 검은색 가죽 수첩 1권과 흰색 볼펜 1자루뿐이며, 사람 없이 정적이고 차분한 분위기 속에서 화면의 하락 그래프가 화면 전체의 주인공으로 돋보입니다.",
+   "v": 2,
+   "subject": "스마트폰 화면에 켜진 증권 앱의 하락 그래프",
+   "en": "To illustrate the topic of Samsung Electronics and SK Hynix debt-financed investment and margin call postponement under the subheading 'Current Situation in Numbers', a realistic photo shows a smartphone screen placed on a windowside table at a brokerage office in Seoul. The smartphone screen clearly displays a stock price downward chart with steep red and blue lines plunging, alongside small digital data indicating percentages. The location is a brokerage consultation room with soft natural daylight from a large glass window on a winter afternoon at 3 PM. Visible together are precisely one black leather notebook and one white ballpoint pen placed next to the smartphone. Without people, in a quiet and sober atmosphere, the downward graph on the smartphone screen stands out as the absolute protagonist of the scene."
+  }
+ ]
+}

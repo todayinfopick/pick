@@ -1,0 +1,310 @@
+{
+ "schemaVersion": 1,
+ "platform": "tistory",
+ "blogName": "오늘의 자격증",
+ "category": "시험 일정·접수",
+ "title": "JLPT 12월 6일 시험, 입실 9시 40분·1시 40분 놓치면 끝나는 당일 체크리스트",
+ "tags": [
+  "JLPT",
+  "JLPT 12월",
+  "JLPT 시험일",
+  "JLPT 수험표",
+  "JLPT 준비물",
+  "JLPT 입실시간",
+  "JLPT 성적발표"
+ ],
+ "blocks": [
+  {
+   "id": "b001",
+   "type": "PARAGRAPH",
+   "text": "2026년 제2회 JLPT(일본어능력시험)는 12월 6일(일)에 치러요. 입실 완료 시각은 N1·N2가 오전 9시 40분, N3·N4·N5가 오후 1시 40분이에요.",
+   "marks": [
+    "2026년 제2회 JLPT(일본어능력시험)는 12월 6일(일)에 치러요."
+   ]
+  },
+  {
+   "id": "b002",
+   "type": "PARAGRAPH",
+   "text": "접수는 이미 끝났으니 이제 남은 건 수험표, 준비물, 시간 관리예요. 시험 전날 한 번만 읽어도 되도록 당일 기준으로 정리했어요."
+  },
+  {
+   "id": "b003",
+   "type": "H2",
+   "text": "12월 JLPT 일정 한눈에",
+   "align": "center"
+  },
+  {
+   "id": "b004",
+   "type": "TABLE",
+   "headers": [
+    "항목",
+    "날짜·시간"
+   ],
+   "rows": [
+    [
+     "시험일",
+     "12월 6일(일)"
+    ],
+    [
+     "수험표 출력",
+     "10월 26일부터 시험일까지"
+    ],
+    [
+     "입실 완료 (N1·N2)",
+     "오전 9시 40분"
+    ],
+    [
+     "입실 완료 (N3·N4·N5)",
+     "오후 1시 40분"
+    ],
+    [
+     "온라인 성적 발표",
+     "2027년 1월 말"
+    ]
+   ]
+  },
+  {
+   "id": "b005",
+   "type": "PARAGRAPH",
+   "text": "레벨, 응시 지역, 시험장 변경은 10월 11일에 이미 마감됐어요. 지금은 수험표에 적힌 시험장으로 가야 해요."
+  },
+  {
+   "id": "b006",
+   "type": "H2",
+   "text": "입실 시간이 가장 중요해요",
+   "align": "center"
+  },
+  {
+   "id": "b007",
+   "type": "PARAGRAPH",
+   "text": "JLPT는 입실 완료 시각이 정해져 있어요. 시험 시작 시각이 아니라 입실을 마쳐야 하는 시각이라는 점을 꼭 기억하세요.",
+   "marks": [
+    "입실을 마쳐야 하는 시각"
+   ]
+  },
+  {
+   "id": "b008",
+   "type": "PARAGRAPH",
+   "text": "오전 레벨(N1·N2)과 오후 레벨(N3·N4·N5)의 입실 시각이 4시간 차이 나요. 친구와 같은 날 시험을 봐도 레벨이 다르면 도착 시간이 달라져요."
+  },
+  {
+   "id": "b009",
+   "type": "QUOTE",
+   "text": "시험장이 학교인 경우 정문에서 교실까지 걸어가는 데만 10분 넘게 걸리기도 해요. 입실 시각보다 최소 30분 일찍 도착하는 걸 목표로 잡으세요."
+  },
+  {
+   "id": "b010",
+   "type": "H2",
+   "text": "준비물, 이것만 챙기세요",
+   "align": "center"
+  },
+  {
+   "id": "b011",
+   "type": "PARAGRAPH",
+   "text": "• 규정 신분증: 실시기관이 인정하는 신분증이어야 해요. 어떤 신분증이 되는지는 수험표나 실시기관 안내에 나와 있으니 미리 확인하세요.",
+   "marks": [
+    "규정 신분증"
+   ]
+  },
+  {
+   "id": "b012",
+   "type": "PARAGRAPH",
+   "text": "• 수험표: 미리 출력해 두세요. 시험 당일 아침 프린터가 말썽을 부리면 곤란해요.",
+   "marks": [
+    "수험표"
+   ]
+  },
+  {
+   "id": "b013",
+   "type": "PARAGRAPH",
+   "text": "• HB 연필 또는 샤프: 답안 표기에 쓰는 필기구예요. 여유 있게 2~3개 챙기세요.",
+   "marks": [
+    "HB 연필 또는 샤프"
+   ]
+  },
+  {
+   "id": "b014",
+   "type": "PARAGRAPH",
+   "text": "• 지우개: 잘 지워지는 걸로 하나 챙기세요.",
+   "marks": [
+    "지우개"
+   ]
+  },
+  {
+   "id": "b015",
+   "type": "PARAGRAPH",
+   "text": "손목시계는 시험실 시계가 잘 안 보일 수 있어서 챙기면 도움이 돼요. 다만 스마트워치는 전자기기로 보일 수 있으니 아날로그 시계가 안전해요."
+  },
+  {
+   "id": "b016",
+   "type": "H2",
+   "text": "시험 전 일주일, 이렇게 쓰세요",
+   "align": "center"
+  },
+  {
+   "id": "b017",
+   "type": "PARAGRAPH",
+   "text": "남은 기간이 일주일 남짓이라면 새로운 걸 배우기보다 정리에 집중하는 게 좋아요."
+  },
+  {
+   "id": "b018",
+   "type": "PARAGRAPH",
+   "text": "1. 기출·모의고사 한 회를 시간 재고 풀어 보세요. 시간 배분 감각이 가장 중요해요.",
+   "marks": [
+    "기출·모의고사 한 회를 시간 재고 풀어 보세요."
+   ]
+  },
+  {
+   "id": "b019",
+   "type": "PARAGRAPH",
+   "text": "2. 틀린 문제의 어휘만 따로 모으세요. 시험 당일 아침에 훑어볼 한 장짜리 메모가 돼요.",
+   "marks": [
+    "틀린 문제의 어휘만 따로 모으세요."
+   ]
+  },
+  {
+   "id": "b020",
+   "type": "PARAGRAPH",
+   "text": "3. 청해는 매일 조금씩 들으세요. 귀를 일본어에 익숙하게 유지하는 게 좋아요.",
+   "marks": [
+    "청해는 매일 조금씩 들으세요."
+   ]
+  },
+  {
+   "id": "b021",
+   "type": "PARAGRAPH",
+   "text": "4. 전날은 일찍 자세요. 오전 레벨이라면 특히 아침 컨디션이 점수에 바로 영향을 줘요.",
+   "marks": [
+    "전날은 일찍 자세요."
+   ]
+  },
+  {
+   "id": "b022",
+   "type": "H2",
+   "text": "시험장은 어디서 확인하나",
+   "align": "center"
+  },
+  {
+   "id": "b023",
+   "type": "PARAGRAPH",
+   "text": "국내 시험은 지역에 따라 세 곳에서 나눠 운영해요."
+  },
+  {
+   "id": "b024",
+   "type": "TABLE",
+   "headers": [
+    "실시기관",
+    "담당 지역"
+   ],
+   "rows": [
+    [
+     "서울실시위원회",
+     "서울·경기·인천·강원·충청·전라·대전·광주"
+    ],
+    [
+     "부산실시위원회",
+     "부산·대구·울산·경남·경북"
+    ]
+   ]
+  },
+  {
+   "id": "b025",
+   "type": "PARAGRAPH",
+   "text": "제주는 제주실시위원회에서 담당해요. 수험표 출력, 시험장 위치, 유의사항은 내 지역 실시기관 누리집에서 확인하면 돼요."
+  },
+  {
+   "id": "b026",
+   "type": "H2",
+   "text": "성적은 1월 말",
+   "align": "center"
+  },
+  {
+   "id": "b027",
+   "type": "PARAGRAPH",
+   "text": "온라인 성적 발표는 2027년 1월 말로 안내됐어요. 취업이나 진학에 성적이 필요하다면 제출 마감일이 1월 말 이후인지 먼저 확인하세요. 마감이 더 이르다면 이번 시험 성적은 쓸 수 없어요."
+  },
+  {
+   "id": "b028",
+   "type": "H2",
+   "text": "자주 묻는 질문",
+   "align": "center"
+  },
+  {
+   "id": "b029",
+   "type": "PARAGRAPH",
+   "text": "수험표는 시험일까지 다시 출력할 수 있어요. 시험 전날 미리 한 장 더 뽑아 두면 마음이 편해요."
+  },
+  {
+   "id": "b030",
+   "type": "PARAGRAPH",
+   "text": "레벨 변경은 10월 11일에 마감됐어요. 이번 시험은 접수한 레벨로 봐야 하고, 다른 레벨은 다음 회차를 노려야 해요."
+  },
+  {
+   "id": "b031",
+   "type": "PARAGRAPH",
+   "text": "일찍 가는 건 괜찮지만 시험장에 따라 대기 공간이 없을 수 있어요. 근처 카페에서 마지막 정리를 하다가 입실 시각 30분 전쯤 들어가는 방법도 있어요."
+  },
+  {
+   "id": "b032",
+   "type": "PARAGRAPH",
+   "text": "JLPT는 보통 1년에 두 번, 7월과 12월에 열려요. 2027년 접수 일정은 실시기관 공지를 확인하세요."
+  },
+  {
+   "id": "b033",
+   "type": "H2",
+   "text": "당일 아침 시간표 예시",
+   "align": "center"
+  },
+  {
+   "id": "b034",
+   "type": "PARAGRAPH",
+   "text": "오전 레벨(N1·N2) 기준으로 시간을 거꾸로 잡아 보면 이래요. 입실 완료가 9시 40분이니 9시 10분까지 시험장 도착, 집에서 이동 시간이 1시간이라면 8시 10분 출발이에요. 아침은 7시 반 전에 가볍게 먹는 게 좋아요. 오후 레벨이라면 같은 방식으로 1시 40분에서 거꾸로 계산하면 돼요."
+  },
+  {
+   "id": "b035",
+   "type": "H2",
+   "text": "정리",
+   "align": "center"
+  },
+  {
+   "id": "b036",
+   "type": "PARAGRAPH",
+   "text": "12월 JLPT는 12월 6일, 입실 완료는 N1·N2 오전 9시 40분, N3·N4·N5 오후 1시 40분이에요. 신분증, 수험표, HB 연필, 지우개 네 가지를 전날 밤 가방에 넣어 두면 당일 아침이 훨씬 편해요."
+  },
+  {
+   "id": "b037",
+   "type": "PARAGRAPH",
+   "text": "출처: 비건뉴스 「12월 JLPT 원서접수 진행…일반접수 20일 마감」(2026.09.02), JLPT 국내 실시기관 안내, 일본국제교류기금 서울문화센터",
+   "size": "small"
+  }
+ ],
+ "images": [
+  {
+   "id": "img1",
+   "file": "01-cover.jpg",
+   "alt": "JLPT 12월 6일 시험, 입실 9시 40분·1시 40분 놓치면 끝나는 당일 체크리스트",
+   "role": "COVER"
+  },
+  {
+   "id": "gen-need2",
+   "file": "e-gen-need2-mx0g2c5e.png",
+   "anchorBlockId": "b008",
+   "position": "after_block",
+   "provenance": "AI"
+  }
+ ],
+ "imageNeeds": [
+  {
+   "id": "need1",
+   "anchorBlockId": "b005",
+   "position": "after_block",
+   "heading": "12월 JLPT 일정 한눈에",
+   "near": "레벨, 응시 지역, 시험장 변경은 10월 11일에 이미 마감됐어요. 지금은 수험표에 적힌 시험장으로 가야 해요.",
+   "alt": "12월 JLPT 일정 한눈에",
+   "ko": "12월 6일 JLPT 시험을 앞두고 책상 위에 놓인 수험표의 생생한 모습이다. A4 크기의 하얀 종이 수험표에는 시험장 학교 이름과 응시 레벨이 선명한 검은색 글씨로 적혀 있다. 겨울철 오전의 차분한 햇살이 창문을 통해 들어와 방 안의 책상과 수험표 표면을 부드럽게 비추고 있다. 수험표 옆에는 검은색 볼펜 한 자루가 나란히 놓여 있어 시험 준비가 끝났음을 보여준다. 주변은 깨끗하게 정돈된 한국의 가정집 공부방이며, 차분하고 긴장감 있는 분위기가 감돈다.",
+   "v": 2,
+   "subject": "하얀 종이 위에 검은색 글씨로 인쇄된 JLPT 수험표",
+   "en": "A realistic photo of a JLPT test admission ticket placed on a desk ahead of the December 6 exam. The white A4-sized paper ticket features clear black printed text showing the test center school name and level. Calm winter morning sunlight streams through a window, softly illuminating the surface of the desk and the ticket. A single black ballpoint pen lies neatly beside the ticket, indicating preparations are complete. The setting is a tidy study room in a Korean home, filled with a quiet and focused atmosphere."
+  }
+ ]
+}
