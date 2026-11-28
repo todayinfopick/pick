@@ -9783,7 +9783,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1g2Z6KpUa_081859_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795838832/coupang-autopost/rjj6td7xmhrgt6iqqvqh.mp4",
+        "account": 1,
+        "at": "2026-11-28T13:07:13"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280817591b1b-090654.mp4",
+      "script": {
+        "title": "배스킨라빈스 쫀떡궁합 파이",
+        "lines": [
+          "이거 모르면 할매입맛 진짜 서운해요.",
+          "고소한 인절미 크림이랑 쫄깃한 흑임자 떡이 통째로 들어있어요.",
+          "냉동실에 얼려 먹으면 식감이 훨씬 쫄깃해져요.",
+          "달달한 초콜릿까지 감싸고 있어서 당 충전용으로 딱이에요.",
+          "근데 진짜 매력 포인트는 고소함이 입안에 싹 퍼지는 거랍니다.",
+          "할매입맛 취향이거나 쫀득한 디저트 좋아하는 분께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18171164434477598",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T13:11:13"
+    },
+    "account": 1
   },
   "상품:리틀클라우드유아용실리콘샤워장갑타올2종세트,핑크+샌드베이지,2개": {
     "name": "리틀클라우드 유아용 실리콘 샤워 장갑 타올 2종 세트, 핑크 + 샌드베이지, 2개",
