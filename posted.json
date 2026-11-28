@@ -9656,7 +9656,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1ggtkwdqf_081626_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795825626/coupang-autopost/eybdiaalggxnjciinrao.mp4",
+        "account": 2,
+        "at": "2026-11-28T09:27:07"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-112808182668c2-090958.mp4",
+      "script": {
+        "title": "락앤락 비스프리 모듈러 직사각 밀폐용기",
+        "lines": [
+          "냉장고 난장판이라 머리 아프시죠?",
+          "이 밀폐용기 하나면 차곡차곡 쌓여서 공간이 확 넓어져요.",
+          "투명해서 안에 뭐가 있는지 바로 보이고요.",
+          "환경호르몬 걱정 없는 BPA 프리 소재라 안심이에요.",
+          "근데 진짜는 이거예요, 4면 결착이라 국물도 절대 안 새요.",
+          "냉동고랑 전자레인지에도 다 쓸 수 있어서 진짜 편해요.",
+          "정리 안 되는 냉장고 쓰신다면 꼭 써보세요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18199104733395919",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T09:31:02"
+    },
+    "account": 2
   },
   "상품:배스킨라빈스쫀떡궁합파이,264g,3개": {
     "name": "배스킨라빈스 쫀떡궁합 파이, 264g, 3개",
