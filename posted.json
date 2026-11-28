@@ -9663,10 +9663,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795825626/coupang-autopost/eybdiaalggxnjciinrao.mp4",
         "account": 2,
         "at": "2026-11-28T09:27:07"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795825933/coupang-autopost/fkowt3jifmfrfaog0rwb.mp4",
+        "account": 2,
+        "at": "2026-11-28T09:32:13"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-112808182668c2-090958.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081842f694-091210.mp4",
       "script": {
         "title": "락앤락 비스프리 모듈러 직사각 밀폐용기",
         "lines": [
@@ -9686,7 +9692,14 @@
       "manual": true,
       "at": "2026-11-28T09:31:02"
     },
-    "account": 2
+    "account": 2,
+    "no": 96,
+    "instagram": {
+      "id": "18077943839770084",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-28T09:33:00"
+    }
   },
   "상품:배스킨라빈스쫀떡궁합파이,264g,3개": {
     "name": "배스킨라빈스 쫀떡궁합 파이, 264g, 3개",
