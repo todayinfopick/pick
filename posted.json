@@ -9963,7 +9963,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1heXarq1s_082248_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795840040/coupang-autopost/oyatzh0q09gyrbaxq2fy.mp4",
+        "account": 2,
+        "at": "2026-11-28T13:27:21"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081832ca44-091057.mp4",
+      "script": {
+        "title": "벤하임 에어젯 퀵드라이 110 000RPM BLDC 항공모터 고속 저소음 헤어드라이어 1500W",
+        "lines": [
+          "아직도 머리 말리느라 아침마다 전쟁이세요?",
+          "11만 RPM BLDC 모터라 바람이 진짜 장난 아니에요.",
+          "1500W 출력인데도 소음은 훨씬 적어서 귀가 편해요.",
+          "버튼 하나로 조작도 정말 직관적이고 편하더라고요.",
+          "근데 진짜는 이거예요, 노즐이랑 거치대까지 다 챙겨줘요.",
+          "바쁜 아침에 머리 빨리 말리고 싶은 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18113445355907659",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T13:31:24"
+    },
+    "account": 2
   },
   "상품:그린핑거힘센보습에센셜유아로션,300ml,1개": {
     "name": "그린핑거 힘센보습 에센셜 유아로션, 300ml, 1개",
