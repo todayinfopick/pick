@@ -10154,10 +10154,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795860444/coupang-autopost/faub2g34ocsr18bmjhzv.mp4",
         "account": 1,
         "at": "2026-11-28T19:07:25"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795860784/coupang-autopost/frxnuh4rimkchbkkernu.mp4",
+        "account": 1,
+        "at": "2026-11-28T19:13:05"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280818074e19-090747.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-112808182283b4-090933.mp4",
       "script": {
         "title": "릴리바이레드 스키니 메스 브로우 펜슬 0.06g",
         "lines": [
@@ -10176,7 +10182,14 @@
       "manual": true,
       "at": "2026-11-28T19:11:24"
     },
-    "account": 1
+    "account": 1,
+    "no": 109,
+    "instagram": {
+      "id": "18074111453506739",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-28T19:13:38"
+    }
   },
   "상품:나드리프레쉬퍼퓸드샴푸화이트머스크향,1l,1개": {
     "name": "나드 리프레쉬 퍼퓸드 샴푸 화이트머스크향, 1L, 1개",
