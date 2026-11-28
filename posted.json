@@ -10250,7 +10250,37 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1h2GjpTYy_083127_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795861648/coupang-autopost/eypzqbsk7va7uzwq4ups.mp4",
+        "account": 2,
+        "at": "2026-11-28T19:27:29"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081839004e-091146.mp4",
+      "script": {
+        "title": "나드 리프레쉬 퍼퓸드 샴푸 화이트머스크향",
+        "lines": [
+          "이거 모르면 하루 종일 손해예요.",
+          "머리 감을 때마다 화이트머스크향이 온종일 은은하게 남아요.",
+          "모든 두피용이라 부담 없이 슥슥 거품 내서 감기 딱 좋아요.",
+          "대용량 1L라서 한 통 사두면 든든하게 오래 써요.",
+          "근데 진짜는 이거예요.",
+          "향수 뿌린 것처럼 잔향이 오래 가는데 머릿결도 부드러워져요.",
+          "은은한 살냄새 샴푸 찾는 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18470777386186294",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T19:31:25"
+    },
+    "account": 2
   },
   "상품:리빙크리에이터지켜텀진공보냉테이크아웃컵홀더": {
     "name": "리빙크리에이터 지켜텀 진공 보냉 테이크아웃 컵홀더",
