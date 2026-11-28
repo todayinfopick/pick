@@ -9790,10 +9790,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795838832/coupang-autopost/rjj6td7xmhrgt6iqqvqh.mp4",
         "account": 1,
         "at": "2026-11-28T13:07:13"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795839147/coupang-autopost/dpa2zo0hulf6mstltlrz.mp4",
+        "account": 1,
+        "at": "2026-11-28T13:12:28"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280817591b1b-090654.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280818152390-090840.mp4",
       "script": {
         "title": "배스킨라빈스 쫀떡궁합 파이",
         "lines": [
@@ -9812,7 +9818,14 @@
       "manual": true,
       "at": "2026-11-28T13:11:13"
     },
-    "account": 1
+    "account": 1,
+    "no": 107,
+    "instagram": {
+      "id": "18198338905401692",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-28T13:13:00"
+    }
   },
   "상품:리틀클라우드유아용실리콘샤워장갑타올2종세트,핑크+샌드베이지,2개": {
     "name": "리틀클라우드 유아용 실리콘 샤워 장갑 타올 2종 세트, 핑크 + 샌드베이지, 2개",
