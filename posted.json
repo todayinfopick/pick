@@ -10057,7 +10057,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1hxiQRbI4_082407_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795853250/coupang-autopost/r0mrpoduklvzyhhyrtkp.mp4",
+        "account": 1,
+        "at": "2026-11-28T17:07:30"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081804c780-090718.mp4",
+      "script": {
+        "title": "그린핑거 힘센보습 에센셜 유아로션",
+        "lines": [
+          "이거 모르면 겨울 내내 손해예요.",
+          "아보카도랑 올리브 코코넛으로 꽉 채운 힘센보습 에센셜 로션이에요.",
+          "300ml 넉넉한 용량으로 슥슥 발라주기 정말 편해요.",
+          "피부 자극 테스트도 마쳐서 안심하고 쓸 수 있어요.",
+          "끈적임 없이 촉촉해서 바를 때마다 기분이 좋아져요.",
+          "건조한 아기 피부로 고민이라면 꼭 써보세요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "17897386632432958",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T17:11:31"
+    },
+    "account": 1
   },
   "상품:릴리바이레드스키니메스브로우펜슬0.06g,04그레이브라운,1개": {
     "name": "릴리바이레드 스키니 메스 브로우 펜슬 0.06g, 04 그레이 브라운, 1개",
