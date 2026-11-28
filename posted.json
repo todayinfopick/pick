@@ -9837,7 +9837,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1g7B4SXdc_082131_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795832844/coupang-autopost/ftn9csqdza5h3soukvfg.mp4",
+        "account": 2,
+        "at": "2026-11-28T11:27:25"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-112808182915d7-091024.mp4",
+      "script": {
+        "title": "리틀클라우드 유아용 실리콘 샤워 장갑 타올 2종 세트",
+        "lines": [
+          "아직도 아기 때밀이 쓰세요?",
+          "말랑말랑한 실리콘 소재라 연한 피부에도 자극이 전혀 없어요.",
+          "그냥 손에 쏙 끼우고 조물조물 씻겨주기만 하면 끝이에요.",
+          "근데 진짜는 이거예요.",
+          "세균 번식 걱정 없이 빨리 마르고 끓는 물 열탕 소독까지 가능해요.",
+          "목욕 시간이 힘든 육아맘이라면 꼭 써보세요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18121154060042241",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T11:31:22"
+    },
+    "account": 2
   },
   "상품:벤하임에어젯퀵드라이110000rpmbldc항공모터고속저소음헤어드라이어1500w": {
     "name": "벤하임 에어젯 퀵드라이 110 000RPM BLDC 항공모터 고속 저소음 헤어드라이어 1500W",
