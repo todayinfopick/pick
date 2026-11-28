@@ -10064,10 +10064,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795853250/coupang-autopost/r0mrpoduklvzyhhyrtkp.mp4",
         "account": 1,
         "at": "2026-11-28T17:07:30"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795853608/coupang-autopost/gdgiivxqp8qtt7gopmfv.mp4",
+        "account": 1,
+        "at": "2026-11-28T17:13:29"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081804c780-090718.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081820e57c-090906.mp4",
       "script": {
         "title": "그린핑거 힘센보습 에센셜 유아로션",
         "lines": [
@@ -10086,7 +10092,14 @@
       "manual": true,
       "at": "2026-11-28T17:11:31"
     },
-    "account": 1
+    "account": 1,
+    "no": 108,
+    "instagram": {
+      "id": "18104701334429918",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-28T17:14:05"
+    }
   },
   "상품:릴리바이레드스키니메스브로우펜슬0.06g,04그레이브라운,1개": {
     "name": "릴리바이레드 스키니 메스 브로우 펜슬 0.06g, 04 그레이 브라운, 1개",
