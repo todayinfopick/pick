@@ -9620,10 +9620,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795831622/coupang-autopost/yz9bcpigt2c2miqtqm71.mp4",
         "account": 1,
         "at": "2026-11-28T11:07:03"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795831940/coupang-autopost/oazqpju16wpewnvcdndc.mp4",
+        "account": 1,
+        "at": "2026-11-28T11:12:21"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280817567dfa-090630.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280818133881-090816.mp4",
       "script": {
         "title": "센카 퍼펙트 휩 콜라겐 인 클렌징 폼",
         "lines": [
@@ -9642,7 +9648,14 @@
       "manual": true,
       "at": "2026-11-28T11:11:13"
     },
-    "account": 1
+    "account": 1,
+    "no": 106,
+    "instagram": {
+      "id": "17938447647146473",
+      "kind": "video",
+      "manual": true,
+      "at": "2026-11-28T11:13:19"
+    }
   },
   "상품:락앤락비스프리모듈러직사각밀폐용기,6개,직사각260ml": {
     "name": "락앤락 비스프리 모듈러 직사각 밀폐용기, 6개, 직사각 260ml",
