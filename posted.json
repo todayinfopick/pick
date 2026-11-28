@@ -10147,7 +10147,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1hPBFDI16_082521_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795860444/coupang-autopost/faub2g34ocsr18bmjhzv.mp4",
+        "account": 1,
+        "at": "2026-11-28T19:07:25"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280818074e19-090747.mp4",
+      "script": {
+        "title": "릴리바이레드 스키니 메스 브로우 펜슬 0.06g",
+        "lines": [
+          "눈썹 그릴 때마다 짱구 되시나요?",
+          "0.06g 초슬림 펜슬이라 진짜 섬세하게 그려져요.",
+          "04 그레이 브라운 컬러로 자연스럽게 슥슥 채워지고요.",
+          "뭉침 없이 깔끔하게 눈썹 결까지 정돈돼요.",
+          "근데 진짜는 이거예요, 얇아서 절대 실패가 없어요.",
+          "똥손이라 눈썹 그리기 어려운 분들께 딱이에요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18079708031463314",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T19:11:24"
+    },
+    "account": 1
   },
   "상품:나드리프레쉬퍼퓸드샴푸화이트머스크향,1l,1개": {
     "name": "나드 리프레쉬 퍼퓸드 샴푸 화이트머스크향, 1L, 1개",
