@@ -9613,7 +9613,36 @@
         "url": "https://github.com/todayinfopick/pick/releases/download/shorts/shorts_2026-11-28_i1gTHFHdO8_080834_thumb.jpg"
       },
       "thumb_v": 3
-    }
+    },
+    "videos": [
+      {
+        "kind": "base",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795831622/coupang-autopost/yz9bcpigt2c2miqtqm71.mp4",
+        "account": 1,
+        "at": "2026-11-28T11:07:03"
+      }
+    ],
+    "reel_voice": {
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-11280817567dfa-090630.mp4",
+      "script": {
+        "title": "센카 퍼펙트 휩 콜라겐 인 클렌징 폼",
+        "lines": [
+          "세수하고 나면 얼굴이 왜 이렇게 땅릴까요?",
+          "콜라겐이 들어있어서 씻고 나서도 촉촉해요.",
+          "부드럽고 풍성한 거품으로 노폐물을 싹 씻어내줘요.",
+          "세안 후에 피부가 당기지 않고 편안해져요.",
+          "근데 진짜는 이거예요, 120g 2개 구성이라 든든해요.",
+          "세안 후에도 촉촉한 클렌징 폼 찾는 분께 추천해요."
+        ]
+      }
+    },
+    "threads": {
+      "id": "18095074979694367",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T11:11:13"
+    },
+    "account": 1
   },
   "상품:락앤락비스프리모듈러직사각밀폐용기,6개,직사각260ml": {
     "name": "락앤락 비스프리 모듈러 직사각 밀폐용기, 6개, 직사각 260ml",
