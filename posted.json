@@ -9970,10 +9970,16 @@
         "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795840040/coupang-autopost/oyatzh0q09gyrbaxq2fy.mp4",
         "account": 2,
         "at": "2026-11-28T13:27:21"
+      },
+      {
+        "kind": "ig",
+        "url": "https://res.cloudinary.com/jka7y06m/video/upload/v1795840355/coupang-autopost/vagcztpyjcfitiej6ktl.mp4",
+        "account": 2,
+        "at": "2026-11-28T13:32:36"
       }
     ],
     "reel_voice": {
-      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128081832ca44-091057.mp4",
+      "file": "/home/runner/work/pick/pick/manual/vid/20261128-1128082243a317-091312.mp4",
       "script": {
         "title": "벤하임 에어젯 퀵드라이 110 000RPM BLDC 항공모터 고속 저소음 헤어드라이어 1500W",
         "lines": [
@@ -9992,7 +9998,14 @@
       "manual": true,
       "at": "2026-11-28T13:31:24"
     },
-    "account": 2
+    "account": 2,
+    "no": 98,
+    "instagram": {
+      "id": "18101798210437852",
+      "kind": "carousel",
+      "manual": true,
+      "at": "2026-11-28T13:33:55"
+    }
   },
   "상품:그린핑거힘센보습에센셜유아로션,300ml,1개": {
     "name": "그린핑거 힘센보습 에센셜 유아로션, 300ml, 1개",
